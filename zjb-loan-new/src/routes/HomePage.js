@@ -1,12 +1,17 @@
 import React from 'react';
 import COS from 'cos-js-sdk-v5';
 
-import {Link, Route,Switch } from 'dva/router';
+import {Link, Route,Switch, Redirect } from 'dva/router';
 
 import { connect } from 'dva';
 import { CommonService } from '../services/api';
 
-import IndexPage from './homePage/IndexPage';
+import IndexPage from '../view/homePage/IndexPage';
+import Header from '../components/header';
+
+import '../assets/common/index';
+
+
 export default class HomePage extends React.Component {
 
   componentDidMount() {
@@ -34,10 +39,11 @@ export default class HomePage extends React.Component {
     const { match, dispatch } = this.props;
     return (
       <div>
-        <span>123123</span>
+        <Header  param={this.props}/>
         <Switch>
+          <Route path={`${match.path}/`} exact render={() => (<Redirect to={`${match.path}/howLoan`}/>)} />
           {/* 首界面 */}
-          <Route path={`${match.path}/`} exact component={IndexPage}/>
+          <Route path={`${match.path}/howLoan`} exact component={IndexPage}/>
         </Switch>
       </div>  
     );

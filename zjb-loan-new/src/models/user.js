@@ -3,7 +3,10 @@ export default {
 
   namespace: 'user',
 
-  state: {},
+  state: {
+    loginStatus: false, // 用户登录状态
+
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {  // eslint-disable-line

@@ -1,0 +1,53 @@
+.sec-touzi {
+    background: #fff;
+    padding: 80px 0;
+    .w {
+        overflow-x: hidden;
+    }
+  }
+.textcol2 {
+    padding: 30px 0;
+    &>.fl {
+        width: 570px;
+        margin-left: 100px;
+    }
+    &>.fr {
+        width: 460px;
+    }
+}
+
+.list-dot>p{
+    padding: 0 0 30px 30px;
+    color: #666;
+    font-size: 18px;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+        background-color: #666;
+    }
+}
+
+.list-suc>p {
+    padding: 0 0 6px 40px;
+    color: #666;
+    font-size: 18px;
+    background: url(../img/ic_right.png) no-repeat left center;
+}
+.btn-green {
+    width: 254px;
+    line-height: 50px;
+    background-color: #02d3a3;
+    color: #fff;
+    font-size: 22px;
+    text-align: center;
+    margin-top: 20px;
+}
+.btn-green.g{
+    padding:10px;
+}

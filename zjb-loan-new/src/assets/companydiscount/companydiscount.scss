@@ -1,0 +1,164 @@
+ 
+@import '../common/_var.scss';
+@import '../common/styles/pager.scss';
+ 
+.banner{
+    margin-bottom: 40px;
+}
+.cats {
+    position: relative;
+    padding: 30px 0 25px 0;
+    .tit {
+        float: left;
+        line-height: 20px;
+        font-size: 20px;
+        border-right: 4px solid #333;
+        padding-right: 20px;
+    }
+    a {
+        float: left;
+        line-height: 14px;
+        padding-bottom: 8px;
+        margin-left: 20px;
+        font-size: 14px;
+        &:hover,&.hover {
+            border-bottom: 2px solid $f60;
+        }
+    }
+    .to-coupon{
+        position: absolute;
+        right: 0px;
+        bottom: 15px; 
+        width: 152px;
+        height: 40px;
+        background-color: #2286e4;
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        line-height: 40px;
+        cursor: pointer;
+    }
+    .to-coupon:hover{
+        background-color: #1C6AB7;
+    }
+}
+  .item {
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    &>.fl {
+        width: 220px;
+        text-align: center;
+        line-height: 158px;
+        .pic {
+            max-width: 220px;
+            max-height: 158px;
+            vertical-align: middle;
+        }
+    }
+    &>.fr {
+        width: 530px;
+        .tit {
+            padding-top: 10px;
+            &>.tag {
+                color: #fff;
+                padding: 0 10px;
+                line-height: 20px;
+                margin-right: 20px;
+                &.tag1 {
+                    background-color: #EA6B8C;
+                }
+                &.tag2 {
+                    background-color: #FF9966;
+                }
+                &.tag3 {
+                    background-color: #CC66FF;
+                }
+                &.tag4 {
+                    background-color: #339900;
+                }
+                &.tag5 {
+                    background-color: #FFCC00;
+                }
+            }
+            &>.name {
+                font-weight: bold;
+                font-size: 16px;
+            }
+        }
+        .tit2 {
+            font-size: 16px;
+            padding: 10px 0;
+        }
+        .desc {
+            margin-bottom: 16px;
+        }
+        .tags {
+            a {
+                padding: 0 15px;
+                line-height: 26px;
+                border: 1px solid #999;
+                border-radius: 3px;
+                margin-right: 10px;
+                &.hover {
+                    color: $f90;
+                    border-color: $f90;
+                }
+                &:hover {
+                    background-color: #ffe;
+                }
+            }
+        }
+    }
+    .ic {
+        position: absolute;
+        bottom: 15px;
+        line-height: 20px;
+        text-indent: 24px;
+        &:hover {
+            color: $f60;
+        }
+    }
+    .ic_like {
+        right: 90px;
+        background-image: url(../img/companydiscount/ic_like.png);
+    }
+    .ic_share {
+        right: 30px;
+        background-image: url(../img/companydiscount/ic_share.png);
+    }
+}
+
+.rcon {
+    width: 360px;
+    &>div {
+        margin-bottom: 20px;
+    }
+  .box2 {
+    .hd {
+      padding: 0 0 10px 20px;
+      i {
+        font-size: 20px;
+        color: #474E5D;
+      }
+    }
+    .hb {
+      border-top: 5px solid #474E5D;
+      padding: 0 1px 30px 1px;
+      color: #000;
+      .tit {
+        font-size: 18px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 0 16px;
+        line-height: 48px;
+      }
+      .ol {
+        padding: 10px 0 10px 46px;
+        font-size: 14px;
+        line-height: 180%;
+      }
+    }
+  }
+}

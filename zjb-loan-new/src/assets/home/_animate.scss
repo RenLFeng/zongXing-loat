@@ -1,0 +1,120 @@
+
+.animated {
+  animation-duration: 1.5s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
+
+@keyframes bounceInDown {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+    transform: translate(0, -3000px);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(0, 25px);
+  }
+  75% {
+    transform: translate(0, -10px);
+  }
+  90% {
+    transform: translate(0, 5px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.bounceInDown {
+  animation-name: bounceInDown;
+}
+
+@keyframes bounceInLeft {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  0% {
+    opacity: 0;
+    transform: translate(-3000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(25px, 0);
+  }
+  75% {
+    transform: translate(-10px, 0);
+  }
+  90% {
+    transform: translate(5px, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.bounceInLeft {
+  animation-name: bounceInLeft;
+}
+
+@keyframes bounceInRight {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+  from {
+    opacity: 0;
+    transform: translate(3000px, 0);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-25px, 0);
+  }
+  75% {
+    transform: translate(10px, 0);
+  }
+  90% {
+    transform: translate(-5px, 0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.bounceInRight {
+  animation-name: bounceInRight;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.zoomIn {
+  animation-name: zoomIn;
+}

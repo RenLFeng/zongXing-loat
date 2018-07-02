@@ -1,0 +1,37 @@
+@import '../common/_var.scss';
+@import './_menu.scss';
+@import './_form.scss';
+
+body1 {
+    background: url(../img/project/topbg.png) no-repeat center top $f5;
+    padding-top: 200px;
+}
+.mt20 {
+    margin-top: 25px;
+}
+#selcity {
+    &>dd>i {
+        display: inline-block;
+        width: 110px;
+        padding-left: 0;
+        text-align: center;
+    }
+}
+
+.avatar-uploader {
+  padding-left: 15px;
+  height: 160px
+}
+
+.upload-div {
+  width: 240px;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ant-upload {
+  height: 140px !important;
+}
+

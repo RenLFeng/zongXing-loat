@@ -18,6 +18,9 @@ if (build === 'production') {
   BASE_URL = 'http://192.168.1.173:8001';
   document.title ="众借帮--开发环境"; 
 }
+export function test() {
+  console.log(store);
+}
 const codeMessage = {
   200: '服务器成功返回请求的数据',
   201: '新建或修改数据成功。',

@@ -1,0 +1,18 @@
+
+@import './_var.scss';
+
+@import './styles/_clear.scss';
+@import './styles/_baseclass.scss';
+@import './styles/_dialog.scss';
+
+@import './styles/_topnav.scss';
+@import './styles/_footer.scss';
+
+//用来覆盖antd的样式
+@import './antd.scss';
+
+body {
+    min-width: 1280px;
+    background-color: $f5;
+}
+

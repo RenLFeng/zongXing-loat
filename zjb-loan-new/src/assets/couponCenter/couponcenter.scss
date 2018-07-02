@@ -1,0 +1,159 @@
+
+@import '../common/_var.scss';
+.coupon-center{
+    margin-top: 135px;
+    .cc-no-data{
+        color: $c9;
+        text-align: center;
+        width: 100%;
+        font-size: 16px;
+    }
+    &>.coupon-center-content{
+        width: 1248px;
+        margin:  60px auto 0; 
+        &>.top-info{
+            padding: 0 60px;
+            &>.text-1{ 
+                span:nth-child(1){
+                    font-size: 20px;
+                    color: #333;
+                }
+                span:nth-child(2){ 
+                    margin-left:30px;
+                    font-size: 16px;
+                    color: $f90;
+                }
+            }
+            &>.text-2{
+                float: right;
+                font-size: 16px;
+                margin-right: 10px;
+                span:nth-child(1){ 
+                    color: $c9;
+                }
+                span:nth-child(2){ 
+                    color: $f90;
+                }
+                span:nth-child(3){ 
+                    color: $c9;
+                }
+            }
+            &>.text-3{
+                float: right;
+                font-size: 16px;
+                margin-right: 30px;
+                span:nth-child(1){ 
+                    color: $c9;
+                }
+                span:nth-child(2){ 
+                    color: $f90;
+                }
+            }
+            &>.to-mycoupon{
+                &>a{
+                    float: right;
+                    text-decoration: underline;
+                    font-size: 16px;
+                    color:#2400ff;
+                }
+                
+            }
+        }
+   
+        &>.coupon-items{  
+            padding: 30px 60px;
+            margin: 30px 0; 
+            background-color: #fff; 
+            &>.coupon-paging{
+                text-align: center;
+                margin-top: 30px;
+                padding: 0 30px;
+            }
+        }
+        &>.search-area{
+            margin: 30px 0;
+            background-color: #fff;
+            padding: 30px;
+            &>ul{
+                padding: 0 30px;
+                li{
+                    margin: 15px 0 ;
+                    &>span{
+                        font-size: 16px;
+                        color:#333;
+                    }
+                    &>Button{
+                        margin-left: 30px;
+                    }
+                    &>p{
+                        display: inline-block;
+                        &>a{
+                            display: inline-block;
+                            width: 90px;
+                            text-align: center;
+                            padding: 5px 0;
+                            margin: 0 20px; 
+                            font-size: 16px;
+                            color: #333;
+                            background-color: #f9f9f9;
+                            border-radius: 5px;
+                            &:hover{ 
+                                opacity: .7;
+                            }
+                            &.active{
+                                color: #fff;
+                                background: $f90; 
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            &>.coupons{
+                margin-top: 30px;
+                padding: 30px;
+            }
+            &>.coupons-paging{
+               margin-top: 10px;
+               padding: 0 30px; 
+               position: relative;
+               .paging-info{
+                   position: absolute;
+                   float: left;
+                   font-size: 18px;
+                    color: $c9;
+                    .light{
+                        color: $f90;
+                    }
+               }
+              .paging-component{ 
+                  text-align: center;
+              }
+               
+            }
+            &>.question-info{
+                margin: 120px 30px 30px 30px ;
+                &>.text1{
+                    font-size: 20px;
+                    color: #333;
+                    margin: 10px 0;
+                }
+                &>.text2{
+                    font-size: 14px;
+                    color: #999;
+                    float: right;
+                }
+                &>div>.question-title{
+                    margin: 10px 0;
+                    font-size: 18px;
+                    color: #333;
+                }
+                &>div>.question-content{
+                    font-size: 14px;
+                    color: #999;
+                    text-indent: 15px;
+                }
+            }
+        }
+    } 
+}

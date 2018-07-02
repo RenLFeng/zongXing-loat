@@ -1,0 +1,119 @@
+ 
+@import '../common/_var.scss';
+ 
+.company-card {
+    height: 237px; 
+    position: relative;
+    margin-bottom: 20px;
+    &>.logo {
+        width: 220px; 
+        height: 160px;
+        margin: 40px 20px;
+        text-align: center;
+        float: left;
+        img {
+            max-height:160px;
+            max-width:220px;  
+            vertical-align: middle;
+        }
+    }
+    &>.card-content {
+        float: left;
+        background-color: #fff; 
+        margin-left: 60px;
+        height: 100%;
+        width: 535px;
+        .tit {
+            padding-top: 45px;
+            &>.tag {
+                color: #fff;
+                padding: 2px 10px;
+                line-height: 20px;
+                margin-right: 20px; 
+                border-radius: 5px;
+                font-size: 11px;
+                background-color: #ff9900 !important;
+                // &.xcy-color{
+                //     background-color: $xcy !important;
+                // }
+                // &.xfw-color{
+                //     background-color: $xfw !important;
+                // }
+                // &.xls-color{
+                //     background-color: $xls !important;
+                // }
+                // &.xny-color{
+                //     background-color: $xny !important;
+                // }
+                // &.xyl-color{
+                //     background-color: $xyl !important;
+                // }
+                // &.other-color{
+                //     background-color: $other !important;
+                // } 
+            }
+            &>.name {
+                font-weight: bold;
+                font-size: 19px;
+            }
+        }
+        .tit2 {
+            font-size: 16px;
+            padding: 25px 0 10px;
+            color: #333;
+        }
+        .desc {
+            height: 60px;
+            margin-bottom: 16px;
+            color: #c6c6c6;
+            font-size: 14px;
+        }
+        .tags {
+            a {
+                padding: 0 15px;
+                line-height: 26px;
+                border: 1px solid #999;
+                border-radius: 3px;
+                margin-right: 10px; 
+                &:hover {
+                    border-color: $f90;
+                    background-color: #ffe;
+                }
+            }
+        }
+        .ics{ 
+            float: right;
+            .ic { 
+                position: absolute;
+                bottom: 15px;
+                font-size: 12px;
+                line-height: 20px;
+                text-indent: 24px;
+                &:hover {
+                    color: $f60; 
+                }
+            }
+            .ic_like {
+                left: 775px;
+                background-image: url(../img/companydiscount/ic_like.png);
+            }
+            .ic_share {
+                left: 835px;
+                background-image: url(../img/companydiscount/ic_share.png);
+            }
+        }
+    } 
+    &>.coupon-items{
+        float: right;
+        margin-left:25px;
+        width: 300px;
+        top: 50px;
+        padding-top: 50px;
+        height: 245px;
+        .coupon-item{
+            background-color: #999;
+            height: 110px;
+            margin: 10px 0;
+        }
+    }
+}

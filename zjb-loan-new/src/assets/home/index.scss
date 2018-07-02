@@ -1,0 +1,40 @@
+@import "../common/_var.scss";
+
+@import "_banner.scss";
+@import "_banner2.scss";
+@import "_company.scss";
+@import "_project.scss";
+@import "_invest.scss";
+@import "_finance.scss";
+@import "_tab3.scss";
+@import "_animate.scss";
+
+
+.section h1 {
+    font-size: 54px;
+    color: #ff9900;
+    font-weight: normal;
+}
+.tit2 {
+    font-size: 36px;
+    color: #484848;
+    line-height: 1.6em;
+}
+.tit3 {
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+    line-height: 3em;
+}
+.tit4 {
+    font-size: 24px;
+    color: #484848;
+    font-weight: bold;
+    line-height: 4em;
+}
+.tit5 {
+    font-size: 36px;
+    color: #fff;
+    text-align: center;
+    line-height: 3em;
+}

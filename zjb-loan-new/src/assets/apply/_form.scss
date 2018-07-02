@@ -1,0 +1,189 @@
+
+.apply-form {
+    margin-left: 145px;
+    width: 1096px;
+    padding: 50px 2px;
+    margin-bottom: 100px;
+    &>h2 {
+        border-top: 1px solid #ddd;
+        i {
+            position: relative;
+            top: -13px;
+            background-color: #fff;
+            padding: 0 16px 0 56px;
+            font-size: 24px;
+            color: #ccc;
+            font-weight: normal;
+        }
+    }
+    .bot {
+        border-top: 1px solid #ddd;
+        i {
+            position: relative;
+            top: -19px;
+            background-color: #fff;
+            padding: 0 10px;
+        }
+        a {
+            line-height: 36px;
+            border: 1px solid #ccc;
+            padding: 0 25px;
+            &:hover {
+                background-color: #f9f9f9;
+            }
+        }
+    }
+}
+.aform {
+    padding-bottom: 60px;
+    .row {
+        padding: 18px 0;
+    }
+    .tit {
+        float: left;
+        width: 268px;
+        font-size: 16px;
+        text-align: right;
+        line-height: 42px;
+        padding-right: 20px;
+        .high {
+            color: #FF6500;
+            background: url(../img/apply/ic_star.png) no-repeat left center;
+            padding-left: 20px;
+        }
+    }
+    .put {
+        width: 500px;
+        padding: 0 10px;
+        height: 42px;
+        line-height: 42px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
+    textarea.put {
+        height: auto;
+        line-height: 24px;
+    }
+    .dw {
+        font-size: 16px;
+        line-height: 42px;
+        padding-left: 10px;
+    }
+    .select {
+        width: 520px;
+    }
+}
+.aform .row2 {
+    .row {
+        float: left;
+    }
+    .tit {
+        width: 186px;
+    }
+    .put {
+        width: 282px;
+    }
+    .put2 {
+        width: 792px;
+    }
+    .select {
+        width: 304px;
+    }
+}
+.aform .cform {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    .row3 {
+        padding: 10px 0;
+        overflow: hidden;
+        zoom: 1;
+    }
+    .tit {
+        padding-right: 10px;
+        &.high {
+            color: #FF6500;
+        }
+    }
+    .tit2 {
+        width: 240px;
+    }
+    .tit3 {
+        width: 80px;
+    }
+    .tit4 {
+        width: 50px;
+    }
+    .put {
+        float: left;
+        width: 70px;
+    }
+    .put2 {
+        width: 190px;
+    }
+    .put3 {
+        width: 112px;
+    }
+}
+.aform .imgbox {
+    float: left;
+    width: 812px;
+    padding: 15px 0 0 0;
+    border-color: #ccc;
+    overflow: hidden;
+    zoom: 1;
+    .imgd {
+        float: left;
+        width: 240px;
+        height: 118px;
+        border: 1px solid #ddd;
+        margin: 0 0 25px 22px;
+        position: relative;
+        text-align: center;
+        &>i {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: url(../img/apply/ic_add.png) no-repeat center 34px;
+            color: #999;
+            padding-top: 78px;
+            font-size: 14px;
+            line-height: 1em;
+        }
+        &:hover {
+            background-color: #f9f9f9;
+        }
+    }
+    .imgd.up {
+        line-height: 118px;
+        font-size: 0;
+        &>i {
+            opacity: 0;
+            background-image: url(../img/apply/ic_del.png);
+            background-color: rgba(0,0,0,0.4);
+            color: #fff;
+            &::before {
+                content: "删除";
+                display: block;
+                padding-bottom: 30px;
+            }
+            &:hover {
+                opacity: 1;
+            }
+        }
+        img {
+            vertical-align: middle;
+            max-width: 240px;
+            max-height: 118px;
+        }
+    }
+}
+.aform .row .imgbox {
+    width: 302px;
+    .imgd {
+        margin-left: 30px;
+    }
+}

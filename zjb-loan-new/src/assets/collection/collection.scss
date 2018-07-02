@@ -1,0 +1,218 @@
+.wrap {
+  width:100%;
+  margin-top: 150px;
+  .page{
+    width:80%;
+    background: white;
+    margin:30px auto;
+    padding-bottom: 30px;
+    .title_1{
+      margin: 10px;
+      border-bottom:1px solid black;
+      span{
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 10px 20px;
+      }
+    }
+
+    .project {
+      margin: 20px;
+      background: #f0f2f5;
+      .tab {
+        height:50px;
+        span{
+          display: inline-block;
+          font-size: 16px;
+          padding: 13px 9px;
+          text-align: center;
+        }
+        .project_info_{
+          width:53%;
+        }
+        .money_{
+          width:10%;
+        }
+        .amount_{
+          width:10%;
+        }
+        .add_{
+          width:10%;
+        }
+        .delete_{
+          width:10%;
+        }
+      }
+    }
+
+    .project_info{
+      width:51.8%;
+      position: relative;
+      .img{
+        position: relative;
+        left: 0;
+        top: 0;
+        .pic {
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+        }
+        .level {
+          position: absolute;
+          z-index: 2;
+          top: 0px;
+          left: 102px;
+          width: 30px;
+          height: 30px;
+          border-radius: 100%;
+          background-color: rgba(0,0,0,0.4);
+          text-align: center;
+          line-height: 30px;
+          font-family: Arial Black,Arial;
+          //font-style: black;
+          font-size: 20px;
+          color: #fc0;
+        }
+      }
+      .titles_{
+        display: inline;
+        position: absolute;
+        top:10px;
+        left:180px;
+      }
+      .info{
+        position: absolute;
+        top:85px;
+        left:180px;
+        .t1 {
+          &>i {
+            font-size: 12px;
+            color: #666;
+            margin-right: 2em;
+          }
+        }
+        em {
+          font-size: 16px;
+          padding: 0 6px;
+        }
+      }
+      .bar {
+        width:210px;
+        position: absolute;
+        top:40px;
+        left:187px;
+        margin: 18px 0 20px 0;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        height: 12px;
+        &>div {
+          float: left;
+          height: 12px;
+          border-radius: 10px;
+          background-color: #01e5b4;
+        }
+      }
+    }
+    .money{
+      width:10%;
+      text-align: center;
+    }
+    .amount{
+      width:10%;
+      text-align: center;
+    }
+    .add{
+      width:10%;
+      text-align: center;
+      .del{
+        display: inline-block;
+        cursor: pointer;
+      }
+      .adds{
+        display: inline-block;
+        cursor: pointer;
+      }
+      span{
+        display: inline-block;
+        width:65px;
+      }
+    }
+    .delete{
+      cursor: pointer;
+      text-align: center;
+      width:10%;
+    }
+
+    .project_{
+      padding-top: 15px;
+      background: white;
+      height:130px;
+      border-bottom:1px solid gray;
+      // div{
+      //   display: inline-block;
+      //   padding:0 11px;
+      //   vertical-align: middle;
+      // }
+
+    }
+  }
+
+  .bottom{
+    width:80%;
+    margin:50px auto;
+    height:50px;
+    vertical-align: middle;
+    background: lightgray;
+    position: relative;
+    vertical-align: middle;
+    .left{
+      position: absolute;
+      left:10px;
+      span{
+        display: inline-block;
+        line-height:50px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      a{
+        display: inline-block;
+        line-height:50px;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    }
+    .right{
+      position: absolute;
+      right:0px;
+      span{
+        display: inline-block;
+        line-height:50px;
+        margin: 0 15px;
+      }
+      .add{
+        background: orange;
+        color:white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 0 30px;
+        margin: 0 ;
+        cursor: pointer;
+      }
+      .num{
+        width:30px;
+        text-align: center;
+        font-size: 16px;
+      }
+      .num_{
+        width:90px;
+        text-align: center;
+        font-size: 16px;
+      }
+    }
+    i{
+      color:orange;
+      font-weight: bold;
+    }
+  }
+}

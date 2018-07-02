@@ -1,0 +1,109 @@
+.pd-body>.lbody .lnav {
+    position: absolute;
+    left: 26px;
+    top: 120px;
+    width: 58px;
+    border-top: 1px solid #ddd;
+    &>a {
+        display: block;
+        height: 44px;
+        padding: 12px 0 0 12px;
+        font-size: 16px;
+        line-height: 1em;
+        color: #fff;
+        border: 1px solid #ddd;
+        border-top: none;
+        background-position: center;
+        background-repeat: no-repeat;
+        text-indent: -10000px;
+        &:hover {
+            border-color: #333;
+            background-color: #333;
+            background-position: -100px 0;
+            text-indent: 0;
+        }
+        &.hover {
+            border-color: $f60;
+            background-color: $f60;
+            background-position: -100px 0;
+            text-indent: 0;
+        }
+    }
+    a.a1 {
+        background-image: url(../img/project-detail/c0.png);
+    }
+    a.a2 {
+        background-image: url(../img/project-detail/c1.png);
+    }
+    a.a3 {
+        background-image: url(../img/project-detail/c2.png);
+    }
+    a.a4 {
+        background-image: url(../img/project-detail/c3.png);
+    }
+    a.a5 {
+        background-image: url(../img/project-detail/c4.png);
+    }
+    a.a6 {
+      background-image: url(../img/project-detail/c5.png);
+    }
+    a.a7 {
+      background-image: url(../img/project-detail/c7.png);
+    }
+    &.fixed {
+        position: fixed;
+        top: 50px;
+        left: 50%;
+        margin-left: -598px;
+    }
+}
+
+.pd-body>.lbody .rbody {
+    margin-left: 90px;
+    font-size: 14px;
+    img {
+        max-width: 100%;
+    }
+    .textbox {
+        position: relative;
+        padding: 50px 30px 30px 30px;
+        margin: 40px 0;
+        &>.tit {
+            position: absolute;
+            left: 60px;
+            top: -15px;
+            line-height: 30px;
+            background-color: #fff;
+            padding: 0 10px;
+            font-size: 18px;
+        }
+    }
+    .tagbox {
+        background-color: #f5f5f5;
+        padding: 30px 0 30px 50px;
+        margin-top: 20px;
+        &>i {
+            width: 190px;
+            background: url(../img/project-detail/chk1.png) no-repeat left center;
+            text-indent: 26px;
+            line-height: 38px;
+            &.chk {
+                background-image: url(../img/project-detail/chk2.png);
+            }
+        }
+    }
+    .border-div {
+      position: relative;
+      padding: 50px 30px 30px 30px;
+      margin: 40px 0;
+      &>.tit {
+        position: absolute;
+        left: 60px;
+        top: -15px;
+        line-height: 30px;
+        background-color: #fff;
+        padding: 0 10px;
+        font-size: 18px;
+      }
+    }
+}

@@ -7,7 +7,11 @@ import ScrollToTop from './common/ScrollToTop';
 
 import './common/MathPlugin';
 
+import './assets/common/index';
+import 'moment/locale/zh-cn';
+import moment from 'moment';
 
+moment.locale('zh-cn');
 
 function RouterConfig({ history }) {
   return (

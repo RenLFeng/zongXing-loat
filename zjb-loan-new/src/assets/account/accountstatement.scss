@@ -1,0 +1,62 @@
+// 资金流水
+
+@import '../common/_var.scss'; 
+ 
+.as-account-statement{ 
+    width: 992px;  
+    &>.search-area{
+      position: relative;
+      padding: 30px 30px 3px;
+      background-color: #fff; 
+      &>.top-title{
+          font-size: 20px;
+          color: #333;
+          padding-bottom: 5px;
+          border-bottom: dashed 1px #e6e6e6;
+      }
+      &>.search-tag{
+        list-style:none ;
+        margin-top: 20px; 
+        &>li{
+            display: inline-block;
+            font-size: 16px;
+            color: $c6;
+            margin-right: 25px; 
+            cursor: pointer;
+            &:hover{
+                color: $f90; 
+            }
+            &.active{
+                color: $f90; 
+            } 
+        }
+      }
+      &>span{
+        position: absolute;
+        right: 22px;
+        bottom: 18px;
+        color: #b6b6b6;
+      }
+    }
+    &>.as-list{
+        margin-top:37px;
+        padding: 26px 50px;
+        background-color: #fff; 
+        .as-paging{
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .no-data{
+            background: #fff;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.45);
+            width: 100%;
+            display: inline-block;
+        }
+    }
+}
+
+
+ 

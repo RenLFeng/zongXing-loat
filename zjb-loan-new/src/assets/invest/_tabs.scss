@@ -1,0 +1,284 @@
+
+.sec-tabs {
+  background-color: #fff;
+}
+#tabs {
+  border-bottom: 1px solid #ddd;
+}
+.tabs {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    padding-top: 4px;
+    font-size: 0;
+    a {
+        font-size: 22px;
+        width: 206px;
+        line-height: 64px;
+        position: relative;
+        color: #999;
+        border: 1px solid transparent;
+        bottom: -1px;
+        &.hover,&:hover {
+            border-color: #ddd;
+            border-bottom-color: $f5;
+            background-color: $f5;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            color: #666;
+        }
+    }
+}
+.tabcon {
+  background-color: #fff;
+  margin-top: 548px;
+  position: relative;
+  padding-top: 230px;
+  .tit {
+    width: 700px;
+    height: 66px;
+    margin: 40px auto;
+    text-align: center;
+    border: 2px solid #333;
+    &>i {
+      font-size: 36px;
+      padding: 0 20px;
+      background-color: #fff;
+      position: relative;
+      line-height: 66px;
+      top: -36px;
+    }
+  }
+  .desc {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    padding: 60px 0 46px 0;
+  }
+  .rule2 {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    &>div {
+      float: left;
+      width: 50%;
+    }
+    .t1 {
+      color: $f60;
+      font-size: 60px;
+      line-height: 80px;
+      i {
+        //background: url(../img/invest/lt.png) left center no-repeat;
+        //padding-left: 40px;
+      }
+    }
+    .t2 {
+      padding-top: 1em;
+      font-size: 24px;
+      height: 4em;
+    }
+    padding-bottom: 80px;
+  }
+}
+
+.card2 {
+  background-color: #fff;
+  position: absolute;
+  padding-top: 135px;
+  top: -546px;
+  width: 100%;
+  text-align: center;
+  .item {
+    float: left;
+    text-align: left;
+    width: 550px;
+    height: 568px;
+    background-color: #fff;
+    margin: 0 25px;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      left: 62px;
+      top: 118px;
+      height: 448px;
+      border-left: 1px solid #ccc;
+    }
+    .hd {
+      height: 116px;
+      border-bottom: 1px solid #ddd;
+      background-position: 40px center;
+      background-repeat: no-repeat;
+      position: relative;
+      .pic {
+        width: 190px;
+        height: 145px;
+        position: absolute;
+        right: 4px;
+        top: -54px;
+        background: url(../img/invest/icbg.png) no-repeat center center;
+        text-align: center;
+        padding-top: 55px;
+      }
+    }
+    .bd {
+      padding: 70px 0 0 50px;
+      font-size: 16px;
+      .dot {
+        font-size: 24px;
+        text-indent: 60px;
+        line-height: 60px;
+        &::before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          background-color: #ccc;
+          border: 2px solid #fff;
+          border-radius: 100%;
+          position: relative;
+          left: -62px;
+          top: 4px;
+          z-index: 2;
+          display: inline-block;
+        }
+      }
+      position: relative;
+      .info {
+        display: none;
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: 310px;
+        background-color: #ffc;
+        border: 1px solid rgb(236, 154, 46);
+        padding: 20px;
+        z-index: 3;
+        border-radius: 5px;
+        font-size: 16px;
+        color: $f90;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 48%;
+          top: -8px;
+          width: 12px;
+          height: 12px;
+          background-color: #ffc;
+          border: 1px solid rgb(236, 154, 46);
+          border-right: none;
+          border-bottom: none;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+      }
+      .dot4>.i {
+        width: 22px;
+        height: 22px;
+        background: url(../img/info.png);
+        position: relative;
+        left: 20px;
+        top: 3px;
+      }
+      .dot4:hover+.info {
+        display: block;
+      }
+    }
+  }
+  .item.fensan .hd {
+    background-image: url(../img/invest/fensan.png);
+  }
+  .item.xiaoe .hd {
+    background-image: url(../img/invest/xiaoe.png);
+  }
+}
+.g .sec-tabs {
+  .tabcon{
+    padding-top: 121px;
+  }
+  .tabs a{
+    display: inline-block;
+  }
+  .card2 .item{
+    float:left;
+    text-align:left;
+    width:600px;
+    height:auto;
+    background-color:#fff;
+    margin:0 10px;
+    position:relative;
+    padding:0 0 45px 0;
+    *, *::before, *::after{
+      box-sizing: content-box;
+    }
+    &::before{
+      content:"";
+      position:absolute;
+      z-index:1;
+      left:62px;
+      top:118px;
+      height:322px;
+      border-left:1px solid #ccc
+    }
+    .bd .dot{
+      font-size:24px;
+      text-indent:60px;
+      line-height:60px;
+      position: relative;
+      cursor: pointer;
+      &>.i{
+        width:22px;
+        height:22px;
+        background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kbtLA0EQh79cFMVXBC0sLIJEq0R8QNDGIkGjoBYxglGb5MxDyOO4S5BgK9gKCqKNr0L/Am0Fa0FQFEEsrKwVbTScc0kgImaW2fn2tzvD7iwooZSaNuoGIJ3J6cGAz7kQXnQ2vKDQhJ02lIhqaDNzEyFq2uc9Niveeqxatc/9a80rMUMFW6PwmKrpOeFJ4em1nGbxjnCnmoysCJ8Ju3W5oPCdpUfL/GpxoszfFuuhoB+UdmFn4hdHf7Ga1NPC8nJc6VRerdzHeklLLDM/J7FHvBuDIAF8OJliHD9eBhmV2YuHIfplRY38gVL+LFnJVWXWKKCzSoIkOdyi5qV6TGJc9JiMFAWr/3/7asSHh8rVW3xQ/2ya773QsA3FLdP8OjLN4jHYn+AyU83PHsLIh+hbVc11AI4NOL+qatFduNiErkctokdKkl1cicfh7RRaw9BxA01L5Z5V9jl5gNC6fNU17O1Dn5x3LP8Az0NnoUGZG98AAAAJcEhZcwAACxMAAAsTAQCanBgAAAHDSURBVDiNvdU9j05BFAfw39x9VqJApVoaVA8NEhK78diVUPoAFFtNwkfw0mB9BMUtbMMHoCOxa70lJKuziQTdVhqhUFg7ijsP+3LnboT4Jzdzztzz/8+Zc+eeCTqQoh4mcRwH8vR7vMJ8qK2UuKEgOIpr+enCDVxvW2CTcIpO4xEqvMFtvMRyDhnDCVzCEaziTKg9Lgqn6Dzu4jPOhdrTrnRTNMB97MKFULvXFjSRopSixS6xwgKLmTu+KeMUfce3UNvZQuxrykOz7aWWmC/YHmqjNHWUopvoYVBI6qKmtmPZbsMAvawlpGgEK1gKtYOFrfbxMLtn2zLOcW/Rx8jwnMJMIRNZaG/p/Rrc0nz8qQqn8uSLLkaKplM0vYXw8zwOKuzLzqcuUcxidgvxocb+aosMhjhUsIuo8DHbuzvivhbsjRhqfKjwJDvj7bF/hIk8LlSYz86VDkKvYG/E5TzOVaH2Q3PU+ik6XCBsK9i/kLl9zITaagWhdlXzkywUhO9outtyttuwgJWstW5bk3iWosVQO7qWEWrvsKcgKDeuHX7X+K/b5kk80NI2/0+jXyP+76+mDQv0MIVj1l+mrzHXdZn+BL47kqddHGoTAAAAAElFTkSuQmCC) no-repeat;
+        background-size:contain;
+        position:absolute;
+        right:30px;
+        top:27px;
+      }
+    }
+    .bd .info{
+      width:auto;
+      z-index:3;
+      background: none;
+      border-radius:5px;
+      border: none;
+      font-size:16px;
+      color:#f90;
+      display:block;
+      p{
+        width:388px;
+        height:auto;
+        position:absolute;
+        background-color:#ffc;
+        border:1px solid #ec9a2e;
+        padding:20px;
+        top: -189px;
+        z-index:3;
+        border-radius:43px;
+        font-size:16px;
+        color:#f90;
+        display: none;
+      }
+      &::before{
+        content:"";
+        position:absolute;
+        left:48%;
+        top:-318px;
+        width:12px;
+        height:12px;
+        background-color:#fff;
+        border:1px solid #ccc;
+        border-right:none;
+        border-bottom:none;
+        -webkit-transform:rotate(45deg);
+        transform:rotate(45deg);
+      }
+    }
+  }
+  .item.fensan .bd .info p{
+    left: 406px;
+  }
+  .item.xiaoe .bd .info p{
+    right:390px;
+  }
+}

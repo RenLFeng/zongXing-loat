@@ -1,0 +1,123 @@
+.lich-box1 {
+    position: relative;
+    padding: 30px 20px;
+    margin: 30px 0;
+    .hd {
+        position: absolute;
+        left: 20px;
+        top: -15px;
+        line-height: 30px;
+        background-color: #fff;
+        .tag {
+            padding: 0 10px;
+            background-color: #01e5b4;
+            color: #fff;
+            font-size: 18px;
+        }
+        .tit {
+            padding: 0 30px 0 10px;
+            font-size: 24px;
+        }
+    }
+    .swiper-slide {
+        color: #666;
+        width: 732px;
+        font-size: 14px;
+        img {
+            float: left;
+            width: 178px;
+            height: 135px;
+            margin-right: 44px;
+        }
+        .t1 {
+            padding-bottom: 30px;
+        }
+    }
+    .bot {
+        position: absolute;
+        right: 20px;
+        bottom: -18px;
+        background-color: #fff;
+        padding-left: 20px;
+        b {
+            font-size: 36px;
+            color: #01e5b4;
+            font-weight: normal;
+            font-style: italic;
+        }
+        em {
+            font-size: 36px;
+            font-style: italic;
+            color: #999;
+        }
+        i {
+            font-size: 14px;
+            font-style: italic;
+            color: #999;
+        }
+        a.btn {
+            line-height: 34px;
+            width: 36px;
+            background-color: #d0d0d0;
+            color: #fff;
+            font-size: 24px;
+            margin-left: 10px;
+            border-radius: 0;
+        }
+    }
+}
+.pd-body .qa-list {
+    .item {
+        font-size: 14px;
+        border-top: 1px solid #ddd;
+        padding: 20px 0;
+        .q,.a {
+            position: relative;
+            padding: 10px 0 10px 56px;
+            em {
+                position: absolute;
+                left: 4px;
+                top: 10px;
+                width: 22px;
+                line-height: 22px;
+                text-align: center;
+                border-radius: 3px;
+                border: 1px solid #ccc;
+            }
+        }
+        .q {
+            em {
+                background-color: $f60;
+                border-color: $f60;
+                color: #fff;
+            }
+        }
+        .a {
+            color: $f60;
+        }
+        .aa {
+            margin: 10px 0 20px 56px;
+            border-top: 1px solid #ddd;
+            .a {
+                color: #333;
+                border-bottom: 1px solid #ddd;
+                padding: 15px 0;
+            }
+        }
+        .more {
+            padding-left: 56px;
+            a {
+                background: url(../img/project-detail/ddl1.png) no-repeat right center;
+                padding-right: 20px;
+                color: #3366ff;
+                text-decoration: underline;
+                &:hover {
+                    color: #666;
+                }
+                &.hover {
+                    background-image: url(../img/project-detail/ddl2.png);
+                }
+            }
+        }
+    }
+}

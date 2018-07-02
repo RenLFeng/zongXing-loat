@@ -1,0 +1,46 @@
+
+.apply-menu {
+    width: 146px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    &>a {
+        width: 146px;
+        height: 66px;
+        padding-top: 80px;
+        text-align: center;
+        background-position: center 36px;
+        background-repeat: no-repeat;
+        background-color: #FF6500;
+        color: #fff;
+        font-size: 16px;
+        &.hover {
+            background-color: #fff;
+            color: #333;
+        }
+    }
+    .a1 {
+        background-image: url(../img/apply/ic_info.png);
+    }
+    .a1.hover {
+        background-image: url(../img/apply/ic_info2.png);
+    }
+    .a2 {
+        background-image: url(../img/apply/ic_user.png);
+    }
+    .a2.hover {
+        background-image: url(../img/apply/ic_user2.png);
+    }
+    .a3 {
+        background-image: url(../img/apply/ic_company.png);
+    }
+    .a3.hover {
+        background-image: url(../img/apply/ic_company2.png);
+    }
+    .a4 {
+        background-image: url(../img/apply/ic_project.png);
+    }
+    .a4.hover {
+        background-image: url(../img/apply/ic_project2.png);
+    }
+}
