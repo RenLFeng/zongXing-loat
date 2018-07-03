@@ -13,8 +13,7 @@ function initPage() {
         slidesPerView: 'auto',
         pagination: '.tab3con1 .swiper-pagination',
         paginationClickable: true
-    });
-    console.info(swiper)
+    }); 
   function makesvg(percentage, inner_text){
     var inner_text = '';
     var abs_percentage = Math.abs(percentage).toString();
@@ -63,8 +62,7 @@ function bindEvent() {
   $('body').on('click', '.sec-tabs .tabs a', function () {
     let $t = $(this);
     $t.addClass('hover').siblings().removeClass('hover');
-    let d = secs[$t.index()];
-    console.log($t.index());
+    let d = secs[$t.index()]; 
     if ($t.index() === 0) {
       av.top(812 - 130);
     } else {

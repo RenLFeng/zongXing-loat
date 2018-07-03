@@ -35,9 +35,7 @@ export default QCloud ={
         'Authorization': sign,
       },
       body:formData,
-    };
-    console.log(options);
-    console.log(url);
+    }; 
     return fetch(url,options)
       .then((response) => response.json());
   },
@@ -52,9 +50,7 @@ export default QCloud ={
         'Authorization': sign,
       },
       body:formData,
-    };
-    console.log(options);
-    console.log(url);
+    }; 
     return fetch(url,options)
       .then((response) => response.json());
   }

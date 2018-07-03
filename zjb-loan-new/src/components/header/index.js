@@ -46,19 +46,21 @@ export default class Header extends React.Component {
     let localPath =location.pathname;
     const styleS = localPath.indexOf('/index/howLoan') !== -1 || localPath.indexOf('/index/howInvest') !== -1 ? {position:'fixed'}: {position:'absolute'};
     let fontColor = 'null';
-          if(localPath.indexOf('/index/projectLoan')!== -1){
-            fontColor='project';
-          }else if(localPath.indexOf('/index/howLoan')!== -1){
-            fontColor='howLoan';
-          }else if(localPath.indexOf('/index/howInvest')!== -1){
-            fontColor='howInvest';
-          }else if(localPath.indexOf('/index/companyDiscount')!== -1){
-            fontColor='companyDiscount';
-          }else if(localPath.indexOf('/index/commonProblem')!== -1){
-            fontColor='commonProblem';
-          }else if(localPath.indexOf('/index/uCenter')!== -1){
-            fontColor='uCenter';
-          }
+    // if(localPath.indexOf('/index/projectLoan')!== -1){
+    //   fontColor='project';
+    // }else if(localPath.indexOf('/index/howLoan')!== -1){
+    //   fontColor='howLoan';
+    // }else if(localPath.indexOf('/index/howInvest')!== -1){
+    //   fontColor='howInvest';
+    // }else if(localPath.indexOf('/index/companyDiscount')!== -1){
+    //   fontColor='companyDiscount';
+    // }else if(localPath.indexOf('/index/commonProblem')!== -1){
+    //   fontColor='commonProblem';
+    // }else 
+    
+    if(localPath.indexOf('/index/uCenter')!== -1){
+      fontColor='uCenter';
+    }
     let shouldFix=true;
     this.state.fixContent.split(',').map((item)=>{
       if(localPath.indexOf('/index/'+item)!=-1){
@@ -75,10 +77,10 @@ export default class Header extends React.Component {
             history.push(`${match.path}/`);
             $("#fix").removeClass('fix');
           }}>
-            <img src={require('../../assets/img/logo-main_1.png')} />
+            <img src={require('./zjb-logo.png')}  className='zjb-logo'/>
           </a>
           <span className="fr" style={styles.fr}>
-            <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
+            {/* <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
             }}>投资项目</a>
@@ -95,7 +97,7 @@ export default class Header extends React.Component {
             <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/commonProblem`);
               $("#fix").removeClass('fix');
-            }}>信息披露</a>
+            }}>信息披露</a> */}
             { !this.props.loginStatus ?
               <a className="btn btn2" style={{width: 122, height: 40,marginTop:5}}>
                 <p style={{paddingTop:7}}>
@@ -131,7 +133,7 @@ export default class Header extends React.Component {
             <img src={require('../../assets/img/logo-main_1.png')} />
           </a>
           <span className="fr" style={styles.fr}>
-            <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
+            {/* <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/projectLoan`);
               $("#fix").removeClass('fix');
             }}>投资项目</a>
@@ -148,7 +150,7 @@ export default class Header extends React.Component {
             <a className={'a1 '+(fontColor=='commonProblem'?'loanCollege':null)} style={styles.titleBtn} onClick={()=>{
               history.push(`${match.path}/commonProblem`);
               $("#fix").removeClass('fix');
-            }}>信息披露</a>
+            }}>信息披露</a> */}
             { !this.props.loginStatus ?
               <a className="btn btn2" style={{width: 122, height: 40}}
                  >

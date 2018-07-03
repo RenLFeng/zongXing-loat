@@ -1,8 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 
-import Qa from './Qa';
-import { startAnimate } from '../../assets/finance/index';
+import Qa from '../qa/Qa';
+import { startAnimate } from './index.js';
+import './index.scss';
 
 export default class HowLoan extends React.Component {
   componentDidMount() {
@@ -14,59 +15,60 @@ export default class HowLoan extends React.Component {
   }
 	render() {
 		return(
-      <div >
+      <div  className='hl-content'>
         <div className="banner1 autosize">
-          <img className="big" src={require('../../assets/img/finance/bg0.png')} />
+          <img className="big" src={require('./img/bg0.png')} />
         </div>
+        {/* 借款流程 */}
         <div className="section sec-tab3">
-        <div className="w center">
-          <div className="tab3 center">
-            <i/>
-            <a href="" className="hover">申请借款流程</a>
-            <i/>
-            <a href="">借款适用的各种场景</a>
-            <i/>
-            <a href="">成功案例采访</a>
-            <i/>
+          <div className="w center">
+            <div className="tab3 center">
+              <i/>
+              <a href="" className="hover">申请借款流程</a>
+              <i/>
+              <a href="">借款适用的各种场景</a>
+              <i/>
+              <a href="">成功案例采访</a>
+              <i/>
+            </div>
           </div>
-        </div>
         <div className="w tab3con">
           <div className="tab3con1">
             <div className="swiper-container">
               <div className="swiper-wrapper">
                 <div className="swiper-slide clearfix">
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step1.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step1.jpg')} />
                     <p className="t1">第一步：录入借款基本项目信息</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step2.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step2.jpg')} />
                     <p className="t1">第二步：填写个人借款信息</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step3.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step3.jpg')} />
                     <p className="t1">第三步：填写企业相关资料</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step4.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step4.jpg')} />
                     <p className="t1">第四步：确认优惠券</p>
                   </div>
                 </div>
                 <div className="swiper-slide clearfix">
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step1.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step1.jpg')} />
                     <p className="t1">第一步：录入借款基本项目信息</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step2.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step2.jpg')} />
                     <p className="t1">第二步：填写个人借款信息</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step3.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step3.jpg')} />
                     <p className="t1">第三步：填写企业相关资料</p>
                   </div>
-                  <div className="item" style={{padding:0}}>
-                    <img className="pic" src={require('../../assets/img/finance/step4.jpg')} />
+                  <div className="item" >
+                    <img className="pic" src={require('./img/step4.jpg')} />
                     <p className="t1">第四步：确认优惠券</p>
                   </div>
                 </div>
@@ -90,7 +92,7 @@ export default class HowLoan extends React.Component {
           <div className="sec1">
             <div className="w clearfix">
               <div className="fl tright">
-                <img className="pic" src={require('../../assets/img/finance/pic4.png')} />
+                <img className="pic" src={require('./img/pic4.png')} />
               </div>
               <div className="fr">
                 <p className="t1">小微企业融资的挑战</p>
@@ -119,14 +121,14 @@ export default class HowLoan extends React.Component {
                 </p>
               </div>
               <div className="fr">
-                <img className="pic" src={require('../../assets/img/finance/pic3.jpg')} />
+                <img className="pic" src={require('./img/pic3.jpg')} />
               </div>
             </div>
           </div>
         </div>
       </div>
         <div className="section sec-road autosize">
-          <img className="big" src={require('../../assets/img/finance/pic4.jpg')} />
+          <img className="big" src={require('./img/pic4.jpg')} />
           <div className="w"/>
         </div>
         <div className="section sec-profit1 g">
@@ -134,7 +136,7 @@ export default class HowLoan extends React.Component {
             <div className="tit">
               <i>众借的好处</i>
             </div>
-            <div className="box61 box6 clearfix">
+            <div className="box61  clearfix">
               <div className="shadow">
                 <div className="pic circlechart" data-percentage="100">
                   <i className="c1"></i>
@@ -180,6 +182,7 @@ export default class HowLoan extends React.Component {
             </div>
           </div>
         </div>
+        {/* 问答 */}
         <Qa />
 			</div>
 		);

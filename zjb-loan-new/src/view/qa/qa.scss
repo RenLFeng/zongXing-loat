@@ -1,0 +1,96 @@
+@import '../../assets/common/_var.scss'; 
+
+.sec-qa {
+    padding:0;
+    &>.w>.fl {
+        width: 258px;
+        padding: 0 26px;
+        min-height: 800px;
+        p>a{
+            cursor: pointer;
+            &:hover{
+                opacity: 0.7;
+                color: $f90;
+            }
+        }
+        .t1 { 
+            font-size: 24px;  
+            padding: 10px 0;
+            color: #333;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+        .t2 {
+            padding: 5px 0;
+            font-size: 18px;
+            line-height: 40px;
+            border-bottom: 1px solid #eee;
+            a {
+                display: block;
+                color: #666
+            } 
+        }
+    }
+    &>.w>.fr {
+        width: 900px; 
+        background-color: $f5;
+        padding-bottom: 0px;
+        height: 800px;
+        overflow-y: scroll;
+        .c6 {
+            font-size: 18px; 
+            padding: 20px;
+            background-color: #fff;
+            text-align: left;
+        }
+        .q {
+            padding: 0 20px;
+            font-size: 18px;
+            line-height: 40px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+            .dl {
+                float: right;
+                width: 8px;
+                height: 8px;
+                border-left: 1px solid #999;
+                border-top: 1px solid #999;
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+                margin-top: 20px;
+            }
+        }
+        .q.close {
+            .dl {
+                -ms-transform: rotate(-135deg);
+                transform: rotate(-135deg);
+            }
+            &+.a {
+                display: none;
+            }
+        }
+        .a {
+            font-size: 16px;
+            padding: 20px;
+            p{
+                color: #666;
+                line-height: 30px;
+            }
+        }
+    } 
+    .center{
+        width: 258px;
+        padding:0 26px;
+        min-height: 570px; 
+    }
+    .fr {
+        width: 900px;
+        margin-bottom: 40px;  
+        height: 505px;
+        overflow-y: scroll;
+      }
+    
+}
+  

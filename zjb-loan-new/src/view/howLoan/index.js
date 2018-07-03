@@ -1,4 +1,4 @@
-import './index.scss';
+ 
 import $ from 'jquery';
 import Swiper from 'swiper';
 export function startAnimate() {
@@ -85,8 +85,7 @@ function bindEvent() {
   });
   $(window).on('scroll', function () {
     if (!d2top) d2top = d2.offset().top - 74;
-    let top = window.av.top();
-    console.log(top);
+    let top = window.av.top(); 
     if (top > 120) {
       d1.addClass('fix');
     } else {
