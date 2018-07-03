@@ -285,7 +285,7 @@ export default class Register extends React.Component {
     const { getFieldDecorator } = this.props.form;
     return (
        
-      <div className="logindiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
+      <div className="regiserdiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
         <div className="back">
                 {/* <div className="hd center">
                   <p className="hover">注册</p>
