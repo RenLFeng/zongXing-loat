@@ -8,13 +8,9 @@ import { CommonService } from '../services/api';
 
 import IndexPage from '../view/homePage/IndexPage';
 import Header from '../components/header';
-<<<<<<< .mine
 import Login from '../view/login/login';
 import ForgetPassWord from '../view/forgetPassWord/forgetPassWord';
-=======
 import Register from '../view/regiser/register';
-
->>>>>>> .theirs
 
 
 import '../assets/common/index';
