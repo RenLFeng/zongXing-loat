@@ -287,11 +287,11 @@ export default class Register extends React.Component {
        
       <div className="logindiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
         <div className="back">
-                <div className="hd center">
+                {/* <div className="hd center">
                   <p className="hover">注册</p>
                   <div></div>
-                </div>
-                <div className="form logf" onChange={this.onChange}>
+                </div> */}
+                <div className="form logf" onChange={this.onChange}  style={{paddingTop:80}}>
                   <Spin tip="注册中..." spinning={this.props.submitting} >
                     <div className="row" style={{position:'relative'}}>   
                       <input className="put "  value={regPhone} maxLength={20}
