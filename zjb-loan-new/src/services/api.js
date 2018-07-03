@@ -25,11 +25,15 @@ export const CouponService = {
     getCouponPlace:async() =>req.get('/zjb-website/coupon/place'),
     //优惠券详情
     myCouponDetail:async(param) =>req.get('/zjb-website/coupon/borrower/myCoupon/detail',param),
+
+    getAccountCoupon:async(param) =>req.get('/zjb-website/account/mycoupon',param),
     
 };
 
 // 账户服务
 export const accountService={
+    
+    getLoginData:async(param)=>req.get('/zjb-website/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/zjb-dc/capital/dynamic',param),
     /**
@@ -44,6 +48,38 @@ export const accountService={
     //获取投资记录条数
     getInvestmentRecordCount:async()=>req.get('/zjb-website/invRecord/MyInvRecord/count'),
     //获取投资回款明细
-    getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param)
+    getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param),
+    repayPlan:async(param)=>req.get('/zjb-website/account/getRepayPlan',param),
     
 }
+
+//登录 dbb
+export const doLogin={
+	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
+	 
+	 //忘记密码获取验证码及检验是否实名认证
+	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName='+param),
+	  //登录-忘记密码时获取验证码
+    f_getCode:async(param)=>req.post('/zjb-website/userInfo/sendAuthCode',param),
+    //校验用户
+    fp_checkInfo:async(param)=>req.post('/zjb-website/userInfo/checkAuthCode',param),
+    //修改密码
+    changePassword:async(param)=>req.post('/zjb-website/userInfo/updatePwd',param), 
+}
+
+//注册-wfl
+export const regiserAccount = {
+    // 校验手机号是否存在的接口
+    getPhoneExist: async (param) => req.get('/zjb-website/login/check', param),
+    // 获取注册验证码的接口
+    getAuthCode: async (param) => req.get('/zjb-website/login/sendMessage', param),
+    // 注册用户 接口
+    regUser: async (param) => req.post('/zjb-website/login/register', param),
+}
+
+//个人中心 - wfl
+export const personal = {
+    //查询平台公告
+    getSiteNotice: async (param) => req.get('/zjb-manage/notice/getPlatNotice', param),
+}
+  

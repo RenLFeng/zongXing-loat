@@ -28,7 +28,7 @@ const styles = {
 };
 
 @connect((state)=>({
-  loginStatus: state.user.loginStatus
+  loginStatus: state.login.status
 }))
 export default class Header extends React.Component {
   constructor(props) {

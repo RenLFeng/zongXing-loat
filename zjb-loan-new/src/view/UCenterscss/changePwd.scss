@@ -1,0 +1,101 @@
+.pass{
+    position: relative;
+    font-size: 12px;
+    .inp{
+        width:230px;
+        height:33px;
+        padding-left: 41px;
+        border-radius: 0px;
+    }
+    .img1{
+       position:absolute;
+       top:2px;
+       left:9px;
+       font-size: 21px;
+       color:#e6e6e6;
+    }
+    .img2{
+        position: absolute;
+        top:-1px;
+        right:10px;
+        // width:18px;
+        // height:17px;
+        font-size: 25px;
+        color:#e6e6e6;
+    }
+}
+.codeInp{
+    position: relative;
+    margin-top: 20px;
+    height:33px;
+    font-size: 12px; 
+   
+    Input{
+        padding-left: 63px;
+        height:33px;
+        border-radius: 0px; 
+    }
+    .forget_phone{
+        position: absolute;
+        top:13px;
+        left:10px;
+    }
+    .input1{
+        position: relative;
+        padding-right:124px;
+        padding-left:10px;
+    }
+    .input2{
+        // position: absolute;
+        // top:0;
+        // left:175px;  定位的按钮点击后按钮位置会动
+        border-radius: 0px; 
+        float: right;
+        margin-top:-33px;
+        width:120px;
+        height:33px;
+        background: rgba(255, 153, 0, 1);
+        color:white !important;
+        font-size: 12px;
+        // padding-left: 0px !important;
+        // text-align: center !important;
+    }
+   
+}
+.input1::-webkit-input-placeholder,.inp::-webkit-input-placeholder  {
+    color: #e6e6e6;
+    font-size: 12px;
+}
+    
+.input1:-moz-placeholder,.inp:-moz-placeholder {
+    color:#e6e6e6;
+    font-size: 12px;
+}
+.input1::-moz-placeholder,.inp::-moz-placeholder{
+    color:#e6e6e6;
+    font-size: 12px;
+}
+.input1:-ms-input-placeholder,.inp:-ms-input-placeholder{
+    color:#e6e6e6;
+    font-size: 12px;
+}
+
+.success{
+    h1{
+        font-family: '微软雅黑';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 28px;
+        text-align: center;
+        margin-top: 100px;
+    }
+    .goback{
+        text-align: center;
+        margin-top: 55px;
+        a{
+            color:blue;
+            text-decoration: underline; 
+        }   
+    }
+}
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
-import Qa from '../qa/Qa';
+import Qa from '../qestionanswer/Qa';
 import { startAnimate } from './index.js';
 import './index.scss';
 

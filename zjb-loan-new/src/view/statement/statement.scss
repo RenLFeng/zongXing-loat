@@ -1,0 +1,99 @@
+
+//资金流水组件
+@import '../../assets/common/_var.scss';
+
+.cp-sm{ 
+    display: block;
+    position: relative;
+    .sm-left{
+        padding: 0;
+        padding-top: 2px; 
+        float: left;
+        width: 150px; 
+        text-align: right;
+        &>p:nth-child(1){
+            color: $c9;
+            font-size: 15px;
+            line-height: 15px;
+        }
+        &>p:nth-child(2){
+            color: $f90;
+            font-size: 18px;
+            line-height: 18px;
+            margin-top: 16px;
+        }
+    } 
+    .sm-right{
+        display: inline-block;
+        border-left: 1px solid #e6e6e6;
+        position: relative;
+        margin-left: 20px;
+        padding: 0 20px 30px; 
+        font-size: 15px;
+        line-height: 15px;
+        &>i{  
+            position: absolute;
+            top: 36px;
+            left: -6px;
+            width: 12px;
+            height: 12px;
+            background: $f90;
+            border-radius:50%;  
+        }
+        &>p:nth-child(1){
+            color: $c9; 
+        }
+        &>p:nth-child(2){
+            color: $c3; 
+            margin-top: 7px;
+        }
+        &>div.text1{
+            color: $c3;
+            margin-top: 10px;
+            position: relative;
+            &>span.span1{
+                display: inline-block;
+                width: 120px;
+            }
+            &>span.span2{
+                display: inline-block; 
+            }
+            &>.msg{
+                position: absolute;
+                width: 300px;
+                left: 350px;
+            }
+            .success{
+                color: #4cd964;
+            }
+            .todo{
+                color: #007aff;
+            }
+            .error{
+                color: #ff3b30;
+            }
+        }
+        &>div.text2{
+            color: $c3;
+            margin-top: 10px;
+            &>span{
+                display: inline-block;
+                // width: 120px;
+            }
+        }
+        .sm-tx,.sm-tz{
+            &>p{
+                color: $c9;
+                line-height: 16px;
+                margin: 16px 0;
+            }
+        }
+        
+
+        
+        
+        
+    }
+}
+
+

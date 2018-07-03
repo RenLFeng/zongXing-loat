@@ -1,9 +1,7 @@
 import React from 'react';
-import {loanQa} from '../../view/qa/LoanQa';
+import {loanQa} from './LoanQa';
 import './qa.scss';
-
  
-
 export default class Qa extends React.Component {
   state = {
     answerArr: loanQa[0].data
