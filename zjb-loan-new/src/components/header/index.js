@@ -130,7 +130,7 @@ export default class Header extends React.Component {
             history.push(`${match.path}/`);
             $("#fix").removeClass('fix');
           }}>
-            <img src={require('../../assets/img/logo-main_1.png')} />
+            <img src={require('./zjb-logo.png')}  className='zjb-logo'/>
           </a>
           <span className="fr" style={styles.fr}>
             {/* <a className={'a1 '+(fontColor=='project'?'project':null)} style={styles.titleBtn} onClick={()=>{

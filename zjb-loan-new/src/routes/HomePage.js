@@ -10,7 +10,7 @@ import Path from '../common/PagePath';
 import HowLoan from '../view/howLoan/HowLoan';  
 import Header from '../components/header';
 import Footer from '../components/footer';
-import UCenter from './homePage/UCenter';
+import UCenter from './UCenter';
 
 import Login from '../view/login/login';
 import ForgetPassWord from '../view/forgetPassWord/forgetPassWord';
