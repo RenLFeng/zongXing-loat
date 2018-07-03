@@ -53,11 +53,11 @@ export const doLogin={
 	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
 	 
 	 //忘记密码获取验证码及检验是否实名认证
-	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName=',param)
-
+	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName='+param),
+	  //登录-忘记密码时获取验证码
+    f_getCode:async(param)=>req.post('/zjb-website/userInfo/sendAuthCode',param),
+    fp_checkInfo:async(param)=>req.post('/zjb-website/userInfo/checkAuthCode',param),
 }
-
-
 
 
 //注册-wfl

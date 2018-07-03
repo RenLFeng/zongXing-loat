@@ -4,7 +4,7 @@ import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg
 import { connect } from 'dva';
 import $ from 'jquery';
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
-import { regiserAccount, doLogin,  getAuthCode, regUser, changePW, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo,f_getCode } from '../../services/api';
+import { regiserAccount, doLogin,  getAuthCode, regUser, changePW, changePassword, relieveAccountAjax, fp_getCode, fp_checkInfo } from '../../services/api';
 
 
 const Step = Steps.Step;
@@ -146,7 +146,7 @@ export default class ForgetPassWord extends React.Component {
     // }
 
     this.setState({nextLoading:true})
-    const response = await doLogin.fp_getCode(this.state.firstPhone);
+    const response = await doLogin.fp_checkInfo(this.state.firstPhone);
     console.log('response',response)
     if(response.code === 0){
       this.setState({
@@ -209,6 +209,7 @@ infoCheck_(){
 
   //获取验证码
   async fp_getCodes() {
+  	debugger
     const { firstPhone ,realName ,idCard ,code} = this.state; 
     let params = {
       mobile:firstPhone,
@@ -223,7 +224,7 @@ infoCheck_(){
     }
     this.setState({ authLoading: true, loading: true });
     try {
-      const response = await f_getCode(params);
+      const response = await doLogin.fp_getCode(params);
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
