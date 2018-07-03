@@ -48,14 +48,21 @@ export const accountService={
     
 }
 
+//登录 dbb
 export const doLogin={
 	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
 }
-//export async function userLogin(param) {
-//return request(`${BASE_URL}/zjb-website/login/login`, {
-//  method: 'POST',
-//  body: {
-//    ...param
-//  }
-//});
-//}
+
+
+
+
+//注册-wfl
+export const regiserAccount = {
+    // 校验手机号是否存在的接口
+    getPhoneExist: async (param) => req.get('/zjb-website/login/check', param),
+    // 获取注册验证码的接口
+    getAuthCode: async (param) => req.get('/zjb-website/login/sendMessage', param),
+    // 注册用户 接口
+    regUser: async (param) => req.post('/zjb-website/login/register', param),
+}
+

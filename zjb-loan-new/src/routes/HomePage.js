@@ -8,8 +8,13 @@ import { CommonService } from '../services/api';
 
 import IndexPage from '../view/homePage/IndexPage';
 import Header from '../components/header';
+<<<<<<< .mine
 import Login from '../view/login/login';
 import ForgetPassWord from '../view/forgetPassWord/forgetPassWord';
+=======
+import Register from '../view/regiser/register';
+
+>>>>>>> .theirs
 
 
 import '../assets/common/index';
@@ -47,10 +52,13 @@ export default class HomePage extends React.Component {
           <Route path={`${match.path}/`} exact render={() => (<Redirect to={`${match.path}/howLoan`}/>)} />
           {/* 首界面 */}
           <Route path={`${match.path}/howLoan`} exact component={IndexPage}/>
-          //login
+					//login
           <Route path={`${match.path}/login`} exact component={Login}/>
           //forgetpwd
            <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
+           //register
+          <Route path={`${match.path}/register`} component={Register} />
+
         </Switch>
       </div>  
     );
