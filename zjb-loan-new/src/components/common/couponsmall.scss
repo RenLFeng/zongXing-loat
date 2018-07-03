@@ -1,0 +1,104 @@
+.small-coupon{
+    height: 112px;
+    width: 280px; 
+    margin: 10px;
+    display: inline-block;
+    &>.coupon-left{
+        width: 210px;
+        float: left; 
+        &>.coupon-name{
+            font-size: 14px;
+            margin: 3px 10px;
+        }
+        &>.coupon-money{ 
+            margin-left:40px; 
+            &>.t1{
+                font-size: 12px;
+            }
+            &>.t2{
+                font-size: 37px;
+                font-weight: bold;
+                margin-top: 15px;
+                display: inline-block;
+            }
+            &>.sub-money{
+                display: inline-block;
+                width: 80px;
+                &>.t3{
+                    font-size: 14px;
+                    font-weight: bold;
+                    margin-left: 10px;
+                }
+                &>.t4{
+                    font-size: 12px; 
+                    margin-left: 10px;
+                    line-height: 10px;
+                }
+            }
+        }
+          
+        &>.coupon-rule{
+            margin-left: 55px; 
+            font-size: 10px;
+        }
+        &>.coupon-time{
+            margin-left: 55px;
+            font-size: 10px;
+        }
+    }
+    &>.coupon-right{ 
+        width: 70px;
+        float: right; 
+        .logo{
+            margin: 10px 15px; 
+            width:40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        &>.coupon-flag{
+            font-size: 14px;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+        &>.coupon-count{
+            font-size: 7px;
+            color: #fff; 
+            text-align: center;
+            margin: 10px;
+            &>span{
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+ 
+.dlq{
+    background:  url(../../assets/img/coupon/dlq.png) no-repeat;
+    &>.coupon-left{
+        color: #ff3b35;
+    }
+}
+
+.ysx{
+    background:  url(../../assets/img/coupon/ysx.png) no-repeat;
+    &>.coupon-left{
+        color: #999;
+    }
+}
+
+.ysy{
+    background:  url(../../assets/img/coupon/ysy.png) no-repeat;
+    &>.coupon-left{
+        color: #f29827;
+    }
+}
+
+.qsy{
+    background:  url(../../assets/img/coupon/qsy.png) no-repeat;
+    &>.coupon-left{
+        color: #017143;
+    }
+}
+

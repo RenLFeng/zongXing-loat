@@ -1,0 +1,62 @@
+.backCard {
+  display: flex;
+  min-width: 932px;
+  width:932px;
+  flex-wrap: wrap;
+  .bankCardDiv {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    height: 136px;
+    border: 1px solid #FCFCFC;
+    margin-right: 30px;
+    margin-top: 20px;
+  }
+}
+
+.mt {
+  background-color: #F7F7F7;
+  height: 60px;
+  line-height: 60px;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  .bank {
+    flex: 2
+  }
+  .tail-number {
+    flex: 1;
+    font-weight: bolder;
+  }
+  .type {
+    flex: 1;
+    height: 60px;
+    padding: 5px;
+    .saving {
+      background-color: #FF7E10;
+      padding: 2px;
+      color: #fff
+    }
+  }
+}
+
+.mc {
+  height: 60px;
+  padding: 15px 15px 0;
+  .item {
+    height: 23px;
+    line-height: 23px;
+    span {
+      display: inline-block;
+      vertical-align: middle;
+      width: 200px;
+      font-size: 12px;
+    }
+    a {
+      vertical-align: middle;
+      width: 40px;
+      text-align: right;
+      color: #FF7E10;
+    }
+  }
+}
