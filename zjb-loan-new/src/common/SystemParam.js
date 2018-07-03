@@ -39,6 +39,7 @@ if (build === 'production') {
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
   SOCKET_URL = 'http://192.168.1.173:8001';
+  
 }
 
 // 导出环境变量配置

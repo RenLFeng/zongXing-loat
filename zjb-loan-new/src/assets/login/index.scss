@@ -6,7 +6,7 @@
     height: 544px;
     left: 50%;
     z-index: 10;
-    background: url(../img/login/pic1.jpg) no-repeat right center #fff;
+    background: url(../img/登陆_03.png) no-repeat right center #fff;
     transform: translate(0,200px);
     transition: transform ease 0.5s;
     a.blue {
@@ -21,15 +21,27 @@
         font-size: 15px;
         font-weight: normal;
         font-stretch: normal;
-        line-height: 24px;
+//      line-height: 24px;
         letter-spacing: 0px;
         color: #c4c4c4;
         position: absolute;
         top:14px;
         left:341px;
+        margin-top:85px;
     }
     a:hover {
         opacity: 0.7;
+    }
+    .login-hr{
+            width: 50%;
+            border: 1.2px solid #f90;
+            margin-top: -3px;
+    }
+    .ant-spin-container{
+        line-height: 58px;
+        .btn{
+            margin-top:45px ;
+        }
     }
 }
 .shadows{
@@ -170,7 +182,7 @@
 // }
 .logindiv1 .other {
     text-align: center;
-    border-top: 1px solid #D9D9D9;
+//  border-top: 1px solid #D9D9D9;
     margin-top: 40px;
     span {
         display: inline-block;
@@ -270,9 +282,9 @@
         padding-top: 80px;
     }
 }
-.logindiv1{
-    background: none !important; 
-}
+//.logindiv1{
+//  background: none !important; 
+//}
 
 .safe-info{
     margin-top: 6px;

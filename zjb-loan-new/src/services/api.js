@@ -48,6 +48,13 @@ export const accountService={
     
 }
 
+//登录 dbb
+export const doLogin={
+	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
+}
+
+
+
 
 //注册-wfl
 export const regiserAccount = {
@@ -58,3 +65,4 @@ export const regiserAccount = {
     // 注册用户 接口
     regUser: async (param) => req.post('/zjb-website/login/register', param),
 }
+
