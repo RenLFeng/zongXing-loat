@@ -30,26 +30,6 @@
         opacity: 0.7;
     }
 }
-
-.logindiv1 .back {
-    .hd{
-        padding: 35px 0;
-        p{
-            font-family: '微软雅黑';
-            color: #666;
-            font-weight: 400;
-            font-size: 28px;
-        }
-
-        div{
-            background-image: url('../../assets/img/login/u23.png');
-            height: 3px;
-            width: 125px;
-            margin: 0 auto;
-        }
-    }
-}
-
 .shadows{
     box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.2);
     width:1200px;
@@ -64,6 +44,7 @@
     padding: 0px 0 0 134px;
     .hd {
         margin-bottom: 50px;
+        margin-top: 80px;
         a {
             width: 80px;
             height: 18px;
