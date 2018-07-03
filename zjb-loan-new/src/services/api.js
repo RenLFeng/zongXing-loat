@@ -51,6 +51,10 @@ export const accountService={
 //登录 dbb
 export const doLogin={
 	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
+	 
+	 //忘记密码获取验证码及检验是否实名认证
+	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName=',param)
+
 }
 
 
