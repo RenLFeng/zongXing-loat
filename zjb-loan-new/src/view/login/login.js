@@ -92,8 +92,6 @@ export default class Login extends React.Component {
             </div>
             <div>
              <p className="safe-info">
-
-               <img src={require('../../assets/img/login/u30.png')   } />
              
                       <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>
                       您的信息已使用SSL加密技术，数据传输安全
