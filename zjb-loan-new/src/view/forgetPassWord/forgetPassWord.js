@@ -146,7 +146,7 @@ export default class ForgetPassWord extends React.Component {
     // }
 
     this.setState({nextLoading:true})
-    const response = await doLogin.fp_checkInfo(this.state.firstPhone);
+    const response = await doLogin.fp_getCode(this.state.firstPhone);
     console.log('response',response)
     if(response.code === 0){
       this.setState({
@@ -209,7 +209,6 @@ infoCheck_(){
 
   //获取验证码
   async fp_getCodes() {
-  	debugger
     const { firstPhone ,realName ,idCard ,code} = this.state; 
     let params = {
       mobile:firstPhone,
@@ -224,7 +223,7 @@ infoCheck_(){
     }
     this.setState({ authLoading: true, loading: true });
     try {
-      const response = await doLogin.fp_getCode(params);
+      const response = await doLogin.f_getCode(params);
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
@@ -283,7 +282,8 @@ infoCheck_(){
       realName: this.state.realName,
       idCard: this.state.idCard
     }
-    const response = await fp_checkInfo(params);
+    
+    const response = await doLogin.fp_checkInfo(params);
     if (response.code === 0) {
       this.setState({
         flagPage: 'third',
@@ -320,7 +320,7 @@ infoCheck_(){
       });
     }
     this.setState({ authLoading: true });
-    const respondse = await changePassword({
+    const respondse = await doLogin.changePassword({
       loginName: this.state.firstPhone,
       password: this.state.password
     });

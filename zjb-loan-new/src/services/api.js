@@ -56,9 +56,11 @@ export const doLogin={
 	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName='+param),
 	  //登录-忘记密码时获取验证码
     f_getCode:async(param)=>req.post('/zjb-website/userInfo/sendAuthCode',param),
+    //校验用户
     fp_checkInfo:async(param)=>req.post('/zjb-website/userInfo/checkAuthCode',param),
+    //修改密码
+    changePassword:async(param)=>req.post('/zjb-website/userInfo/updatePwd',param), 
 }
-
 
 //注册-wfl
 export const regiserAccount = {
