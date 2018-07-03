@@ -47,3 +47,15 @@ export const accountService={
     getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param)
     
 }
+
+export const doLogin={
+	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
+}
+//export async function userLogin(param) {
+//return request(`${BASE_URL}/zjb-website/login/login`, {
+//  method: 'POST',
+//  body: {
+//    ...param
+//  }
+//});
+//}
