@@ -1,4 +1,4 @@
-import {getPersonAccount, getPersonAccountNew,getCompanylist} from '../services/api';
+import {personal} from '../services/api';
 import {message} from 'antd';
 
 // 开户状态 0: 未开户 1: 开户中 2: 开户失败 3: 开户成功
@@ -41,7 +41,7 @@ export default {
     },
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
-      const response = yield call(getPersonAccountNew, payload); 
+      const response = yield call(personal.getPersonAccountNew, payload); 
       console.log(response);
       if (response.code === 0) {
         if (!response.data) {
@@ -102,7 +102,7 @@ export default {
       }
     },
     *getCompanyAccount({payload}, {call,put}) {
-      const res = yield call(getPersonAccountNew, payload );
+      const res = yield call(personal.getPersonAccountNew, payload );
       console.log(res);
       if (res.code === 0) {
         yield put({
@@ -114,7 +114,7 @@ export default {
       }
     },
     *getCompanyLists({payload}, {call,put}) {
-      const resp = yield call(getCompanylist, payload );
+      const resp = yield call(personal.getCompanylist, payload );
       console.log(resp);
       if(resp.code ===0) {
         yield put({

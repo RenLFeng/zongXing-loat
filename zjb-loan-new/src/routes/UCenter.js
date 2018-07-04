@@ -7,9 +7,9 @@ import {Button} from 'antd';
 
 import '../view/ucenter/index'; 
 import PersonAccount from '../view/personAccount/personAccount'; 
-import LoginInfo from '../view/loginInfo/loginInfo';  
+import LoginInfo from '../components/personal/loginInfo/loginInfo';  
 import Path from '../common/PagePath'; 
-import LeftMenu from '../view/leftmenu/leftMenu';
+import LeftMenu from '../components/personal/leftmenu/leftMenu';
 
 export default class UCenter extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export default class UCenter extends React.Component {
       <div className="body2">
         <LoginInfo history={this.props.history}/> 
         <div className="w clearfix">
-          <LeftMenu/>
+          <LeftMenu  param={this.props}/>
             <Switch>
                 {/* 账户总览 */}
                 <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
