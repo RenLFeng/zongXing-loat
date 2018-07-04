@@ -13,6 +13,7 @@ import LoginInfo from '../view/personal/loginInfo/loginInfo';
 import Path from '../common/PagePath'; 
 // import LeftMenu from '../view/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
+import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 
 
 import AccountStatement from "../view/personal/Account/accountstatement";
@@ -50,13 +51,15 @@ export default class UCenter extends React.Component {
                   {/* 账户总览 */}
                   <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
                   {/* 资金动态 */}
-                  <Route path={Path.ACCOUNT_STATEMENT}  component={AccountStatement} />
+                  <Route path={Path.ACCOUNT_STATEMENT} exact component={AccountStatement} />
                   {/* 我的借款 */}
                   <Route path={Path.MINE_LOAN} exact component={MineLoan} />
                   {/* 邮箱绑定 */}
                   <Route path={Path.BIND_EMAIL} component={BindEmail} />    
                   {/* 变更邮箱绑定 */}
                   <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />   
+                  {/*申请借款*/}
+                  <Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
             </Switch>
         </div>
       </div>
