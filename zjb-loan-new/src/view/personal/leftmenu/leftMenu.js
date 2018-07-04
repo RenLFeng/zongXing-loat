@@ -20,13 +20,10 @@ export default class LeftMenu extends React.Component {
                 </span>
                 <ul> 
                   <li><Link className={path.indexOf(Path.PERSONAL_ACCOUNT) ===-1?'':'active'} to={Path.PERSONAL_ACCOUNT}>账户总览</Link></li>    
-                  <li><Link className={path.indexOf(Path.INVEST_MENT) ===-1?'':'active'} to={Path.INVEST_MENT}>投资记录</Link></li>    
-                  <li><Link className={path.indexOf(Path.RECEIVE_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>回款计划</Link></li>    
+                  <li><Link className={path.indexOf(Path.MINE_LOAN) ===-1?'':'active'} to={Path.MINE_LOAN}>我的借款</Link></li>    
+                  <li><Link className={path.indexOf(Path.REPAY_PLAN) ===-1?'':'active'} to={Path.RECEIVE_PLAN}>还款计划</Link></li>    
                   <li><Link className={path.indexOf(Path.ACCOUNT_STATEMENT) ===-1?'':'active'} to={Path.ACCOUNT_STATEMENT}>资金流水</Link></li>
                   <li><Link className={path.indexOf(Path.MY_COUPON) ===-1?'':'active'} to={Path.MY_COUPON}>我的优惠券</Link></li>
-                  <li><Link className={path.indexOf(Path.VOUCHER) ===-1?'':'active'} to={Path.VOUCHER}>券额明细</Link></li>
-                  <li><Link className={path.indexOf(Path.Project_Collection) ===-1?'':'active'} to={Path.Project_Collection}>项目收藏</Link> </li>
-                  <li>我的邀请码</li>
                 </ul>
              </li>
              <li>
