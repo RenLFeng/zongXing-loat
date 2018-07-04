@@ -4,7 +4,7 @@ import COS from 'cos-js-sdk-v5';
 import {Link, Route,Switch, Redirect } from 'dva/router';
 
 import { connect } from 'dva';
-import { CommonService } from '../services/api';
+import { CommonService, personal } from '../services/api';
  
 import Path from '../common/PagePath';
 import HowLoan from '../view/howLoan/HowLoan';  
@@ -18,9 +18,21 @@ import Register from '../view/regiser/register';
  
 import '../assets/common/index';
  
+@connect((state) => ({
+  login: state.login,
+  userId: state.login.baseData.userId,
+  socketData: state.login.socketData
+}))
 export default class HomePage extends React.Component {
+  constructor(props){
+    super(props)
+  }
 
   componentDidMount() {
+    // 判断有没有token请求获取用户基础数据
+    if (localStorage.getItem('accessToken')) {
+      this.getUserBaseData();
+    }
     if (!global.cos) {
       global.cos = new COS({
         getAuthorization: function (options, callback) {
@@ -39,6 +51,14 @@ export default class HomePage extends React.Component {
       });
     }
   } 
+
+  async getUserBaseData() {
+    const response = await personal.getLoginData(); 
+    if (response.code === 0) {
+      this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+    }
+  }
+
   render() {
     const { match, dispatch } = this.props;
     return (

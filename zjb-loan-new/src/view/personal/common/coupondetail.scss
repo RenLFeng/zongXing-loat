@@ -1,0 +1,66 @@
+
+.cd-content{
+    margin-top: 10px;
+    padding: 20px 0;
+    width: 400px;
+    background-color: #fff;
+    .logo{
+        margin-left: 20px;
+    }
+    .text1{
+        width:100%;
+        display: inline-block;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        color: #000;
+        margin-top: 25px;
+    }
+    .text2{
+        margin-top: 30px;
+        width:100%;
+        display: inline-block;
+        text-align: center;
+        font-size: 15px;
+        color: #676767;
+    }
+    .text3{ 
+        width:100%;
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        color: #b6b6b6;
+    }
+    .qr-code{ 
+        width: 100%;
+        height: 160px;
+        margin: 5px 0;
+        #qrcodeCanvas{
+            margin: 0 auto;
+            height: 160px;
+            width: 160px;
+        }
+    }
+    .text4{
+        font-size: 15px;
+        color: #676767;
+        margin:40px 0 5px 60px; 
+    }
+    .little-coupon{ 
+        margin-left: 50px;
+        margin-top: 40px;
+    }
+    .cd-address{
+        margin: 0 60px;
+        color: #b6b6b6;
+        &>.cd-item{
+            margin-top: 5px;
+            .c1{
+                float: left;
+                width: 25px;
+                height: 100%;
+            } 
+        }
+    }
+   
+}

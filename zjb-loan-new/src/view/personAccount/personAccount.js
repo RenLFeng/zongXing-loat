@@ -5,11 +5,12 @@ import LineReact from '../../common/Echarts/LineReact';
 import Path from '../../common/PagePath';
 import {connect} from 'dva';
 import moment from 'moment';
-import LeftMenu from '../leftmenu/leftMenu';
+import LeftMenu from '../personal/leftmenu/leftMenu';
 import { Modal, Button,Table,message, Pagination } from 'antd'; 
 import './personal.scss';
 import Statement from '../statement/Statement';
-import { getLoginData,repayPlan,getAccountCoupon,accountService, CouponService } from '../../services/api.js';  
+import {personal} from '../../services/api';
+import {accountService, CouponService} from '../../services/api2';
 import CouponSmall from '../couponsmall/CouponSmall';
 
 @connect((state)=>({
@@ -232,7 +233,7 @@ export default class PersonAccount extends React.Component {
       return;
     }
     this.setState({loadingPage: true});
-    const response= await getAccountCoupon(this.state.pageParam);
+    const response= await personal.getAccountCoupon(this.state.pageParam);
     this.setState({loadingPage: false});
     console.log('getCouponList', response);
     if (response.code === 0) {
@@ -250,7 +251,7 @@ export default class PersonAccount extends React.Component {
 
   // 获取回款计划折线图数据
   async getReceivePlan() {
-    const response = await repayPlan();
+    const response = await personal.repayPlan();
     console.log('getReceivePlan', response);
     if (response.code === 0) {
       let planArr = [];
@@ -440,7 +441,6 @@ export default class PersonAccount extends React.Component {
             }
           ]
         },
-        
       });
     }
   }
@@ -477,7 +477,7 @@ export default class PersonAccount extends React.Component {
   }
 
   async reashLoginData(){
-    const response = await getLoginData(); 
+    const response = await personal.getLoginData(); 
     if (response.code === 0) {
         this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }
@@ -485,10 +485,11 @@ export default class PersonAccount extends React.Component {
 
   render() {
     const { openStatus, errorMessage } = this.props;
+    console.log(openStatus === 0,'openStatus')
     if (openStatus === 0) {
       return (
         <div>
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30}}>
             <span>您还没有开通个人账户，开通 <Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
@@ -497,7 +498,7 @@ export default class PersonAccount extends React.Component {
     } else if (openStatus === 1) {
       return (
         <div>
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
@@ -506,7 +507,7 @@ export default class PersonAccount extends React.Component {
     } else if (openStatus === 2) {
       return (
         <div>
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding:30}}>
             <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
@@ -518,7 +519,7 @@ export default class PersonAccount extends React.Component {
     }
     return (
       <div>
-        <LeftMenu param={this.props}/>
+        {/* <LeftMenu param={this.props}/> */}
         <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>

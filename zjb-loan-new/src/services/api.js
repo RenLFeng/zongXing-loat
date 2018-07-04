@@ -79,6 +79,7 @@ export const regiserAccount = {
 
 //个人中心 - wfl
 export const personal = {
+
     //查询平台公告
     getSiteNotice: async (param) => req.get('/zjb-manage/notice/getPlatNotice', param),
     //校验邮箱是否存在
@@ -88,7 +89,17 @@ export const personal = {
     //更改邮箱
     UpdateEmail:async (param) => req.post('zjb-website/userInfo/updateEmail',param),
     //更改绑定邮箱
-    UpdateEmail_:async (param) => req.post('zjb-website/userInfo/bindingNewEmail',param)
+    UpdateEmail_:async (param) => req.post('zjb-website/userInfo/bindingNewEmail',param),
+    //获取个人账户.企业账户信息的接口
+    getPersonAccountNew: async (param) => req.post('/zjb-website/account/show/info', param),
+    //获取有账户的企业信息列表的接口
+    getCompanylist: async () => req.get('/zjb-website/account/company/list'),
+    // 账户总览优惠券
+    getAccountCoupon: async (param) => req.post('/zjb-website/account/mycoupon', param),
+    // 获取用户基础信息与login相同
+    getLoginData: async () => req.get('/zjb-website/login/getData'),
+    //回款计划
+    repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
 }
 
   

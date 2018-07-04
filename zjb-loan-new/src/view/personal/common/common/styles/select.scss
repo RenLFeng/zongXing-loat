@@ -1,0 +1,54 @@
+
+@import '../_var.scss';
+
+dl.select {
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    line-height: 40px;
+    font-size: 16px;
+    dt,dd {
+        margin: 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background: #fff;
+    }
+    dt {
+        cursor: pointer;
+        padding: 0 40px 0 1em;
+        &::before{
+            content: "";
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            width: 8px;
+            height: 8px;
+            border-bottom: 2px solid #999;
+            border-left: 2px solid #999;
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+        &:hover {
+            background-color: $f5;
+        }
+    }
+    dd {
+        position: absolute;
+        z-index: 1111;
+        left: 0;
+        right: 0;
+        top: 41px;
+        display: none;
+        &>i {
+            display: block;
+            cursor: pointer;
+            padding-left: 1em;
+            &:hover {
+                background-color: $f5;
+            }
+        }
+    }
+    dd.show {
+        display: inline-block;
+    }
+}

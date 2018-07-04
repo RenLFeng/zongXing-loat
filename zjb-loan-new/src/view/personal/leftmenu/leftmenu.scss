@@ -1,0 +1,45 @@
+@import '../../../assets/common/_var.scss'; 
+.personal-left-menu {
+    width: 240px;
+    background-color: #fff;
+    float: left;
+    padding: 35px 0px;
+    &>ul>li{  
+        font-family: "Microsoft Yahei", 微软雅黑;
+        &>span{
+            padding-left: 50px;
+            display: block; 
+            height: 75px;
+            font-size:22px;
+            color: #666;
+            line-height: 75px;
+            background-color: #f9f9f9;
+            i{
+                margin-right: 12px;
+                font-size: 22px;
+
+            }
+        }
+        &>ul{
+            padding-bottom: 35px;
+            &>li{
+                padding-left: 83px;
+                padding-top: 15px;
+                padding-bottom:15px;
+                font-size: 16px;
+                color: $c9 !important;
+                line-height: 16px; 
+                cursor: pointer;
+                &:hover,&.active{
+                    color: $f90 !important;
+                }
+                a{
+                    color: $c9 !important;
+                }
+                a:hover,a.active{
+                    color: $f90 !important;
+                }
+            }
+        }
+    }
+}

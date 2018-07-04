@@ -40,6 +40,9 @@ export default {
   
   
   
+    REPAY_PLAN: '/index/uCenter/repayPlan',//还款计划
+    MINE_LOAN: '/index/uCenter/mineLoan',//我的借款
+
     Project_Collection:'/index/uCenter/projectcollection',
     INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
     RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划

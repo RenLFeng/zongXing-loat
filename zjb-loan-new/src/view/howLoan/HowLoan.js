@@ -136,7 +136,7 @@ export default class HowLoan extends React.Component {
             <div className="tit">
               <i>众借的好处</i>
             </div>
-            <div className="box61  clearfix">
+            <div className="box61 box6 clearfix">
               <div className="shadow">
                 <div className="pic circlechart" data-percentage="100">
                   <i className="c1"></i>
