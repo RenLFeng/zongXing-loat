@@ -5,7 +5,7 @@ import LineReact from '../../common/Echarts/LineReact';
 import Path from '../../common/PagePath';
 import {connect} from 'dva';
 import moment from 'moment';
-import LeftMenu from '../personal/leftmenu/leftMenu';
+import LeftMenu from '../../components/leftmenu/leftMenu';
 import { Modal, Button,Table,message, Pagination } from 'antd'; 
 import './personal.scss';
 import Statement from '../statement/Statement';
@@ -486,19 +486,9 @@ export default class PersonAccount extends React.Component {
   render() {
     const { openStatus, errorMessage } = this.props;
     console.log(openStatus === 0,'openStatus')
-    if (openStatus === 0) {
+    if (openStatus === 1) {
       return (
-        <div>
-          {/* <LeftMenu param={this.props}/> */}
-          <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30}}>
-            <span>您还没有开通个人账户，开通 <Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
-          </div>
-        </div>
-      );
-    } else if (openStatus === 1) {
-      return (
-        <div>
-          {/* <LeftMenu param={this.props}/> */}
+        <div> 
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
@@ -519,7 +509,7 @@ export default class PersonAccount extends React.Component {
     }
     return (
       <div>
-        {/* <LeftMenu param={this.props}/> */}
+        <LeftMenu param={this.props}/> 
         <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
