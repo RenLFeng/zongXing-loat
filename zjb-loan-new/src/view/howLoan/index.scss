@@ -187,6 +187,7 @@
         }
         .box61{
             padding-bottom: 50px;
+            cursor: pointer;
         }
         .box61>div {
             float: left;
@@ -321,52 +322,51 @@
     top: 50%;
     margin-top: -63px;
     margin-left: -63px;
-    .circle-chart__circle {
-        stroke: #41E9C3;
-        stroke-width: 2;
-        stroke-linecap: square;
-        fill: none;
-        animation: circle-chart-fill .8s reverse;
-        transform: rotate(-90deg);
-        transform-origin: center;
-    }
-    .circle-chart__circle--negative {
-        transform: rotate(-90deg) scale(1,-1);
-    }
-    .circle-chart__background {
-        stroke: #efefef;
-        stroke-width: 2;
-        fill: none;
-    }
-    .circle-chart__info {
-        animation: circle-chart-appear 2s forwards;
-        opacity: 0;
-    }
-    .circle-chart__percent {
-        alignment-baseline: central;
-        text-anchor: middle;
-        font-size: 8px;
-    }
-    .circle-chart__subline {
-        alignment-baseline: central;
-        text-anchor: middle;
-        font-size: 3px;
-    }
-    .success-stroke {
-        stroke: #33E9BF;
-    }
-    .warning-stroke {
-        stroke: #ffbb33;
-    }
-    .danger-stroke {
-        stroke: #ff4444;
-    }
-    @keyframes circle-chart-fill {
-        to { stroke-dasharray: 0 100; }
-    }
-    @keyframes circle-chart-appear {
-    to {
-        opacity: 1;
-    }
-    }
+
+}
+.circle-chart__circle {
+    stroke: #41E9C3;
+    stroke-width: 2;
+    stroke-linecap: square;
+    fill: none;
+    animation: circle-chart-fill .8s reverse;
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+.circle-chart__circle--negative {
+    transform: rotate(-90deg) scale(1,-1);
+}
+.circle-chart__background {
+    stroke: #efefef;
+    stroke-width: 2;
+    fill: none;
+}
+.circle-chart__info {
+    animation: circle-chart-appear 2s forwards;
+    opacity: 0;
+}
+.circle-chart__percent {
+    alignment-baseline: central;
+    text-anchor: middle;
+    font-size: 8px;
+}
+.circle-chart__subline {
+    alignment-baseline: central;
+    text-anchor: middle;
+    font-size: 3px;
+}
+.success-stroke {
+    stroke: #33E9BF;
+}
+.warning-stroke {
+    stroke: #ffbb33;
+}
+.danger-stroke {
+    stroke: #ff4444;
+}
+@keyframes circle-chart-fill {
+    to { stroke-dasharray: 0 100; }
+}
+@keyframes circle-chart-appear {
+    to { opacity: 1;}
 }
