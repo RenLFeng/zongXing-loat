@@ -498,7 +498,7 @@ export default class PersonAccount extends React.Component {
     } else if (openStatus === 1) {
       return (
         <div>
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding: 30}}>
             <span>您的账户开户中，可<a style={{color: 'blue'}} onClick={()=>this.getInitData()}>刷新</a>查看</span>
           </div>
@@ -507,7 +507,7 @@ export default class PersonAccount extends React.Component {
     } else if (openStatus === 2) {
       return (
         <div>
-          <LeftMenu param={this.props}/>
+          {/* <LeftMenu param={this.props}/> */}
           <div className="fr uc-rbody" style={{backgroundColor: '#fff',padding:30}}>
             <span>您的账户开户失败，原因：{errorMessage} ,可重新尝试开通，<Link to={Path.OPENQACCOUNT} style={{color: 'blue'}}>点击此处</Link></span>
           </div>
@@ -519,7 +519,7 @@ export default class PersonAccount extends React.Component {
     }
     return (
       <div>
-        <LeftMenu param={this.props}/>
+        {/* <LeftMenu param={this.props}/> */}
         <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
           <div className="per_account">
             <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>

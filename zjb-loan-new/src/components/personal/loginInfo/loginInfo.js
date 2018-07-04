@@ -134,6 +134,7 @@ class LoginInfo extends React.Component {
 
     render() { 
         const {baseData} = this.props
+        console.log(this.props,'****')
         return ( 
             <div className='lg-login-info'>
                     {

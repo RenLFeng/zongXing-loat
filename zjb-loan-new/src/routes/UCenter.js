@@ -36,7 +36,7 @@ export default class UCenter extends React.Component {
       <div className="body2">
         <LoginInfo history={this.props.history}/> 
         <div className="w clearfix">
-          <LeftMenu/>
+          <LeftMenu  param={this.props}/>
             <Switch>
                 {/* 账户总览 */}
                 <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />

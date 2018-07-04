@@ -1,5 +1,5 @@
 @import '../../../assets/common/_var.scss'; 
-.uc-left-menu {
+.personal-left-menu {
     width: 240px;
     background-color: #fff;
     float: left;
@@ -27,17 +27,17 @@
                 padding-top: 15px;
                 padding-bottom:15px;
                 font-size: 16px;
-                color: $c9!important;
+                color: $c9 !important;
                 line-height: 16px; 
                 cursor: pointer;
                 &:hover,&.active{
-                    color: $f90!important;
+                    color: $f90 !important;
                 }
                 a{
-                    color: $c9!important;
+                    color: $c9 !important;
                 }
                 a:hover,a.active{
-                    color: $f90!important;
+                    color: $f90 !important;
                 }
             }
         }

@@ -79,6 +79,7 @@ export const regiserAccount = {
 
 //个人中心 - wfl
 export const personal = {
+
     //查询平台公告
     getSiteNotice: async (param) => req.get('/zjb-manage/notice/getPlatNotice', param),
     //获取个人账户.企业账户信息的接口
@@ -93,3 +94,4 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
 }
+  
