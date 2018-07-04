@@ -1,0 +1,77 @@
+
+
+@import '../common/_var.scss';
+
+.mycoupon{
+    width: 992px; 
+    .top-content{
+        padding: 30px;
+        padding-bottom: 10px;
+        background-color: #fff;
+        .top-title{
+            font-size: 20px;
+            color: #333;
+            padding-bottom: 5px;
+            border-bottom: dashed 1px #e6e6e6;
+        }
+        .search-tag{
+            list-style:none ;
+            margin-top: 20px;
+            li{
+                display: inline-block;
+                font-size: 16px;
+                color: $c6;
+                margin-right: 25px; 
+                cursor: pointer;
+                &:hover{
+                    color: $f90; 
+                }
+            }
+            li.active{
+                color: $f90; 
+            }
+        }
+    }
+   
+    p.sub-text{
+        margin-top: 20px;
+        margin-left: 30px;
+        span{
+            font-size: 14px;
+            color: $c9;
+        }
+        span.val{
+            display: inline-block;
+            margin-right: 20px;
+            color: $f90;
+        }
+    }
+    .coupon-list{
+        margin-top: 35px;
+        padding: 20px 50px;
+        background-color: #fff;
+        &>div{
+            display: inline-block;
+            vertical-align: top;
+        }
+        &>div:nth-child(odd){
+            margin-right:140px; 
+        }
+        &>.coupon-paging{
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        &>.not-found{
+            color: $c9;
+            text-align: center;
+            width: 100%;
+        }
+    }
+}
+
+.slip_model{
+    &>.mc-detail{
+        margin:  0 auto;
+    }
+}

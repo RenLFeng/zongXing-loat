@@ -12,7 +12,7 @@ import Path from '../common/PagePath';
 import LeftMenu from '../view/personal/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 
-import AccountStatement from "../components/personal/Account/accountstatement";
+import AccountStatement from "../view/personal/Account/accountstatement";
 export default class UCenter extends React.Component {
 	constructor(props) {
 		super(props);

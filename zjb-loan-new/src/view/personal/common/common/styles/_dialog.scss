@@ -1,0 +1,139 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5)
+}
+
+.modal2 {
+    display: block;
+}
+
+.modal3 {
+    display: block;
+    background: none;
+    height: 100vh;
+}
+
+._masker {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+._dialog {
+    position: absolute;
+    left: 50%;
+    top: 22%;
+    width: 80%;
+    margin-left: -40%;
+    background: #fff;
+    border-radius: 5px;
+    border-top: 5px solid #DD2721;
+    z-index: 210;
+}
+
+._dialog ._header {
+    width: 100%;
+    text-align: center;
+}
+
+._dialog ._header ._title {
+    font-size: 1.5em;
+    padding: 1em 2em 0.5em 2em;
+    display: inline-block;
+}
+
+._dialog ._body {
+    padding: 10px 20px 20px 20px;
+    min-height: 80px;
+}
+
+._dialog .scrollbd {
+    max-height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    -o-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+}
+
+._dialog ._close {
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    width: 34px;
+    height: 34px;
+    margin-left: -17px;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    background: url(../img/x.png) no-repeat center center;
+    background-size: 15px auto;
+}
+
+._dialog .tishi {
+    text-align: center;
+    font-size: 18px;
+    line-height: 150%;
+}
+
+._dialog ._foot {
+    text-align: center;
+    padding: 5px 3px 3px 3px;
+    zoom: 1;
+    overflow: hidden;
+}
+
+._dialog ._foot>a {
+    line-height: 36px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+._dialog ._foot>a.btn1-0 {
+    display: block;
+    background-color: #DD2721;
+    color: #fff;
+}
+
+._dialog ._foot>a.btn2-0 {
+    float: left;
+    width: 50%;
+    background-color: #DFDFDF;
+    color: #555;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+._dialog ._foot>a.btn2-1 {
+    float: left;
+    width: 50%;
+    background-color: #DD2721;
+    color: #fff;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    width: 200px;
+    text-align: center;
+    margin-left: -100px;
+    padding: 90px 0 30px 0;
+    background: url(../img/loading.gif) no-repeat center 20px rgba(255, 255, 255, 0.9);
+    background-size: 50px auto;
+    border-radius: 10px;
+}
