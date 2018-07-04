@@ -11,6 +11,7 @@ import LoginInfo from '../components/personal/loginInfo/loginInfo';
 import Path from '../common/PagePath'; 
 import LeftMenu from '../components/personal/leftmenu/leftMenu';
 
+import AccountStatement from "../components/personal/Account/accountstatement";
 export default class UCenter extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +41,9 @@ export default class UCenter extends React.Component {
             <Switch>
                 {/* 账户总览 */}
                 <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
+                
+                 {/* 资金动态 */}
+                  <Route path={Path.ACCOUNT_STATEMENT}  component={AccountStatement} />
             </Switch>
         </div>
       </div>
