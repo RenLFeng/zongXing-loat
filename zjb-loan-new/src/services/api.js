@@ -81,5 +81,14 @@ export const regiserAccount = {
 export const personal = {
     //查询平台公告
     getSiteNotice: async (param) => req.get('/zjb-manage/notice/getPlatNotice', param),
+    //校验邮箱是否存在
+    checkEmail:async (param) => req.get('zjb-website/userInfo/checkEmail',param),
+    //邮箱绑定
+    bindEmail:async (param) => req.get('zjb-website/userInfo/bindEmail',param),
+    //更改邮箱
+    UpdateEmail:async (param) => req.post('zjb-website/userInfo/updateEmail',param),
+    //更改绑定邮箱
+    UpdateEmail_:async (param) => req.post('zjb-website/userInfo/bindingNewEmail',param)
 }
+
   
