@@ -50,6 +50,10 @@ export default class UCenter extends React.Component {
                   <Route path={Path.ACCOUNT_STATEMENT} exact component={AccountStatement} />
                   {/* 我的借款 */}
                   <Route path={Path.MINE_LOAN} exact component={MineLoan} />
+                  {/* 邮箱绑定 */}
+                  <Route path={Path.BIND_EMAIL} component={BindEmail} />    
+                  {/* 变更邮箱绑定 */}
+                  <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />   
                   {/*申请借款*/}
                   <Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
             </Switch>
