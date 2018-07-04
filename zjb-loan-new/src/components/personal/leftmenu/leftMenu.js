@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'dva/router';
-import Path from '../../common/PagePath';
+import Path from '../../../common/PagePath';
 import './leftmenu.scss' 
 
 export default class LeftMenu extends React.Component {

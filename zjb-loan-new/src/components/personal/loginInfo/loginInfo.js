@@ -3,8 +3,8 @@ import $ from 'jquery';
 import {connect} from 'dva';
 import {Button, message} from 'antd';
 import './loginInfo.scss';
-import Path from '../../common/PagePath';
-import {personal} from '../../services/api'; 
+import Path from '../../../common/PagePath';
+import {personal} from '../../../services/api'; 
 import moment from 'moment';
 import { setInterval, setTimeout } from 'timers';
 
@@ -141,7 +141,7 @@ class LoginInfo extends React.Component {
                     <div className="uc-tbody clearfix"> 
                         {/* 用户头像 */}
                         <a className="fl">
-                            <img className="av" src={require('../../assets/img/ucenter/av1.png')} />
+                            <img className="av" src={require('../../../assets/img/ucenter/av1.png')} />
                         </a>
                         {/* 用户信息 */}
                         <div className="fl">

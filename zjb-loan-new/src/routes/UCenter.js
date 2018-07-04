@@ -7,9 +7,9 @@ import {Button} from 'antd';
 
 import '../view/ucenter/index'; 
 import PersonAccount from '../view/personAccount/personAccount'; 
-import LoginInfo from '../view/loginInfo/loginInfo';  
+import LoginInfo from '../components/personal/loginInfo/loginInfo';  
 import Path from '../common/PagePath'; 
-import LeftMenu from '../view/leftmenu/leftMenu';
+import LeftMenu from '../components/personal/leftmenu/leftMenu';
 
 export default class UCenter extends React.Component {
   constructor(props) {
