@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/login/index.scss';
+import '../login/login.scss';
 import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg} from '../../common/SystemParam';
 import { connect } from 'dva';
 import $ from 'jquery';
