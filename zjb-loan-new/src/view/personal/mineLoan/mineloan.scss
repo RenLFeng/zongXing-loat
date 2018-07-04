@@ -1,0 +1,35 @@
+@import '../../../assets/common/_var.scss';
+.mineloan{
+    .personal-rbody {
+        width: 992px;
+        padding: 30px;
+        float: right;
+        background-color: #fff;
+        p{
+            font-family: '微软雅黑';
+            font-style: normal;
+            font-size: 20px;
+            font-weight: 400;
+        }
+        img{
+            margin-top: -10px;
+            width: 100%;
+        }
+        .apply{
+            width: 133px;
+            cursor: pointer;
+            background-color: rgb(0, 204, 0);
+            text-align: center;
+            padding: 7px 0;
+            border-radius: 5px;
+            float: right;
+            a{
+                color: #fff;
+                font-size: 16px;
+            }
+            &:hover{
+                opacity: 0.7;
+            }
+        }
+    }
+}

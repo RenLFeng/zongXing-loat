@@ -5,7 +5,7 @@ import LineReact from '../../common/Echarts/LineReact';
 import Path from '../../common/PagePath';
 import {connect} from 'dva';
 import moment from 'moment';
-import LeftMenu from '../../components/personal/leftmenu/leftMenu';
+import LeftMenu from '../personal/leftmenu/leftMenu';
 import { Modal, Button,Table,message, Pagination } from 'antd'; 
 import './personal.scss';
 import Statement from '../statement/Statement';

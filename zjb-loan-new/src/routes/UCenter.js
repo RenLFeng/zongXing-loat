@@ -7,9 +7,10 @@ import {Button} from 'antd';
 
 import '../view/ucenter/index'; 
 import PersonAccount from '../view/personAccount/personAccount'; 
-import LoginInfo from '../components/personal/loginInfo/loginInfo';  
+import LoginInfo from '../view/personal/loginInfo/loginInfo';  
 import Path from '../common/PagePath'; 
-import LeftMenu from '../components/personal/leftmenu/leftMenu';
+import LeftMenu from '../view/personal/leftmenu/leftMenu';
+import MineLoan from '../view/personal/mineLoan/mineLoan';
 
 export default class UCenter extends React.Component {
   constructor(props) {
@@ -40,6 +41,8 @@ export default class UCenter extends React.Component {
             <Switch>
                 {/* 账户总览 */}
                 <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
+                {/* 我的借款 */}
+                <Route path={Path.MINE_LOAN} exact component={MineLoan} />
             </Switch>
         </div>
       </div>
