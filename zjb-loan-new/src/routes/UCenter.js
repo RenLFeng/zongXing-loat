@@ -11,7 +11,7 @@ import BindEmail from '../view/bindEmail/bindEmail';
 import ChangeBindEmail from '../view/changeBindEmail/changeBindEmail';
 import LoginInfo from '../view/personal/loginInfo/loginInfo';  
 import Path from '../common/PagePath'; 
-// import LeftMenu from '../view/leftmenu/leftMenu';
+import LeftMenu from '../view/personal/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 
@@ -46,7 +46,7 @@ export default class UCenter extends React.Component {
 			<div className="body2">
         <LoginInfo history={this.props.history}/> 
         <div className="w clearfix">
-          {/* <LeftMenu  param={this.props}/> */}
+          <LeftMenu  param={this.props}/>
             <Switch>
                   {/* 账户总览 */}
                   <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
