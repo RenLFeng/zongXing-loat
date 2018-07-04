@@ -7,7 +7,7 @@ import { build } from '../common/SystemParam';
 let BASE_URL = ''
 if (build === 'production') {
   // 远端
-  BASE_URL = 'http://192.168.1.4:8001';
+  BASE_URL = 'http://test.5izjb.com:8001';
   document.title ="众借帮--客户测试环境";
 } else if (build === 'test') { 
   //  测试
