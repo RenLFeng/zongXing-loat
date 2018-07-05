@@ -1,0 +1,61 @@
+.appalyloan-tag div {
+    width:200px;
+    height:150px;
+    text-align: center;
+    // background: #fff;
+    margin-bottom: 8px;
+    cursor: pointer;
+    span{
+	    height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background: #fff;
+        line-height: 40px;
+        display: inline-block;
+        margin-top: 32px;
+        font-size: 20px;
+    }
+    p{
+        font-size: 20px;
+        margin-top: 22px;
+    }
+    .activep{
+        color: #fff;
+    }
+}
+        .hides{
+            display: none!important;
+            visibility: hidden;
+          } 
+
+.appalyactive{
+    // color: #fff;
+    background: #ff9900;
+}
+.notappalyactive{
+    background: #fff; 
+}
+
+.appalyloan-info{
+    width: 1015px;
+    padding: 30px;
+    float: right;
+    background-color: #fff;
+}
+.activespan{
+    color: #ff9900
+}
+
+
+// title
+.applone-title{
+    .applone-loan{
+        font-style: normal;
+        font-size: 20px;
+        font-weight: 400;
+    }
+    img{
+        margin-top: -10px;
+        width: 100%;
+    }
+}
