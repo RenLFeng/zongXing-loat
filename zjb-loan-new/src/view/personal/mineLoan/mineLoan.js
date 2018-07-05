@@ -14,7 +14,7 @@ class MineLoan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            noloan: true
+            noloan: false
         }
     }
     render(){
