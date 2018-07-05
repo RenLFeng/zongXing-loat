@@ -77,7 +77,8 @@ export default {
   
     OPEATE_DATA: '/infor/operateData', //运营数据
     PLATFORM_REPORT: '/infor/platformReport', //平台报告
-    FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表
+    FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表 
+     APPALY_LOAN: '/index/uCenter/appalyloan', //绑定银行卡
   
   }
   

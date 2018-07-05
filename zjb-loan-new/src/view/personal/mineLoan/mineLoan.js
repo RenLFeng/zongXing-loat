@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import './mineloan.scss'
-
+import LeftMenu from '../../../components/leftmenu/leftMenu';
 import NoLoan from './mineLoanComm/noLoan';
 import HaveLoan from './mineLoanComm/haveLoan';
 
@@ -20,11 +20,17 @@ class MineLoan extends React.Component{
     render(){
         if(!this.state.noloan){
             return(
-                <NoLoan></NoLoan>
+            	<div>
+            	 <LeftMenu param={this.props}/>
+            	 <NoLoan></NoLoan>
+            	</div>
             )
         }else{
             return(
-                <HaveLoan></HaveLoan>
+            	<div>
+            	 <LeftMenu param={this.props}/>
+            	 <HaveLoan></HaveLoan>
+            	</div>
             )
         }
     }
