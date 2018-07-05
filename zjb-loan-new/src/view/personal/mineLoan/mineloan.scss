@@ -2,89 +2,119 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:12 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-04 17:57:18
+ * @Last Modified time: 2018-07-05 17:52:48
  */
+
 @import '../../../assets/common/_var.scss';
-$col: #009900;
-$edit: rgb(0, 102, 255);
-$del: rgb(255, 0, 0);
+@import './color.scss';
 $weight: 600;
-.mineloan{
-    font-family: '微软雅黑';
-    .personal-rbody {
-        width: 992px;
-        padding: 30px;
-        float: right;
-        background-color: #fff;
-        .mine-loan{
-            font-style: normal;
-            font-size: 20px;
-            font-weight: 400;
-        }
-        img{
-            margin-top: -10px;
-            width: 100%;
-        }
-        .apply{
-            width: 133px;
-            cursor: pointer;
-            background-color: $col;
-            text-align: center;
-            padding: 7px 0;
-            border-radius: 5px;
-            float: right;
-            a{
-                color: #fff;
-                font-size: 16px;
-            }
-            &:hover{
-                opacity: 0.7;
-            }
-        }
-        .action{
-            color: $col;
-            .ac-commit{
-                color: $col;
-            }
-            .ac-edit{
-                color: $edit;
-            }
-            .ac-del{
-                color: $del;
-            }
-            span{
-                padding: 0 8px;
-                color: #f2f2f2;
-            }
-        }
-
-        .loan-step{
-            div{
-                width: 10%;
-                display: inline-block;
-                .ready{
-                    color: $col;
-                }
-                .unready{
-                    color: #cccccc;
-                }
-            }
-            p{
-                color: #999;
-                padding: 5px 0;
-                span{
-                    color: #333;
-                    padding-left: 8px;
-                }
-            }
-        }
+.mineloan {
+  font-family: '微软雅黑';
+  .personal-rbody {
+    width: 992px;
+    padding: 30px;
+    float: right;
+    background-color: #fff;
+    .mine-loan {
+      font-style: normal;
+      font-size: 20px;
+      font-weight: 400;
     }
-
-    .wait-commit{
-        color: $col;
+    .step-img {
+      margin-top: -10px;
+      width: 100%;
     }
-
-    .wait-apply{
-        color: $col;
+    .apply {
+      width: 133px;
+      cursor: pointer; // background-color: $col;
+      background-image: url('./img/img.png');
+      background-position: 0px 122px;
+      text-align: center;
+      padding: 7px 0;
+      border-radius: 5px;
+      float: right;
+      a {
+        color: #fff;
+        font-size: 16px;
+      }
+      &:hover {
+        opacity: 0.7;
+      }
+      .apply-top{
+        width: 20px;
+        height: 16px;
+        position: relative;
+        top: 2px;
+        background-image: url('./img/img.png');
+        background-position: 0px 168px;
+        display: inline-block;
+      }
     }
+    .action {
+      color: $col;
+      a {
+        text-decoration: underline;
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+      .ac-commit {
+        color: $colsub;
+      }
+      .ac-edit {
+        color: $edit;
+      }
+      .ac-del {
+        color: $del;
+      }
+      span {
+        padding: 0 8px;
+        color: #f2f2f2;
+      }
+    }
+    .loan-step {
+      div {
+        display: inline-block;
+        .ready {
+          color: #FFEDEB;
+          padding-left: 22px;
+        }
+        .unready {
+          color: #cccccc;
+        }
+      }
+      p {
+        color: #999;
+        padding: 5px 0;
+        span {
+          color: #333;
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+  .wait-commit {
+    color: $col;
+  }
+  .wait-apply {
+    color: $col;
+  }
+  .avatar-uploader>.ant-upload {
+    width: 128px;
+    height: 128px;
+  }
+  .ready-bag {
+    background-image: url('./img/img.png');
+    background-position: 0px 154px;
+    width: 115px;
+  }
+  .unready-bag {
+    width: 94px;
+    p {
+      text-align: center;
+    }
+    .unready-fir {
+      text-align: left;
+    }
+  }
 }

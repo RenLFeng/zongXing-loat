@@ -2,10 +2,11 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:51 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-04 18:39:22
+ * @Last Modified time: 2018-07-05 09:32:12
  * 我的借款
  */
 import React from 'react';
+import {connect} from 'dva';
 import '../mineloan.scss'
 
 class LoanTitle extends React.Component{

@@ -2,9 +2,10 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:49:38 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-04 18:40:06
+ * @Last Modified time: 2018-07-05 09:32:20
  * 步骤数据
  */
+import {connect} from 'dva';
 export const stepDate = [
     {
         name: '申请借款',

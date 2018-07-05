@@ -2,14 +2,17 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-04 18:51:10
+ * @Last Modified time: 2018-07-05 12:20:49
  * 有借款记录
  */
 import React from 'react';
 import LoanTitle from './loanTitle';
 import LoanStep from './loanStep';
 import SureLoan from './sureLoan';
+import SendCoupon from './sendCoupon';
+
 import { Table } from 'antd';
+import {connect} from 'dva';
 import '../mineloan.scss'
 
 class NoLoan extends React.Component{
@@ -19,12 +22,6 @@ class NoLoan extends React.Component{
             loading: true,
             status: 4,
             data: [{
-                howmang: '8.00万元',
-                howlong: '11个月',
-                createtime: '2018-06-25 12:25:26',
-                states: 0,
-                state: '待提交'
-            },{
                 howmang: '14.50万元',
                 howlong: '8个月',
                 states: 1,
@@ -50,7 +47,7 @@ class NoLoan extends React.Component{
             this.setState({
                 loading: false
             })
-        },2000)
+        },1000)
     }
     render(){
         const locale = {
@@ -111,7 +108,7 @@ class NoLoan extends React.Component{
         const info = [];
         const nowStep = [];
         if(this.state.status === 4){
-            nowStep.push(<SureLoan></SureLoan>)
+            nowStep.push(<SendCoupon></SendCoupon>)
         }
         return(
             <div className="mineloan">
