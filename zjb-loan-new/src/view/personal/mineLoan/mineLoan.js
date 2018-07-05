@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:16:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 17:53:42
+ * @Last Modified time: 2018-07-05 18:29:03
  */
 import React from 'react';
 import './mineloan.scss'
@@ -15,7 +15,7 @@ class MineLoan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            noloan: false
+            noloan: true
         }
     }
     render(){
