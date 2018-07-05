@@ -1,8 +1,8 @@
 /*
  * @Author: wfl 
  * @Date: 2018-07-04 18:16:00 
- * @Last Modified by:   wfl 
- * @Last Modified time: 2018-07-04 18:16:00 
+ * @Last Modified by: wfl
+ * @Last Modified time: 2018-07-05 09:15:30
  */
 import React from 'react';
 import './mineloan.scss'

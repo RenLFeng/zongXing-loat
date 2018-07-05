@@ -41,8 +41,8 @@ export default class UCenter extends React.Component {
 
 		return(
 			<div className="body2">
-        <LoginInfo history={this.props.history}/> 
-        <div className="w clearfix"> 
+        		<LoginInfo history={this.props.history}/> 
+        	<div className="w clearfix"> 
             <Switch>
                   {/* 账户总览 */}
                   <Route path={Path.PERSONAL_ACCOUNT} exact component={PersonAccount} />
@@ -51,9 +51,9 @@ export default class UCenter extends React.Component {
                   {/* 我的借款 */}
                   <Route path={Path.MINE_LOAN} exact component={MineLoan} />
                   {/* 邮箱绑定 */}
-                  <Route path={Path.BIND_EMAIL} component={BindEmail} />    
+                  {/* <Route path={Path.BIND_EMAIL} component={BindEmail} />     */}
                   {/* 变更邮箱绑定 */}
-                  <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />   
+                  {/* <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />    */}
                   {/*申请借款*/}
                   <Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
             </Switch>
