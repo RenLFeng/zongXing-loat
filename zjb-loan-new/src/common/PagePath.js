@@ -40,6 +40,9 @@ export default {
   
   
   
+    REPAY_PLAN: '/index/uCenter/repayPlan',//还款计划
+    MINE_LOAN: '/index/uCenter/mineLoan',//我的借款
+
     Project_Collection:'/index/uCenter/projectcollection',
     INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
     RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
@@ -74,7 +77,8 @@ export default {
   
     OPEATE_DATA: '/infor/operateData', //运营数据
     PLATFORM_REPORT: '/infor/platformReport', //平台报告
-    FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表
+    FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表 
+     APPALY_LOAN: '/index/uCenter/appalyloan', //绑定银行卡
   
   }
   

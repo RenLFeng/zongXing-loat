@@ -5,7 +5,7 @@
     &>.w>.fl {
         width: 258px;
         padding: 0 26px;
-        min-height: 800px;
+        min-height: 600px;
         p>a{
             cursor: pointer;
             &:hover{
@@ -35,8 +35,8 @@
         width: 900px; 
         background-color: $f5;
         padding-bottom: 0px;
-        height: 800px;
-        overflow-y: scroll;
+        height: 600px;
+        overflow-y: auto;
         .c6 {
             font-size: 18px; 
             padding: 20px;
