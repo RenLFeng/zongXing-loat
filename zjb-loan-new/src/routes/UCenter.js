@@ -13,6 +13,9 @@ import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 import Repayment from '../view/repaymentPlan/repayment';
+import RealName from '../view/ucenter/seccenter/realName/realName'
+import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
+import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
 
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
@@ -60,6 +63,9 @@ export default class UCenter extends React.Component {
 						{/* <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />    */}
 						{/*申请借款*/}
 						<Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
+            <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
+            <Route path={Path.OPEN_ACCOUNT} component={OpenAccount} />
+            <Route path={Path.BINDCARD} component={BindCard} />
 					</Switch>
 			   </div>
       </div>
