@@ -14,7 +14,7 @@ export default {
     SAFE_CENTER: '/index/uCenter/safeCenter', //安全中心页面地址
     REALNAME_AUTHENTICATION: '/index/uCenter/realName', //实名认证页面地址
     AUTHENTICATION: '/index/uCenter/authentication', //实名认证页面
-    OPENQACCOUNT: '/index/uCenter/openQAccount', //开通乾多多认证
+    OPENQACCOUNT: '/index/uCenter/openQAccount', //开通乾多多账户
     IPRECORD: '/index/uCenter/IPRecord', //IP记录页面
     VOUCHER: '/index/uCenter/voucher', //券额明细页面
     PLATFORM_NOTICE: '/index/uCenter/platformNotice', //平台通知页面
