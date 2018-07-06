@@ -100,6 +100,9 @@ export const personal = {
     getLoginData: async () => req.get('/zjb-website/login/getData'),
     //回款计划
     repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
+     //还款计划
+     borrowPlan: async () => req.get('/zjb-website/project/getBorrowPlan'),
 }
+    
 
   
