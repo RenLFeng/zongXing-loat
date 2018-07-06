@@ -4,7 +4,6 @@ import { Input, Button, Spin, message  } from 'antd';
 import { personal } from '../../services/api';
 import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../common/PagePath';
 import { AUTH_CODE_TIME, E_MAIL} from '../../common/SystemParam';
-import '../ucenter/changePwd.scss';
 import {connect} from 'dva';
 
 @connect((state)=>({
