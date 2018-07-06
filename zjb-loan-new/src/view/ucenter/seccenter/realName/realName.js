@@ -3,7 +3,7 @@ import { Icon, Input, Button, Steps, Modal, message } from 'antd';
 import { AUTH_ADDRESS } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
 import { connect } from 'dva';
-import LeftMenu from '../../../../components/personal/leftmenu/leftMenu';
+import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
 import {securityCentreService} from '../../../../services/api';
 
