@@ -16,39 +16,6 @@
         }
     }
     
-    .repay{
-        margin:18px 0px;
-        height: 65px;
-        line-height: 65px;
-        background-color: #fffdf8;
-        box-shadow: 1px 1px 10px #EDEDED;
-        .time{
-            margin-left: 25px;
-        }
-        .btns{
-            width: 70px;
-            height: 25px;
-            background-color: #46bb3a;
-            border-radius: 2px;
-            display: inline-block;
-            line-height: 26px;
-            text-align: center;
-            color:#fff;
-            margin:0 18px;
-        }
-        .data{
-            display: inline-block;
-        }
-        .a{
-            color:#3366ff;
-            text-decoration: underline;
-            float: right;
-            margin-right: 37px;
-        }
-        .btns:hover,.a:hover{
-            cursor: pointer;
-        }
-    }
     .info{
         font-family: MicrosoftYaHei;
         .date{
@@ -58,8 +25,132 @@
     }
 }
 
+//公用样式
+.repay{
+    margin:18px 0px;
+    height: 65px;
+    line-height: 65px;
+    background-color: #fffdf8;
+    box-shadow: 1px 1px 10px #EDEDED;
+    .time{
+        margin-left: 25px;
+    }
+    .btns{
+        width: 70px;
+        height: 25px;
+        background-color: #46bb3a;
+        border-radius: 2px;
+        display: inline-block;
+        line-height: 26px;
+        text-align: center;
+        color:#fff;
+        margin:0 18px;
+    }
+    .data{
+        display: inline-block;
+    }
+    .a{
+        color:#3366ff;
+        text-decoration: underline;
+        float: right;
+        margin-right: 37px;
+    }
+    .btns:hover,.a:hover{
+        cursor: pointer;
+    }
+}
+
+.repay_{
+    margin-top:18px;
+    height: 50px;
+    line-height: 65px;
+    .time{
+        margin-left: 25px;
+    }
+    .btns{
+        width: 70px;
+        height: 25px;
+        background-color: #46bb3a;
+        border-radius: 2px;
+        display: inline-block;
+        line-height: 26px;
+        text-align: center;
+        color:#fff;
+        margin:0 18px;
+    }
+    .btns_{
+        width: 70px;
+        height: 25px;
+        background-color:  #cccccc;
+        border-radius: 2px;
+        display: inline-block;
+        line-height: 26px;
+        text-align: center;
+        color:#fff;
+        margin:0 18px;
+    }
+    .data{
+        display: inline-block;
+    }
+    .a{
+        color:#3366ff;
+        text-decoration: underline;
+        float: right;
+        margin-right: 37px;
+    }
+    .btns:hover,.btns_:hover,.a:hover{
+        cursor: pointer;
+    }
+    .times{
+        color:#999999;
+        margin-left: 165px;
+    }
+}
+
+.info_{
+    font-family: MicrosoftYaHei;
+    .date{
+        font-size: 14px;
+        color: #999999;
+        padding-left: 25px;
+    }
+}
+
 .S{
+    padding-bottom: 40px;
     .project{
         border-bottom: 1px dashed rgba(235, 235, 235, 0.6);
+        .number{
+            .money{
+                display: inline-block;
+                margin: 34px 0 0 130px;
+                p{
+                    text-align: center;
+                }
+                .num{
+                    font-family: MicrosoftYaHei-Bold;
+                    font-size: 48px;
+                    height:71px;
+                    font-weight: bold;
+                   
+                } 
+                .word{
+                    color:#999;
+                }
+            }
+        }
+        .button{
+            margin: 50px auto 10px auto;
+            width:152px;
+            height:39px;
+            background-image: linear-gradient(-90deg, 
+            #46bc3b 0%, 
+            #2ca021 53%, 
+            #128407 100%), 
+            linear-gradient(
+                #f29827, 
+                #f29827);
+            color:white;
+        }
     }
 }
