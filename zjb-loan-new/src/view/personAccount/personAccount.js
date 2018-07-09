@@ -251,8 +251,7 @@ export default class PersonAccount extends React.Component {
 
   // 获取回款计划折线图数据
   async getReceivePlan() {
-    const response = await personal.repayPlan();
-    console.log('getReceivePlan', response);
+    const response = await personal.repayPlan(); 
     if (response.code === 0) {
       let planArr = [];
       for (let obj of response.data.list) {
@@ -315,13 +314,7 @@ export default class PersonAccount extends React.Component {
 
   jumpAuth() {
     var that = this;
-    Modal.info({
-      title: '您目前还没有开户，请先开户！',
-      okText:'去开户',
-      onOk() {
-        that.props.history.push('/index/uCenter/realName')
-      },
-    });
+    that.props.history.push('/index/uCenter/realName');
   }
 
   async getAccountStatement() {
@@ -448,13 +441,11 @@ export default class PersonAccount extends React.Component {
   jumpRecharge(accoundId) {
     this.props.history.push({pathname: Path.ACCOUNT_RECHARGE, state: {account:accoundId}})
   };
-  jumpRecharge_(accoundId) {
-    console.log(accoundId);
+  jumpRecharge_(accoundId) { 
     this.props.history.push({pathname: Path.ACCOUNT_WITHDRAWALS, state: {account:accoundId}})
   };
 
-  clickCoupon = (data) => {
-    console.log(data);
+  clickCoupon = (data) => { 
     if (data.fflag == 1) {
       this.receiveCoupon(data.fcoupon_id)
     }
@@ -509,80 +500,36 @@ export default class PersonAccount extends React.Component {
     }
     return (
       <div>
-        <LeftMenu param={this.props}/> 
-        <div className="fr uc-rbody" style={{backgroundColor: '#F5F5F5',padding: 0}}>
-          <div className="per_account">
-            <div className="ptit" style={{borderBottom: '1px dashed #e9e9e9'}}>
-              <i style={{fontSize: '20px',lineHeight: '14px',marginRight: '18px'}}>账户总资产</i>
-              <b style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</b>
-              <em style={{marginTop: 0}}>单位：元</em>
-            </div>
-            <div className="tright hd1" style={{margin: '10px 0 10px 0'}}>
-              <a className="fl" style={{cursor: 'default'}}>
-                <i>累计利息收益</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInterest+'').fm()}</b>
-              </a>
-              <a className="fl" style={{cursor: 'default'}}>
-                <i>累计投资金额</i>
-                <b className="f18" style={{marginLeft: 20}}>{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</b>
-              </a>
-            </div>
-            <div className="border shadow box1" style={{marginTop: 70}}>
-              <div className="pieDiv" style={{left: '60px'}}>
-                <div>
-                  <span style={{fontSize: '22px'}}>{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</span>
-                  <span style={{fontSize: '14px'}}>账户总资产</span>
-                </div>
+        <LeftMenu param={this.props}/>  
+        <div className="per_account">
+          <div className="ptit">
+            <i>当前借款金额</i>
+            <span>￥{this.props.personal.totalAssets.totalAssets?(this.props.personal.totalAssets.totalAssets.add(this.props.personal.totalAssets.collectPrincipal).add(this.props.personal.totalAssets.collectInterest)+'').fm():'0.00'}</span>
+            <em>单位：元</em>
+          </div>
+          <div className="sub-info">
+              <i>累计利息支出</i>
+              <span >{(this.props.personal.totalAssets.totalInterest+'').fm()}</span>
+              <i>累计借款金额</i>
+              <span >{(this.props.personal.totalAssets.totalInvMoney+'').fm()}</span>
+              <div className='to-loan'>
+                  <span></span> 申请借款
               </div>
-              <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
-            </div>
-          </div>
-          {/* 未领取优惠券 */}
-          { this.state.couponList.length >0 ?
-            <div className="per_account coupon_list" style={{marginTop: 30, clear: 'both'}}>
-              <span className="tips">{this.props.personal.totalAssets.receiveCoupon?`您有${this.props.personal.totalAssets.receiveCoupon}张优惠券待领取`:''} {this.props.personal.totalAssets.willExpireCoupon?`有${this.props.personal.totalAssets.willExpireCoupon}张优惠券即将过期`:''}</span>
-              {this.state.couponList.map((data, index)=>{
-                return (
-                  <CouponSmall key={index} data={data} hasLine='true' handlerBtnClick={this.clickCoupon}/>
-                );
-              })}
-              {
-                Math.ceil(this.state.pageParam.total/this.state.pageParam.pageSize)>1?<div style={{widht: '100%', textAlign: 'center'}}>
-                    <Pagination current={this.state.pageParam.currPage} pageSize={this.state.pageParam.pageSize} onChange={this.handlerPageChange} total={this.state.pageParam.total} />
-                </div>:null
-            } 
-            </div> : null
-          }
-          {/* 回款计划 */}
-          <div className="per_account" style={{marginTop: 30}}>
-            <div className="return_money">
-              <em>回款计划</em>
-              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/receivePlan')}>更多>></span>
-            </div>
-            <div className="return_money_desc" style={{marginTop: 20}}>
-              <span style={{color: '#666', marginRight: 100}}>待收总额：{`${this.state.allMoney}`.fm()}</span>
-              <span style={{color: '#666', marginRight: 100}}>待收本金：{`${this.state.daishoubenjin}`.fm()}</span>
-              <span style={{color: '#666'}}>待收利息：{`${this.state.daishoulixi}`.fm()}</span>
-              <div style={{marginTop: 20}}>
-                <LineReact height="450px" width="900px" option={this.state.lineOption}/>
-              </div> 
-            </div>
-          </div>
+          </div> 
+        </div>
+        <div className="per_account"> 
+          <div className="ptit">
+              <i>近期还款</i> 
+          </div> 
+          <div className="account-info" >
+              <span className="sub-title">近期应还 </span>
 
-          {/* 资金动态 */}
-          <div className="per_account" style={{marginTop: 30}}>
-            <div className="return_money">
-              <em>资金动态</em>
-              <span style={{color: '#d6d6d6', cursor: 'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/accountstatement')}>更多>></span>
-            </div>
-            <p style={{color: '#c9c9c9',marginBottom: 20}}>以下为您近期最新10笔资金动态</p>
-            {
-              this.state.infoList.map((data, index)=> {
-                return <Statement key={index} showTitle={index==0} data={data}></Statement>
-              })
-            }
           </div>
         </div>
+  
+        {/* 
+         <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
+        */}
       </div>
 
     );

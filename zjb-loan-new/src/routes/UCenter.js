@@ -6,7 +6,7 @@ import { connect } from 'dva';
 import { Button } from 'antd';
 
 import './ucenter/index';
-import PersonAccount from '../view/personAccount/personAccount';
+import PersonAccount from '../view/personAccount/personAccount.1';
 import LoginInfo from '../view/personal/loginInfo/loginInfo';
 import Path from '../common/PagePath';
 import LeftMenu from '../components/leftmenu/leftMenu';
