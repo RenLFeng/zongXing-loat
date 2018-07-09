@@ -15,8 +15,12 @@ import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 import Recharge from '../view/personal/recharge/recharge'
 import BindCard from '../view/personal/rechargecomponents/card/bindcard/bindCard'
 import Withdrawals from '../view/personal/tixian/tixian'
-import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
+
+
+import Repayment from '../view/repaymentPlan/repayment';
+import RealName from '../view/ucenter/seccenter/realName/realName';
+import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
 
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
