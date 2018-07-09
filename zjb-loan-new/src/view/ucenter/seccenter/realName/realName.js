@@ -178,10 +178,10 @@ export default class RealName extends React.Component {
 
   render() {
     // 初始化数据
-    console.log("path",Path);
     const safeData = this.props.safeData;
-    console.log("safeData1",safeData);
     const { status, distribution, url } = this.state;
+
+    const dataArr = [{title:'人形数据'},{title:'运营商数据'},{title:'社保数据'},{title:'公积金数据'},{title:'学信数据'},{title:'京东数据'},{title:'苏宁数据'}]
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -342,7 +342,19 @@ export default class RealName extends React.Component {
                 <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>账户授权</span>
               </div>
             </div>
-
+             <div style={{margin:'35px 0px 20px 0px'}}>
+             {
+               dataArr.map((data,index)=>{
+                 return(
+                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:10}}>
+                    <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
+                    <p style={{textAlign:'center',color:'red'}}>授权</p>
+                  </div>
+                 )
+               })
+             }
+               
+             </div>
             <div className="safeCenter">
               <div className="line">
                 <div className="block1">
