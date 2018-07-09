@@ -86,6 +86,10 @@ export const doLogin={
     changePassword:async(param)=>req.post('/zjb-website/userInfo/updatePwd',param), 
     // 获取用户基础信息的接口
     getUserBaseData:async(param)=>req.get('/zjb-website/userInfo/findOne'),
+    //修改登陆密码
+    UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+    changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+ 
 }
 
 

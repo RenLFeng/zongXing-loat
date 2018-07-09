@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Input, Button, Spin, message } from 'antd';
-import { UpdatePass, changePass } from '../../../../../services/api';
+import { doLogin} from '../../../../../services/api';
 import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../../../../common/PagePath';
 import { AUTH_CODE_TIME,pass_reg} from '../../../../../common/SystemParam';
 import './changeLoginPwd.scss';
@@ -108,7 +108,7 @@ export default class ChangeLPwd extends React.Component {
     }
     this.setState({ loading: true });
     try {
-      const response = await UpdatePass(param);
+      const response = await doLogin.UpdatePass(param);
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
@@ -152,7 +152,7 @@ export default class ChangeLPwd extends React.Component {
       verificationCode:code,
     }
     this.setState({sureloading:true})
-    const response = await changePass(param);
+    const response = await doLogin.changePass(param);
     console.log('reaponse',response)
     if(response.code === 0){
        this.setState({

@@ -13,10 +13,13 @@ import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 import Recharge from '../view/personal/recharge/recharge'
-import BindCard from '../view/personal/rechargecomponents/card/bindcard/bindCard'
 import Withdrawals from '../view/personal/tixian/tixian'
 import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
+import Repayment from '../view/repaymentPlan/repayment';
+import RealName from '../view/ucenter/seccenter/realName/realName';
+import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
+import MyCoupon from '../view/myCoupon/myCoupon';
 
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
@@ -56,6 +59,8 @@ export default class UCenter extends React.Component {
 						<Route path={Path.ACCOUNT_STATEMENT} exact component={AccountStatement} />
 						{/*还款计划 */}
 						<Route path={Path.RECEIVE_PLAN} exact component={Repayment} />
+						{/*我的优惠券*/}
+						<Route path={Path.MY_COUPON} exact component={MyCoupon} />
 						{/* 我的借款 */}
 						<Route path={Path.MINE_LOAN} exact component={MineLoan} />
 						{/* 修改登陆密码 */}
