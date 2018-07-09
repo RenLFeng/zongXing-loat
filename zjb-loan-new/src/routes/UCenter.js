@@ -16,6 +16,7 @@ import Repayment from '../view/repaymentPlan/repayment';
 import RealName from '../view/ucenter/seccenter/realName/realName'
 import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
 import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
+import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
 
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
@@ -57,15 +58,17 @@ export default class UCenter extends React.Component {
 						<Route path={Path.RECEIVE_PLAN} exact component={Repayment} />
 						{/* 我的借款 */}
 						<Route path={Path.MINE_LOAN} exact component={MineLoan} />
+						{/* 修改登陆密码 */}
+						<Route path={Path.CHANGE_LPWD} component={ChangeLPwd} />  
 						{/* 邮箱绑定 */}
 						{/* <Route path={Path.BIND_EMAIL} component={BindEmail} />     */}
 						{/* 变更邮箱绑定 */}
 						{/* <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />    */}
 						{/*申请借款*/}
 						<Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
-            <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
-            <Route path={Path.OPEN_ACCOUNT} component={OpenAccount} />
-            <Route path={Path.BINDCARD} component={BindCard} />
+                        <Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
+                        <Route path={Path.OPEN_ACCOUNT} component={OpenAccount} />
+                        <Route path={Path.BINDCARD} component={BindCard} />
 					</Switch>
 			   </div>
       </div>
