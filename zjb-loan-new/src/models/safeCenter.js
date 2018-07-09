@@ -1,4 +1,4 @@
-import {realName} from '../services/api';
+import {securityCentreService} from '../services/api';
 import { message } from 'antd';
 export default {
   namespace: 'safeCenter',
@@ -15,7 +15,7 @@ export default {
         type: 'startSafeData'
       });
       try {
-        const response = yield call(realName.getSafeData);
+        const response = yield call(securityCentreService.getSafeData);
         console.log("safeData",response);
         if (response.code === 0) {
           if(payload){
