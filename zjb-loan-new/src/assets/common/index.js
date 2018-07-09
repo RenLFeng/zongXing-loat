@@ -13,14 +13,14 @@ window.av.touch = "ontouchend" in document ? true : false;
 
 
 window.av.query = function (name, url) {
-    if (!name || typeof name != 'string') return '';
+    if (!name || typeof name !== 'string') return '';
     if (!url) url = window.location.href;
     var mat = new RegExp('(^|[?&])(?:' + name + ')=(.*?)(&|#|$)', 'i').exec(url);
     if (mat && mat.length >= 2) return decodeURIComponent(mat[2]);
     return '';
 };
 window.av.top = function (y) {
-    if (typeof y == 'undefined') {
+    if (typeof y === 'undefined') {
         var top1 = document.body.scrollTop;
         var top2 = document.documentElement.scrollTop;
         return top1 || top2;

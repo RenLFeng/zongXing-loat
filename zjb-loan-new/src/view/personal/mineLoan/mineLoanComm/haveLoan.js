@@ -2,20 +2,20 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-09 12:05:41
+ * @Last Modified time: 2018-07-09 13:55:14
  * 有借款记录
  */
 import React from 'react';
 import LoanTitle from './loanTitle';
 import LoanStep from './loanStep';
 import SureLoan from './sureLoan';
+import {connect} from 'dva';
 import SendCoupon from './sendCoupon';
 import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
 import {columns,columnsi1,columns13, columnsi3} from './tableCloumes/tablecloumes'
 
 import { Table } from 'antd';
-import {connect} from 'dva';
 import '../mineloan.scss'
 
 @connect((state)=>({
@@ -54,7 +54,7 @@ class NoLoan extends React.Component{
             this.setState({
                 loading: false
             })
-        },1000)
+        },2000)
     }
 
     getbgimg(item){

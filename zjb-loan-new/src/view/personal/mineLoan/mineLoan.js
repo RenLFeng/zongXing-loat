@@ -2,14 +2,14 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:16:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-09 10:47:07
+ * @Last Modified time: 2018-07-09 13:54:52
  */
 import React from 'react';
-import './mineloan.scss'
+import './mineloan.scss';
+import {connect} from 'dva';
 import LeftMenu from '../../../components/leftmenu/leftMenu';
 import NoLoan from './mineLoanComm/noLoan';
 import HaveLoan from './mineLoanComm/haveLoan';
-import {connect} from 'dva';
 
 @connect((state)=>({
     mineloan: state.mineloan,
