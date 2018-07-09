@@ -16,8 +16,8 @@ import Recharge from '../view/personal/recharge/recharge'
 import BindCard from '../view/personal/rechargecomponents/card/bindcard/bindCard'
 import Withdrawals from '../view/personal/tixian/tixian'
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
-
-
+import BindEmail from '../view/ucenter/seccenter/realName/bindEmail/bindEmail.js';
+import ChangeBindEmail from '../view/ucenter/seccenter/realName/changeBindEmail/changeBindEmail.js';
 import Repayment from '../view/repaymentPlan/repayment';
 import RealName from '../view/ucenter/seccenter/realName/realName';
 import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
@@ -65,9 +65,9 @@ export default class UCenter extends React.Component {
 						{/* 修改登陆密码 */}
 						<Route path={Path.CHANGE_LPWD} component={ChangeLPwd} />
 						{/* 邮箱绑定 */}
-						{/* <Route path={Path.BIND_EMAIL} component={BindEmail} />     */}
+						<Route path={Path.BIND_EMAIL} component={BindEmail} />
 						{/* 变更邮箱绑定 */}
-						{/* <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />    */}
+						<Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />
 						{/*申请借款*/}
 						<Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
 						<Route path={Path.REALNAME_AUTHENTICATION} component={RealName} />
