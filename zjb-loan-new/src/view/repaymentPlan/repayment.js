@@ -112,6 +112,7 @@ export default class Repayment extends React.Component {
                    <div>
                        <p style={{color:"#999999",marginTop:18}}><span>计划还款时间</span><span style={{float:"right"}}>实际还款时间</span></p>
                        {
+                           paymentArr.length > 0 ?
                            paymentArr.map((data,index)=>{
                                return(
                                    <div>
@@ -184,7 +185,7 @@ export default class Repayment extends React.Component {
                                    </div>
                                
                                )
-                           })
+                           }) : <p style={{textAlign:'center',marginTop:30}}>暂无数据</p>
                        }
                         
                        
