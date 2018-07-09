@@ -98,7 +98,7 @@ export default class Authentication extends React.Component {
       msgPhone = '手机号格式不正确';
     }
     if (!param.realName) {
-      msgRealName = '真实姓名不能为空';
+      msgRealName = '企业名称不能为空';
     }
     this.setState({msgIdcard,msgPhone,msgRealName});
     if(msgIdcard || msgRealName || msgPhone){
@@ -160,7 +160,7 @@ export default class Authentication extends React.Component {
                     }
                   </div>
                   <div className="inp">
-                    <Input placeholder="请输入企业统一社会信用代码" onChange={this.updateIdcard} style={{marginTop:23}}/>
+                    <Input placeholder="请输入企业统一社会信用代码" onChange={this.updateIdcard} style={{marginTop:3}}/>
                     <img alt="身份证id" src={require('../../../../../assets/img/u192.png')}  className="img2"/>
                     <span className="span_1">|</span>
                     {
@@ -171,7 +171,7 @@ export default class Authentication extends React.Component {
                   </div>
 
                   <div className="inp">
-                    <Input placeholder="手机号（默认）" onChange={this.updatePhone} style={{marginTop:2}}/>
+                    <Input placeholder="手机号（默认）" onChange={this.updatePhone} style={{marginTop:3}}/>
                     <img alt="身份证id" src={require('../../../../../assets/img/ph.png')}  className="img3"/>
                     <span className="span_2">|</span>
                     {

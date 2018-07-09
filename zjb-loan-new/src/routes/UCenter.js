@@ -79,10 +79,10 @@ export default class UCenter extends React.Component {
 						{/* 充值 */}
 						<Route path={Path.ACCOUNT_RECHARGE} exact component={Recharge} />
 						<Route path={Path.ACCOUNT_WITHDRAWALS} exact component={Withdrawals} />
-						<Route path={Path.BINDCARD} component={BindCard} />
+						{/* <Route path={Path.BINDCARD} component={BindCard} /> */}
 					</Switch>
 				</div>
 			</div>
 		);
 	}
-
+}
