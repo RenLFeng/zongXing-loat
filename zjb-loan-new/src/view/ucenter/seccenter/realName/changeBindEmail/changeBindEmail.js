@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { Input, Button, Spin, message  } from 'antd';
-import { personal } from '../../services/api';
-import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../common/PagePath';
-import { AUTH_CODE_TIME, E_MAIL} from '../../common/SystemParam';
-import '../ucenter/changePwd.scss';
+import { personal } from '../../../../../services/api';
+import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../../../../common/PagePath';
+import { AUTH_CODE_TIME, E_MAIL} from '../../../../../common/SystemParam';
 import {connect} from 'dva';
 
 @connect((state)=>({
@@ -26,8 +25,8 @@ export default class ChangeBindEmail extends React.Component {
       firstShow:true,
       num:3,   //3秒后跳转
       click:true ,
-      message1:'',  //提示语 
-      message2:'',  //提示语 
+      message1:'',  //提示语
+      message2:'',  //提示语
       sureloading:false    //确定按钮
     }
     this.countDown = null;
@@ -146,7 +145,7 @@ export default class ChangeBindEmail extends React.Component {
          firstShow:false,
          sureloading:false
        })
-      this.countDown = setInterval(()=>{ 
+      this.countDown = setInterval(()=>{
           this.setState({
             num: this.state.num - 1
           }, () => {
@@ -168,7 +167,7 @@ export default class ChangeBindEmail extends React.Component {
     return (
 
         <div className="fr uc-rbody user-form-box" style={{width:"100%",float:"none",height:900}}>
-            
+
             {
               this.state.firstShow ?
               <div>
@@ -177,26 +176,26 @@ export default class ChangeBindEmail extends React.Component {
                   <span style={{fontSize: 16}}>&gt; 变更绑定邮箱 &gt;  绑定新邮箱</span>
                </div>
               <div style={{width:230,margin:'71px auto 0 auto'}}>
-                
+
                   <div className="pass">
                     <Input placeholder="输入正在使用的邮箱地址" className="inp" value={email} onChange={(e) => { this.setState({ email: e.target.value }) }} />
                     {
-                      message1 ? 
+                      message1 ?
                       <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{message1}</p>:
                       <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>&nbsp;</p>
-                    }               
+                    }
                     <i className="zjb zjb-e-mail_icon img1" />
                   </div>
-                
+
               </div>
               <div style={{width:230,margin:'5px auto 0 auto'}}>
                 <div className="pass">
                     <Input placeholder="输入新邮箱地址" className="inp" value={newEmail} onChange={(e) => { this.setState({ newEmail: e.target.value }) }} />
                     {
-                      message2 ? 
+                      message2 ?
                       <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{message2}</p>:
                       <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>&nbsp;</p>
-                    }  
+                    }
                     <i className="zjb zjb-e-mail_icon img1" />
                 </div>
               </div>
@@ -204,7 +203,7 @@ export default class ChangeBindEmail extends React.Component {
                 <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6} />
                   {// 根据倒计时时间显示是否可以点击获取验证码按钮
                     this.state.showAuthCode ?
-                    (this.state.click ?  
+                    (this.state.click ?
                      <Button className="input2" onClick={() => this.update()} loading={this.state.loading}>点击获取验证码</Button>:
                      <Button className="input2" style={{ backgroundColor: '#D1D1D1' }}>点击获取验证码</Button>)
                       :
@@ -223,17 +222,17 @@ export default class ChangeBindEmail extends React.Component {
                 </div>
                 <div className="success">
                   <h1>
-                     <img alt="ok" src={require('../../assets/img/u3551.png')} />{baseData ? baseData.nickName:''}，恭喜您新邮箱地址绑定成功
+                     <img alt="ok" src={require('../../../../../assets/img/u3551.png')} />{baseData ? baseData.nickName:''}，恭喜您新邮箱地址绑定成功
                   </h1>
                   <p className="goback">
                     <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>
-                  </p>                
+                  </p>
                 </div>
-                
+
             </div>
             }
-           
-           
+
+
         </div>
 
     );

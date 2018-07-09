@@ -1,0 +1,71 @@
+
+.recharge-form{
+    color: #000;
+    .containers{
+        width: 290px;
+        height: 400px;
+        margin: 0 auto;
+        .card-info-title{
+            font-size: 18px;
+            color: #0b69fd;
+            font-family: 微软雅黑;
+            margin-left: 20px;
+        }
+    }
+    .label_text-card{
+       font-size: 18px;
+       color: #999;
+    }
+    p{
+        line-height: 60px;
+    }
+    .rech_center {
+        margin: 0 auto;
+        padding-top: 32px;
+        width: 400px;
+        .label_div {
+          display: inline-block;
+        }
+        .label_text {
+          font-size: 18px;
+          display: block;
+          margin-bottom: 50px;
+          color: #999;
+        }
+        .input-view {
+          width: 160px;
+          border-bottom: 1px solid #e6e6e6;
+          .money_tip {
+            font-size: 30px;
+            color: #ff9900;
+          }
+          .input_money {
+            width: 120px;
+            border: 0px;
+            display: inline-block;
+            color: #ff9900;
+            font-size: 30px;
+          }
+        }
+        .select_div {
+          margin-top: 33px;
+          width: 210px;
+          .recharge_btn {
+            cursor: pointer;
+            display: inline-block;
+            padding: 6px 9px;
+            border: 1px dashed #c3c3c3;
+            font-size: 18px;
+            color: #999;
+          }
+          .recharge_btn_choose {
+            cursor: pointer;
+            display: inline-block;
+            padding: 6px 9px;
+            border: 1px dashed #007aff;
+            font-size: 18px;
+            color: #007aff;
+          }
+        }
+      }
+    }

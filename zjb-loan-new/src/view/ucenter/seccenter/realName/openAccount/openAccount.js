@@ -181,7 +181,7 @@ export default class Authentication extends React.Component {
                     }
                   </div>
       
-                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{top:244,left:449}}>提交开户</span>
+                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{top:247,left:449}}>提交开户</span>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?
