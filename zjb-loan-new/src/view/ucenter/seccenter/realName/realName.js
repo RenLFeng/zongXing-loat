@@ -319,10 +319,7 @@ export default class RealName extends React.Component {
 
           </div>
 
-          <div className="fr uc-rbody" style={{
-            marginTop: '30px', padding: 0, display: 'flex',
-            justifyContent: 'space-between'
-          }}>
+          <div className="fr uc-rbody" style={{ marginTop: '30px', padding: 0 }}>
             {/* <div className="baseInfo">
               <i className="zjb zjb-moban"></i>
               <h3 onClick={() => { this.props.history.push(Path.USER_BASIC) }}>基础资料</h3>
@@ -330,13 +327,13 @@ export default class RealName extends React.Component {
               <p><span>****</span>*</p>
             </div> */}
 
-            <div className="baseInfo">
+            <div className="baseInfo" style={{display:'inline-block'}}>
               <i className="zjb zjb-mima1"></i>
               <h3 onClick={() => { this.props.history.push(Path.CHANGE_LPWD) }}>修改登陆密码</h3>
               <p>定期更改登录密码让你的账户更安全</p>
               <span>2018/6/15</span>
             </div>
-            <div className="baseInfo">
+            <div className="baseInfo" style={{display:'inline-block'}}>
               <i className="zjb zjb-youxiang"></i>
               <h3 onClick={() => { this.props.history.push(Path.CHANGE_BINDEMAIL) }}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
