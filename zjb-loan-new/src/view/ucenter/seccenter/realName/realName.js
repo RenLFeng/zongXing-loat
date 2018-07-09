@@ -42,20 +42,40 @@ export default class RealName extends React.Component {
 
   componentDidMount() {
     //初始化安全中心信息
-    this.getInitData();
-    //第三方开户成功后再去获取用户银行卡信息
+    this.initFetchSafeData();
+    // 第三方开户成功再去获取用户银行卡信息
+    if (this.props.safeData.userSecurityCenter.fThirdAccount) {
+      this.getBankCardListAjax(); // 获取用户绑定银行卡
+    }
     
     //获取已经授权的授权代码
     this.getAuthorizationState();
   
     
   }
-  getInitData() {
+
+  /** 初始化安全中心信息 */
+  initFetchSafeData() {
     console.log("getInitData running ...")
     this.props.dispatch({
       type: 'safeCenter/getSafe'
     });
   }
+
+   /** 获取用户绑定银行卡 */ 
+   getBankCardListAjax = async (param) => {
+    const response = await securityCentreService.getBankCardList(param?param:this.props.accountId);
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          cardList: response.data
+        })
+      }
+    } else {
+      message.error(response.msg);
+    }
+  }
+
  
   /** 跳转到开户界面 */
   jumpCreateAccount() {
