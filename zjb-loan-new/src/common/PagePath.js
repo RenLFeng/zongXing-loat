@@ -19,14 +19,12 @@ export default {
     VOUCHER: '/index/uCenter/voucher', //券额明细页面
     PLATFORM_NOTICE: '/index/uCenter/platformNotice', //平台通知页面
     SITE_NOTICE: '/index/uCenter/siteNotice', //站内通知页面
-  
-    BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
+    
+ 
     COMPANY_ACCOUNT: '/index/uCenter/companyAccount',  //企业账户页面地址
     BANK_CARD: '/index/uCenter/bankCard',  //银行卡管理页面
     BANK_CARD_UPDATE: '/index/uCenter/bankCardUpdate',  //银行卡修改
     BANK_CARD_CREATE: '/index/uCenter/bankCardCreate',  //银行卡绑定
-    ACCOUNT_RECHARGE: '/index/uCenter/recharge',  // 充值
-    ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 提现  type: 0 个人, 1 企业
     PROJECT_LIST: '/index/projectLoan',  // 项目列表页面
     PROJECT_DETAIL: '/index/projectDetail',  // 项目列表页面
     STATION_MESSAGE: '/index/uCenter/message',  // 站内消息页面
@@ -35,23 +33,23 @@ export default {
     NOTICE_LIST: '/index/uCenter/noticeList', //站内公告列表
     BIND_SUCCESS: '/index/uCenter/bindSuccess',
     INCOME_PLAN: '/index/uCenter/myInvest/incomePlan', //平台公告列表 
-  
+    
     ALL_INVEST:'/index/uCenter/allInvest',  //投资总览
-  
-  
-  
+    
+    
+    
     REPAY_PLAN: '/index/uCenter/repayPlan',//还款计划
     MINE_LOAN: '/index/uCenter/mineLoan',//我的借款
-
+    
     Project_Collection:'/index/uCenter/projectcollection',
     INVEST_MENT: '/index/uCenter/InvestMent', //投资记录
     RECEIVE_PLAN: '/index/uCenter/receivePlan',  // 回款计划
     ACCOUNT_STATEMENT:'/index/uCenter/accountstatement',  //资金动态
     MY_COUPON:'/index/uCenter/mycoupon',//我的优惠券 
-  
+    
     COUPON_CENTER:'/index/couponCenter',//优惠券交易中心
-  
-  
+    
+    
     NOTICE_DETAIL: '/infor/plantNotice', //平台公告页面
     RECORD_INFORMATION: '/infor/recordinformation',     //备案信息页面
     ORGANIZATIONAL_INFORMATION: '/infor/organizationInformation',  //组织信息页面
@@ -74,11 +72,16 @@ export default {
     SECURITY_COOPERATION: '/infor/securityCooperation', //安全合作
     MEDIA_COOPERATION: '/infor/mediaCooperation', //媒体合作
     ICON_TEST: '/infor/iconTest', //图标测试
-  
+    
     OPEATE_DATA: '/infor/operateData', //运营数据
     PLATFORM_REPORT: '/infor/platformReport', //平台报告
     FINANCIAL_STATEMENTS: '/infor/financialStatements', //财务报表 
-     APPALY_LOAN: '/index/uCenter/appalyloan', //绑定银行卡
-  
-  }
-  
+    
+    APPALY_LOAN: '/index/uCenter/appalyloan', //申请借款
+    ACCOUNT_RECHARGE: '/index/uCenter/recharge',  // 充值
+    ACCOUNT_WITHDRAWALS: '/index/uCenter/withdrawals',  // 提现  type: 0 个人, 1 企业
+
+
+    BINDCARD: '/index/uCenter/bindCard', //绑定银行卡
+}
+

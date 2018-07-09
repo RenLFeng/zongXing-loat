@@ -11,6 +11,7 @@ const app = dva();
 app.model(require('./models/user').default);
 app.model(require('./models/login').default);
 app.model(require('./models/account').default);
+app.model(require('./models/safeCenter').default);
 // 4. Router
 app.router(require('./router').default);
 

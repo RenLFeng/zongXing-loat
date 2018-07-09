@@ -12,7 +12,9 @@ import Path from '../common/PagePath';
 import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
-
+import Recharge  from '../view/personal/recharge/recharge'
+import BindCard  from '../view/personal/rechargecomponents/card/bindcard/bindCard'
+import Withdrawals from '../view/personal/tixian/tixian'
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
 export default class UCenter extends React.Component {
 	constructor(props) {
@@ -56,6 +58,13 @@ export default class UCenter extends React.Component {
                   {/* <Route path={Path.CHANGE_BINDEMAIL} component={ChangeBindEmail} />    */}
                   {/*申请借款*/}
                   <Route path={Path.APPALY_LOAN} exact component={AppalyLoan} />
+				  {/* 充值 */}
+				  <Route path={Path.ACCOUNT_RECHARGE} exact component={Recharge} />
+				  <Route path={Path.ACCOUNT_WITHDRAWALS} exact component={Withdrawals} />
+				  
+				  {/* 绑定银行卡 */}
+				  <Route path={Path.BINDCARD} component={BindCard} />
+
             </Switch>
         </div>
       </div>
