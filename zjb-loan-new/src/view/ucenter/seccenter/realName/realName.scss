@@ -210,6 +210,12 @@
         left:10px;
         z-index: 1;
     }
+    .img3{
+        position: absolute;
+        top:11px;
+        left:8px;
+        z-index: 1;
+    }
     .span_{
         position: absolute;
         top:42px;
@@ -220,6 +226,13 @@
     .span_1{
         position: absolute;
         top:32px;
+        left:32px;
+        z-index: 1;
+        color:#D2D2D2;
+    }
+    .span_2{
+        position: absolute;
+        top:11px;
         left:32px;
         z-index: 1;
         color:#D2D2D2;
