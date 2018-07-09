@@ -82,7 +82,7 @@ export default class Repayment extends React.Component {
                         <span style={{marginLeft:40}}>本笔还款已逾期<span style={{color:'#ff3b35'}}>{recentRepay.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
                     </p>
                     
-                    <p style={{float:'right',color:'#ff3b35',marginTop:10,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{width:23,height:23}}></i>逾期处罚措施</p>
+                    <p style={{float:'right',color:'#ff3b35',marginTop:10,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{fontSize:20,verticalAlign: 'middle'}}></i>逾期处罚措施</p>
                 </div>
 
                 <div className="fr uc-rbody S" style={{marginTop:10}}>
