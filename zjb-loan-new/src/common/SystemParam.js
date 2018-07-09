@@ -87,7 +87,7 @@ export const china_REG = /^[\u4E00-\u9FA5]+$/;
 export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 
 // 营业执照号正则
-export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{15}$)/;
+export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{19}$)/;
 
 // 邮箱验证正则
 export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Input, Button, Spin, message } from 'antd';
-import { doLogin} from '../../../../../services/api';
+import { securityCentreService } from '../../../../../services/api';
 import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../../../../common/PagePath';
 import { AUTH_CODE_TIME,pass_reg} from '../../../../../common/SystemParam';
 import './changeLoginPwd.scss';
@@ -17,7 +17,8 @@ export default class ChangeLPwd extends React.Component {
     super(props);
     this.state={
       password:'',
-      show:false,  //密码隐藏
+
+      show:true,  //密码隐藏
       message1:'',  //提示1
       newPassword:'',
       newShow:false,//密码隐藏
@@ -108,7 +109,9 @@ export default class ChangeLPwd extends React.Component {
     }
     this.setState({ loading: true });
     try {
-      const response = await doLogin.UpdatePass(param);
+      console.log("getCode running ...");
+      const response = await securityCentreService.UpdatePass(param);
+      console.log("getCode finish ...");
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
@@ -122,6 +125,7 @@ export default class ChangeLPwd extends React.Component {
       }
     } catch (e) {
       this.setState({ loading: false });
+      console.log("error",e);
       message.error('请求失败');
       return;
     }
@@ -152,7 +156,7 @@ export default class ChangeLPwd extends React.Component {
       verificationCode:code,
     }
     this.setState({sureloading:true})
-    const response = await doLogin.changePass(param);
+    const response = await securityCentreService.changePass(param);
     console.log('reaponse',response)
     if(response.code === 0){
        this.setState({
