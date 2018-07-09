@@ -50,8 +50,27 @@ export const accountService={
     //获取投资回款明细
     getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param),
     repayPlan:async(param)=>req.get('/zjb-website/account/getRepayPlan',param),
-    
+  // 提交充值信息 获取充值所需数据
+    getRecharge:async(param)=>req.post('/zjb-dc/account/getRechargeInfo',param),
+    // 银行卡绑定
+    bindBankCard:async(param)=>req.post('/zjb-website/bankcard/add',param),
+    // 银行卡信息校验——聚合数据校验
+    verifyBankCard:async(param)=>req.get('/zjb-website/jh/bankCardInfo?bankCard='+param),
+    // 获取已绑定的银行卡列表
+    getBankCardList:async(param)=>req.get('/zjb-website/bankcard/list/person'),
+    //提交提现表单信息接口
+    putInformation:async(param)=>req.post('/zjb-dc/withdrawals/param',param),
 }
+
+
+
+
+export const baseService={
+    //获取省份对应的城市
+    getCity:async(param)=>req.get('/zjb-website/common/cities?provinceId='+param),
+}
+  
+
 
 //登录 dbb
 export const doLogin={
@@ -65,7 +84,14 @@ export const doLogin={
     fp_checkInfo:async(param)=>req.post('/zjb-website/userInfo/checkAuthCode',param),
     //修改密码
     changePassword:async(param)=>req.post('/zjb-website/userInfo/updatePwd',param), 
+    // 获取用户基础信息的接口
+    getUserBaseData:async(param)=>req.get('/zjb-website/userInfo/findOne'),
 }
+
+
+
+
+
 
 //注册-wfl
 export const regiserAccount = {
@@ -105,6 +131,11 @@ export const personal = {
 }
     
 
+//我的借款
+export const mineloan = {
+    //
+    getMineLoan: async () => req.get('/zjb-website/project/self/project'),
+}
 //实名认证 - momei
 export const securityCentreService = {
   getSafeData: async () => req.get('/zjb-website/securityCenter/findByuserId'),

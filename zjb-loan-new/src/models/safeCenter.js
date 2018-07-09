@@ -1,4 +1,4 @@
-import {realName} from '../services/api';
+import {getSafeData} from '../services/api';
 import { message } from 'antd';
 export default {
   namespace: 'safeCenter',
@@ -9,23 +9,15 @@ export default {
     safeDataLoading: false
   },
   effects: {
-    *getSafe({payload}, { call, put }) {
+    *getSafe(_, { call, put }) {
       //请求安全中心首页数据
       yield put({
         type: 'startSafeData'
       });
       try {
-        const response = yield call(realName.getSafeData);
-        console.log("safeData",response);
+        const response = yield call(getSafeData);
+        console.log(response);
         if (response.code === 0) {
-          if(payload){
-            let resObj = response.data;
-            if(!resObj.userSecurityCenter.fCertification){
-              payload.jumpAuth();
-            }else if(!resObj.userSecurityCenter.fThirdAccount){
-              payload.jumpCreateAccount();  
-            }
-          }
           yield put({
             type: 'endSafeData',
             payload: response.data

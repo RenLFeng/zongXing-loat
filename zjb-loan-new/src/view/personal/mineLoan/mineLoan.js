@@ -2,23 +2,31 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:16:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 09:15:30
+ * @Last Modified time: 2018-07-09 13:54:52
  */
 import React from 'react';
-import './mineloan.scss'
+import './mineloan.scss';
+import {connect} from 'dva';
 import LeftMenu from '../../../components/leftmenu/leftMenu';
 import NoLoan from './mineLoanComm/noLoan';
 import HaveLoan from './mineLoanComm/haveLoan';
 
+@connect((state)=>({
+    mineloan: state.mineloan,
+    data: state.mineloan.data
+}))
 class MineLoan extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            noloan: false
-        }
+    }
+    componentDidMount(){
+        this.props.dispatch({
+            type: 'mineloan/getMineLoan',
+            payload: ''
+        })
     }
     render(){
-        if(!this.state.noloan){
+        if(this.props.data.length === 0){
             return(
             	<div>
             	 <LeftMenu param={this.props}/>
