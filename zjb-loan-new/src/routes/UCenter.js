@@ -13,6 +13,7 @@ import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
 import Recharge from '../view/personal/recharge/recharge'
+import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard'
 
 import Withdrawals from '../view/personal/tixian/tixian'
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
@@ -79,7 +80,7 @@ export default class UCenter extends React.Component {
 						{/* 充值 */}
 						<Route path={Path.ACCOUNT_RECHARGE} exact component={Recharge} />
 						<Route path={Path.ACCOUNT_WITHDRAWALS} exact component={Withdrawals} />
-						{/* <Route path={Path.BINDCARD} component={BindCard} /> */}
+						<Route path={Path.BINDCARD} component={BindCard} />
 					</Switch>
 				</div>
 			</div>

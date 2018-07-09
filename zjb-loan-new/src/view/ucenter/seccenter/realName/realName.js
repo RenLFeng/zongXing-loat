@@ -213,7 +213,7 @@ export default class RealName extends React.Component {
                       <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                       <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>企业开通借款账户</span>
                       <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                      {safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a> : <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>}
+                      {safeData.userSecurityCenter.fThirdAccount ? null : <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>}
                     </div>
                     <div style={{ marginTop: 9, marginBottom: 5 }}>
                       <img alt="" src={require('../../../../assets/img/ucenter/u4288.png')} />
