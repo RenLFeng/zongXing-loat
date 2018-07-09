@@ -1,8 +1,10 @@
 import React from 'react';
 import { Icon, Input, Button, Steps, Modal, message } from 'antd';
+import moment from 'moment';
+import { connect } from 'dva';
+
 import { AUTH_ADDRESS } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
-import { connect } from 'dva';
 import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
 import {securityCentreService} from '../../../../services/api';
@@ -33,29 +35,45 @@ export default class RealName extends React.Component {
       distribution: {}, //授权表单数据
       status: '', //授权状态
       url: '',     // 提交表单乾多多链接
-      safeData: { //安全中心数据对象
-        userSecurityCenter: {}
-      },
       cardList: [] //银行卡列表
     }
   }
 
   componentDidMount() {
     //初始化安全中心信息
-    this.getInitData();
-    //第三方开户成功后再去获取用户银行卡信息
-    
+    this.initFetchSafeData();
+    // 第三方开户成功再去获取用户银行卡信息
+    console.log("this.props.safeData.userSecurityCenter.fThirdAccount",this.props.safeData.userSecurityCenter.fThirdAccount);
+    // 获取用户绑定银行卡
+    this.getBankCardListAjax(); 
     //获取已经授权的授权代码
     this.getAuthorizationState();
   
     
   }
-  getInitData() {
+
+  /** 初始化安全中心信息 */
+  initFetchSafeData() {
     console.log("getInitData running ...")
     this.props.dispatch({
       type: 'safeCenter/getSafe'
     });
   }
+
+   /** 获取用户绑定银行卡 */ 
+   getBankCardListAjax = async (param) => {
+    const response = await securityCentreService.getBankCardList(param?param:this.props.accountId);
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          cardList: response.data
+        })
+      }
+    } else {
+      message.error(response.msg);
+    }
+  }
+
  
   /** 跳转到开户界面 */
   jumpCreateAccount() {
@@ -128,12 +146,42 @@ export default class RealName extends React.Component {
     }
   }
 
+  // 解除银行卡绑定
+  async unbindBankCardAjax(cardId, fid) {
+    if (!this.state[`${fid}password`] || (this.state[`${fid}password`] && this.state[`${fid}password`].trim().length === 0)) {
+      message.error('密码不能为空');
+      return;
+    }
+    if (this.state.unbindLoading) {
+      return;
+    }
+    this.setState({ unbindLoading: true });
+    const response = await securityCentreService.unbindBankCard({
+      accountId: this.props.accountId,
+      bankcard: cardId,
+      password: this.state[`${fid}password`].trim()
+    });
+    this.setState({ unbindLoading: false });
+    if (response.code === 0) {
+      this.getBankCardListAjax()
+      // for (let i = 0, len = this.state.cardList.length; i < len; i++) {
+      //   if (this.state.cardList[i].fbankcard === cardId) {
+      //     this.state.cardList.splice(1, i);
+      //     break;
+      //   }
+      // }
+      // this.setState({ cardList: this.state.cardList });
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
 
   render() {
     // 初始化数据
-    console.log("safeData", safeData);
     console.log("path",Path);
-    const { safeData, status, distribution, url } = this.state;
+    const safeData = this.props.safeData;
+    console.log("safeData1",safeData);
+    const { status, distribution, url } = this.state;
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -143,7 +191,7 @@ export default class RealName extends React.Component {
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">开户中心</span>
-                  <span className="registrationTime">注册时间:2018/05/18 19:25</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
                   {/* <div style={{ marginBottom: 23 }}>
@@ -165,20 +213,20 @@ export default class RealName extends React.Component {
                       <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                       <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>企业开通借款账户</span>
                       <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                      <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>
+                      {safeData.userSecurityCenter.fThirdAccount ? <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a> : <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>}
                     </div>
                     <div style={{ marginTop: 9, marginBottom: 5 }}>
                       <img alt="" src={require('../../../../assets/img/ucenter/u4288.png')} />
                     </div>
                     {
-                      safeData.userSecurityCenter ?
+                      safeData.userSecurityCenter.fThirdAccount ?
 
                         <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
-                          <span style={{ color: 'black' }} >西安金凡翻译有限公司</span>
+                          <span style={{ color: 'black' }} >{safeData.fRealName}</span>
                           <span className="line" >|</span>
-                          <span style={{ color: 'black' }} >91130528601068705W</span>
+                          <span style={{ color: 'black' }} >{safeData.fIdcardNo}</span>
                           <span className="line" >|</span>
-                          <span style={{ color: 'black' }} >钱多多账户：2560434</span>
+                          <span style={{ color: 'black' }} >钱多多账户：{safeData.fThirdAccountNo}</span>
                           <div className="findPass">
                             <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                             <span className="line" >|</span>
@@ -223,7 +271,7 @@ export default class RealName extends React.Component {
                 <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                 <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>我的银行卡</span>
                 <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
-                <a className="right">设置</a>
+                <a className="right" style={{display:'none'}}>设置</a>
               </div>
 
               <div className="cardBox">

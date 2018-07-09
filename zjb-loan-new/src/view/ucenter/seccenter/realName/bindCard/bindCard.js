@@ -46,10 +46,10 @@ class BindCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      realname: '余凤',
+      realname: '',
       idcard: '',
       bankCardNo: '', // 银行卡号
-      userBaseInfo: null, // 当前登录用户的信息
+      userBaseInfo: {}, // 当前登录用户的信息
       cardType:'借记卡',
     };
   }
@@ -60,19 +60,21 @@ class BindCard extends React.Component {
         showNumInfo:4,
       }
     });
-    // this.queryCompanyBaseData();
+    this.queryUserBaseInfo();
     this.sort();
   }
-
   // 查询当前登录的用户
-  queryCompanyBaseData = async () => {
-    let response = await securityCentreService.getCompanyBaseData();
+  queryUserBaseInfo = async () => {
+    let response = await securityCentreService.getUserBaseData();
+    console.log("this.state.userBaseInfo",response);
     if (response.code === 0) {
       this.setState({ userBaseInfo: response.data });
     } else {
       response.msg && message.error(response.msg);
     }
   }
+
+
   updateRealName = (e) => {
     console.log('updateRealName', e.target.value);
     this.setState({ realName: e.target.value });
@@ -121,7 +123,14 @@ class BindCard extends React.Component {
       });
       return;
     }else{
+      //正确
+      let param = {
+        realname:this.state.userBaseInfo.freal_name,
+        idcard: this.state.userBaseInfo.fidcard_No,
+        cardType: '借记卡'
+      }
       this.setState({
+        ... param,
         bankCardImg: 'success',
         bankCardErr: ''
       });
@@ -293,7 +302,7 @@ class BindCard extends React.Component {
         <div className="forms">
           <div className="bind_item_view">
             <span className="name">持卡人姓名</span> 
-            <span>{this.state.realName}</span> 
+            <span>{this.state.userBaseInfo.freal_name}</span> 
           </div>
           {/* <i title="绑定手机号" className="zjb zjb-zhengque" style={{color:'green', fontSize: 24}}></i> */}
           <div className="bind_item_view">
