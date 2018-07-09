@@ -3,7 +3,7 @@ import { Icon, Input, Button, Steps, Modal, message } from 'antd';
 import { AUTH_ADDRESS } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
 import { connect } from 'dva';
-import LeftMenu from '../../../../components/personal/leftmenu/leftMenu';
+import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
 import {securityCentreService} from '../../../../services/api';
 
@@ -44,7 +44,11 @@ export default class RealName extends React.Component {
     //初始化安全中心信息
     this.getInitData();
     //第三方开户成功后再去获取用户银行卡信息
+    
     //获取已经授权的授权代码
+    this.getAuthorizationState();
+  
+    
   }
   getInitData() {
     console.log("getInitData running ...")
@@ -132,7 +136,7 @@ export default class RealName extends React.Component {
     const { safeData, status, distribution, url } = this.state;
     return (
       <div>
-        <LeftMenu/>
+        <LeftMenu param={this.props}/>
         <div>
           {
             safeData.userSecurityCenter !== undefined ?
