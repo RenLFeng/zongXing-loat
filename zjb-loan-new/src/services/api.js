@@ -126,6 +126,39 @@ export const personal = {
     getLoginData: async () => req.get('/zjb-website/login/getData'),
     //回款计划
     repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
+     //还款计划
+     borrowPlan: async () => req.get('/zjb-website/project/getBorrowPlan'),
 }
+    
 
-  
+//我的借款
+export const mineloan = {
+    //
+    getMineLoan: async () => req.get('/zjb-website/project/self/project'),
+}
+//实名认证 - momei
+export const securityCentreService = {
+  getSafeData: async () => req.get('/zjb-website/securityCenter/findByuserId'),
+  createAccount: async(param) => req.post('/zjb-dc/account/add', param),
+  /** 获取当前用户的企业开户所需信息 */
+  getCompanyRealInfo: async() => req.get(''),
+  /** 获取企业基本信息 */
+  getCompanyBaseData: async() => req.get(''),
+  /** 绑定银行卡 */
+  bindBankCard: async(param) => req.post('/zjb-website/bankcard/add',param),
+  // 获取已绑定的银行卡列表
+  getBankCardList: async() => req.get('/zjb-website/bankcard/list/person'),
+  /** 解除除银行卡绑定 */
+  unbindBankCard: async(param) => req.post('/zjb-website/bankcard/delete',param),
+
+  /** 获取授权所需参数 */
+  distribution: async(willStr, companyNo, returnUrl) => req.get(`/zjb-dc/author/open?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+
+  /** 查询已授权的状态 */
+  authorizationState: async(companyNo) => req.get(`/zjb-dc/author/authorized?companyNo=${companyNo}`),
+
+  /** 取消授权 */
+  closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/zjb-dc/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+
+}
+   

@@ -1,0 +1,61 @@
+/*
+ * @Author: wfl 
+ * @Date: 2018-07-05 09:51:51 
+ * @Last Modified by: wfl
+ * @Last Modified time: 2018-07-06 16:27:02
+ */
+@import '../color.scss';
+.sure-loan{
+    padding: 25px 35px;
+    margin: 15px 0;
+    background-color: rgb(242, 242, 242);
+    p{
+        color: #999;
+        padding: 5px 0;
+        span{
+            color: #333;
+            padding-left: 8px;
+        }
+    }
+    .table-bg{
+        background-color: #fff;
+    }
+    .ac-button{
+        margin: 13px 0;
+        text-align: right;
+        a{
+            width: 98px;
+            height: 36px;
+            text-align: center;
+            display: inline-block;
+            line-height: 36px;
+            border-radius: 4px;
+            &:hover{
+                opacity: 0.7;
+            }
+        }
+        a.agree{
+            color: #FDE5D1;
+            background-color: $agop;
+            border:1px solid $agop;
+            background: -webkit-linear-gradient($agop,$agree, $agop); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient($agop,$agree, $agop); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient($agop,$agree, $agop); /* Firefox 3.6 - 15 */
+            background: linear-gradient($agop,$agree, $agop); /* 标准的语法（必须放在最后） */
+        }
+        a.unagree{
+            color: $agree;
+            border:1px solid $agree;
+            margin: 0 5px;
+        }
+        a.stop{
+            color: #FED6D3;
+            background-color: $stopop;
+            border:1px solid $stopop;
+            background: -webkit-linear-gradient($stopop,$stop, $stopop); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient($stopop,$stop, $stopop); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient($stopop,$stop, $stopop); /* Firefox 3.6 - 15 */
+            background: linear-gradient($stopop,$stop, $stopop); /* 标准的语法（必须放在最后） */
+        }
+    }
+}
