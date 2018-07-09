@@ -132,12 +132,11 @@ export default class Authentication extends React.Component {
                   <div className="inp">
                     <Input placeholder="手机号（默认）" onChange={this.updateIdcard} style={{marginTop:2}}/>
                     <img alt="身份证id" src={require('../../../../../assets/img/ph.png')}  className="img3"/>
-                    {/* <i className="zjb zjb-shouji-copy img2"></i> */}
                     <span className="span_2">|</span>
                     {/* <span className="prompts">{this.state.message2}</span> */}
                   </div>
       
-                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{top:244,left:449}}>提交开户</span>
+                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{top:247,left:449}}>提交开户</span>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?
