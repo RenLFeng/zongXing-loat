@@ -99,8 +99,11 @@ export const personal = {
     // 获取用户基础信息与login相同
     getLoginData: async () => req.get('/zjb-website/login/getData'),
     //回款计划
-    repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),  
+    repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
+     //还款计划
+     borrowPlan: async () => req.get('/zjb-website/project/getBorrowPlan'),
 }
+    
 
 //实名认证 - momei
 export const securityCentreService = {

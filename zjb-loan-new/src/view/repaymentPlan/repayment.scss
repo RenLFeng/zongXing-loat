@@ -31,7 +31,7 @@
     height: 65px;
     line-height: 65px;
     background-color: #fffdf8;
-    box-shadow: 1px 1px 10px #EDEDED;
+    box-shadow: 1px 1px 30px #999999;
     .time{
         margin-left: 25px;
     }
@@ -59,6 +59,42 @@
         cursor: pointer;
     }
 }
+
+.repays{
+    margin:18px 0px;
+    height: 65px;
+    line-height: 65px;
+    background-color: #fffdf8;
+    box-shadow: 1px 1px 30px #999999;
+    margin-bottom: 90px;
+    .time{
+        margin-left: 25px;
+    }
+    .btns{
+        width: 70px;
+        height: 25px;
+        background-color: #46bb3a;
+        border-radius: 2px;
+        display: inline-block;
+        line-height: 26px;
+        text-align: center;
+        color:#fff;
+        margin:0 18px;
+    }
+    .data{
+        display: inline-block;
+    }
+    .a{
+        color:#3366ff;
+        text-decoration: underline;
+        float: right;
+        margin-right: 37px;
+    }
+    .btns:hover,.a:hover{
+        cursor: pointer;
+    }
+}
+
 
 .repay_{
     margin-top:18px;
@@ -107,8 +143,11 @@
     }
 }
 
+
+
 .info_{
     font-family: MicrosoftYaHei;
+    // height:300px;
     .date{
         font-size: 14px;
         color: #999999;
