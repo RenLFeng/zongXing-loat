@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:12 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 17:52:48
+ * @Last Modified time: 2018-07-09 11:28:31
  */
 
 @import '../../../assets/common/_var.scss';
@@ -91,6 +91,87 @@ $weight: 600;
           padding-left: 8px;
         }
       }
+    }
+    .reply-statu{
+      text-align: center;
+      margin: 20px 0;
+      .statu-a{
+        width: 110px;
+        height: 40px;
+        display: inline-block;
+        line-height: 40px;
+        margin: 0 1px;
+        background-color: #E4E4E4;
+        span{
+          color: $agree;
+          padding-left: 5px;
+        }
+      }
+    }
+    .reply-card{
+      background-color: #FBFAFA;
+      padding: 25px;
+      .replay-col20{
+
+        .type{
+          color: $agree;
+          padding-right: 8px;
+        }
+      }
+      .replay-col4{
+        text-align: right;
+        p,a{
+          color: $hui;
+        }
+        a.hf{
+          color: $agree;
+        }
+      }
+      .hf-div{
+        text-align: right;
+        transition: all .25s ease-in-out;
+        -webkit-transition: all .25s ease-in-out;
+        .hf-btn{
+          text-align: right;
+          margin-top: 15px;
+          a{
+            display: inline-block;
+            width: 55px;
+            height: 25px;
+            text-align: center;
+            line-height: 25px;
+            border-radius: 3px;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+          a.commit{
+            color: #fff;
+            margin-right: 8px;
+            background: -webkit-linear-gradient(top,#3366FF,rgba(51, 102, 255, 0.7)); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(bottom,#3366FF,rgba(51, 102, 255, 0.7)); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(bottom,#3366FF,rgba(51, 102, 255, 0.7)); /* Firefox 3.6 - 15 */
+            background: linear-gradient(bottom,#3366FF,rgba(51, 102, 255, 0.7)); /* 标准的语法（必须放在最后） */
+          }
+          a.cancle{
+            color: #fff;
+            background: -webkit-linear-gradient(top,#9C9C9C,rgba(156, 156, 156, 0.7)); /* Safari 5.1 - 6.0 */
+            background: -o-linear-gradient(bottom,#9C9C9C,rgba(156, 156, 156, 0.7)); /* Opera 11.1 - 12.0 */
+            background: -moz-linear-gradient(bottom,#9C9C9C,rgba(156, 156, 156, 0.7)); /* Firefox 3.6 - 15 */
+            background: linear-gradient(bottom,#9C9C9C,rgba(156, 156, 156, 0.7)); /* 标准的语法（必须放在最后） */
+          }
+        }
+      }
+    }
+    .zhang{
+      background-repeat: no-repeat;
+      width: 150px;
+      height: 125px;
+      float: right;
+      display: inline-block;
+      position: relative;
+      margin-bottom: -125px;
+      top: -105px;
     }
   }
   .wait-commit {

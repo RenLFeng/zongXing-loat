@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:20:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 17:43:10
+ * @Last Modified time: 2018-07-06 17:51:32
  * 步骤条
  */
 import React from 'react';
@@ -11,19 +11,27 @@ import {Icon} from 'antd';
 import {connect} from 'dva';
 import '../mineloan.scss';
 
+@connect((state)=>({
+    mineloan: state.mineloan,
+    data: state.mineloan.data
+}))
 class LoanStep extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             states: 1,
-            
         }
     }
+    componentDidMount(){
+     
+    }
     render(){
+        console.log(this.props.stepdata,'ppp')
+        const {fname,fproject_no,fflag} = this.props.stepdata;
         let step = [];
-        let num = 0;
+        let num = 0; 
         for(let i of stepDate){
-            if(this.state.states === i.state){
+            if(fflag === i.state){
                 step.push(<div key={i.state} className='ready-bag'>
                 <p className='ready'>{i.name}</p> 
              </div>)
@@ -37,9 +45,9 @@ class LoanStep extends React.Component{
         }
         return(
             <div className="loan-step" >
-                {step}
-                <p>项目编号:<span>P18060006</span></p>
-                <p>项目名称:<span>海底捞火锅新店扩张</span></p>
+                {this.props.type === 0 ? '' : step}
+                <p>项目编号:<span>{fproject_no}</span></p>
+                <p>项目名称:<span>{fname}</span><span></span></p>
             </div>
         )
     }

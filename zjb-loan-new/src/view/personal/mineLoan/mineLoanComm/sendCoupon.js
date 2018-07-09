@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-05 11:48:42 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 18:24:53
+ * @Last Modified time: 2018-07-05 18:47:19
  * 发放优惠券
  */
 import React from 'react';
@@ -10,8 +10,9 @@ import {connect} from 'dva';
 import './sendcoupon.scss';
 import {IMG_BASE_URL} from '../../../../common/SystemParam';
 import UploadImg from '../../../../components/imgupload/ImgUpload';
-import { Input, InputNumber, Row, Col } from 'antd';
-
+import DatePick from './datePick';
+import { Input, InputNumber, Row, Col, Select } from 'antd';
+const Option = Select.Option;
 @connect((state)=>({
 
 }))
@@ -24,6 +25,8 @@ class SendCoupon extends React.Component{
             imgsrc: '',
             fullrule: 0,
             parvalue: '',
+            address: '',
+            phone: '',
             couponnum: 0,
             data:[
                 {
@@ -57,7 +60,7 @@ class SendCoupon extends React.Component{
         console.log(val,'ppp')
     }
     render(){
-        const {data, parvalue, fullrule, couponnum} = this.state;
+        const {data, parvalue, fullrule, couponnum, address, phone} = this.state;
         let couCard = [];
         for(let i of data){
             if(i.status === 0){
@@ -167,9 +170,22 @@ class SendCoupon extends React.Component{
                 </Col>)
             }
         }
+
+
         return(
             <Row className="send-coupon" type="flex" justify="center">
                 {couCard}
+                <div className="send-form-div">
+                    <span className="fir-span">使用地址:</span> 
+                    <Input className="form-item" value={address} 
+                            placeholder= "详细地址"
+                            onChange={(e)=> this.setState({address: e.target.value })} 
+                            style={{display: 'inline-block',width: '123px'}}/>
+                    <Input className="form-item" value={phone} 
+                            placeholder= "联系电话"
+                            onChange={(e)=> this.setState({phone: e.target.value })} 
+                            style={{display: 'inline-block',width: '123px'}}/>
+                </div>
             </Row>
         )
     }

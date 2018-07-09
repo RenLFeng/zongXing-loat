@@ -2,27 +2,20 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:42:28 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-05 10:26:17
+ * @Last Modified time: 2018-07-06 16:49:39
  * 我的借款--确认借款 
  */
 import React from 'react';
 import './sureloan.scss';
 import {connect} from 'dva';
+import {parseTime, returnFloat} from '../dateformat/date';
 import { Table } from 'antd';
 
 class SureLoan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            data: [
-                {
-                    howmang: '10.00万元',
-                    howlong: '3个月',
-                    rate: '9%',
-                    rank: 'A',
-                    time: '2018-06-06 11:56:34',
-                }
-            ]
+            data: []
         }
     }
 
@@ -49,45 +42,57 @@ class SureLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'howmang', 
-                key: 'howmang' 
+                dataIndex: 'fcredit_money', 
+                key: 'fcredit_money',
+                render: (text,record) =>{
+                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                }  
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'howlong', 
-                key: 'howlong' 
+                dataIndex: 'fcredit_month', 
+                key: 'fcredit_month' ,
+                render: (text,record) =>{
+                    return <span>{record.fcredit_month}个月</span>
+                }
             },
             { 
                 title: '借款利率', 
                 align: 'center',
-                dataIndex: 'rate', 
-                key: 'rate' 
+                dataIndex: 'frate_predict', 
+                key: 'frate_predict',
+                render: (text,record) =>{
+                    return <span>{record.frate_predict}%</span>
+                }  
             },
             { 
                 title: '项目评级', 
                 align: 'center',
-                dataIndex: 'rank', 
-                key: 'rank',
+                dataIndex: 'fleve_name', 
+                key: 'fleve_name',
             },
             { 
                 title: '评级时间', 
                 align: 'center',
-                dataIndex: 'time', 
-                key: 'time',
+                dataIndex: 'fcreate_time', 
+                key: 'fcreate_time',
+                render: (text,record) =>{
+                    return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                }
             },
           ];
-
+        const {fname,fproject_no,fflag} = this.props.suredata;
         return(
             <div className="sure-loan">
-                <p>项目编号:<span>P18060006</span></p>
-                <p>项目名称:<span>海底捞火锅新店扩张</span></p>
+                <p>项目编号:<span>{fproject_no}</span></p>
+                <p>项目名称:<span>{fname}</span></p>
                 <div className="table-bg">
                     <Table
                         bordered size="small"
                         locale={locale}
                         pagination={false}
-                        dataSource={this.state.data}
+                        dataSource={[this.props.suredata]}
                         columns={columns}
                         rowClassName="editable-row"
                         loading={this.state.loading}

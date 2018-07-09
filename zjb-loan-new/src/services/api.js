@@ -102,4 +102,10 @@ export const personal = {
     repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
 }
 
+//我的借款
+export const mineloan = {
+    //
+    getMineLoan: async () => req.get('/zjb-website/project/self/project'),
+}
+
   

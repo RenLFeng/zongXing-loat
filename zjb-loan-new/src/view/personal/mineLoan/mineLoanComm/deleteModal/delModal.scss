@@ -1,0 +1,55 @@
+.del-modal {
+  background-color: #fff;
+  width: 325px;
+  text-align: center;
+  height: 185px;
+  border-radius: 5px;
+  box-shadow: 0 0 50px 0px #ddd;
+  position: absolute;
+  left: calc(50% - 150px);
+  transition: all .25s ease-in-out;
+  -webkit-transition: all .25s ease-in-out;
+  display: none;
+  .del-header {
+    height: 40px;
+    line-height: 40px;
+    &:hover{
+        opacity: 0.7;
+    }
+    i {
+      float: right;
+      padding: 6px 12px 6px 6px;
+      background-color: #F4F5F8;
+      cursor: pointer;
+      font-size: 25px;
+      color: #929499;
+    }
+  }
+  .del-content{
+    height: 105px;
+    line-height: 105px;
+    color: #000;
+  }
+
+  .del-btn{
+      a{
+        display: inline-block;
+        width: 50%;
+        height: 40px;
+        line-height: 40px;
+        &:hover{
+            opacity: 0.7;
+        }
+      }
+      a.btn-sure{
+        background-color: #EB6761;
+        color: #fff;
+        border-radius: 0 0 0 5px;
+      }
+      a.btn-cancel{
+        background-color: #B0B6C8;
+        color: #fff;
+        border-radius: 0 0 5px 0;
+      }
+  }
+}
