@@ -1,90 +1,79 @@
-  
-.safeCenter{
-  padding-bottom: 20px;
-  p{
-   font-weight: bold;
-    //color:gray;
-    font-size: 16px;
-  }
-  .line{
-    width:96%;
-    margin: auto;
-    padding: 25px 15px;
-    border-bottom: 1px solid lightgray;
-    .block1 {
-      display: inline-block;
-      width:30%;
-      vertical-align: middle;
-      border-right:1px solid lightgray;
-      padding: 0 8px;
-      .i1{
-        font-size: 30px;
-        color:rgb(152,220,2);
-        font-weight: bold;
-        margin-right: 20px;
-      }
-      .i2{
-        font-size: 24px;
-        color:#FFCC00;
-        font-weight: bold;
-        margin-right: 20px;
-      }
-      .word{
-        display: inline-block;
-        font-size: 20px;
-        font-weight: bold;
-        color:grey;
-
-      }
-      .icon{
-        display: inline-block;
-        color:white;
-        background: orange;
-        width:15px;
-        height:15px;
-        text-align: center;
-        line-height: 15px;
-        margin-left: 10px;
-      }
-      .icon1{
-        display: inline-block;
-        color:white;
-        background: lightgray;
-        width:15px;
-        height:15px;
-        text-align: center;
-        line-height: 15px;
-        margin-left: 10px;
-      }
-    }
-    .block2 {
-      display: inline-block;
-      width:57%;
-      vertical-align: middle;
-      padding: 0 20px;
-      color:gray;
-    }
-    .block3 {
-      display: inline-block;
-      width:11%;
-      vertical-align: middle;
-      padding: 0 8px;
-      color:#FF7E10;
-      a{
-        color:#FF7E10;
-      }
-      Link{
-        color:#FF7E10;
-      }
-    }
-  }
-
-}
+ 
 
 .per_account {
-  background-color: #fff;
+  float: right;
+  width: 992px;
+  background-color: #fff; 
   padding: 30px;
-  .return_money {
+  margin-bottom: 10px;
+  position: relative;
+  &>.my-statement {
+    &>.no-statement {
+      display: inline-block;
+      width: 932px;
+      background-color: #f9f9f9;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
+  &>.ptit{
+    border-bottom:  1px dashed #e9e9e9 ;
+    padding-bottom: 14px;
+    &>i{
+      font-size: 20px;
+      line-height: 14px;
+      margin-right: 18px;
+    }
+    &>span{
+      font-size: 22px;
+      font-weight: bold;
+      color: #f90;
+    }
+    &>em{
+      padding: 5px 10px;
+      background-color: #f5f5f5;
+      color: #ccc;
+      float: right;
+      border-radius: 15px;
+    }
+  }
+  &>.sub-info{
+    margin: 30px 0 10px;
+    &>i{
+      font-size: 14px;
+      color: #666;
+    }
+    &>span{
+      font-size: 18px;
+      color:#000;
+      margin-left: 22px;
+      margin-right: 95px;
+    }
+    &>.to-loan{
+      margin-top: -5px;
+      float: right;
+      width: 152px;
+      height: 39px;
+      background-position: 0px 122px;
+      background-image: url('./img/img.png');
+      text-align: center;
+      color: #fff;
+      font-size: 14px; 
+      padding-top: 8px;
+      &>span{ 
+        margin-bottom: -2px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-position: 0px 0px;
+        background-image: url('./img/img.png');
+      }
+    }
+  }
+ 
+  &>.return_money {
     border-bottom: 1px dashed #c9c9c9;
     em {
       font-size: 20px;
@@ -97,59 +86,165 @@
       margin-top: 10px;
     }
   }
-  .return_money_desc {
-    margin-top: 15px;
-    clear: both;
-    span {
-      color: #ff9900;
-      display: inline-block;
-      margin-top: 5px;
-      
+  &>.recent-repany{
+    margin-top: 10px;
+    &>.title{
+      margin: 30px 0 15px;
+      font-size: 14px;
+      color: #000;
     }
-    .orange_font {
-      color: #ff9900;
+    &>.repany-content{
+      height: 65px;
+      background-color:#fffdf8; 
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+      vertical-align: middle;
+      padding: 0 25px;
+      &>span{
+        font-size: 14px;
+        color: #000;
+        line-height: 65px;
+        margin-right:20px; 
+        &.txt2{
+          background-color: #46bb3a;
+          padding: 6px 14px;
+          color: #fff;
+          border-radius: 3px;
+        }
+        &.txt4{
+          margin-left:-10px;
+          margin-right: 10px; 
+          color: #ccc;
+        }
+        &.txt5{
+          color: #f90;
+          margin-right: 55px; 
+        }
+        &.txt6{
+          margin-right: 55px;
+        }
+        &.txt7{
+          margin-right: 55px;
+        }
+        &.txt8{
+          color: #ff3b35;
+        }
+
+      }
+      &>.hand-repay{ 
+        margin-left: 90px;
+        color: #3366ff;
+        text-decoration: underline;
+      } 
     }
-    .icon_btn {
+    &>.sub-content{
+      margin-top: 30px;
+      &>span{
+        font-size: 14px;
+        &.txt1{
+          color: #999;
+          margin-right: 40px;
+        }
+        &.txt3{
+          color: #ff3b35;
+        }
+      }
+    }
+    &>.chufa{
       float: right;
-      right: 0px;
-      display: inline-block;
-      .btn {
-        z-index: 999;
-        cursor: pointer;
+      color: #ff3b35;
+    }
+  } 
+  &>.my-loan{
+    &>.loan-lable{
+      margin-top: 30px;
+      margin-left: 10px;
+      margin-bottom: 40px;
+      &>span{
+        font-size: 16px;
+        margin-right: 21px;
+        line-height: 30px;
+        color: #999;
+        &.active{
+          display: inline-block;
+          width: 115px;
+          height: 30px;
+          color: #fff;
+          text-align: center;
+          padding-right: 10px;
+          line-height: 30px;
+          background-image: url('./img/img.png');
+          background-position:  0px 69px;
+        }
+      }
+    }
+    &>.project-info{
+      margin-bottom: 15px;
+      &>.txt1{
+        font-size: 14px;
+        color: #999;
+      }
+      &>.txt2{
+        font-size: 14px;
+        color: #000;
+      }
+    }
+    &>.loan-table{
+      &>tr{
+        height: 54px;
+        &>td{
+          border: 1px solid #ccc;
+          text-align: center;
+        }
+        &>td:nth-child(1){
+          width: 136px;
+        } 
+        &>td:nth-child(2){
+          width: 147px;
+        } 
+        &>td:nth-child(3){
+          width: 108px;
+        } 
+        &>td:nth-child(4){
+          width: 169px;
+        }
+        &>td:nth-child(5){
+          width: 148px;
+          color: #f90;
+        } 
+        &>td:nth-child(6){
+          width: 182px;
+          &>a{
+            color: #3366ff;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  &>.total-acount{
+    padding-top: 20px;
+    &>.account-info{
+      position: absolute;
+      top: 96px;
+      left: 60px;
+      width: 180px;
+      height: 180px; 
+      border-radius: 90px;
+      text-align: center; 
+      padding-top: 65px;
+      &>p:nth-child(1){
+        font-size: 16px;
+        color: #000;
+      }
+      &>p:nth-child(2){
+        font-size: 14px;
+        color: #666;
       }
     }
   }
 }
 
-.table_count_text {
-  position: absolute;
-  left: 0;
-  bottom: 20px;
-  color: #333;
-}
-
-.per_table_font > span {
-  color: #333 !important;
-}
-
-.table_div {
-  margin-top: 50px;
-  .ant-table {
-    overflow: visible;
-  }
-}
-
-.coupon_list {
-  .tips {
-    color: #c9c9c9;
-    display: block;
-    margin-bottom: 5px;
-    font-size: 12px;
-  }
-  .cp-coupon-content:nth-child(even) {
-    margin-right: 80px;
-  }
-}
+ 
 
 .money_dynamic_item {
   border: 1 solid #333;

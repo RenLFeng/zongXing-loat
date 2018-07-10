@@ -11,11 +11,11 @@ if (build === 'production') {
   document.title ="众借帮--客户测试环境";
 } else if (build === 'test') { 
   //  测试
-  BASE_URL = 'http://192.168.1.4:8001';
+  BASE_URL = 'http://192.168.1.59:8001';
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.4:8001';
+  BASE_URL = 'http://192.168.1.59:8001';
   document.title ="众借帮--开发环境"; 
 }
 export function test() { 
@@ -48,11 +48,12 @@ function checkStatus(response) {
     return response;
   }
   const errortext = codeMessage[response.status] || response.statusText;
-  const error = new Error(errortext);
-  error.name = response.status;
-  error.response = response;
-  global.error = error;
-  throw error;
+  // const error = new Error(errortext);
+  // error.name = response.status;
+  // error.response = response;
+  // global.error = error;
+  // throw error;
+  return {code: 999,msg:  codeMessage[response.status] || response.statusText}
 }
 
 export const req = {
@@ -87,6 +88,10 @@ export const req = {
     return fetch(url, Options)
       .then(checkStatus)
       .then((response) => {
+        console.log(response);
+        if (response.code === 999) {
+          return response;
+        }
         if (response.status === 204) {
           return response.text();
         }
@@ -121,11 +126,15 @@ export const req = {
     return fetch(url, newOptions)
       .then(checkStatus)
       .then((response) => {
+        console.log(response);
+        if (response.code === 999) {
+          return response;
+        }
         if (response.status === 204) {
           return response.text();
         }
         return response.json();
-      });
+      })
   }
 }
 
