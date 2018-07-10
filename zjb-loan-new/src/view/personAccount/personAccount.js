@@ -8,8 +8,11 @@ import LeftMenu from '../../components/leftmenu/leftMenu';
 import { Modal, message} from 'antd'; 
 import './personal.scss';
 import Statement from '../statement/Statement';  
+import { accountService } from '../../services/api';
  
-
+@connect((state)=>({
+  personal: state.personal.data
+}))
 export default class PersonAccount extends React.Component {
   constructor(props) {
     super(props);
@@ -107,6 +110,21 @@ export default class PersonAccount extends React.Component {
         statements:[]
     }; 
   } 
+
+  componentDidMount() {
+    this.fetchPersonalData();
+  }
+
+  async fetchPersonalData() {
+    const response = await accountService.getPersonalData();
+    console.log(response);
+    if (response.code === 0) {
+      
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
   render() { 
     const lables = [
       {
@@ -230,7 +248,7 @@ export default class PersonAccount extends React.Component {
                 <td>借款期数</td>
                 <td>借款利率</td>
                 <td>创建时间</td>
-                <td>状态</td>
+                <td style={{color: '#333'}}>状态</td>
                 <td>操作</td>
               </tr>
               <tr>
@@ -266,11 +284,12 @@ export default class PersonAccount extends React.Component {
           </div> 
           <div className="my-statement" >
               {
+                this.state.statements.length > 0 ? 
                 this.state.statements.map((item,index)=>{
                   return <Statement data={item} key={index}></Statement>
-                })
+                }) :
+                <span className="no-statement">暂无资金动态</span>
               }
-              
           </div>
         </div>
       </div>
