@@ -346,7 +346,7 @@ export default class RealName extends React.Component {
              {
                dataArr.map((data,index)=>{
                  return(
-                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:10}}>
+                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:'10px'}}>
                     <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
                     <p style={{textAlign:'center',color:'red'}}>授权</p>
                   </div>
