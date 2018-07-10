@@ -86,6 +86,10 @@ export const doLogin={
     changePassword:async(param)=>req.post('/userInfo/updatePwd',param), 
     // 获取用户基础信息的接口
     getUserBaseData:async(param)=>req.get('/userInfo/findOne'),
+    //修改登陆密码
+    UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+    changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+ 
 }
 
 
@@ -140,6 +144,8 @@ export const mineloan = {
 export const securityCentreService = {
   getSafeData: async () => req.get('/securityCenter/findByuserId'),
   createAccount: async(param) => req.post('/account/add', param),
+  /** 开户 */
+  createAccount: async(param) => req.post('/zjb-dc/account/add', param),
   /** 获取当前用户的企业开户所需信息 */
   getCompanyRealInfo: async() => req.get(''),
   /** 获取企业基本信息 */
@@ -159,6 +165,16 @@ export const securityCentreService = {
 
   /** 取消授权 */
   closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+
+  /** 获取用户基础信息的接口 */
+  getUserBaseData: async() => req.get('/zjb-website/userInfo/findOne'),
+
+  /** 为修改密码发送验证码 */
+  UpdatePass: async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+  /** 验证修改密码时的验证码 */
+  changePass: async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+  
+  
 
 }
    
