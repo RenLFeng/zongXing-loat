@@ -12,25 +12,23 @@ import Path from '../common/PagePath';
 import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
-import Recharge from '../view/personal/recharge/recharge'
-import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard'
+import Recharge from '../view/personal/recharge/recharge.js' ;
 
-import Withdrawals from '../view/personal/tixian/tixian'
+import Withdrawals from '../view/personal/tixian/tixian';
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
 import BindEmail from '../view/ucenter/seccenter/realName/bindEmail/bindEmail.js';
 import ChangeBindEmail from '../view/ucenter/seccenter/realName/changeBindEmail/changeBindEmail.js';
 import Repayment from '../view/repaymentPlan/repayment';
 import RealName from '../view/ucenter/seccenter/realName/realName';
 import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
-import MyCoupon from '../view/myCoupon/myCoupon';
-
+import MyCoupon from '../view/myCoupon/myCoupon'; 
+import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
 export default class UCenter extends React.Component {
 	constructor(props) {
 		super(props);
-	}
-
+	} 
 	componentDidMount() {
 
 		setTimeout(() => {

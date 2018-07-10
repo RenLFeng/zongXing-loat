@@ -6,7 +6,7 @@ export default class MyCoupon extends React.Component {
         return(
          <div>
               <LeftMenu param={this.props} />
-              <div className="fr uc-rbody">
+              <div className="">
               </div>
          </div>
         )
