@@ -1,0 +1,57 @@
+.my-coupon{
+  .send-coupon{
+    width:75%;
+    height:800px;
+    background: #f0f0f0;
+    position: absolute;
+    top: 50%;
+    margin-top: -400px;
+    left:58%;
+    margin-left: -45%;
+    z-index: 9999999;
+    padding-top: 0;
+    >.tit{
+      background: #C4C4C4;
+      font-size: 20px;
+      height: 63px;
+      line-height: 63px;
+      padding: 0 20px;
+    }
+    .content-info{
+      padding: 35px;
+      .tit{
+        p{
+          color:#999;
+          margin-top: 10px;
+          span{
+            color:#333;
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    table{
+      margin-top: 30px;
+    }
+    .btns{
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      a{
+        display: inline-block;
+        width: 83px;
+        height: 34px;
+        border-radius: 2px;
+        border: solid 1px #f29827;
+        color:#f90;
+        text-align: center;
+        line-height: 34px;
+      }
+      .sub{
+        background: #f90;
+        color:#fff;
+        margin-left: 20px;
+      }
+    }
+  }
+}
