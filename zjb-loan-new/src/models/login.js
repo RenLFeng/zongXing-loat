@@ -34,7 +34,7 @@ export default {
         //请求结束，请求状态修改为未请求状态
         //登录成功做的操作
         if (response.code === 0) {
-          const access = {webToken:response.data.webToken,nickName: response.data.nickName};
+          const access = {webToken:response.data.UserwebToken,nickName: response.data.companyName};
           localStorage.setItem('accessToken', JSON.stringify(access));
           yield put(routerRedux.push('/'));
           yield put({
