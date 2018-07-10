@@ -74,7 +74,7 @@ export const baseService={
 
 //登录 dbb
 export const doLogin={
-	 userLogin:async(param)=>req.post('/login/login',param),
+	 userLogin:async(param)=>req.post('/company/login',param),
 	 
 	 //忘记密码获取验证码及检验是否实名认证
 	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
