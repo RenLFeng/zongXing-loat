@@ -61,7 +61,7 @@
     }
   }
  
-  .return_money {
+  &>.return_money {
     border-bottom: 1px dashed #c9c9c9;
     em {
       font-size: 20px;
@@ -74,8 +74,73 @@
       margin-top: 10px;
     }
   }
-  .account-info{
+  &>.recent-repany{
     margin-top: 10px;
+    &>.title{
+      margin: 30px 0 15px;
+      font-size: 14px;
+      color: #000;
+    }
+    &>.repany-content{
+      height: 65px;
+      background-color:#fffdf8; 
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+      vertical-align: middle;
+      padding: 0 25px;
+      &>span{
+        font-size: 14px;
+        color: #000;
+        line-height: 65px;
+        margin-right:20px; 
+        &.txt2{
+          background-color: #46bb3a;
+          padding: 6px 14px;
+          color: #fff;
+          border-radius: 3px;
+        }
+        &.txt4{
+          margin-left:-10px;
+          margin-right: 10px; 
+          color: #ccc;
+        }
+        &.txt5{
+          color: #f90;
+          margin-right: 55px; 
+        }
+        &.txt6{
+          margin-right: 55px;
+        }
+        &.txt7{
+          margin-right: 55px;
+        }
+        &.txt8{
+          color: #ff3b35;
+        }
+
+      }
+      &>.hand-repay{ 
+        margin-left: 90px;
+        color: #3366ff;
+        text-decoration: underline;
+      } 
+    }
+    &>.sub-content{
+      margin-top: 30px;
+      &>span{
+        font-size: 14px;
+        &.txt1{
+          color: #999;
+          margin-right: 40px;
+        }
+        &.txt3{
+          color: #ff3b35;
+        }
+      }
+    }
+    &>.chufa{
+      float: right;
+      color: #ff3b35;
+    }
   }
 }
 

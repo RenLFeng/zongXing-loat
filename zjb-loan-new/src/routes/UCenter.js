@@ -21,15 +21,14 @@ import ChangeBindEmail from '../view/ucenter/seccenter/realName/changeBindEmail/
 import Repayment from '../view/repaymentPlan/repayment';
 import RealName from '../view/ucenter/seccenter/realName/realName';
 import OpenAccount from '../view/ucenter/seccenter/realName/openAccount/openAccount';
-import MyCoupon from '../view/myCoupon/myCoupon';
-
+import MyCoupon from '../view/myCoupon/myCoupon'; 
+import BindCard from '../view/ucenter/seccenter/realName/bindCard/bindCard';
 
 import AccountStatement from "../view/personal/accountstatement/accountstatement";
 export default class UCenter extends React.Component {
 	constructor(props) {
 		super(props);
-	}
-
+	} 
 	componentDidMount() {
 
 		setTimeout(() => {
@@ -84,5 +83,5 @@ export default class UCenter extends React.Component {
 				</div>
 			</div>
 		);
-	}
-
+	} 
+}

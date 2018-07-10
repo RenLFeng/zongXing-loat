@@ -18,28 +18,16 @@ export default class PersonAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       
-      
+        
     }; 
-  }
-
-  componentDidMount() {
-   
-    
-  }
- 
-   
-
-  componentWillReceiveProps(nextProps) {
-    
-  }
- 
- 
- 
- 
-
+  } 
   render() { 
-  
+    const lable = [
+      {
+        text:'借款申请',
+        ffalg:1
+      }
+    ]
     return (
       <div>
         <LeftMenu param={this.props}/>  
@@ -63,13 +51,38 @@ export default class PersonAccount extends React.Component {
           <div className="ptit">
               <i>近期还款</i> 
           </div> 
-          <div className="account-info" >
-              <span className="sub-title">近期应还 </span>
-            
+          <div className="recent-repany" >
+              <p className='title'>近期应还 </p>
+              <div className='repany-content '>
+                 <span className='txt1'>2018/07/21</span>
+                 <span className='txt2'>待还款</span>
+                 <span className='txt3'>02/12期</span>
+                 <span className='txt4'>|</span>
+                 <span className='txt5'>￥26.25</span>
+                 <span className='txt6'>本金：24</span>
+                 <span className='txt7'>利息：2.25</span>
+                 <span className='txt8'>逾期：50</span>
+                 <a className='hand-repay'>手动还款</a>
+              </div>
+              <div className='sub-content'>
+                <span className='txt1'>2018-07-23 10:10</span>
+                <span className='txt2'>本笔还款已逾期</span>
+                <span className='txt3'>{'{1}'}</span>
+                <span className='txt2'>天，逾期费用</span>
+                <span className='txt3'>{'{元}'}</span>
+                <span className='txt2'>，为了不影响您的征信，请及时还款</span>  
+              </div>
+              <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
           </div>
         </div>
 
-
+        <div className="per_account"> 
+          <div className="ptit">
+              <i>我的借款</i> 
+          </div> 
+          <div className="my-loan" >
+          </div>  
+        </div>
 
         {/* 
          <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
