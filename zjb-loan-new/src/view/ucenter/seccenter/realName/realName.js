@@ -2,12 +2,13 @@ import React from 'react';
 import { Icon, Input, Button, Steps, Modal, message } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
-
 import { AUTH_ADDRESS } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
 import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
 import {securityCentreService} from '../../../../services/api';
+import ModalData from './authorization/authorization';
+
 
 const Step = Steps.Step;
 
@@ -35,7 +36,8 @@ export default class RealName extends React.Component {
       distribution: {}, //授权表单数据
       status: '', //授权状态
       url: '',     // 提交表单乾多多链接
-      cardList: [] //银行卡列表
+      cardList: [], //银行卡列表
+      showModal:false   
     }
   }
 
@@ -176,6 +178,14 @@ export default class RealName extends React.Component {
     }
   }
 
+  show(index){
+    console.log(1111,index)
+    this.setState({
+      // [`showModal${index}`]: !this.state[`showModal${index}`]
+      showModal:true
+      })
+  }
+
   render() {
     // 初始化数据
     const safeData = this.props.safeData;
@@ -220,7 +230,6 @@ export default class RealName extends React.Component {
                     </div>
                     {
                       safeData.userSecurityCenter.fThirdAccount ?
-
                         <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
                           <span style={{ color: 'black' }} >{safeData.fRealName}</span>
                           <span className="line" >|</span>
@@ -342,13 +351,13 @@ export default class RealName extends React.Component {
                 <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>账户授权</span>
               </div>
             </div>
-             <div style={{margin:'35px 0px 20px 0px'}}>
+             <div style={{margin:'35px 0px 20px 10px'}}>
              {
                dataArr.map((data,index)=>{
                  return(
                   <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:'10px'}}>
                     <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
-                    <p style={{textAlign:'center',color:'red'}}>授权</p>
+                    <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(index)}>授权</p>
                   </div>
                  )
                })
@@ -419,7 +428,12 @@ export default class RealName extends React.Component {
             <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL ? distribution.notifyURL : ''} />
             <input id="SignInfo" name="SignInfo" value={distribution.signInfo ? distribution.signInfo : ''} />
           </form> : null}
+
+
+          <ModalData  visable={this.state.showModal} operateModal={()=>this.setState({showModal: !this.state.showModal})}/>
       </div>
+
+
     );
   }
 }
