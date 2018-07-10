@@ -12,7 +12,7 @@ import Path from '../common/PagePath';
 import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
-import Recharge from '../view/personal/recharge/recharge'
+import Recharge from '../view/personal/recharge/recharge' 
 
 import Withdrawals from '../view/personal/tixian/tixian'
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
@@ -83,5 +83,5 @@ export default class UCenter extends React.Component {
 				</div>
 			</div>
 		);
-	} 
+	}
 }
