@@ -6,15 +6,15 @@ import { connect } from 'dva';
 import { Button } from 'antd';
 
 import './ucenter/index';
-import PersonAccount from '../view/personAccount/personAccount.1';
+import PersonAccount from '../view/personAccount/personAccount';
 import LoginInfo from '../view/personal/loginInfo/loginInfo';
 import Path from '../common/PagePath';
 import LeftMenu from '../components/leftmenu/leftMenu';
 import MineLoan from '../view/personal/mineLoan/mineLoan';
 import AppalyLoan from '../view/personal/mineLoan/applayLoan/appalyloan';
-import Recharge from '../view/personal/recharge/recharge' 
+import Recharge from '../view/personal/recharge/recharge.js' ;
 
-import Withdrawals from '../view/personal/tixian/tixian'
+import Withdrawals from '../view/personal/tixian/tixian';
 import ChangeLPwd from '../view/ucenter/seccenter/realName/changeLoginPwd/changeLoginPwd';
 import BindEmail from '../view/ucenter/seccenter/realName/bindEmail/bindEmail.js';
 import ChangeBindEmail from '../view/ucenter/seccenter/realName/changeBindEmail/changeBindEmail.js';
