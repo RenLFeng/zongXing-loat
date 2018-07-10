@@ -9,32 +9,25 @@
         .safeCenter_{
             display: inline-block;
             font-size: 20px;
-            color:#333333;     
+            color:#333333;    
         }
         .safeCenter_:hover{
             cursor: pointer;
         }
     }
-    
-    .info{
-        font-family: MicrosoftYaHei;
-        .date{
-            font-size: 14px;
-            color: #999999;
-        }
-    }
+    .btn1{
+        float:right;
+    } 
 }
 
 //公用样式
 .repay{
-    margin:18px 0px;
+    margin-top:18px;
+    margin-bottom: 50px;
     height: 65px;
     line-height: 65px;
     background-color: #fffdf8;
-    box-shadow: 1px 1px 30px #999999;
-    .time{
-        margin-left: 25px;
-    }
+    box-shadow: 0px 0px 40px rgba(0,0,0,.1);
     .btns{
         width: 70px;
         height: 25px;
@@ -58,15 +51,23 @@
     .btns:hover,.a:hover{
         cursor: pointer;
     }
+
+    .info{
+        font-family: MicrosoftYaHei;
+        .date{
+            font-size: 14px;
+            color: #999999;
+        }
+    }
 }
 
 .repays{
-    margin:18px 0px;
+    margin-top:18px;
+    margin-bottom: 45px;
     height: 65px;
     line-height: 65px;
     background-color: #fffdf8;
-    box-shadow: 1px 1px 30px #999999;
-    margin-bottom: 90px;
+    box-shadow: 0px 0px 40px rgba(0,0,0,.1);
     .time{
         margin-left: 25px;
     }
@@ -148,7 +149,8 @@
 
 .info_{
     font-family: MicrosoftYaHei;
-    // height:300px;
+    // padding-left: 30px; 
+    padding-top: 10px;
     .date{
         font-size: 14px;
         color: #999999;
