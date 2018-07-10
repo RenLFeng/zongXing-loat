@@ -5,37 +5,37 @@ export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图k
 
 //通用service
 export const CommonService = {
-    getPicAuth: async (param) => req.get('/zjb-website/common/sign', param)
+    getPicAuth: async (param) => req.get('/common/sign', param)
 };
 //优惠券service
 export const CouponService = {
-    getCouponCount: async ()=> req.get('/zjb-website/coupon/inv/MyCoupon/count'),
-    getCoupon:async(param)=>req.post('/zjb-website/coupon/inv/MyCoupon',param),
+    getCouponCount: async ()=> req.get('/coupon/inv/MyCoupon/count'),
+    getCoupon:async(param)=>req.post('/coupon/inv/MyCoupon',param),
     // 领取优惠券
-    receiveCoupon:async(param)=>req.get('/zjb-website/coupon/receive',param),
+    receiveCoupon:async(param)=>req.get('/coupon/receive',param),
     //兑换优惠券
-    convertCoupon:async(param)=>req.post('/zjb-website/coupon/convert',param), 
+    convertCoupon:async(param)=>req.post('/coupon/convert',param), 
     //获取交换中心中我的优惠券
-    getMyConvertCoupon:async(param)=>req.post('/zjb-website/coupon/exchange/centre/top',param), 
+    getMyConvertCoupon:async(param)=>req.post('/coupon/exchange/centre/top',param), 
     //交换中心
-    getCenterCoupon:async(param)=>req.post('/zjb-website/coupon/exchange/centre',param), 
+    getCenterCoupon:async(param)=>req.post('/coupon/exchange/centre',param), 
     //券额兑换优惠券
-    moneyConvertCoupon:async(param)=>req.post('/zjb-website/coupon/convert/coupon',param), 
+    moneyConvertCoupon:async(param)=>req.post('/coupon/convert/coupon',param), 
     //获取优惠券的地理位置
-    getCouponPlace:async() =>req.get('/zjb-website/coupon/place'),
+    getCouponPlace:async() =>req.get('/coupon/place'),
     //优惠券详情
-    myCouponDetail:async(param) =>req.get('/zjb-website/coupon/borrower/myCoupon/detail',param),
+    myCouponDetail:async(param) =>req.get('/coupon/borrower/myCoupon/detail',param),
 
-    getAccountCoupon:async(param) =>req.get('/zjb-website/account/mycoupon',param),
+    getAccountCoupon:async(param) =>req.get('/account/mycoupon',param),
     
 };
 
 // 账户服务
 export const accountService={
     
-    getLoginData:async(param)=>req.get('/zjb-website/login/getData',param),
+    getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
-    getAccountStatement:async(param)=>req.post('/zjb-dc/capital/dynamic',param),
+    getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
     /**
      * 投资记录
      * pageParam 
@@ -44,22 +44,22 @@ export const accountService={
      * flag
      * projectName
      */
-    getInvestmentRecord:async(param)=>req.post('/zjb-website/invRecord/MyInvRecord',param),
+    getInvestmentRecord:async(param)=>req.post('/invRecord/MyInvRecord',param),
     //获取投资记录条数
-    getInvestmentRecordCount:async()=>req.get('/zjb-website/invRecord/MyInvRecord/count'),
+    getInvestmentRecordCount:async()=>req.get('/invRecord/MyInvRecord/count'),
     //获取投资回款明细
-    getInvestmentPlan:async(param)=>req.get('/zjb-website/invRecord/MyInvRecord/plan',param),
-    repayPlan:async(param)=>req.get('/zjb-website/account/getRepayPlan',param),
+    getInvestmentPlan:async(param)=>req.get('/invRecord/MyInvRecord/plan',param),
+    repayPlan:async(param)=>req.get('/account/getRepayPlan',param),
   // 提交充值信息 获取充值所需数据
-    getRecharge:async(param)=>req.post('/zjb-dc/account/getRechargeInfo',param),
+    getRecharge:async(param)=>req.post('/account/getRechargeInfo',param),
     // 银行卡绑定
-    bindBankCard:async(param)=>req.post('/zjb-website/bankcard/add',param),
+    bindBankCard:async(param)=>req.post('/bankcard/add',param),
     // 银行卡信息校验——聚合数据校验
-    verifyBankCard:async(param)=>req.get('/zjb-website/jh/bankCardInfo?bankCard='+param),
+    verifyBankCard:async(param)=>req.get('/jh/bankCardInfo?bankCard='+param),
     // 获取已绑定的银行卡列表
-    getBankCardList:async(param)=>req.get('/zjb-website/bankcard/list/person'),
+    getBankCardList:async(param)=>req.get('/bankcard/list/person'),
     //提交提现表单信息接口
-    putInformation:async(param)=>req.post('/zjb-dc/withdrawals/param',param),
+    putInformation:async(param)=>req.post('/withdrawals/param',param),
 }
 
 
@@ -67,25 +67,25 @@ export const accountService={
 
 export const baseService={
     //获取省份对应的城市
-    getCity:async(param)=>req.get('/zjb-website/common/cities?provinceId='+param),
+    getCity:async(param)=>req.get('/common/cities?provinceId='+param),
 }
   
 
 
 //登录 dbb
 export const doLogin={
-	 userLogin:async(param)=>req.post('/zjb-website/login/login',param),
+	 userLogin:async(param)=>req.post('/login/login',param),
 	 
 	 //忘记密码获取验证码及检验是否实名认证
-	  fp_getCode:async(param)=>req.get('/zjb-website/userInfo/forgetPwd?loginName='+param),
+	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
 	  //登录-忘记密码时获取验证码
-    f_getCode:async(param)=>req.post('/zjb-website/userInfo/sendAuthCode',param),
+    f_getCode:async(param)=>req.post('/userInfo/sendAuthCode',param),
     //校验用户
-    fp_checkInfo:async(param)=>req.post('/zjb-website/userInfo/checkAuthCode',param),
+    fp_checkInfo:async(param)=>req.post('/userInfo/checkAuthCode',param),
     //修改密码
-    changePassword:async(param)=>req.post('/zjb-website/userInfo/updatePwd',param), 
+    changePassword:async(param)=>req.post('/userInfo/updatePwd',param), 
     // 获取用户基础信息的接口
-    getUserBaseData:async(param)=>req.get('/zjb-website/userInfo/findOne'),
+    getUserBaseData:async(param)=>req.get('/userInfo/findOne'),
     //修改登陆密码
     UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
     changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
@@ -100,50 +100,50 @@ export const doLogin={
 //注册-wfl
 export const regiserAccount = {
     // 校验手机号是否存在的接口
-    getPhoneExist: async (param) => req.get('/zjb-website/login/check', param),
+    getPhoneExist: async (param) => req.get('/login/check', param),
     // 获取注册验证码的接口
-    getAuthCode: async (param) => req.get('/zjb-website/login/sendMessage', param),
+    getAuthCode: async (param) => req.get('/login/sendMessage', param),
     // 注册用户 接口
-    regUser: async (param) => req.post('/zjb-website/login/register', param),
+    regUser: async (param) => req.post('/login/register', param),
 }
 
 //个人中心 - wfl
 export const personal = {
 
     //查询平台公告
-    getSiteNotice: async (param) => req.get('/zjb-manage/notice/getPlatNotice', param),
+    getSiteNotice: async (param) => req.get('/notice/getPlatNotice', param),
     //校验邮箱是否存在
-    checkEmail:async (param) => req.get('zjb-website/userInfo/checkEmail',param),
+    checkEmail:async (param) => req.get('/userInfo/checkEmail',param),
     //邮箱绑定
-    bindEmail:async (param) => req.get('zjb-website/userInfo/bindEmail',param),
+    bindEmail:async (param) => req.get('/userInfo/bindEmail',param),
     //更改邮箱
-    UpdateEmail:async (param) => req.post('zjb-website/userInfo/updateEmail',param),
+    UpdateEmail:async (param) => req.post('/userInfo/updateEmail',param),
     //更改绑定邮箱
-    UpdateEmail_:async (param) => req.post('zjb-website/userInfo/bindingNewEmail',param),
+    UpdateEmail_:async (param) => req.post('/userInfo/bindingNewEmail',param),
     //获取个人账户.企业账户信息的接口
-    getPersonAccountNew: async (param) => req.post('/zjb-website/account/show/info', param),
+    getPersonAccountNew: async (param) => req.post('/account/show/info', param),
     //获取有账户的企业信息列表的接口
-    getCompanylist: async () => req.get('/zjb-website/account/company/list'),
+    getCompanylist: async () => req.get('/account/company/list'),
     // 账户总览优惠券
-    getAccountCoupon: async (param) => req.post('/zjb-website/account/mycoupon', param),
+    getAccountCoupon: async (param) => req.post('/account/mycoupon', param),
     // 获取用户基础信息与login相同
-    getLoginData: async () => req.get('/zjb-website/login/getData'),
+    getLoginData: async () => req.get('/login/getData'),
     //回款计划
-    repayPlan: async () => req.get('/zjb-website/account/getRepayPlan'),
+    repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async () => req.get('/zjb-website/project/getBorrowPlan'),
+     borrowPlan: async () => req.get('/project/getBorrowPlan'),
 }
     
 
 //我的借款
 export const mineloan = {
     //
-    getMineLoan: async () => req.get('/zjb-website/project/self/project'),
+    getMineLoan: async () => req.get('/project/self/project'),
 }
 //实名认证 - momei
 export const securityCentreService = {
-  /** 获取安全中心数据 */
-  getSafeData: async () => req.get('/zjb-website/securityCenter/findByuserId'),
+  getSafeData: async () => req.get('/securityCenter/findByuserId'),
+  createAccount: async(param) => req.post('/account/add', param),
   /** 开户 */
   createAccount: async(param) => req.post('/zjb-dc/account/add', param),
   /** 获取当前用户的企业开户所需信息 */
@@ -151,20 +151,20 @@ export const securityCentreService = {
   /** 获取企业基本信息 */
   getCompanyBaseData: async() => req.get(''),
   /** 绑定银行卡 */
-  bindBankCard: async(param) => req.post('/zjb-website/bankcard/add',param),
+  bindBankCard: async(param) => req.post('/bankcard/add',param),
   // 获取已绑定的银行卡列表
-  getBankCardList: async() => req.get('/zjb-website/bankcard/list/person'),
+  getBankCardList: async() => req.get('/bankcard/list/person'),
   /** 解除除银行卡绑定 */
-  unbindBankCard: async(param) => req.post('/zjb-website/bankcard/delete',param),
+  unbindBankCard: async(param) => req.post('/bankcard/delete',param),
 
   /** 获取授权所需参数 */
-  distribution: async(willStr, companyNo, returnUrl) => req.get(`/zjb-dc/author/open?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+  distribution: async(willStr, companyNo, returnUrl) => req.get(`/author/open?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
 
   /** 查询已授权的状态 */
-  authorizationState: async(companyNo) => req.get(`/zjb-dc/author/authorized?companyNo=${companyNo}`),
+  authorizationState: async(companyNo) => req.get(`/author/authorized?companyNo=${companyNo}`),
 
   /** 取消授权 */
-  closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/zjb-dc/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+  closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
 
   /** 获取用户基础信息的接口 */
   getUserBaseData: async() => req.get('/zjb-website/userInfo/findOne'),
