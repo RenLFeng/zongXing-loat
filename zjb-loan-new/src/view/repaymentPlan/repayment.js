@@ -14,6 +14,53 @@ export default class Repayment extends React.Component {
         recentRepay:{},
         project:{},
         date:null,
+        word:'',
+        data:[{
+            id:'1',
+            forPayTime:'2018-7-11 15:02',
+            ispay:true,
+            fsort:1,
+            fcreditMonth:10,
+            borrowInterest:100,
+            principal:10,
+            interest:100,
+            overdueMoney:1000,
+            overdue:4
+        },{
+            id:'2',
+            forPayTime:'2018-7-12 15:02',
+            ispay:true,
+            fsort:1,
+            fcreditMonth:10,
+            borrowInterest:100,
+            principal:10,
+            interest:100,
+            overdueMoney:1000,
+            overdue:4
+        },{
+            id:'3',
+            forPayTime:'2018-7-13 15:02',
+            ispay:true,
+            fsort:1,
+            fcreditMonth:10,
+            borrowInterest:100,
+            principal:10,
+            interest:100,
+            overdueMoney:1000,
+            overdue:4
+        },{
+            id:'4',
+            forPayTime:'2018-7-14 15:02',
+            ispay:true,
+            fsort:1,
+            fcreditMonth:10,
+            borrowInterest:100,
+            principal:10,
+            interest:100,
+            overdueMoney:1000,
+            overdue:4
+        }],
+        check:true,
       }
     }
 
@@ -43,11 +90,19 @@ export default class Repayment extends React.Component {
            })
         } else {
             response.msg && message.error(response.msg)
+            // if(response.msg === '用户未做权限验证'){
+            //     this.setState({
+            //         word:'您还未有任何投资记录，立即前往投资'
+            //     })
+            // }
+           
         }
     }
 
-    onChange(e) {
+    onChange(e,id) {
         console.log(`checked = ${e.target.checked}`);
+        console.log('id',id)
+
       }
 
     render(){
@@ -63,7 +118,7 @@ export default class Repayment extends React.Component {
                         <span>近期应还</span>
                         <Button className="btn1">手动还款</Button>
                     </p>
-                    <div className="repay"> 
+                    {/* <div className="repay"> 
                          <Checkbox onChange={this.onChange} style={{marginLeft:10}}></Checkbox>
                          <span className="time">{moment(recentRepay.forPayTime).format('YYYY/MM/DD')}</span> 
                          <span className="btns">
@@ -80,42 +135,43 @@ export default class Repayment extends React.Component {
                          <span >利息：<span style={{width:100,display:'inline-block'}}>{recentRepay.interest}</span></span>
                          <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:100,display:'inline-block'}}>{recentRepay.overdueMoney}</span></span>
                          <span className="a">
-                         {/* {
-                             recentRepay.canPay ? '手动还款':''
-                         } */}
+                        
                          </span>
                         <p className="info" >
                             <span className="date">{this.state.date}</span>
                             <span style={{marginLeft:40}}>{recentRepay.fsort}/{project.fcreditMonth}期还款已逾期<span style={{color:'#ff3b35'}}>{recentRepay.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
                         </p>
-                    </div>
-
-                    <div className="repay"> 
-                         <Checkbox onChange={this.onChange} style={{marginLeft:10}}></Checkbox>
-                         <span className="time">{moment(recentRepay.forPayTime).format('YYYY/MM/DD')}</span> 
-                         <span className="btns">
-                         {
-                             recentRepay.ispay ? '已还款' : '待还款'
-                         }
-                         </span>
-                         <div className="data">
-                             {recentRepay.fsort}/{project.fcreditMonth}期
-                             <span style={{ margin: '0 5px 0 8px'}}>|</span>
-                             <span style={{color:'#f29827'}}> ￥{recentRepay.borrowInterest}</span>    
-                         </div>
-                         <span style={{marginLeft:55}}>本金：<span style={{width:100,display:'inline-block'}}>{recentRepay.principal}</span></span>
-                         <span >利息：<span style={{width:100,display:'inline-block'}}>{recentRepay.interest}</span></span>
-                         <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:100,display:'inline-block'}}>{recentRepay.overdueMoney}</span></span>
-                         <span className="a">
-                         {/* {
-                             recentRepay.canPay ? '手动还款':''
-                         } */}
-                         </span>
-                        <p className="info" >
-                            <span className="date">{this.state.date}</span>
-                            <span style={{marginLeft:40}}>{recentRepay.fsort}/{project.fcreditMonth}期还款已逾期<span style={{color:'#ff3b35'}}>{recentRepay.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
-                        </p>
-                    </div>
+                    </div> */}
+                    {
+                        this.state.data.length > 0 ?
+                        this.state.data.map((item,index)=>{
+                            return(
+                                <div className="repay" key={item.id}> 
+                                    <Checkbox onChange={(e)=>this.onChange(e,index)} style={{marginLeft:10}} disabled={index === 0 ? !this.state.check : this.state.check}></Checkbox>
+                                    <span className="time">{moment(item.forPayTime).format('YYYY/MM/DD')}</span> 
+                                    <span className="btns">
+                                    {
+                                        item.ispay ? '已还款' : '待还款'
+                                    }
+                                    </span>
+                                    <div className="data">
+                                        {item.fsort}/{item.fcreditMonth}期
+                                        <span style={{ margin: '0 5px 0 8px'}}>|</span>
+                                        <span style={{color:'#f29827'}}> ￥{item.borrowInterest}</span>    
+                                    </div>
+                                    <span style={{marginLeft:55}}>本金：<span style={{width:100,display:'inline-block'}}>{item.principal}</span></span>
+                                    <span >利息：<span style={{width:100,display:'inline-block'}}>{item.interest}</span></span>
+                                    <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:100,display:'inline-block'}}>{item.overdueMoney}</span></span>
+                                <p className="info" >
+                                    <span className="date">{this.state.date}</span>
+                                    <span style={{marginLeft:40}}>{item.fsort}/{item.fcreditMonth}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                </p>
+                            </div>
+                            )
+                        })
+                       : <p>您当前所有的投资项目皆已回款完毕</p>
+                    }
+                   
                    
                     <p style={{float:'right',color:'#ff3b35',marginTop:15,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{fontSize:16,verticalAlign: 'middle',fontWeight:'bold',marginRight:5}}></i>逾期处罚措施</p>
                 </div>
@@ -143,7 +199,6 @@ export default class Repayment extends React.Component {
                         <p style={{paddingBottom:26,color:'#999999'}}>待还款总额：<span style={{color:'#f29827'}}>￥123456.12</span></p>
                      </div>
                    </div>
-
                    <div>
                        <p style={{color:"#999999",marginTop:18}}><span>计划还款时间</span><span style={{float:"right"}}>实际还款时间</span></p>
                        {

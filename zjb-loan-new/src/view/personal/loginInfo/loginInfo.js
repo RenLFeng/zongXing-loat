@@ -73,7 +73,11 @@ class LoginInfo extends React.Component {
 
 
     async getNotice() {
-        const response = await personal.getSiteNotice(this.state.pageCurrent, this.state.pageSize);
+        let param = {
+            pageIndex:this.state.pageCurrent, 
+            pageSize:this.state.pageSize
+        }
+        const response = await personal.getSiteNotice(param);
         console.log('系统消息数据',response)
         if (response.code === 0) {
             this.setState({
@@ -88,7 +92,7 @@ class LoginInfo extends React.Component {
 
     render() {
         const { baseData } = this.props;
-        console.log(baseData);
+        console.log('baseData',baseData);
         return (
             <div className='lg-login'>
                 {
@@ -113,11 +117,11 @@ class LoginInfo extends React.Component {
                                         <span className="nickname">{baseData.realName ? baseData.realName : '未认证'}</span>
                                         <span className="split">|</span>
 
-                                        <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fMobileBinding ? 'active' : ''}`}></i>
+                                        <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fmobileBind ? 'active' : ''}`}></i>
                                         {
                                             baseData.userSecurityCenter.fCertification ? 
                                             <i title="身份证认证" className="zjb zjb-moban active"></i>:
-                                            <i title="身份证认证" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.REALNAME_AUTHENTICATION)}}></i>
+                                            <i title="身份证认证" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.OPEN_ACCOUNT)}}></i>
                                         }
                                         {
                                             baseData.userSecurityCenter.fBankCardBinding ?  
