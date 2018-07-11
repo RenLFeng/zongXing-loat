@@ -64,17 +64,22 @@ export const accountService={
 }
 
 
-
+// 基础信息 dbb
 
 export const baseService={
     //获取省份对应的城市
     getCity:async(param)=>req.get('/common/cities?provinceId='+param),
     // 获取项目行业编码类别接口
-    getProjectType: async () => req.get('/apply/getProjectCode')
+    getProjectType: async () => req.get('/apply/getProjectCode'),
+    
+// 获取当前项目的 委员会确认结果
+    getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
+      // 获取之前的 借款信息接口
+      getLoanInfo: async () => req.get('/apply/getOne'),
+    
 }
+
   
-
-
 
 //登录 dbb
 export const doLogin={
