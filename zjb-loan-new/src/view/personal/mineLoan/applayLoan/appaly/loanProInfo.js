@@ -91,7 +91,7 @@ class Loaninfo extends React.Component {
   marker = null;
 
   componentDidMount() {
-      // console.log(window,new AMap(),"-4154545454545445")
+    // console.log(window,new AMap(),"-4154545454545445")
     // var map = new AMap.Map("container", {
     //   resizeEnable: true,
     //   zoom: 10
@@ -121,7 +121,7 @@ class Loaninfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("---------------------------------",Editor);
+    console.log("---------------------------------", Editor);
     if (this.props.num !== nextProps.num) {
       if (this.props.visible) {
         this.props.form.validateFieldsAndScroll((error, values) => {
@@ -132,7 +132,7 @@ class Loaninfo extends React.Component {
             // 拿到富文本编辑器的值，整理值
             let modulesArr = this.state.dataList;
             for (let i = 0; i < modulesArr.length; i++) {
-              console.log(this[`editor${i}`].returnValue ,"---------------------------------",Editor);
+              console.log(this[`editor${i}`].returnValue, "---------------------------------", Editor);
               modulesArr[i].fcontent = draftToHtml(convertToRaw(this[`editor${i}`].returnValue().getCurrentContent()));
             }
             let arr = _.cloneDeep(modulesArr);
@@ -307,6 +307,9 @@ class Loaninfo extends React.Component {
       )
     }
   }
+  submit() {
+    alert(3)
+  }
 
   render() {
     const { form, dispatch, submitting } = this.props;
@@ -320,7 +323,7 @@ class Loaninfo extends React.Component {
         <Title Title="借款项目信息" />
         <div>
           <div style={{ borderTop: '1px dashed #e6e2e2' }}>
-            <Form layout="vertical" hideRequiredMark style={{margin: '30px 0'}}>
+            <Form layout="vertical" hideRequiredMark style={{ margin: '30px 0' }}>
               <Row gutter={16}>
                 <Col lg={13} md={13} sm={24}>
                   <Form.Item label={<RequireLabel>项目名称</RequireLabel>}>
@@ -341,19 +344,19 @@ class Loaninfo extends React.Component {
                       rules: [],
                     })(
                       <div>
-                      <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo> <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span></div>
+                        <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo> <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span></div>
                     )}
-                   
+
                   </Form.Item>
                 </Col>
               </Row>
             </Form>
           </div>
-          <div style={{  borderTop: '1px dashed #e6e2e2' , marginBottom: 20,paddingTop: 20 }} className="second-img-uploads">
+          <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20, paddingTop: 20 }} className="second-img-uploads">
             <Form layout="vertical" hideRequiredMark>
               <Row gutter={16}>
                 <Col lg={8} md={12} sm={24}>
-                  <Form.Item   label={<RequireLabel>借款项目展示封面图</RequireLabel>}    >
+                  <Form.Item label={<RequireLabel>借款项目展示封面图</RequireLabel>}    >
                     {/* <div><Tooltip title={<p>填写说明：<br />1、可展示该项目最具代表性的图片<br />2、裁剪成适当的大小。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
                     {getFieldDecorator('fcard_pic_path', {
                       // initialValue: data.fcard_pic_path ? data.fcard_pic_path : '',
@@ -364,124 +367,124 @@ class Loaninfo extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col lg={8} md={12} sm={24}>
-                  <Form.Item  label={<RequireLabel>经营场所实景图</RequireLabel>} >
+                  <Form.Item label={<RequireLabel>经营场所实景图</RequireLabel>} >
                     {/* <div><Tooltip title={<p>填写说明：<br />对于项目封面图和经营场所实景图，图片选择可参考首页部分展示项目。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
                     {getFieldDecorator('fbanner_pic_path', {
                       // initialValue: data.fbanner_pic_path ? data.fbanner_pic_path : '',
                       rules: [],
                     })(
-                      <UploadSingle {...this.data} prefix={dataPath} tipText="经营场所实景图"  className="second-img-uploads-mag" />
+                      <UploadSingle {...this.data} prefix={dataPath} tipText="经营场所实景图" className="second-img-uploads-mag" />
                     )}
                   </Form.Item>
                 </Col>
               </Row>
             </Form>
           </div>
-          <div  style={{  borderTop: '1px dashed #e6e2e2' , marginBottom: 20 }}>
-           <div>
-           
+          <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
+            <div>
 
 
- 
-           <RequireLabel>经营场所实景图</RequireLabel>
-           </div>
-          
+
+
+              <RequireLabel>经营场所实景图</RequireLabel>
+            </div>
+
           </div>
 
 
 
 
 
-          <div  style={{  borderTop: '1px dashed #e6e2e2' , marginBottom: 20 }}>
+          <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
 
-           
-          {
-            this.state.dataList.map((item, index) => {
-            return (
-              <Row key={item.fid} style={{width: '90%'}}>
-                <Col xl={{span: 12}} lg={{span: 12}} md={{span: 12}} sm={24}>
-                  <Card type="inner" style={{width:'200%', marginBottom: 10, position: 'relative'}}>
-                    { item.ftype == 1 ? null :
-                      <div style={{position: 'absolute', right: 10, zIndex: 10}}>
-                        {index !== 1 ?
-                          <Icon type="arrow-up" style={{fontSize: 16, paddingRight: 5,cursor:'pointer'}} onClick={()=>this.upIndex(index)}/> : null}
-                        {index !== this.state.dataList.length - 1 ?
-                          <Icon type="arrow-down" style={{fontSize: 16, paddingRight: 5,cursor:'pointer'}} onClick={()=>this.downIndex(index)}/> : null}
-                        <Icon type="close" style={{fontSize: 16, paddingRight: 5,cursor:'pointer'}} onClick={()=>this.delIndex(item.fid)}/>
-                      </div>
-                    }
-                    <Row>
-                      <Form.Item label={'项目详情标题'} {...formItemLayout}>
-                      {this.help.call(this, item.ftitle)}
-                        {getFieldDecorator(`title${item.fid}`, {
-                          rules: [],
-                          // initialValue: item.ftitle ? item.ftitle: '',
-                        })(
-                          <Input
-                            placeholder='请输入'
-                            disabled={item.ftype == 1}
-                            onChange={(e)=>{
-                              let arr = this.state.dataList;
-                              arr[index].ftitle = e.target.value;
-                              this.setState({
-                                dataList: arr
-                              }, () => {
-                              })
-                            }}
-                          />
-                        )}
-                      </Form.Item>
-                    </Row>
-                    <Row>
-                      <Form.Item label={'项目详情正文'} {...formItemLayout}>
-                        <Editor 
-                          ref={ref => this[`editor${index}`] = ref}
-                          value={item.fcontent ? item.fcontent: ''}
-                        />
-                      </Form.Item>
-                    </Row>
-                    <Row>
-                      <Form.Item label={'项目详情图片'} {...formItemLayout}>
-                        {
-                      //     getFieldDecorator(`pictures${item.fid}`, {
-                      //     rules: [],
-                      //     // initialValue: item.fpictures ? JSON.parse(item.fpictures): []
-                      //   }
-                      // )
-                      // (
-                          // <UploadPicMultipleFile
-                          //   {...this.data}
-                          //   prefix={dataPath}
-                          //   onChange={(e)=> {
-                          //     let arr = this.state.dataList;
-                          //     let valArr = _.cloneDeep(e);
-                          //     for (let i = 0; i<valArr.length; i++) {
-                          //       if (valArr[i].status !== 'done') {
-                          //         valArr.splice(i, 1);
-                          //       }
-                          //     }
-                          //     arr[index].fpictures = JSON.stringify(valArr);
-                          //     this.setState({
-                          //       dataList: arr
-                          //     }, () => {
-                          //       console.log(this.state.dataList);
-                          //     })
-                          //   }}
-                          // >项目详情图片</UploadPicMultipleFile>
-                        // )
+
+            {
+              this.state.dataList.map((item, index) => {
+                return (
+                  <Row key={item.fid} style={{ width: '90%' }}>
+                    <Col xl={{ span: 12 }} lg={{ span: 12 }} md={{ span: 12 }} sm={24}>
+                      <Card type="inner" style={{ width: '200%', marginBottom: 10, position: 'relative' }}>
+                        {item.ftype == 1 ? null :
+                          <div style={{ position: 'absolute', right: 10, zIndex: 10 }}>
+                            {index !== 1 ?
+                              <Icon type="arrow-up" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.upIndex(index)} /> : null}
+                            {index !== this.state.dataList.length - 1 ?
+                              <Icon type="arrow-down" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.downIndex(index)} /> : null}
+                            <Icon type="close" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.delIndex(item.fid)} />
+                          </div>
                         }
-                      </Form.Item>
-                    </Row>
-                  </Card>
-                  { index === this.state.dataList.length - 1 ?
-                    <Button type="dashed" onClick={this.add} style={{width:'200%'}}>
-                      <Icon type="plus"/> 增加项目详情模块
+                        <Row>
+                          <Form.Item label={'项目详情标题'} {...formItemLayout}>
+                            {this.help.call(this, item.ftitle)}
+                            {getFieldDecorator(`title${item.fid}`, {
+                              rules: [],
+                              // initialValue: item.ftitle ? item.ftitle: '',
+                            })(
+                              <Input
+                                placeholder='请输入'
+                                disabled={item.ftype == 1}
+                                onChange={(e) => {
+                                  let arr = this.state.dataList;
+                                  arr[index].ftitle = e.target.value;
+                                  this.setState({
+                                    dataList: arr
+                                  }, () => {
+                                  })
+                                }}
+                              />
+                            )}
+                          </Form.Item>
+                        </Row>
+                        <Row>
+                          <Form.Item label={'项目详情正文'} {...formItemLayout}>
+                            <Editor
+                              ref={ref => this[`editor${index}`] = ref}
+                              value={item.fcontent ? item.fcontent : ''}
+                            />
+                          </Form.Item>
+                        </Row>
+                        <Row>
+                          <Form.Item label={'项目详情图片'} {...formItemLayout}>
+                            {
+                              //     getFieldDecorator(`pictures${item.fid}`, {
+                              //     rules: [],
+                              //     // initialValue: item.fpictures ? JSON.parse(item.fpictures): []
+                              //   }
+                              // )
+                              // (
+                              // <UploadPicMultipleFile
+                              //   {...this.data}
+                              //   prefix={dataPath}
+                              //   onChange={(e)=> {
+                              //     let arr = this.state.dataList;
+                              //     let valArr = _.cloneDeep(e);
+                              //     for (let i = 0; i<valArr.length; i++) {
+                              //       if (valArr[i].status !== 'done') {
+                              //         valArr.splice(i, 1);
+                              //       }
+                              //     }
+                              //     arr[index].fpictures = JSON.stringify(valArr);
+                              //     this.setState({
+                              //       dataList: arr
+                              //     }, () => {
+                              //       console.log(this.state.dataList);
+                              //     })
+                              //   }}
+                              // >项目详情图片</UploadPicMultipleFile>
+                              // )
+                            }
+                          </Form.Item>
+                        </Row>
+                      </Card>
+                      {index === this.state.dataList.length - 1 ?
+                        <Button type="dashed" onClick={this.add} style={{ width: '200%' }}>
+                          <Icon type="plus" /> 增加项目详情模块
                     </Button> : null
-                  }
-                </Col>
-              </Row> 
-              );
-          })}
+                      }
+                    </Col>
+                  </Row>
+                );
+              })}
           </div>
           <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
             <Row>
@@ -513,7 +516,11 @@ class Loaninfo extends React.Component {
           </Card>
 
         </div>
-
+        <Row>
+          <div className="loan-aoolays-btns" onClick={this.submit.bind(this)}>
+            <a  >保存</a>
+          </div>
+        </Row>
       </div>
     )
   }
