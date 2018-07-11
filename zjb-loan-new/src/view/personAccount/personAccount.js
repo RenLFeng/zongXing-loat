@@ -291,7 +291,7 @@ export default class PersonAccount extends React.Component {
               <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
               <i>累计借款金额</i>
               <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
-              <div className='to-loan' style={{cursor: 'pointer'}}>
+              <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push()}}>
                   <span></span> 申请借款
               </div>
           </div> 

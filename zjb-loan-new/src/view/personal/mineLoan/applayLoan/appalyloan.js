@@ -8,7 +8,7 @@ import './appalyloan.scss'
 import { baseService } from '../../../../services/api';
 import {message } from 'antd';
 
-export default class BindCard extends React.Component {
+export default class Appalyloan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,9 +51,6 @@ export default class BindCard extends React.Component {
       response.msg && message.error(response.msg);
     }
   }
-
-
-
 
   render() {
     return (
