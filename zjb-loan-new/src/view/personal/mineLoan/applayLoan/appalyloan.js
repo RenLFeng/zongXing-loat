@@ -6,6 +6,7 @@ import LoanCompanyInfo from './appaly/loanCompanyInfo'
 import LoanProInfo from './appaly/loanProInfo'
 import './appalyloan.scss'
 import { baseService } from '../../../../services/api';
+import {message } from 'antd';
 
 export default class BindCard extends React.Component {
   constructor(props) {
