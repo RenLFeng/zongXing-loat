@@ -34,6 +34,8 @@ export const CouponService = {
 export const accountService={
     // 获取账户总览首页数据
     getPersonalData: async () => req.get('/company/totality/info'),
+    
+    
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
@@ -78,8 +80,7 @@ export const baseService={
 
 //登录 dbb
 export const doLogin={
-	 userLogin:async(param)=>req.post('/company/login',param),
-	 
+	 userLogin:async(param)=>req.post('/company/login',param),	 
 	 //忘记密码获取验证码及检验是否实名认证
 	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
 	  //登录-忘记密码时获取验证码
