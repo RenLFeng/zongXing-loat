@@ -69,8 +69,11 @@ export const accountService={
 export const baseService={
     //获取省份对应的城市
     getCity:async(param)=>req.get('/common/cities?provinceId='+param),
+    // 获取项目行业编码类别接口
+    getProjectType: async () => req.get('/apply/getProjectCode')
 }
   
+
 
 
 //登录 dbb
