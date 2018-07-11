@@ -136,6 +136,9 @@ class Loaninfo extends React.Component {
         // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
         callback()
     };
+    submit() {
+        alert(4)
+    }
     render() {
         const { form, dispatch, submitting } = this.props;
         const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
@@ -379,9 +382,9 @@ class Loaninfo extends React.Component {
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item >
                                     <div><Tooltip title={<p>填写说明：<br />
-                                    1、纳税记录文件需有权部门公章，银行代缴有关凭证需加盖银行签章。
+                                        1、纳税记录文件需有权部门公章，银行代缴有关凭证需加盖银行签章。
                                     <br />2.如有多个文件可打包上传。</p>}>
-                                    <Icon type="question-circle-o" className='filler_uploads' style={{ left: 180, top: -26 }} /></Tooltip></div>
+                                        <Icon type="question-circle-o" className='filler_uploads' style={{ left: 180, top: -26 }} /></Tooltip></div>
                                     {getFieldDecorator('fratepaying_record', {
                                         //   initialValue: data.fratepaying_record ? JSON.parse(data.fratepaying_record) : [],
                                         rules: [],
@@ -396,7 +399,7 @@ class Loaninfo extends React.Component {
                                         <Tooltip title={<p>填写说明：<br />
                                             暂无。</p>}>
                                             <Icon type="question-circle-o" className='filler_uploads'
-                                             style={{ left: 120, top: -26 }} /></Tooltip>
+                                                style={{ left: 120, top: -26 }} /></Tooltip>
                                     </div>
                                     {getFieldDecorator('fother_file1', {
                                         //   initialValue: data.fother_file1 ? JSON.parse(data.fother_file1) : [],
@@ -453,7 +456,11 @@ class Loaninfo extends React.Component {
                     </div>
 
                 </div>
-
+                <Row>
+                    <div className="loan-aoolays-btns" onClick={this.submit.bind(this)}>
+                        <a  >保存</a>
+                    </div>
+                </Row>
             </div>
         )
     }

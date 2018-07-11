@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Card, Form, Col, Row, Input, Select, InputNumber, Alert, Icon, Tooltip } from 'antd';
+import { Card, Form, Col, Row, Input, Select, InputNumber, Alert, Icon, Tooltip,Button } from 'antd';
 import Title from './title'
 import { MONEY_REG, MUN_INTEGER, IMG_BASE_URL, LIMIT_MOENY, } from '../../../../../common/SystemParam';
 import styles from './loanInfo.scss';
@@ -94,7 +94,9 @@ class Loaninfo extends React.Component {
         // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
         callback()
     };
-
+    submits(){
+        alert(1)
+    }
 
 
 
@@ -203,8 +205,11 @@ class Loaninfo extends React.Component {
 
                         </div>
                     </Row>
-
-                    
+                    <Row>
+                    <div className="loan-aoolays-btns"  onClick={this.submits.bind(this)}>
+                      <a >保存</a>
+                    </div>
+                    </Row>
                 </Form>
 
 
