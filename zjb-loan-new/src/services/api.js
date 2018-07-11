@@ -33,7 +33,7 @@ export const CouponService = {
 // 账户服务
 export const accountService={
     // 获取账户总览首页数据
-    getPersonalData: async () => req.get('/company/totality/info'),
+    getPersonalData: async () => req.get('/account/company/totality/info'),
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/capital/dynamic',param),

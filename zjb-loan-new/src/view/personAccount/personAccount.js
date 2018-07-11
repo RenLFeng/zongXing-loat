@@ -9,6 +9,7 @@ import { Modal, message} from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';  
 import { accountService } from '../../services/api';
+import { formatFlagToText } from '../../common/SystemParam';
  
 @connect((state)=>({
   personal: state.personal.data
@@ -115,17 +116,122 @@ export default class PersonAccount extends React.Component {
     this.fetchPersonalData();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.personal !== nextProps.personal) {
+      const {companyTotalAssetsVo, myBorrowVo} = nextProps.personal; 
+
+      this.setState({
+        activeFlag: myBorrowVo.fflag||0,
+        pieOption: {
+          tooltip: {
+            trigger: 'item',
+          },
+          color: ['#03B9CB', '#F84B23', '#8BC25B', '#FD9F09', '#C7C7C7'],
+          legend: {
+            orient: 'vertical',
+            x: 'right',
+            align: 'left',
+            itemGap: 20,
+            textStyle: {
+              fontFamily: 'Arial',
+              fontSize: 16,
+              rich:{
+                b:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                },
+                c:{
+                  fontSize:16,
+                  align:'right',
+                  padding:[0,10,0,0],
+                  width: 100,
+                  fontWeight: 'bold',
+                  color: '#FF6600'
+                }
+              }
+            },
+            formatter:  function(name){
+              if (name==='可用余额') {
+                return `${name}  {c|${`${companyTotalAssetsVo.availableBalance||0}`.fm()}}`
+              } else if (name === '冻结金额') {
+                return `${name}  {b|${`${companyTotalAssetsVo.freezingAmount||0}`.fm()}}`
+              } else if (name === '待还本金') {
+                return `${name}  {b|${`${companyTotalAssetsVo.forReturnPrincipal||0}`.fm()}}`
+              } else {
+                return `${name}  {b|${`${companyTotalAssetsVo.forReturnInterest||0}`.fm()}}`
+              }
+            },
+            left: '60%',
+            y: 'center',
+            data:[{
+              name: '可用余额',
+              icon: 'circle'
+            },{
+              name: '冻结金额',
+              icon: 'circle'
+            },{
+              name: '待还本金',
+              icon: 'circle'
+            },{
+              name: '待还利息',
+              icon: 'circle'
+            }]
+          },
+           grid: {
+             right: '70%'
+           },
+          series: [
+            {
+              name:'金额',
+              type:'pie',
+              radius: ['100%', '90%'],
+              center: ['20%', '50%'],
+              avoidLabelOverlap: false,
+              hoverAnimation: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:companyTotalAssetsVo.availableBalance||0, name:'可用余额'},
+                {value:companyTotalAssetsVo.freezingAmount||0, name:'冻结金额'},
+                {value:companyTotalAssetsVo.forReturnPrincipal||0, name:'待还本金'},
+                {value:companyTotalAssetsVo.forReturnInterest||0, name:'待还利息'}
+              ]
+            }
+          ]
+        }
+      })
+    }
+  }
+
+  // 借款用户 账户总览信息 数据获取 存入redux
   async fetchPersonalData() {
     const response = await accountService.getPersonalData();
     console.log(response);
     if (response.code === 0) {
-      
+      // 存入redux
+      this.props.dispatch({
+        type: 'personal/getPersonalAccount',
+        payload: response.data
+      })
     } else {
       response.msg && message.error(response.msg);
     }
   }
 
   render() { 
+    console.log(this.props);
     const lables = [
       {
         text:'借款申请',
@@ -168,23 +274,24 @@ export default class PersonAccount extends React.Component {
         fflag:13
       },
     ];
- 
-
+    console.log(this.props.personal);
+    // 当前借款金额  近期还款  我的借款  账户金额  资金动态
+    const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     return (
       <div>
         <LeftMenu param={this.props}/>  
         <div className="per_account">
           <div className="ptit">
             <i>当前借款金额</i>
-            <span>￥153,113.42 </span>
+            <span>￥{`${currentBorrowAmount.currentBorrowAmount}`.fm()} </span>
             <em>单位：元</em>
           </div>
           <div className="sub-info">
               <i>累计利息支出</i>
-              <span >153,113.42</span>
+              <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
               <i>累计借款金额</i>
-              <span >153,113.42</span>
-              <div className='to-loan'>
+              <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
+              <div className='to-loan' style={{cursor: 'pointer'}}>
                   <span></span> 申请借款
               </div>
           </div> 
@@ -217,7 +324,7 @@ export default class PersonAccount extends React.Component {
               <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
           </div>
         </div>
-
+        { myBorrowVo?
         <div className="per_account"> 
           <div className="ptit">
               <i>我的借款</i> 
@@ -236,11 +343,11 @@ export default class PersonAccount extends React.Component {
             </p>
             <p className='project-info'>
               <span className='txt1'>项目编号：</span>
-              <span className='txt2'>P180000222</span>
+              <span className='txt2'>{myBorrowVo.fprojectNo}</span>
             </p>
             <p className='project-info'>
               <span className='txt1'>项目名称：</span>
-              <span className='txt2'>海底捞</span>
+              <span className='txt2'>{myBorrowVo.fname}</span>
             </p>
             <table className='loan-table'>
               <tr>
@@ -252,18 +359,20 @@ export default class PersonAccount extends React.Component {
                 <td>操作</td>
               </tr>
               <tr>
-                <td>10.00万元</td>
-                <td>12个月</td>
-                <td>9%</td>
-                <td>2018-06-28 17:36</td>
-                <td >还款中</td>
+                <td>{myBorrowVo.fcreditMoney?`${myBorrowVo.fcreditMoney/1000}`.fm()+'万元': ''}</td>
+                <td>{myBorrowVo.fcreditMonth?`${myBorrowVo.fcreditMonth}`.fm()+'个月':''}</td>
+                <td>{myBorrowVo.frateLast?`${myBorrowVo.frateLast}`.fm()+'%':''}</td>
+                <td>{moment(myBorrowVo.fcreateTime).format('YYYY-MM-DD HH:mm')}</td>
+                <td>{formatFlagToText(myBorrowVo.fflag)}</td>
                 <td>
-                  <a href="javascript:;">还款计划</a>
+                  <a href="javascript:;" onClick={()=>this.props.history.push('/uCenter/receivePlan')}>还款计划</a>
                 </td>
               </tr>
             </table>
           </div>  
-        </div>
+        </div> : 
+        null
+      }
         <div className="per_account"> 
           <div className="ptit">
               <i>账户总资产</i> 
@@ -271,7 +380,7 @@ export default class PersonAccount extends React.Component {
           <div className="total-acount" >
             <PieReact width='600px' height="200px"  option={this.state.pieOption}/>
             <div className='account-info'>
-              <p>36.32</p>
+              <p>{`${companyTotalAssetsVo.totalAssets||0}`.fm()}</p>
               <p>账户总资产</p>
             </div>
           </div>
@@ -282,10 +391,10 @@ export default class PersonAccount extends React.Component {
           <div className="ptit">
               <i>资金动态</i> 
           </div> 
-          <div className="my-statement" >
+          <div className="my-statement" style={{paddingTop: 20}}>
               {
-                this.state.statements.length > 0 ? 
-                this.state.statements.map((item,index)=>{
+                accountDynamicVos.length > 0 ? 
+                accountDynamicVos.map((item,index)=>{
                   return <Statement data={item} key={index}></Statement>
                 }) :
                 <span className="no-statement">暂无资金动态</span>
