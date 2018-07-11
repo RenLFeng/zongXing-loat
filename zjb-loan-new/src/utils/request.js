@@ -48,11 +48,12 @@ function checkStatus(response) {
     return response;
   }
   const errortext = codeMessage[response.status] || response.statusText;
-  const error = new Error(errortext);
-  error.name = response.status;
-  error.response = response;
-  global.error = error;
-  throw error;
+  // const error = new Error(errortext);
+  // error.name = response.status;
+  // error.response = response;
+  // global.error = error;
+  // throw error;
+  return {code: 999,msg:  codeMessage[response.status] || response.statusText}
 }
 
 export const req = {
@@ -87,6 +88,10 @@ export const req = {
     return fetch(url, Options)
       .then(checkStatus)
       .then((response) => {
+        console.log(response);
+        if (response.code === 999) {
+          return response;
+        }
         if (response.status === 204) {
           return response.text();
         }
@@ -121,11 +126,15 @@ export const req = {
     return fetch(url, newOptions)
       .then(checkStatus)
       .then((response) => {
+        console.log(response);
+        if (response.code === 999) {
+          return response;
+        }
         if (response.status === 204) {
           return response.text();
         }
         return response.json();
-      });
+      })
   }
 }
 

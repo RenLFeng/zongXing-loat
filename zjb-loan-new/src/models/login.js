@@ -34,7 +34,7 @@ export default {
         //请求结束，请求状态修改为未请求状态
         //登录成功做的操作
         if (response.code === 0) {
-          const access = {webToken:response.data.webToken,nickName: response.data.nickName};
+          const access = {webToken:response.data.UserwebToken,nickName: response.data.companyName};
           localStorage.setItem('accessToken', JSON.stringify(access));
           yield put(routerRedux.push('/'));
           yield put({
@@ -70,8 +70,7 @@ export default {
           message.error(response.msg);
         }
       } catch (e) {
-        console.log(e);
-        message.error('服务器繁忙，请稍后重试');
+        console.log('服务器繁忙，请稍后重试');
         yield put({
           type: 'changeLoginStatus',
           payload: {
