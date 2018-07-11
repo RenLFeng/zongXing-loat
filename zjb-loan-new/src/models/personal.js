@@ -10,14 +10,36 @@ import {personal, mineloan} from '../services/api';
 export default {
   namespace: 'personal',
   state: {
-    data: {},
+    data: {
+      currentBorrowAmount: {  // 当前借款金额
+
+      },
+      recentForRepanymentVo: {  //近期还款
+
+      },
+      myBorrowVo: {  // 我的借款
+
+      },
+      companyTotalAssetsVo: { // 账户总资产
+
+      },
+      accountDynamicVos: [] // 资金动态
+    }
   },
   effects: {
-    *getMineLoan({payload}, {call, put}){
+    *getPersonalAccount({payload}, {call, put}){
+      yield put({
+        type: 'savePersonalAccount',
+        payload: payload
+      }) 
     },
   },
   reducers: {
-    saveMineLoan(state, {payload}) {
+    savePersonalAccount(state, {payload}) {
+      return {
+        ...state,
+        data: payload
+      }
     },
   },
 }
