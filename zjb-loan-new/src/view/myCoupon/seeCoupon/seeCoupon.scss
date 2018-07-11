@@ -1,0 +1,133 @@
+.my-coupon{
+  .see-box {
+    width: 399px;
+    height: 590px;
+    background: #fff;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    //margin-top: -300px;
+    left: 58%;
+    margin-left: -200px;
+    z-index: 9999999;
+    box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.6);
+  }
+    .send-coupon-info{
+    .top-bg{
+      position: absolute;
+      width: 100%;
+      height: 97px;
+      top: -96px;
+      left: -13px;
+      z-index: 999999999;
+      background: url(../../../assets/img/coupon/see.png) no-repeat 0 0/100%;
+      span{
+        position: absolute;
+        left: 50%;
+        font-size: 18px;
+        font-weight: bolder;
+        top: 60%;
+        margin-left: -12px;
+      }
+    }
+    .close{
+      color:#999;
+      border-color: #999;
+    }
+    .coupon-nub{
+      p{
+        text-align: center;
+      }
+      p:nth-child(1){
+        color:#999;
+        margin: 10px 0;
+      }
+    }
+    .coupon-info{
+      width: 100%;
+      height:143px;
+      background: url(../../../assets/img/coupon/qsy.png) no-repeat 0 0 /100%;
+      margin-top: 20px;
+      padding: 10px;
+      color:#017143;
+      .fl{
+        width:264px;
+        height:100%;
+        position: relative;
+        .tit{
+          font-size: 16px;
+        }
+        >div{
+          width: 100%;
+          position: absolute;
+          left: 50%;
+          margin-left: -148px;
+          bottom:0;
+        }
+        .money{
+          text-align: center;
+          margin-bottom: 10px;
+          span{
+            font-size: 50px;
+            font-weight: bolder;
+          }
+        }
+        .ins {
+          text-align: center;
+          i{
+            display: block;
+            font-size: 12px;
+            line-height: 135%;
+          }
+        }
+      }
+      .fr{
+        margin-top: 25px;
+        >div{
+          width: 70px;
+          height:70px;
+          background: #fff;
+          border-radius: 50%;
+          overflow: hidden;
+          img{
+            width: 100%;
+          }
+        }
+      }
+    }
+    .coupon-name{
+      margin: 20px 0;
+      color:#666;
+    }
+    .coupon-address{
+      margin-bottom: 40px;
+      .tit{
+        color:#ccc;
+      }
+      li{
+        margin-top: 10px;
+        span{
+          color:#333;
+        }
+      }
+    }
+    .btn{
+      position: absolute;
+      bottom: 15px;
+      right: 10px;
+      width: 152px;
+      height: 39px;
+      line-height: 39px;
+      font-size: 14px !important;
+      color:#fff;
+      background-image: linear-gradient(-90deg,
+        #017143 0%),
+      linear-gradient(
+          #f29827,
+          #f29827);
+      background-blend-mode: normal,
+      normal;
+      border-radius: 2px;
+    }
+  }
+}

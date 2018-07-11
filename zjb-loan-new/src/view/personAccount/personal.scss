@@ -7,6 +7,17 @@
   padding: 30px;
   margin-bottom: 10px;
   position: relative;
+  &>.my-statement {
+    &>.no-statement {
+      display: inline-block;
+      width: 932px;
+      background-color: #f9f9f9;
+      padding: 10px;
+      text-align: center;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+  }
   &>.ptit{
     border-bottom:  1px dashed #e9e9e9 ;
     padding-bottom: 14px;
@@ -211,9 +222,10 @@
     }
   }
   &>.total-acount{
+    padding-top: 20px;
     &>.account-info{
       position: absolute;
-      top: 76px;
+      top: 96px;
       left: 60px;
       width: 180px;
       height: 180px; 

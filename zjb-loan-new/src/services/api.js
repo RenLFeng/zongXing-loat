@@ -32,6 +32,10 @@ export const CouponService = {
 
 // 账户服务
 export const accountService={
+    // 获取账户总览首页数据
+
+    getPersonalData: async () => req.get('/account/company/totality/info'),
+    
     
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
@@ -63,19 +67,28 @@ export const accountService={
 }
 
 
-
+// 基础信息 dbb
 
 export const baseService={
     //获取省份对应的城市
     getCity:async(param)=>req.get('/common/cities?provinceId='+param),
-}
-  
+    // 获取项目行业编码类别接口
 
+    getProjectType: async () => req.get('/apply/getProjectCode'),
+    
+// 获取当前项目的 委员会确认结果
+    getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
+      // 获取之前的 借款信息接口
+      getLoanInfo: async () => req.get('/apply/getOne'),
+    
+}
+
+  
 
 //登录 dbb
 export const doLogin={
-	 userLogin:async(param)=>req.post('/company/login',param),
-	 
+
+	 userLogin:async(param)=>req.post('/company/login',param),	 
 	 //忘记密码获取验证码及检验是否实名认证
 	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
 	  //登录-忘记密码时获取验证码
