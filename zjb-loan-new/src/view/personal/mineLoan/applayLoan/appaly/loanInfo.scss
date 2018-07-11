@@ -1,0 +1,280 @@
+.ant-form-inline .ant-form-item .ant-form-item-label {
+    width: auto !important;
+}
+.ant-form-inline .ant-form-item .ant-form-item-control {
+    width: auto !important;
+
+}
+.ant-form-inline .ant-form-item {
+    width: auto !important;
+}
+
+.ant-form-item-label label:after {
+    content: " ";
+    margin: 0 ;
+    
+    top: 0;
+}
+.ant-form-item-control-wrapper{
+margin-left: 16px;
+}
+input{
+    width: 200px;
+}
+
+.loan-aoolays-btns{
+  display: block;
+  background-color: #169bd5;
+  color: #fff;
+  line-height: 42px;
+  font-size: 14px;
+  border-radius: 6px;
+  width: 150px;
+  text-align: center;
+  margin: 0 auto;
+  cursor: pointer;
+  a{
+    color: #fff
+  }
+  .loan-aoolays-btns:hover{
+    background-color: #2f96c3;
+  }
+  
+}
+.loan-aoolays-btns:hover{
+  background-color: #2d7fa2;
+}
+
+
+.seconds{
+  .ant-row .ant-form-item{
+    display: -webkit-box !important;
+  }
+  .names{
+    letter-spacing: 2em;
+    margin-right: -28px;
+  }
+  .namepx{
+    letter-spacing: 5px;
+  }
+  input{
+    width: 200px
+  }
+  .IDcard{
+    .ant-form-item {
+      display: block;
+   }
+  }
+  .ant-upload.ant-upload-select-picture-card{
+    margin-left: -100px;
+    margin-top: 40px;
+  }
+  .cars .ant-upload.ant-upload-select-picture-card {
+    margin-left: -86px;
+  }
+  .home .ant-upload.ant-upload-select-picture-card {
+    margin-left: -70px;
+  }
+  .third_s{
+    .ant-form-item {
+      display: block !important;
+   }
+  
+  }
+ 
+}
+
+// compamy 
+.third_company_info {
+    .ant-row .ant-form-item{
+       display: -webkit-box !important;
+    }
+    input{
+      width: 200px;
+    }
+    .jingyingadresss{
+      .ant-form-item-control-wrapper{
+        width: 84.5%;
+      }
+    }
+    .ant-upload.ant-upload-select-picture-card {
+      margin-left: -8px;
+    }
+    .ant-upload {
+       height: 0  !important; 
+  }
+   
+}
+.person_xin{
+  position: absolute;
+  right: -22px;
+  top: 5px;
+  color: #ff7e8e; 
+ }
+ .filler_uploads{
+  position: absolute;
+  right: -67px;
+  margin: 31px 2px;
+  color: #ff7e8e;
+ }
+ .applone-pro-info{
+  .ant-row .ant-form-item{
+    display: -webkit-box;
+  }
+      .ant-form-item-control-wrapper {
+        margin-left: 16px;
+        width: 80%;
+        
+    }
+    .video-tip-grays{
+      margin-left: 8px;
+      margin-top: 4px;
+      color: #b3a5a5ee;
+    }
+    .second-img-uploads{
+      .ant-row .ant-form-item{
+        display: block;
+      }
+      .second-img-uploads-mag{
+        .ant-upload .ant-upload-select .ant-upload-select-picture-card{
+          margin-left: -8px;
+        }
+       
+      } 
+    }
+ }
+ .video_tip{
+  .ant-form-item-control-wrapper{
+ margin-left: 0 !important
+}
+#fvideo_path{
+  display: flex;
+    margin-right: -66px;
+}
+}
+.card {
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-size: 14px;
+  line-height: 22px;
+  margin: 0 0 16px 0;
+}
+
+.steps:global(.ant-steps) {
+  max-width: 750px;
+  margin: 16px auto;
+}
+
+.errorIcon {
+  cursor: pointer;
+  color:#f5f8fa;
+  margin-right: 24px;
+  i {
+    margin-right: 4px;
+  }
+}
+
+.errorPopover {
+  :global {
+    .ant-popover-inner-content {
+      padding: 0;
+      max-height: 290px;
+      overflow: auto;
+      min-width: 256px;
+    }
+  }
+}
+
+.errorListItem {
+  list-style: none;
+  border-bottom: 1px solid #f5f8fa;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    background:#f5f8fa;
+  }
+  &:last-child {
+    border: 0;
+  }
+  .errorIcon {
+    color:#f5f8fa;
+    float: left;
+    margin-top: 4px;
+    margin-right: 12px;
+    padding-bottom: 22px;
+  }
+  .errorField {
+    font-size: 12px;
+    color:#f5f8fa;
+    margin-top: 2px;
+  }
+}
+
+.editable {
+  td {
+    padding-top: 13px !important;
+    padding-bottom: 12.5px !important;
+  }
+}
+
+// custom footer for fixed footer toolbar
+.advancedForm + div {
+  padding-bottom: 64px;
+}
+
+.advancedForm {
+  :global {
+    .ant-form .ant-row:last-child .ant-form-item {
+      margin-bottom: 24px;
+    }
+    .ant-table td {
+      transition: none !important;
+    }
+  }
+}
+
+.optional {
+  color:#f5f8fa;
+  font-style: normal;
+}
+
+.upload-div {
+  width: 240px;
+  height: 135px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// .ant-upload {
+//   height: 140px !important;
+// }
+
+/* tile uploaded pictures */
+.upload-list-inline .ant-upload-list-item {
+  float: left;
+  width: 198px;
+  margin-right: 8px;
+}
+.upload-list-inline .ant-upload-animate-enter {
+  animation-name: uploadAnimateInlineIn;
+}
+.upload-list-inline .ant-upload-animate-leave {
+  animation-name: uploadAnimateInlineOut;
+}
+
+//文字提示
+.textBox{
+  position: relative;
+  vertical-align: middle;
+}
+
+.toolTip { 
+  position: absolute;
+  vertical-align: middle;
+  color:#FF7E10;
+  font-size: 14px;  
+}
