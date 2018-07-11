@@ -27,7 +27,7 @@ const formItemLayout = {
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.login.baseData.accountId,
-
+  baseData: state.login.baseData,
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -187,6 +187,8 @@ export default class RealName extends React.Component {
   }
 
   render() {
+    console.log("loginBaseData",this.props.baseData);
+    console.log("accountId",this.props.accountId);
     // 初始化数据
     const safeData = this.props.safeData;
     const { status, distribution, url } = this.state;

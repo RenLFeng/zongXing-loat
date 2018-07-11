@@ -87,8 +87,8 @@ export const doLogin={
     // 获取用户基础信息的接口
     getUserBaseData:async(param)=>req.get('/userInfo/findOne'),
     //修改登陆密码
-    UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
-    changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+    UpdatePass:async(param) => req.post('/userInfo/updatePassword',param),
+    changePass:async(param) => req.post('/userInfo/verifyForPassword',param),
  
 }
 
@@ -167,12 +167,12 @@ export const securityCentreService = {
   closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
 
   /** 获取用户基础信息的接口 */
-  getUserBaseData: async() => req.get('/zjb-website/userInfo/findOne'),
+  getUserBaseData: async() => req.get('/userInfo/findOne'),
 
   /** 为修改密码发送验证码 */
-  UpdatePass: async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+  UpdatePass: async(param) => req.post('/userInfo/updatePassword',param),
   /** 验证修改密码时的验证码 */
-  changePass: async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+  changePass: async(param) => req.post('/userInfo/verifyForPassword',param),
   
   
 
