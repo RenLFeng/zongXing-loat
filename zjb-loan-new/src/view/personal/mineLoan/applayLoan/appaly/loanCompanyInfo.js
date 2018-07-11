@@ -137,8 +137,29 @@ class Loaninfo extends React.Component {
         callback()
     };
     submit() {
-        alert(4)
-    }
+        debugger
+        let obj={};
+        let flag=true
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                obj=values;
+            }
+          });
+        console.log(obj,"11111111111111111111111111111111")
+          for(let i in obj){
+              if(obj[i] === undefined){
+                flag=false
+              }
+          }
+          if(!flag){
+            alert('请完善借款信息');
+          }else{
+            this.submitLoanInfo(obj)
+          }
+      };
+      submitLoanInfo(obj){
+        console.log(obj,"su")
+      }
     render() {
         const { form, dispatch, submitting } = this.props;
         const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
@@ -155,7 +176,7 @@ class Loaninfo extends React.Component {
                 <div>
 
                     <div style={{ marginBottom: 20 }} className="third_company_info  ">
-                        <Form layout="vertical" hideRequiredMark style={{ marginTop: 29 }}>
+                        <Form layout="vertical" hideRequiredMark style={{ marginTop: 29 }} onSubmit={this.submit.bind(this)}>
                             <Row gutter={16}>
                                 <Col lg={8} md={12} sm={24}>
                                     <Form.Item label={<RequireLabel>企业名称</RequireLabel>}>

@@ -18,6 +18,14 @@ class Loaninfo extends React.Component {
     state = {
         cityList: City.provincerList,
         monthList:[],
+        data:{
+            fcredit_money:'',
+            fcredit_month:'',
+            fcity_code:'',
+            fcredit_use:'',
+            frate_predict:'',
+            fchannel:'',
+        }
     };
     data = {
         className: "ant-upload",
@@ -95,33 +103,52 @@ class Loaninfo extends React.Component {
         callback()
     };
     submits(){
-        alert(1)
+        let obj={};
+        let flag=true
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                obj=values;
+            }
+          });
+        
+          for(let i in obj){
+              if(obj[i] === undefined){
+                flag=false
+              }
+          }
+          if(!flag){
+            alert('请完善借款信息');
+          }else{
+            this.submitLoanInfo(obj)
+          }
     }
 
-
+    submitLoanInfo(obj){
+      console.log(obj,"su")
+    }
 
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
         const { cityList, data } = this.props;
         const { visible } = this.props;
+        const {  fcredit_money,fcredit_month,fcity_code,fcredit_use,frate_predict,fchannel } = this.state.data;
         return (
             <div className="applone-info">
                 <Title Title="借款信息" />
                 <div>
                 </div>
-                <Form layout="inline">
-                    <Row style={{ display: 'inline-flex' }}>
+                <Form layout="inline" onSubmit={this.submits.bind(this)} ref="froms">
+                    <Row style={{ display: 'inline-flex' }} > 
                         <div style={{ width: '30%', display: 'contents' }}>
                             <Form.Item layout="inline" label={
                                 <RequireLabel>要借多钱</RequireLabel>}>
                                 {getFieldDecorator('fcredit_money', {
-                                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
                                     rules: [
                                         { pattern: MONEY_REG, message: '请输入正确的金额格式' },
                                         { validator: this.validateNumber }
                                     ]
-                                })(<InputNumber min={0} max={1000000} step={100} style={{ width: '200px', marginLeft: 6 }} placeholder="请输入" />)}
+                                })(<InputNumber min={0}    max={1000000} step={100} style={{ width: '200px', marginLeft: 6 }} placeholder="请输入" />)}
                             </Form.Item>
                         </div>
                         <div style={{ width: '30%', display: 'contents' }}>
@@ -131,10 +158,10 @@ class Loaninfo extends React.Component {
                                          {getFieldDecorator('fcredit_month', {
                                     // initialValue: data.fcity_code ? data.fcity_code : this.props.cityList.length > 0 ? this.props.cityList[0].fCode : ''
                                 })(
-                                    <Select style={{ width: '200px', marginLeft: 6 }} >
+                                    <Select style={{ width: '200px', marginLeft: 6 }}   >
                                         {this.state.monthList.map((data) => {
                                             return (
-                                                <Select.Option key={data.fcode} value={data.fcode}>{data.fname}</Select.Option>
+                                                <Select.Option key={data.fcode} >{data.fname}</Select.Option>
                                             );
                                         })}
                                     </Select>)}
@@ -155,10 +182,10 @@ class Loaninfo extends React.Component {
                                 {getFieldDecorator('fcity_code', {
                                     // initialValue: data.fcity_code ? data.fcity_code : this.props.cityList.length > 0 ? this.props.cityList[0].fCode : ''
                                 })(
-                                    <Select style={{ width: '200px', marginLeft: 6 }} >
+                                    <Select style={{ width: '200px', marginLeft: 6 }}   >
                                         {this.state.cityList.map((data) => {
                                             return (
-                                                <Select.Option key={data.fcode} value={data.fcode}>{data.fname}</Select.Option>
+                                                <Select.Option key={data.fcode} >{data.fname}</Select.Option>
                                             );
                                         })}
                                     </Select>)}
@@ -173,7 +200,7 @@ class Loaninfo extends React.Component {
                                 {getFieldDecorator('fcredit_use', {
                                     // initialValue: data.fcredit_use? data.fcredit_use :'',
                                 })(
-                                    <Input placeholder="请输入" style={{ width: '200px', marginLeft: 6 }} />
+                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} />
                                 )}
                             </Form.Item>
 
@@ -184,7 +211,7 @@ class Loaninfo extends React.Component {
                                 {getFieldDecorator('frate_predict', {
                                     // initialValue: data.frate_predict ? data.frate_predict + '' : '',
                                 })(
-                                    <InputNumber min={8} max={15} step={0.1} placeholder="请输入" style={{ width: '200px', marginLeft: '-6px' }} />
+                                    <InputNumber   min={8} max={15} step={0.1} placeholder="请输入" style={{ width: '200px', marginLeft: '-6px' }} />
                                 )}
                             </Form.Item>
 
@@ -195,7 +222,7 @@ class Loaninfo extends React.Component {
                                     rules: [],
                                     // initialValue: data.fchannel ? data.fchannel : '0'
                                 })(
-                                    <Select style={{ width: '200px', marginLeft: 11 }}>
+                                    <Select style={{ width: '200px', marginLeft: 11 }} >
                                         <Select.Option value="0">网络搜索</Select.Option>
                                         <Select.Option value="1">熟人推荐分享</Select.Option>
                                         <Select.Option value="2">线下宣传</Select.Option>

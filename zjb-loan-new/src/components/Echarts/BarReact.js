@@ -33,6 +33,16 @@ export default class BarReact extends React.Component {
 
   render() {
     const { width="100%", height="200px", margin='0'} = this.props;
-    return <div ref={ID => this.ID = ID} style={{width, height, margin}}/>
+    return(
+        <div>
+          <h2>
+            优惠券使用情况
+            <p><span className="t">投资人</span><span className="y">游客</span></p>
+          </h2>
+          <div ref={ID => this.ID = ID} style={{width, height, margin}}>
+          </div>
+        </div>
+      )
+
   }
 }

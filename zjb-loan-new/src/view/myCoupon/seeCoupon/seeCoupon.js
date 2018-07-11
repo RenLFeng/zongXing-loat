@@ -4,7 +4,7 @@ import './seeCoupon.scss';
 export default class SeeCoupon extends React.Component {
   render(){
     return(
-      <div className="see-box none">
+      <div className="see-box send-coupon-info none">
         <p className="top-bg"><span>投资人</span></p>
         <a className="close">x</a>
         <div className="coupon-nub">

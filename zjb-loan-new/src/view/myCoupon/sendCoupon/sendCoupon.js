@@ -1,5 +1,7 @@
 import React from 'react';
 import './sendCoupon.scss';
+import Coupon from './couPon.js';
+import CouponSmall from '../../couponsmall/CouponSmall.js';
 export default class SendCoupon extends React.Component {
   render(){
     return(
@@ -27,6 +29,8 @@ export default class SendCoupon extends React.Component {
               <td className="state">还款中</td>
             </tr>
           </table>
+          {/*<CouponSmall />*/}
+          <Coupon />
         </div>
         <p className="btns">
           <a className="hold">保存</a><a className="sub">提交</a>

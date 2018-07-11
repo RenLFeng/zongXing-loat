@@ -2,7 +2,7 @@
 
 
 // 部署替换
-let build = 'local';  // production 是远端 test 是测试端 local 是本地端
+let build = 'production';  // production 是远端 test 是测试端 local 是本地端
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
@@ -39,7 +39,7 @@ if (build === 'production') {
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
   SOCKET_URL = 'http://192.168.1.173:8001';
-  
+
 }
 
 // 导出环境变量配置
