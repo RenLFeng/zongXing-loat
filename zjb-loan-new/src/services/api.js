@@ -162,10 +162,12 @@ export const mineloan = {
     getTimeLine: async (param) => req.get('/projectJourney/getOne', param), 
     //添加项目历程
     addTimeLine: async (param) => req.post('/projectJourney/save', param), 
-    //修改项目历程
-    editTimeLine: async (param) => req.post('/projectNotice/save', param), 
+    //删除项目历程
+    delTimeLine: async (param) => req.get('/projectJourney/delete', param),  
     //获取项目等级 和利率/project/getRateAndLevel 
-    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param), 
+    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param),
+    //删除项目
+    delProject: async (param) => req.get('/project/delete', param), 
 
     //投前咨询
     getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),

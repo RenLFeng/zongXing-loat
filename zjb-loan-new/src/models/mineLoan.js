@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-05 09:44:19 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 11:00:18
+ * @Last Modified time: 2018-07-12 14:08:08
  * 我的借款
  */
 import {personal, mineloan} from '../services/api';
@@ -18,8 +18,8 @@ export default {
   namespace: 'mineloan',
   state: {
     data: [],
-    projectId: '21531bab545349d3a391afa46d114901',
-    projectName: 'dc-测试项目',
+    projectId: '',
+    projectName: '',
     loading: false,
   },
   effects: {

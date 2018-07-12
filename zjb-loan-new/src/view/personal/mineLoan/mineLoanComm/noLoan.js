@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:41 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 09:48:06
+ * @Last Modified time: 2018-07-12 16:50:15
  * 无借款记录
  */
 import React from 'react';
@@ -11,7 +11,6 @@ import {connect} from 'dva';
 import { Link } from 'dva/router';
 import '../mineloan.scss'
 import Path from '../../../../common/PagePath';
-import DelModal from './deleteModal/deleteModal';
 
 class NoLoan extends React.Component{
 	constructor(props){
@@ -32,7 +31,6 @@ class NoLoan extends React.Component{
                         <Link to={Path.APPALY_LOAN}><span>申请借款</span></Link>
                     </div>
                 </div>
-                <DelModal ref="delmodal" content="你确定要删除吗?" sure="确定" cancel="取消"></DelModal>
             </div>
         )
     }

@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:51 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 09:30:41
+ * @Last Modified time: 2018-07-12 14:09:14
  * 我的借款
  * /projectTopic/getOne
  */
@@ -15,8 +15,7 @@ import {parseTime, returnff} from '../dateformat/date';
 const { TextArea } = Input;
 
 @connect((state)=>({
-    projectId: state.mineloan.projectId,
-    projectName: state.mineloan.projectName,
+    
 }))
 class InvestRecord extends React.Component{
     constructor(props){
