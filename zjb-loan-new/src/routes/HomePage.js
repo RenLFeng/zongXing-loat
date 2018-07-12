@@ -30,7 +30,7 @@ export default class HomePage extends React.Component {
 
   componentDidMount() {
     // 判断有没有token请求获取用户基础数据
-    if (localStorage.getItem('accessToken')) {
+    if (localStorage.getItem('accessTokenCompany')) {
       this.getUserBaseData();
     }
     if (!global.cos) {

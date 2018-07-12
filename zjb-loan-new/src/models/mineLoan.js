@@ -9,8 +9,8 @@ import {personal, mineloan} from '../services/api';
 import {message} from 'antd';
 
 let webToken = null;
-if (localStorage.getItem('accessToken')) {
-  const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+if (localStorage.getItem('accessTokenCompany')) {
+  const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
   webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
 }
 

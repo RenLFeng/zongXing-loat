@@ -8,8 +8,8 @@ const OPENING = 1;
 const OPEN_FAIL = 2;
 const OPEN_SUCCESS = 3;
 let webToken = null;
-if (localStorage.getItem('accessToken')) {
-  const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+if (localStorage.getItem('accessTokenCompany')) {
+  const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
   webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
 }
 
@@ -157,8 +157,8 @@ export default {
 function saveOpenStatus(param) {
   console.log('保存开户状态', param);
   let webToken = '';
-  if (localStorage.getItem('accessToken')) {
-    const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+  if (localStorage.getItem('accessTokenCompany')) {
+    const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
     webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
   }
   if (webToken) {

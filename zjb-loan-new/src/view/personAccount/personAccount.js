@@ -274,7 +274,7 @@ export default class PersonAccount extends React.Component {
         fflag:13
       },
     ];
-    console.log(this.props.personal);
+    console.log(this.props.personal,'----------------------------');
     // 当前借款金额  近期还款  我的借款  账户金额  资金动态
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     return (

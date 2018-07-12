@@ -42,40 +42,37 @@ class Loaninfo extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.num !== nextProps.num) {
       if (this.props.visible) {
-        this.props.form.validateFieldsAndScroll((error, values) => {
-          if (!error) {
-            // submit the values
-            // values.fother_pic_json = typeof values.fother_pic_json !== 'string' ? JSON.stringify(values.fother_pic_json) : values.fother_pic_json;
-            values.fdeal_log = typeof values.fdeal_log !== 'string' ? JSON.stringify(values.fdeal_log) : values.fdeal_log;
-            values.fcredit_report = typeof values.fcredit_report !== 'string' ? JSON.stringify(values.fcredit_report) : values.fcredit_report;
-            console.log('values.members', values.members);
-            for (let i = 1; i <= values.members.length; i++) {
-              values[`tlo${i}Idcard`] = values.members[i - 1].fIdcardNo;
-              values[`tlo${i}Name`] = values.members[i - 1].fName;
-              values[`tlo${i}phone`] = values.members[i - 1].fPhone;
-              values[`tlo${i}relation`] = values.members[i - 1].fRelation;
-            }
-            console.log('values', values);
-            if (this.props.saveNO !== nextProps.saveNO) {
-              this.props.changeData('personal', values, true, true);
-            } else {
-              if (this.props.commit !== nextProps.commit) {
-                this.props.changeData('personal', values, true, false, true);
-              } else {
-                this.props.changeData('personal', values, true, false);
-              }
-            }
-          } else {
-            this.props.changeData('personal', values, false);
-          }
-        });
+        
       }
     }
   }
-
-  componentWillUnmount() {
+  // 处理组件内的数据 传递给上层组建
+  getChildData = () => {
+    let val = null;
+    this.props.form.validateFieldsAndScroll((error, values) => {
+      if (!error) {
+        // submit the values
+        values.fother_pic_json = typeof values.fother_pic_json !== 'string' ? JSON.stringify(values.fother_pic_json) : values.fother_pic_json;
+        values.fdeal_log = typeof values.fdeal_log !== 'string' ? JSON.stringify(values.fdeal_log) : values.fdeal_log;
+        values.fcredit_report = typeof values.fcredit_report !== 'string' ? JSON.stringify(values.fcredit_report) : values.fcredit_report;
+        for (let i = 1; i <= 3; i++) {
+          values[`tlo${i}Idcard`] = values[`fIdcardNo${i}`] ||'';
+          values[`tlo${i}Name`] = values[`fName${i}`] ||'';
+          values[`tlo${i}phone`] = values[`fPhone${i}`] ||'';
+          values[`tlo${i}relation`] = values[`fRelation${i}`] ||'';
+        }
+        console.log('values', values);
+        val = values;
+      } else {
+        val = null;
+      }
+    });
+    return val;
   }
+  componentWillUnmount() {
 
+  }
+  
   validateNumber = (rule, value, callback) => {
     const { getFieldValue } = this.props.form;
     if (MONEY_REG.test(value) && (value * 1 < 100000 || value * 1 > 1000000)) {
@@ -102,29 +99,15 @@ class Loaninfo extends React.Component {
     // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
     callback()
   };
+
   submit() {
-    debugger
-    let obj={};
-    let flag=true
-    this.props.form.validateFields((err, values) => {
-        if (!err) {
-            obj=values;
-        }
-      });
-    console.log(obj,"11111111111111111111111111111111")
-      for(let i in obj){
-          if(obj[i] === undefined){
-            flag=false
-          }
-      }
-      if(!flag){
-        alert('请完善借款信息');
-      }else{
-        this.submitLoanInfo(obj)
-      }
-  };
-  submitLoanInfo(obj){
-    console.log(obj,"su")
+    const val = this.getChildData();
+    if (val == null) {
+        message.error('请检查数据格式');
+        return;
+    } else {
+        this.props.changeOldData(val, 'SAVE');
+    }
   }
   render() {
     const { form, dispatch, submitting, data } = this.props;
@@ -142,7 +125,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel ><span className="names">姓名</span></RequireLabel>}>
                   {getFieldDecorator('lenderName', {
-                    //   initialValue: data.lenderName ? data.lenderName : ''
+                    initialValue: data.lenderName ? data.lenderName : ''
                   })(
                     <Input placeholder="请输入" />
                   )}
@@ -151,7 +134,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel>手机号码</RequireLabel>} style={{ paddingLeft: 6 }}>
                   {getFieldDecorator('fmobile', {
-                    //   initialValue: data.fmobile ? data.fmobile : '',
+                    initialValue: data.fmobile ? data.fmobile : '',
                     rules: [{
                       pattern: VER_PHONE, message: '请填写正确的手机'
                     }]
@@ -162,7 +145,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel><span className="namepx">QQ号</span></RequireLabel>}>
                   {getFieldDecorator('fqq', {
-                    //   initialValue: data.fqq ? data.fqq : '',
+                    initialValue: data.fqq ? data.fqq : '',
                     rules: [{
                       pattern: QQ_REG, message: '请填写正确的QQ号'
                     }],
@@ -179,7 +162,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel>身份证号</RequireLabel>}>
                   {getFieldDecorator('fidcard_no', {
-                    //   initialValue: data.fidcard_no ? data.fidcard_no : '',
+                     initialValue: data.fidcard_no ? data.fidcard_no : '',
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
@@ -191,7 +174,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'婚姻情况'} style={{ paddingLeft: 18 }}>
                   {getFieldDecorator('fmarriage', {
-                    //   initialValue: data.fmarriage ? data.fmarriage.toString() : '0',
+                    initialValue: data.fmarriage ? data.fmarriage.toString() : '0',
                   })(
                     <Select style={{ width: 200 }}>
                       <Select.Option value="0">未婚</Select.Option>
@@ -204,7 +187,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel><span className="namepx">微信号</span></RequireLabel>}>
                   {getFieldDecorator('fweichat', {
-                    //   initialValue: data.fweichat ? data.fweichat : '',
+                    initialValue: data.fweichat ? data.fweichat : '',
                     rules: [{
                       pattern: WeChat_REG, message: '请填写正确的微信号'
                     }],
@@ -213,15 +196,12 @@ class Loaninfo extends React.Component {
                   )}
                 </Form.Item>
               </Col>
-
-
-
             </Row>
             <Row gutter={16} style={{ marginLeft: 4 }}>
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'银行卡号'}>
                   {getFieldDecorator('fbank_no', {
-                    //   initialValue: data.fbank_no ? data.fbank_no : '',
+                    initialValue: data.fbank_no ? data.fbank_no : '',
                     rules: [{
                       pattern: BANK_CARD, message: '请输入正确的银行卡号'
                     }],
@@ -234,7 +214,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel ><span className="names">学历</span></RequireLabel>}  >
                   {getFieldDecorator('feducation', {
-                    //   initialValue: data.feducation ? data.feducation : '大专及以下',
+                    initialValue: data.feducation ? data.feducation : '大专及以下',
                   })(
                     <Select style={{ width: 200 }}>
                       <Select.Option value="大专及以下">大专及以下</Select.Option>
@@ -248,7 +228,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'电子邮箱'}>
                   {getFieldDecorator('fcompany_email', {
-                    //   initialValue: data.fcompany_email ? data.fcompany_email : '',
+                   initialValue: data.fcompany_email ? data.fcompany_email : '',
                     rules: [{
                       pattern: E_MAIL, message: '请输入正确的电子邮箱'
                     }]
@@ -265,7 +245,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'开户银行'}>
                   {getFieldDecorator('fbank_name', {
-                    //   initialValue: data.fbank_name ? data.fbank_name : '',
+                    initialValue: data.fbank_name ? data.fbank_name : '',
                     rules: [],
                   })(
                     <Input placeholder="请输入" />
@@ -275,7 +255,7 @@ class Loaninfo extends React.Component {
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={<RequireLabel ><span className="names">座机</span></RequireLabel>}  >
                   {getFieldDecorator('ftelephone', {
-                    //   initialValue: data.ftelephone ? data.ftelephone : '',
+                    initialValue: data.ftelephone ? data.ftelephone : '',
                     rules: [{
                       pattern: TEL_PHONE, message: '请填写正确的座机号'
                     }],
@@ -289,7 +269,7 @@ class Loaninfo extends React.Component {
                 <Form.Item label={<div className={styles.textBox}>家庭住址
               </div>} style={{ marginBottom: 20 }}>
                   {getFieldDecorator('faddress', {
-                    //   initialValue: data.faddress ? data.faddress : '',
+                   initialValue: data.faddress ? data.faddress : '',
                     rules: [
                       { validator: this.validateStr }
                     ]
@@ -307,19 +287,17 @@ class Loaninfo extends React.Component {
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" label={
                   <RequireLabel>第一紧急联系人</RequireLabel>}>
-                  {getFieldDecorator('fcredit_name', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
-                    // rules: [
-                    //     { pattern: MONEY_REG, message: '请输入姓名' },
-                    //     { validator: this.validateNumber }
-                    // ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" />)}
+                  {getFieldDecorator('fName1', {
+                    initialValue: data.tlo1Name ? data.tlo1Name : '',
+                    rules: [
+                    ]
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }}>
-                  {getFieldDecorator('fcredit_idcard', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fIdcardNo1', {
+                    initialValue: data.tlo1Idcard ? data.tlo1Idcard : '',
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
@@ -329,8 +307,8 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_phone', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fPhone1', {
+                    initialValue: data.tlo1phone ? data.tlo1phone : '',
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
@@ -339,14 +317,15 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_Sociology', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fRelation1', {
+                    initialValue: data.tlo1relation ? data.tlo1relation : '',
                   })(
                     <Select style={{ width: '200px', marginLeft: 11 }}>
-                      <Select.Option value="0">配偶</Select.Option>
-                      <Select.Option value="1">父亲</Select.Option>
-                      <Select.Option value="2">子女</Select.Option>
-                      <Select.Option value="3">其他亲属</Select.Option>
+                      <Select.Option value="配偶">配偶</Select.Option>
+                      <Select.Option value="父亲">父亲</Select.Option>
+                      <Select.Option value="母亲">母亲</Select.Option>
+                      <Select.Option value="子女">子女</Select.Option>
+                      <Select.Option value="其他亲属">其他亲属</Select.Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -356,20 +335,19 @@ class Loaninfo extends React.Component {
             <Row style={{ display: 'inline-flex', marginBottom: '-40px' }}>
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" label={
-                  <RequireLabel>商业伙伴</RequireLabel>}>
-                  {getFieldDecorator('fcredit_secondname', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
-                    // rules: [
-                    //     { pattern: MONEY_REG, message: '请输入姓名' },
-                    //     { validator: this.validateNumber }
-                    // ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" />)}
+                  <div>商业伙伴</div>}>
+                  {getFieldDecorator('fName2', {
+                    initialValue: data.tlo2Name ? data.tlo2Name : '',
+                    rules: [
+                        { pattern: MONEY_REG, message: '请输入姓名' },
+                    ]
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }}>
-                  {getFieldDecorator('fcredit_secondidcard', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fIdcardNo2', {
+                    initialValue: data.tlo2Idcard ? data.tlo2Idcard : '',
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
@@ -379,8 +357,8 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_secondphone', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fPhone2', {
+                    initialValue: data.tlo2phone ? data.tlo2phone : '',
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
@@ -389,37 +367,34 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_secondSociology', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fRelation2', {
+                    initialValue: data.tlo2relation ? data.tlo2relation : '',
                   })(
                     <Select style={{ width: '200px', marginLeft: 11 }}>
-                      <Select.Option value="0">配偶</Select.Option>
-                      <Select.Option value="1">父亲</Select.Option>
-                      <Select.Option value="2">子女</Select.Option>
-                      <Select.Option value="3">其他亲属</Select.Option>
+                      <Select.Option value="同事">同事</Select.Option>
+                      <Select.Option value="上下游供应商">上下游供应商</Select.Option>
+                      <Select.Option value="合伙人">合伙人</Select.Option>
                     </Select>
                   )}
                 </Form.Item>
               </div>
             </Row>
-            {/* // ------------------------------------------------------------------------------ */}
             <Row style={{ display: 'inline-flex', marginBottom: '-20px' }}>
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" label={
-                  <RequireLabel>朋友</RequireLabel>}>
-                  {getFieldDecorator('fcredit_thirdname', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
-                    // rules: [
-                    //     { pattern: MONEY_REG, message: '请输入姓名' },
-                    //     { validator: this.validateNumber }
-                    // ]
+                  <div>朋友</div>}>
+                  {getFieldDecorator('fName3', {
+                    initialValue: data.tlo3Name ? data.tlo3Name : '',
+                    rules: [
+                        { pattern: MONEY_REG, message: '请输入姓名' },
+                    ]
                   })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" />)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }}>
-                  {getFieldDecorator('fcredit_thirdidcard', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fIdcardNo3', {
+                    initialValue: data.tlo3Idcard ? data.tlo3Idcard : '',
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
@@ -429,8 +404,8 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '20%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_thirdphone', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fPhone3', {
+                    initialValue: data.tlo3phone ? data.tlo3phone : '',
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
@@ -439,24 +414,19 @@ class Loaninfo extends React.Component {
               </div>
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
-                  {getFieldDecorator('fcredit_thirdSociology', {
-                    // initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                  {getFieldDecorator('fRelation3', {
+                    initialValue: data.tlo3relation ? data.tlo3relation : '',
                   })(
                     <Select style={{ width: '200px', marginLeft: 11 }}>
-                      <Select.Option value="0">配偶</Select.Option>
-                      <Select.Option value="1">父亲</Select.Option>
-                      <Select.Option value="2">子女</Select.Option>
-                      <Select.Option value="3">其他亲属</Select.Option>
+                      <Select.Option value="朋友">朋友</Select.Option>
+                      <Select.Option value="其他">其他</Select.Option>
                     </Select>
                   )}
                 </Form.Item>
               </div>
             </Row>
           </Form>
-
-
         </div>
-
         <div style={{ marginBottom: 20 }} className="IDcard">
           <Row gutter={16}>
             <Col lg={8} md={12} sm={24}>
@@ -466,7 +436,7 @@ class Loaninfo extends React.Component {
                   <Icon type="question-circle-o" className={styles.toolTip} style={{left:120,top:-27}}/></Tooltip> */}
                 </div>
                 {getFieldDecorator('fidcard_pic1', {
-                  //   initialValue: data.fidcard_pic1 ? data.fidcard_pic1 : '',
+                    initialValue: data.fidcard_pic1 ? data.fidcard_pic1 : '',
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="身份证正面" />
                 )}
@@ -480,7 +450,7 @@ class Loaninfo extends React.Component {
                   </Tooltip> */}
                 </div>
                 {getFieldDecorator('fidcard_pic2', {
-                  //   initialValue: data.fidcard_pic2 ? data.fidcard_pic2 : '',
+                    initialValue: data.fidcard_pic2 ? data.fidcard_pic2 : '',
                   rules: [],
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="身份证反面" />
@@ -496,7 +466,7 @@ class Loaninfo extends React.Component {
                   <Icon type="question-circle-o" className={styles.toolTip} style={{left:120,top:-27}}/></Tooltip> */}
                 </div>
                 {getFieldDecorator('fidcard_pic3', {
-                  //   initialValue: data.fidcard_pic3 ? data.fidcard_pic3 : '',
+                    initialValue: data.fidcard_pic3 ? data.fidcard_pic3 : '',
                   rules: [],
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="手持身份证" />
@@ -513,7 +483,7 @@ class Loaninfo extends React.Component {
                   </Tooltip> */}
                 </div>
                 {getFieldDecorator('fcar_pic', {
-                  //   initialValue: data.fcar_pic ? data.fcar_pic : '',
+                    initialValue: data.fcar_pic ? data.fcar_pic : '',
                   rules: [],
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="车辆行驶证" />
@@ -528,7 +498,7 @@ class Loaninfo extends React.Component {
                   </Tooltip> */}
                 </div>
                 {getFieldDecorator('fhouse_pic1', {
-                  //   initialValue: data.fhouse_pic1 ? data.fhouse_pic1 : '',
+                    initialValue: data.fhouse_pic1 ? data.fhouse_pic1 : '',
                   rules: [],
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="房产证明" />
@@ -549,7 +519,7 @@ class Loaninfo extends React.Component {
                   </Tooltip>
                 </div>
                 {getFieldDecorator('fcredit_report', {
-                  //   initialValue: data.fcredit_report ? JSON.parse(data.fcredit_report) : [],
+                    initialValue: data.fcredit_report ? JSON.parse(data.fcredit_report) : [],
                   rules: [],
                 })(
                   <UploadFile {...this.fileData} prefix={dataPath}>个人征信报告</UploadFile>
@@ -566,7 +536,7 @@ class Loaninfo extends React.Component {
                   </Tooltip>
                 </div>
                 {getFieldDecorator('fdeal_log', {
-                  //   initialValue: data.fdeal_log ? JSON.parse(data.fdeal_log) : [],
+                    initialValue: data.fdeal_log ? JSON.parse(data.fdeal_log) : [],
                   rules: [],
                 })(
                   <UploadFile {...this.fileData} prefix={dataPath}>个人交易流水</UploadFile>
@@ -582,20 +552,19 @@ class Loaninfo extends React.Component {
                     <Icon type="question-circle-o" className=' person_xin' />
                   </Tooltip>
                 </div>
-                {/* {getFieldDecorator('fother_pic_json', {
+                {getFieldDecorator('fother_pic_json', {
                   initialValue: data.fother_pic_json ? JSON.parse(data.fother_pic_json) : [],
                   rules: [],
-                })( */}
-                <UploadFile {...this.fileData} prefix={dataPath}>其他财产证明</UploadFile>
-                {/* )} */}
+                })(
+                  <UploadFile {...this.fileData} prefix={dataPath}>其他财产证明</UploadFile>
+                )}
               </Form.Item>
             </Col>
           </Row>
-          <Row>
-            <div className="loan-aoolays-btns" onClick={this.submit.bind(this)}>
-              <a  >保存</a>
-            </div>
-          </Row>
+          {this.props.hasUnfinishProject ? null: 
+          <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>
+            <Button style={{width: 140, margin: '0 auto'}} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
+          </div>}
         </div>
       </div>);
   }

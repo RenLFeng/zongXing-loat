@@ -76,11 +76,20 @@ export const baseService={
 
     getProjectType: async () => req.get('/apply/getProjectCode'),
     
-// 获取当前项目的 委员会确认结果
+    // 获取当前项目的 委员会确认结果
     getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
-      // 获取之前的 借款信息接口
-      getLoanInfo: async () => req.get('/apply/getOne'),
-    
+    // 获取之前的 借款信息接口
+    getLoanInfo: async () => req.get('/apply/getOne'),
+    // 保存 借款信息接口
+    saveLoanInfo: async (param) => req.post('/apply/save', param),
+    // 提交借款信息接口
+    commitInfo: async (param) => req.post('/apply/submit', param),
+    // 项目可选城市获取
+    getProCityList: async () => req.get('/apply/getCity'),
+    // 获取最近一次完成项目的数据
+    getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),
+    // 获取上传视频的签名
+    createKey: async ()=>req.get('/getUploadSignature')
 }
 
   
