@@ -2,14 +2,15 @@
 import React from 'react';
 import './index.scss'
 import { Link } from 'dva/router';
-import { accountService } from '../../../../services/api'
+import { accountService} from '../../../../services/api'
 import { Card, Row, Col, Checkbox, Button, AutoComplete, Modal,message } from 'antd';
-
+import { connect } from 'dva';
 import Recharge from '../recharge'
 import Account from '../accountWithdrawals/accountWithdrawals'
 
 import BindCard from './bindcard/bindCard'
 import Path from '../../../../common/PagePath'
+
 export default class Loaninfo extends React.Component {
     constructor(props) {
         super(props)
@@ -29,20 +30,25 @@ export default class Loaninfo extends React.Component {
     }
     componentDidMount() {
         this.getinit();
+    
     }
+
     //获取银行卡信息
   async  getinit() {
         //获取银行卡
         const response = await accountService.getBankCardList();
         console.log('提现银行卡接口', response);
         if (response.code === 0) {
-            this.setState({
-                card: response.data,
-                activeObj:  response.data[0]
-            });
+            if(response.data.length>0){
+                this.setState({
+                    card: response.data,
+                    activeObj:  response.data[0]
+                });
+            }
         } else {
             message.error(response.msg);
         }
+        debugger
 
     }
     handleOk = (e) => {
@@ -67,21 +73,21 @@ export default class Loaninfo extends React.Component {
       }
     }
     render() {
-        console.log(this.state.activeObj,"11111111111111111111111111111")
         return (
             <div className="card-info">
                 <Row >
                     {
-                        this.props.types === '1' ? <center>请选择充值银行卡</center> : <center>请选择到账银行卡</center>
+                        this.props.types === '1' ? <center> </center> : <center>请选择到账银行卡</center>
                     }
 
                     {
+                         this.props.types === '1' ? <center> </center> :
                         this.state.card.map(item => {
                             return <div>
                                 <Col span={8}>
                                     <Card style={{ background: '#0b69fd', cursor: 'pointer', marginLeft: 16, marginRight: 16, marginBottom: 8 }} onClick={this.handlerClcikLable.bind(this, item)}>
                                         <div className='card-logo '>
-                                            <img src={require('./img/js.png')} className="logo-img"></img>
+                                            <img src={item.flogo} className="logo-img"></img>
                                         </div>
                                         <div className='card-logo-info'>
                                             <p className="card-logo-back" >{item.fbank}</p>
@@ -95,18 +101,24 @@ export default class Loaninfo extends React.Component {
                     }
                 </Row>
                 {
-                    this.props.types === '1' ? <div className="card-logo-recharge">
-                        <span className="card-logo-recharge-add"  ><Link to="/index/uCenter/bindCard" > +使用新卡充值</Link> </span>
-                        <span className="card-logo-recharge-tip">（只支持储蓄卡）</span>
-                    </div> : <div className="card-logo-recharge">
+                    this.props.types === '1' ? 
+                    <div className="card-logo-recharge">
+                        {/* <span className="card-logo-recharge-add"  ><Link to="/index/uCenter/bindCard" > +使用新卡充值</Link> </span>
+                        <span className="card-logo-recharge-tip">（只支持储蓄卡）</span> */}
+                    </div>
+                     : <div className="card-logo-recharge">
                             <span className="card-logo-recharge-add"><Link to="/index/uCenter/bindCard" > +使用新卡提现</Link> </span>
                             <span className="card-logo-recharge-tip">（只支持储蓄卡）</span>
                         </div>
                 }
-                <img src={require('../../mineLoan/img/u904.png')} ></img>
                
                 {
-                    this.props.types === '2' ? <Account param={this.state.activeObj} /> : null
+                    this.props.types === '2' ? 
+                    <div>
+                     <img src={require('../../mineLoan/img/u904.png')} ></img>
+                    <Account param={this.state.activeObj} />
+                    </div>
+                    : null
                 }
                 {
                     this.props.types === '1' ? <Recharge param={this.state.activeObj} /> : null
