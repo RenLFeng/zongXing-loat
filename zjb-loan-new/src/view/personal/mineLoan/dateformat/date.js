@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-10 19:16:15
+ * @Last Modified time: 2018-07-12 14:20:09
  * @des: 日历 - 日期  金钱相关方法
  */
 
@@ -292,7 +292,6 @@ export function getTime(time1, time2){
     }
     let date2=new Date(time1);    //结束时间
     let date3=date1.getTime()-date2.getTime(); //时间差秒
-    console.log(date3,'date3')
     //计算出相差天数
     let days=Math.floor(date3/(24*3600*1000));
      

@@ -83,10 +83,18 @@ export const baseService={
     getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
       // 获取之前的 借款信息接口
       getLoanInfo: async () => req.get('/apply/getOne'),
-    
+    // 还款计划详情
+    getDetailPlane:async(param)=>req.get('/project/borrowPlanInfo?projectId='+param.projectId+"&forPayTime="+param.forPayTime),
+    // 手动还款接口
+    manualReimpayment:async(param)=>req.post('/repayment/manually',param),
+    // 获取还款计划
+    getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
 }
 
   
+
+  
+
 
 //登录 dbb
 export const doLogin={
@@ -166,10 +174,12 @@ export const mineloan = {
     getTimeLine: async (param) => req.get('/projectJourney/getOne', param), 
     //添加项目历程
     addTimeLine: async (param) => req.post('/projectJourney/save', param), 
-    //修改项目历程
-    editTimeLine: async (param) => req.post('/projectNotice/save', param), 
+    //删除项目历程
+    delTimeLine: async (param) => req.get('/projectJourney/delete', param),  
     //获取项目等级 和利率/project/getRateAndLevel 
-    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param), 
+    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param),
+    //删除项目
+    delProject: async (param) => req.get('/project/delete', param), 
 
     //投前咨询
     getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),

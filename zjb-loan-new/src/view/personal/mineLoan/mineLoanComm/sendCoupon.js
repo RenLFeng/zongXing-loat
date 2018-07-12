@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-05 11:48:42 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 18:22:04
+ * @Last Modified time: 2018-07-12 14:20:31
  * 发放优惠券
  */
 import React from 'react';
@@ -19,8 +19,7 @@ const RadioGroup = Radio.Group;
 const year = getYears();
 const month = getMonths();
 @connect((state)=>({
-    projectId: state.mineloan.projectId,
-    projectName: state.mineloan.projectName,
+    
 }))
 class SendCoupon extends React.Component{
     constructor(props){
@@ -147,7 +146,6 @@ class SendCoupon extends React.Component{
         return data.year + '-' + month + '-' + day;
     }
     async onChange(statu,val){
-        console.log(statu,val)
         if(statu === 'invest'){
            await this.setState({
                 invest: {
@@ -364,7 +362,7 @@ class SendCoupon extends React.Component{
     //获取
     async getSendCou(){
         let data = {
-            projectId: '50616b665fc440aeb1d6cbe659b7e428'//this.props.coudata.fid
+            projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
         if(res.code === 0){
@@ -394,12 +392,10 @@ class SendCoupon extends React.Component{
         await this.setState({
             saveAddress: arrs
         })
-        console.log(this.state.saveAddress,'ooo')
     }
 
     editAddress(index){
         let arr = this.state.saveAddress;
-        console.log(index, arr,'RR')
         let obj = arr[index];
         arr.splice(index,1)
         this.getCity(obj.provnice);

@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:12 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 09:05:55
+ * @Last Modified time: 2018-07-12 14:03:05
  */
 
 @import '../../../assets/common/_var.scss';
@@ -78,6 +78,10 @@ $weight: 600;
         .ready {
           color: #FFEDEB;
           padding-left: 22px;
+        }
+        .ready-long{
+          color: #FFEDEB;
+          padding-left: 15px;
         }
         .unready {
           color: #cccccc;
@@ -196,6 +200,7 @@ $weight: 600;
     }
     .unready-fir {
       text-align: left;
+      color: #cccccc !important;
     }
   }
 }
