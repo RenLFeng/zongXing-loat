@@ -136,7 +136,7 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async () => req.get('/project/getBorrowPlan'),
+     borrowPlan: async (param) => req.get('/project/getBorrowPlan',param),
 }
     
 
