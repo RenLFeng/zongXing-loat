@@ -31,6 +31,7 @@ export default class ImgUpload extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps,'nextProps')
     if ('value' in nextProps) {
       this.setState({
         imageUrl: nextProps.value,
@@ -90,12 +91,21 @@ export default class ImgUpload extends React.Component {
 
   handleCancel() {
     this.setState({visible: false})
+    this.setState({
+      imageUrl: ''
+    })
   }
 
   changeReview(type) {
     if (this.state.imageUrl) {
       this.setState({showReview: type});
     }
+  }
+
+  setPicture(val){
+    this.setState({
+      imageUrl: val
+    })
   }
 
   render() {

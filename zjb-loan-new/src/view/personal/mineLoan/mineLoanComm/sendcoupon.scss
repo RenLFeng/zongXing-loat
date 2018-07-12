@@ -1,4 +1,6 @@
 $mainColor: #FC5951;
+$top: #fff;
+$bottom: #F0F0F0;
 .send-coupon {
   margin-top: 25px;
   padding-top: 18px;
@@ -10,21 +12,33 @@ $mainColor: #FC5951;
     background-color: #fff;
     padding-left: 23px;
     padding-top: 40px;
+    background: -webkit-linear-gradient(bottom,$top,$bottom); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(top,$top,$bottom); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(top,$top,$bottom); /* Firefox 3.6 - 15 */
+    background: linear-gradient(top,$top,$bottom); /* 标准的语法（必须放在最后） */
   }
   .coupon-info,
   .business-img,
     {
     display: inline-block;
   }
+
+  .business-img{
+
+    .sj-logo{
+      background-color: #FF3B35;
+      border-left: 1px solid #FF3B35;
+    }
+  }
   .send-coupon1,
   .send-coupon2 {
     display: inline-block;
     width: calc(50% - 36px);
-    margin: 0 15px;
+    margin: 0 18px;
     .t-img {
       text-align: center;
       margin-bottom: -27px;
-      img {
+      .t-imgs {
         width: 225px;
         height: 60px;
       }
@@ -46,8 +60,10 @@ $mainColor: #FC5951;
     background-color: #EBE6D6;
     padding-left: 15px;
     padding-top: 3px;
-    p {
+    .coupon-info-p {
       color: #FC5951;
+      margin-top: 0;
+      text-align: left;
       font-size: 14px;
       &.coupon-name {
         font-size: 16px;
@@ -56,7 +72,7 @@ $mainColor: #FC5951;
         color: #F68D81;
       }
     }
-    div {
+    .coupon-info-div {
       margin-left: 85px;
       margin-bottom: -14px;
       .coupon-deno {
@@ -88,11 +104,12 @@ $mainColor: #FC5951;
   }
   .send-form {
     .send-form-div {
-      margin: 15px 0;
+      margin: 15px 0 ;
       p {
         padding-left: 116px;
         color: #F29827;
         font-size: 12px;
+        margin-top: 0;
       }
       .full-jie{
         color: #F29827;
@@ -107,5 +124,52 @@ $mainColor: #FC5951;
       display: inline-block;
       width: 85px;
     }
+  }
+
+  .send-form-address{
+    width: 100%;
+    float: left;
+    padding: 8px 0 8px 40px;
+    background-color: #f2f2f2;
+    .save-address{
+      color: #F29827;
+      text-decoration: underline;
+      padding-left: 3px;
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+    .ant-spin-nested-loading {
+      position: relative;
+      display: inline-block;
+    }
+    .spin-top{
+      top: 11px;
+    }
+  }
+
+  .coupon-btn{
+    background-color: #fff;
+    width: 100%;
+    text-align: right;
+    padding: 20px 40px 0 40px;
+  }
+
+  .radio-group-coupon{
+    width: 100%;
+    padding: 10px 0 25px 125px;
+    .edit-address{
+      margin-left: 20px;
+      color: #4976FD;
+      text-decoration: underline;
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .error-imput{
+    color: #FF3B35 !important;
+    text-align: left;
   }
 }

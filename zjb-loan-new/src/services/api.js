@@ -144,14 +144,57 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async () => req.get('/project/getBorrowPlan'),
+     borrowPlan: async (param) => req.get('/project/getBorrowPlan',param),
 }
     
 
-//我的借款
+//我的借款 - wfl
 export const mineloan = {
-    //
+    //获取项目
     getMineLoan: async () => req.get('/project/self/project'),
+    //项目公告
+    getNotice: async (param) => req.get('/projectNotice/getOne', param),
+    //保存公告
+    saveNotice: async (param) => req.post('/projectNotice/save', param), 
+    //删除公告
+    delNotice: async (param) => req.get('/projectNotice/delete', param),
+    //获取项目历程
+    getTimeLine: async (param) => req.get('/projectJourney/getOne', param), 
+    //添加项目历程
+    addTimeLine: async (param) => req.post('/projectJourney/save', param), 
+    //修改项目历程
+    editTimeLine: async (param) => req.post('/projectNotice/save', param), 
+    //获取项目等级 和利率/project/getRateAndLevel 
+    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param), 
+
+    //投前咨询
+    getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),
+    //获取投资人列表
+    getInvestRecord: async (param) => req.post('/invRecord/getOne', param),
+    //提交回复 投后
+    saveConsult: async (param) => req.post('/answer/save', param),
+    //投前
+    saveConsultq: async (param) => req.post('/projectTopicReply/save', param),
+
+    //
+    getSureDate: async (param) => req.get('/project/getRateAndLevel', param),
+    /**
+     * 
+     * 优惠券
+     * 
+     */
+    //省
+    getProvince: async () => req.get('/area/getProvince'),
+    //市
+    getCity: async (param) => req.get('/area/getChild', param),
+    //区
+    getArea: async (param) => req.get('/area/getChild', param),
+
+    //保存优惠券
+    saveCou: (param) => req.post('/coupon/save', param),
+    //获取优惠券
+    getSendCou: (param) => req.get('/coupon/self/coupon', param),
+
 }
 //实名认证 - momei
 export const securityCentreService = {

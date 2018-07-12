@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-05 09:44:19 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-06 14:08:34
+ * @Last Modified time: 2018-07-11 11:00:18
  * 我的借款
  */
 import {personal, mineloan} from '../services/api';
@@ -18,11 +18,17 @@ export default {
   namespace: 'mineloan',
   state: {
     data: [],
+    projectId: '21531bab545349d3a391afa46d114901',
+    projectName: 'dc-测试项目',
+    loading: false,
   },
   effects: {
     *getMineLoan({payload}, {call, put}){
-      console.log('5555555')
       try {
+        yield put({
+          type: 'changeLoad',
+          payload: true
+        })
         const response = yield call(mineloan.getMineLoan);
         if(response.code === 0){
             yield put({
@@ -33,6 +39,10 @@ export default {
             })
         }else{
             message.error(response.msg);
+            yield put({
+              type: 'changeLoad',
+              payload: false
+            })
         }
       }catch(e){
 
@@ -41,11 +51,17 @@ export default {
   },
   reducers: {
     saveMineLoan(state, {payload}) {
-      console.log(payload,'payload')
       return {
         ...state,
-        data: payload.data
+        data: payload.data,
+        loading: false
       }
     },
+    changeLoad(state, {payload}) {
+      return {
+        ...state,
+        loading: payload
+      }
+    }
   },
 }
