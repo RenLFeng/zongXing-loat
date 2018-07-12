@@ -28,6 +28,9 @@ export const CouponService = {
 
     getAccountCoupon:async(param) =>req.get('/account/mycoupon',param),
     
+    getCouponInfo:async(param)=> req.post('coupon/borrow/mycoupon/statistics',param)
+    
+    
 };
 
 // 账户服务
@@ -144,7 +147,8 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async (param) => req.get('/project/getBorrowPlan',param),
+     borrowPlan: async () => req.get('/project/getBorrowPlan'),
+
 }
     
 
@@ -194,6 +198,7 @@ export const mineloan = {
     saveCou: (param) => req.post('/coupon/save', param),
     //获取优惠券
     getSendCou: (param) => req.get('/coupon/self/coupon', param),
+    
 
 }
 //实名认证 - momei
