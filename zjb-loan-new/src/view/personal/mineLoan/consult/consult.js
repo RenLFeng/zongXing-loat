@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:51 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 17:49:33
+ * @Last Modified time: 2018-07-12 14:20:04
  * 我的借款
  * /projectTopic/getOne
  */
@@ -17,8 +17,7 @@ const { TextArea } = Input;
 
 
 @connect((state)=>({
-    projectId: state.mineloan.projectId,
-    projectName: state.mineloan.projectName,
+    
 }))
 class Consult extends React.Component{
     constructor(props){
@@ -84,7 +83,6 @@ class Consult extends React.Component{
     }
     //取消回复
     cancelan(){
-        console.log('888')
         this.setState({
             flag: -1,
             hfdata: ''

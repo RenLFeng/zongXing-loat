@@ -31,7 +31,6 @@ export default class ImgUpload extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps,'nextProps')
     if ('value' in nextProps) {
       this.setState({
         imageUrl: nextProps.value,

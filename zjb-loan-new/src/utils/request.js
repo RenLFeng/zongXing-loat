@@ -15,8 +15,9 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.59:8001';
-  document.title ="众借帮--开发环境"; 
+  // BASE_URL = 'http://192.168.1.59:8001';
+  BASE_URL = 'http://193.112.97.50:8001';
+  document.title ="众借帮--本地测试环境"; 
 }
 const codeMessage = {
   200: '服务器成功返回请求的数据',

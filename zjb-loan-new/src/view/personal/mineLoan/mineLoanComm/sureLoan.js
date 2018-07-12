@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:42:28 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 17:46:53
+ * @Last Modified time: 2018-07-12 14:09:59
  * 我的借款--确认借款 
  */
 import React from 'react';
@@ -26,7 +26,7 @@ class SureLoan extends React.Component{
 
     async getSureDate(){
         let data = {
-            projectId: '7e67a4e04bce4fdaa3251a766853c7a5',//this.props.suredata.fid
+            projectId: this.props.suredata.fid
         }
         let res = await mineloan.getSureDate(data);
         if(res.code === 0){

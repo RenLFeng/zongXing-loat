@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-09 11:30:58 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 19:41:37
+ * @Last Modified time: 2018-07-12 14:49:06
  */
 import React from 'react';
 import {Icon, message, Row, Col} from 'antd';
@@ -20,8 +20,8 @@ const { TextArea } = Input;
 const imgurl = 'https://zjb-test-1255741041.picgz.myqcloud.com/'
 
 @connect((state)=>({
-    projectId: state.mineloan.projectId,
-    projectName: state.mineloan.projectName,
+    // projectId: state.mineloan.projectId,
+    // projectName: state.mineloan.projectName,
 }))
 
 export default class Notice extends React.Component{
@@ -33,6 +33,7 @@ export default class Notice extends React.Component{
             loading: false,
             loadingadd: false,
             loadingdel: false,
+            visible: false,
             notice: '',
             noticeDate: [],
             fPicJson: '',
@@ -81,24 +82,37 @@ export default class Notice extends React.Component{
     //保存 - 修改公告
     async saveNotice(){
         let data = {}
+        const {fTitle, fContent, fPicJson} = this.state;
+        if(fTitle.trim().length === 0){
+            message.info('请输入标题');
+            return
+        }
+        if(fContent.trim().length === 0){
+            message.info('请输入内容');
+            return
+        }
+        if(fPicJson === ''){
+            message.info('请上传图片');
+            return
+        }
         this.setState({
             loadingadd: true
         })
         if(this.state.edit){
             data = {
                 fId: this.state.fId,
-                fTitle: this.state.fTitle,
+                fTitle: fTitle,
                 fProjectId: this.props.projectId,
-                fContent: this.state.fContent,
-                fCardPic: this.state.fPicJson,
+                fContent: fContent,
+                fCardPic: fPicJson,
                 fTime:  this.state.fTime,
             }
         }else{
             data = {
-                fTitle: this.state.fTitle,
+                fTitle: fTitle,
                 fProjectId: this.props.projectId,
-                fContent: this.state.fContent,
-                fCardPic: this.state.fPicJson,
+                fContent: fContent,
+                fCardPic: fPicJson,
             }
         }
         let res = await mineloan.saveNotice(data);
@@ -106,7 +120,8 @@ export default class Notice extends React.Component{
             this.getNotice();
             this.cancelAdd();
             this.setState({
-                loadingadd: false
+                loadingadd: false,
+                edit: false
             })
         }else{
             this.setState({
@@ -131,7 +146,9 @@ export default class Notice extends React.Component{
         await  this.setState({
             fContent: '',
             fTitle: '',
-            modal2Visible: false
+            fPicJson: '',
+            modal2Visible: false,
+            edit: false
         })
         this.refs.upload.handleCancel();
     }
@@ -148,11 +165,16 @@ export default class Notice extends React.Component{
             fTitle: item.fTitle,
             fProjectId: item.fProjectId,
             fContent: item.fContent,
-            fCardPic: item.fCardPic,
+            fPicJson: item.fCardPic,
             modal2Visible: true,
             edit: true,
         })
         this.refs.upload.setPicture(item.fCardPic)
+    }
+    cnacelDel(){
+        this.setState({
+            visible: false
+        })
     }
     //确认删除
     async comitDel(){
@@ -166,12 +188,13 @@ export default class Notice extends React.Component{
         if(res.code === 0){
             this.getNotice();
             this.setState({
-                loadingdel: false
+                loadingdel: false,
+                visible: false
             })
             this.refs.delmodal.cnacelDel();
         }else{
             this.setState({
-                loadingdel: false
+                loadingdel: false,
             })
             message.error(res.msg);
         }
@@ -179,9 +202,9 @@ export default class Notice extends React.Component{
     //删除
     delNotice(item){
         this.setState({
-            delId: item.fId
+            delId: item.fId,
+            visible: true
         })
-        this.refs.delmodal.showModal();
     }
     render(){
         const {fContent,fTitle} = this.state;
@@ -228,7 +251,10 @@ export default class Notice extends React.Component{
                     </Spin>
                 </Modal>
 
-                <DelModal ref="delmodal" content="确定要删除公告吗？" loading={this.state.loadingdel} comitDel={() => this.comitDel()} sure="确定" cancel="取消"></DelModal>
+                <DelModal ref="delmodal" visible={this.state.visible} content="确定要删除公告吗？" 
+                          loading={this.state.loadingdel} comitDel={() => this.comitDel()} 
+                          cnacelDel={() => this.cnacelDel()} key="2"
+                          sure="确定" cancel="取消"></DelModal>
 
                 <Spin spinning={this.state.loading}>
                     <Row>
