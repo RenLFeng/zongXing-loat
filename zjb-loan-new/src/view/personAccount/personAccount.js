@@ -291,7 +291,7 @@ export default class PersonAccount extends React.Component {
               <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
               <i>累计借款金额</i>
               <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
-              <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push()}}>
+              <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push(Path.APPALY_LOAN)}}>
                   <span></span> 申请借款
               </div>
           </div> 
@@ -360,8 +360,8 @@ export default class PersonAccount extends React.Component {
               </tr>
               <tr>
                 <td>{myBorrowVo.fcreditMoney?`${myBorrowVo.fcreditMoney/1000}`.fm()+'万元': ''}</td>
-                <td>{myBorrowVo.fcreditMonth?`${myBorrowVo.fcreditMonth}`.fm()+'个月':''}</td>
-                <td>{myBorrowVo.frateLast?`${myBorrowVo.frateLast}`.fm()+'%':''}</td>
+                <td>{myBorrowVo.fcreditMonth?`${myBorrowVo.fcreditMonth}`+'个月':''}</td>
+                <td>{myBorrowVo.frate?`${myBorrowVo.frate}`.fm()+'%':''}</td>
                 <td>{moment(myBorrowVo.fcreateTime).format('YYYY-MM-DD HH:mm')}</td>
                 <td>{formatFlagToText(myBorrowVo.fflag)}</td>
                 <td>
