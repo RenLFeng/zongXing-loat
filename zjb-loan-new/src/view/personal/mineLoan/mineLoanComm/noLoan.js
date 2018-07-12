@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:41 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-09 10:48:30
+ * @Last Modified time: 2018-07-11 09:48:06
  * 无借款记录
  */
 import React from 'react';
@@ -29,7 +29,7 @@ class NoLoan extends React.Component{
                     <LoanTitle title="我的借款"></LoanTitle>
                     <div className="apply">
                         <div className="apply-top"></div>
-                        <Link to={Path.APPALY_LOAN} ><a>申请借款</a></Link>
+                        <Link to={Path.APPALY_LOAN}><span>申请借款</span></Link>
                     </div>
                 </div>
                 <DelModal ref="delmodal" content="你确定要删除吗?" sure="确定" cancel="取消"></DelModal>

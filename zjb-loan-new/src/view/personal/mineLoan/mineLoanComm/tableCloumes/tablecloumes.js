@@ -1,4 +1,9 @@
-
+/*
+ * @Author: wfl 
+ * @Date: 2018-07-10 10:56:56 
+ * @Last Modified by:   wfl 
+ * @Last Modified time: 2018-07-10 10:56:56 
+ */
 import {parseTime, returnFloat} from '../../dateformat/date';
 
 function getStatu(flag){
@@ -49,7 +54,6 @@ function getStatu(flag){
             return ''                                     
     }
 }
-
 
 export const columns = [
     { 
@@ -112,6 +116,155 @@ export const columns = [
     },
   ];
 
+//上线筹款  
+export const columns10 = [
+    { 
+        title: '借款金额', 
+        align: 'center',
+        dataIndex: 'fcredit_money', 
+        key: 'fcredit_money' ,
+        render: (text,record) =>{
+            return <span>{returnFloat(record.fcredit_money)}万元</span>
+        } 
+    },
+    { 
+        title: '借款期数',
+        align: 'center',
+        dataIndex: 'fcredit_month', 
+        key: 'fcredit_month' ,
+        render: (text,record) =>{
+            return <span>{record.fcredit_month}个月</span>
+        } 
+    },
+    { 
+        title: '借款利率', 
+        align: 'center',
+        dataIndex: 'frate_last', 
+        key: 'frate_last' ,
+        render: (text,record) =>{
+            return <span>{record.frate_last}%</span>
+        } 
+    },
+    { 
+        title: '上线时间', 
+        align: 'center',
+        dataIndex: 'fpublish_time', 
+        key: 'fpublish_time' ,
+        render: (text,record) =>{
+            return <span>{parseTime(record.fpublish_time,'{y}-{m}-{d} {h}:{i}')}</span>
+        }
+    },
+    { 
+        title: '已筹金额',
+        align: 'center',
+        dataIndex: 'invMoney', 
+        key: 'invMoney' ,
+        render: (text,record) =>{
+            return <span>{returnFloat(record.invMoney)}万元</span>
+        } 
+    },
+    { 
+        title: '筹款进度',
+        align: 'center',
+        dataIndex: 'fcredit_month', 
+        key: 'fcredit_month' ,
+        render: (text,record) =>{
+            return <span>{record.fcredit_month}%</span>
+        } 
+    },
+    { 
+        title: '筹款时长', 
+        align: 'center',
+        dataIndex: 'fcreate_time', 
+        key: 'fcreate_time' ,
+        render: (text,record) =>{
+            return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+        }
+    },
+    { 
+        title: '投资人数', 
+        align: 'center',
+        dataIndex: 'invCount,', 
+        key: 'invCount,' ,
+        render: (text,record) =>{
+            return <span>{record.invCount}人</span>
+        }
+    },
+    { 
+        title: '状态', 
+        align: 'center',
+        dataIndex: 'state', 
+        key: 'state',
+        render: (text,record, index) =>{
+            return <span className="wait-commit">
+                    •{getStatu(record.fflag)}
+                </span>
+        } 
+    },
+  ];
+
+//按月还款
+export const columns12 = [
+    { 
+        title: '借款金额', 
+        align: 'center',
+        dataIndex: 'fcredit_money', 
+        key: 'fcredit_money' ,
+        render: (text,record) =>{
+            return <span>{returnFloat(record.fcredit_money)}万元</span>
+        } 
+    },
+    { 
+        title: '借款期数',
+        align: 'center',
+        dataIndex: 'fcredit_month', 
+        key: 'fcredit_month' ,
+        render: (text,record) =>{
+            return <span>{record.fcredit_month}个月</span>
+        } 
+    },
+    { 
+        title: '借款利率', 
+        align: 'center',
+        dataIndex: 'frate_last', 
+        key: 'frate_last' ,
+        render: (text,record) =>{
+            return <span>{record.frate_last}%</span>
+        } 
+    },
+    { 
+        title: '放款日期', 
+        align: 'center',
+        dataIndex: 'fcreate_time', 
+        key: 'fcreate_time' ,
+        render: (text,record) =>{
+            return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+        }
+    },
+    { 
+        title: '状态', 
+        align: 'center',
+        dataIndex: 'state', 
+        key: 'state',
+        render: (text,record, index) =>{
+            return <span className="wait-commit">
+                    •{getStatu(record.fflag)}
+                </span>
+        } 
+    },
+    { 
+        title: '操作', 
+        align: 'center',
+        dataIndex: '', 
+        key: 'x',   
+        render: (text,record,index) =>{
+            return <div className="action">
+                    <a className="ac-commit" onClick={() => this.submitLoan(text,record,index)}>还款计划</a>
+                  </div>
+        } 
+    },
+  ];
+
 export const columns13 = [
     { 
         title: '借款金额', 
@@ -141,7 +294,7 @@ export const columns13 = [
         } 
     },
     { 
-        title: '创建时间', 
+        title: '还清日期', 
         align: 'center',
         dataIndex: 'fcreate_time', 
         key: 'fcreate_time',

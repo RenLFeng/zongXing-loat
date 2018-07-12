@@ -31,6 +31,7 @@ export default {
       try {
         //向后台请求登录接口
         const response = yield call(doLogin.userLogin, payload);
+        console.log(response);
         //请求结束，请求状态修改为未请求状态
         //登录成功做的操作
         if (response.code === 0) {

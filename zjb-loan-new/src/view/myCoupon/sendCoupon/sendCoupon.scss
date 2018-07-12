@@ -8,7 +8,7 @@
     margin-top: -400px;
     left:50%;
     margin-left: -400px;
-    z-index: 9999999;
+    z-index: 99;
     padding-top: 0;
     padding-bottom: 80px;
     box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.6);
@@ -50,9 +50,8 @@
       position: relative;
       background: #fff;
       padding: 1px 10px;
-      margin-top: 108px;
-      margin-left: 2%;
-      margin-right:2%;
+      margin:108px 2% 30px 2%;
+
       box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.3);
       .coupon-info{
         padding: 1px 8px;
@@ -92,12 +91,41 @@
         }
         .ant-form-item-control-wrapper{
           display: inline-block;
+          .ant-form-item-children{
+            .ant-input-number{
+              width: 70px;
+            }
+          }
           .dec{
             color:#f90;
             font-size: 14px;
             margin-left: 15px;
           }
         }
+      }
+      .ant-row.how{
+        .ant-form-item-control-wrapper{
+          width: 100%;
+          margin-bottom: 0;
+        }
+      }
+    }
+    .adds{
+      .ant-form-item-control-wrapper{
+        display: inline-block;
+        .ant-form-item-children{
+          >a{
+            color: #f90;
+            margin-left: 15px;
+            border-bottom: 1px solid #f90;
+          }
+        }
+        .ant-input{
+          width:auto;
+        }
+      }
+      .ant-checkbox-group-item{
+        display: block;
       }
     }
     .btns{

@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:20:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-06 17:51:32
+ * @Last Modified time: 2018-07-10 11:12:39
  * 步骤条
  */
 import React from 'react';
@@ -27,7 +27,7 @@ class LoanStep extends React.Component{
     }
     render(){
         console.log(this.props.stepdata,'ppp')
-        const {fname,fproject_no,fflag} = this.props.stepdata;
+        const {fname,fproject_no,fflag,fleve_name} = this.props.stepdata;
         let step = [];
         let num = 0; 
         for(let i of stepDate){
@@ -47,7 +47,12 @@ class LoanStep extends React.Component{
             <div className="loan-step" >
                 {this.props.type === 0 ? '' : step}
                 <p>项目编号:<span>{fproject_no}</span></p>
-                <p>项目名称:<span>{fname}</span><span></span></p>
+                <p style={{display:'inline-block',width: '50%'}}>项目名称:<span>{fname}</span></p>
+                {fleve_name ? 
+                <p style={{display:'inline-block',width: '50%',textAlign: 'right'}}>
+                    项目评级:<span style={{color: 'red'}}>{fleve_name}</span>
+                    </p> :
+                    ''}
             </div>
         )
     }

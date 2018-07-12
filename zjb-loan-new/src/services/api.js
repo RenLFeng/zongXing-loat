@@ -33,7 +33,8 @@ export const CouponService = {
 // 账户服务
 export const accountService={
     // 获取账户总览首页数据
-    getPersonalData: async () => req.get('/company/totality/info'),
+
+    getPersonalData: async () => req.get('/account/company/totality/info'),
     
     
     getLoginData:async(param)=>req.get('/login/getData',param),
@@ -66,20 +67,27 @@ export const accountService={
 }
 
 
-
+// 基础信息 dbb
 
 export const baseService={
     //获取省份对应的城市
     getCity:async(param)=>req.get('/common/cities?provinceId='+param),
     // 获取项目行业编码类别接口
-    getProjectType: async () => req.get('/apply/getProjectCode')
+
+    getProjectType: async () => req.get('/apply/getProjectCode'),
+    
+// 获取当前项目的 委员会确认结果
+    getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
+      // 获取之前的 借款信息接口
+      getLoanInfo: async () => req.get('/apply/getOne'),
+    
 }
+
   
-
-
 
 //登录 dbb
 export const doLogin={
+
 	 userLogin:async(param)=>req.post('/company/login',param),	 
 	 //忘记密码获取验证码及检验是否实名认证
 	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
@@ -140,10 +148,53 @@ export const personal = {
 }
     
 
-//我的借款
+//我的借款 - wfl
 export const mineloan = {
-    //
+    //获取项目
     getMineLoan: async () => req.get('/project/self/project'),
+    //项目公告
+    getNotice: async (param) => req.get('/projectNotice/getOne', param),
+    //保存公告
+    saveNotice: async (param) => req.post('/projectNotice/save', param), 
+    //删除公告
+    delNotice: async (param) => req.get('/projectNotice/delete', param),
+    //获取项目历程
+    getTimeLine: async (param) => req.get('/projectJourney/getOne', param), 
+    //添加项目历程
+    addTimeLine: async (param) => req.post('/projectJourney/save', param), 
+    //修改项目历程
+    editTimeLine: async (param) => req.post('/projectNotice/save', param), 
+    //获取项目等级 和利率/project/getRateAndLevel 
+    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param), 
+
+    //投前咨询
+    getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),
+    //获取投资人列表
+    getInvestRecord: async (param) => req.post('/invRecord/getOne', param),
+    //提交回复 投后
+    saveConsult: async (param) => req.post('/answer/save', param),
+    //投前
+    saveConsultq: async (param) => req.post('/projectTopicReply/save', param),
+
+    //
+    getSureDate: async (param) => req.get('/project/getRateAndLevel', param),
+    /**
+     * 
+     * 优惠券
+     * 
+     */
+    //省
+    getProvince: async () => req.get('/area/getProvince'),
+    //市
+    getCity: async (param) => req.get('/area/getChild', param),
+    //区
+    getArea: async (param) => req.get('/area/getChild', param),
+
+    //保存优惠券
+    saveCou: (param) => req.post('/coupon/save', param),
+    //获取优惠券
+    getSendCou: (param) => req.get('/coupon/self/coupon', param),
+
 }
 //实名认证 - momei
 export const securityCentreService = {

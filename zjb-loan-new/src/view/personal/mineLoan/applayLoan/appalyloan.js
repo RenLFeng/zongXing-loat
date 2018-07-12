@@ -5,7 +5,10 @@ import LoanUserInfo from './appaly/loanUserInfo'
 import LoanCompanyInfo from './appaly/loanCompanyInfo'
 import LoanProInfo from './appaly/loanProInfo'
 import './appalyloan.scss'
-export default class BindCard extends React.Component {
+import { baseService } from '../../../../services/api';
+import {message } from 'antd';
+
+export default class Appalyloan extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +36,20 @@ export default class BindCard extends React.Component {
     this.setState({
       activeCode: item,
     });
+  }
+
+  componentDidMount() {
+    this.getBefore();
+  }
+  async getBefore() {
+    
+    const response = await baseService.getLoanInfo();
+    console.log(response);
+    if (response.code === 0) {
+     alert("nadaole")
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
 
   render() {

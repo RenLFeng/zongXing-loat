@@ -35,7 +35,7 @@ export default class EditorComponent extends React.Component {
       editorState
     })
   };
-  
+
   returnValue() {
     return this.state.editorState;
   }
@@ -44,17 +44,17 @@ export default class EditorComponent extends React.Component {
     const { editorState } = this.state;
     return (
       <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName={styles["demo-wrapper"]}
-          editorClassName={styles['demo-editor']}
-          toolbarStyle={{display: 'none'}}
-          readOnly={true}
-          onEditorStateChange={this.onEditorStateChange}
-          toolbar={{
-            options: [],
-          }}
-        />
+       <Editor
+         editorState={editorState}
+         wrapperClassName={styles["demo-wrapper"]}
+         editorClassName={styles['demo-editor']}
+         toolbarStyle={{display: 'none'}}
+         readOnly={true}
+         onEditorStateChange={this.onEditorStateChange}
+         toolbar={{
+         options: [],
+         }}
+         />
       </div>
     )
   }
