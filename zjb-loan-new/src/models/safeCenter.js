@@ -1,4 +1,4 @@
-import {realName} from '../services/api';
+import {securityCentreService} from '../services/api';
 import { message } from 'antd';
 export default {
   namespace: 'safeCenter',
@@ -9,23 +9,15 @@ export default {
     safeDataLoading: false
   },
   effects: {
-    *getSafe({payload}, { call, put }) {
+    *getSafe(_, { call, put }) {
       //请求安全中心首页数据
       yield put({
         type: 'startSafeData'
       });
       try {
-        const response = yield call(realName.getSafeData);
+        const response = yield call(securityCentreService.getSafeData);
         console.log("safeData",response);
         if (response.code === 0) {
-          if(payload){
-            let resObj = response.data;
-            if(!resObj.userSecurityCenter.fCertification){
-              payload.jumpAuth();
-            }else if(!resObj.userSecurityCenter.fThirdAccount){
-              payload.jumpCreateAccount();  
-            }
-          }
           yield put({
             type: 'endSafeData',
             payload: response.data
@@ -48,7 +40,7 @@ export default {
         if (typeof e === 'object' && e.name === 288) {
           throw e;
         }
-        message.error('服务器繁忙，请稍后重试');
+        console.log('服务器繁忙，请稍后重试');
       }
     },
   },

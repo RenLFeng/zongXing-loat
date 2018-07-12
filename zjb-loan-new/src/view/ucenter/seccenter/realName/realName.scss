@@ -206,7 +206,7 @@
     }
     .img2{
         position: absolute;
-        top:35px;
+        top:16px;
         left:10px;
         z-index: 1;
     }
@@ -225,7 +225,7 @@
     }
     .span_1{
         position: absolute;
-        top:32px;
+        top:13px;
         left:32px;
         z-index: 1;
         color:#D2D2D2;
@@ -824,16 +824,24 @@
         height:77px;
         position: relative;
         .block1,.block2,.block3{
-            margin-top: 25px;
+            margin-top: 28px;
+            display: inline-block;
         }
         .block1{
             width:212px;
             border-right:1px solid #e6e6e6;
+            .word{
+                display: inline-block;
+                font-size: 20px;
+                font-weight: bold;
+                color: grey;
+            }
         }
         .block2{
             width:55%;
             color:#e6e6e6;
             font-size: 14px;
+            margin-left: 20px;
         }
         .block3{
             

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Input, Button, Spin,message  } from 'antd';
-import { personal } from '../../services/api';
- import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../common/PagePath';
- import { AUTH_CODE_TIME, E_MAIL} from '../../common/SystemParam';
-  import '../ucenter/changePwd.scss';
+import { personal } from '../../../../../services/api';
+ import { AUTHENTICATION, OPENQACCOUNT, BINDCARD ,USER_BASIC} from '../../../../../common/PagePath';
+ import { AUTH_CODE_TIME, E_MAIL} from '../../../../../common/SystemParam';
 import {connect} from 'dva';
 
 @connect((state)=>({
@@ -29,9 +28,9 @@ import {connect} from 'dva';
       this.countDownFun = null;
     }
     componentDidMount(){
-   
+
     }
-  
+
     componentWillUnmount() {
       if (this.countDownFun) {
         clearInterval(this.countDownFun);
@@ -39,9 +38,9 @@ import {connect} from 'dva';
       if (this.countDown) {
         clearInterval(this.countDown);
       }
-      
+
     }
-    
+
     //校验邮箱格式并发送验证码
     async checkEmail_(){
       const {email} = this.state
@@ -59,7 +58,7 @@ import {connect} from 'dva';
      } else{
          this.setState({
              message:''
-         }) 
+         })
      }
      const sendTime = localStorage.getItem(email);
      if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
@@ -100,9 +99,9 @@ import {connect} from 'dva';
          this.setState({ countDown: this.state.countDown - 1 });
        }
      }, 1000);
-     
+
     }
-  
+
     //绑定邮箱
      async bindEmail(){
       const {email,code} = this.state;
@@ -117,7 +116,7 @@ import {connect} from 'dva';
           firstShow:false,
           sureloading:false
         });
-        this.countDown = setInterval(()=>{ 
+        this.countDown = setInterval(()=>{
           this.setState({
             num: this.state.num - 1
           }, () => {
@@ -132,14 +131,14 @@ import {connect} from 'dva';
         response.msg && message.error(response.msg)
       }
     }
-  
-  
+
+
     render() {
       const {email,code,showAuthCode,countDown} = this.state;
       const {baseData} = this.props;
-  
+
       return (
-          <div className="fr uc-rbody user-form-box" style={{width:"100%",float:"none",height:900}}> 
+          <div className="fr uc-rbody user-form-box" style={{width:"100%",float:"none",height:900}}>
               {
                 this.state.firstShow ?
                 <div>
@@ -148,24 +147,24 @@ import {connect} from 'dva';
                     <span style={{fontSize: 16}}> &gt; 绑定邮箱</span>
                  </div>
                 <div style={{width:230,margin:'71px auto 0 auto'}}>
-                  
+
                     <div className="pass">
                       <Input placeholder="输入邮箱地址" className="inp" value={email} onChange={(e) => { this.setState({ email: e.target.value })}} />
                       {
-                          this.state.message ? 
+                          this.state.message ?
                           <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>{this.state.message}</p>:
                           <p className="prompts" style={{ marginBottom: 5, color: 'red' }}>&nbsp;</p>
                       }
-                      
+
                       <i className="zjb zjb-e-mail_icon img1" />
                     </div>
-                  
+
                 </div>
                 <div style={{width:230,margin:'4px auto 0 auto'}} className="codeInp">
                   <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6} />
                     {// 根据倒计时时间显示是否可以点击获取验证码按钮
                       this.state.showAuthCode ?
-                      (this.state.click ? 
+                      (this.state.click ?
                          <Button className="input2" onClick={()=>{this.checkEmail_()}} loading={this.state.loading}>点击获取验证码</Button>:
                          <Button className="input2" style={{ backgroundColor: '#D1D1D1' }}>点击获取验证码</Button>):
                         <Button className="input2" style={{ backgroundColor: '#D1D1D1' }}>{countDown}s后重新获取</Button>
@@ -183,19 +182,19 @@ import {connect} from 'dva';
                   </div>
                   <div className="success">
                     <h1>
-                       <img alt="ok" src={require('../../assets/img/u3551.png')} />{baseData? baseData.nickName :''}，恭喜您邮箱绑定成功
+                       <img alt="ok" src={require('../../../../../assets/img/u3551.png')} />{baseData? baseData.nickName :''}，恭喜您邮箱绑定成功
                     </h1>
                     <p className="goback">
                       <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>
-                    </p>                
+                    </p>
                   </div>
-                  
+
               </div>
               }
-             
-             
+
+
           </div>
-  
+
       );
     }
   }

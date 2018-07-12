@@ -1,11 +1,14 @@
 import React from 'react';
 import { Icon, Input, Button, Steps, Modal, message } from 'antd';
+import moment from 'moment';
+import { connect } from 'dva';
 import { AUTH_ADDRESS } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
-import { connect } from 'dva';
 import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
 import {securityCentreService} from '../../../../services/api';
+import ModalData from './authorization/authorization';
+
 
 const Step = Steps.Step;
 
@@ -33,29 +36,46 @@ export default class RealName extends React.Component {
       distribution: {}, //授权表单数据
       status: '', //授权状态
       url: '',     // 提交表单乾多多链接
-      safeData: { //安全中心数据对象
-        userSecurityCenter: {}
-      },
-      cardList: [] //银行卡列表
+      cardList: [], //银行卡列表
+      showModal:false   
     }
   }
 
   componentDidMount() {
     //初始化安全中心信息
-    this.getInitData();
-    //第三方开户成功后再去获取用户银行卡信息
-    
+    this.initFetchSafeData();
+    // 第三方开户成功再去获取用户银行卡信息
+    console.log("this.props.safeData.userSecurityCenter.fThirdAccount",this.props.safeData.userSecurityCenter.fThirdAccount);
+    // 获取用户绑定银行卡
+    this.getBankCardListAjax(); 
     //获取已经授权的授权代码
     this.getAuthorizationState();
   
     
   }
-  getInitData() {
+
+  /** 初始化安全中心信息 */
+  initFetchSafeData() {
     console.log("getInitData running ...")
     this.props.dispatch({
       type: 'safeCenter/getSafe'
     });
   }
+
+   /** 获取用户绑定银行卡 */ 
+   getBankCardListAjax = async (param) => {
+    const response = await securityCentreService.getBankCardList(param?param:this.props.accountId);
+    if (response.code === 0) {
+      if (response.data) {
+        this.setState({
+          cardList: response.data
+        })
+      }
+    } else {
+      message.error(response.msg);
+    }
+  }
+
  
   /** 跳转到开户界面 */
   jumpCreateAccount() {
@@ -128,12 +148,50 @@ export default class RealName extends React.Component {
     }
   }
 
+  // 解除银行卡绑定
+  async unbindBankCardAjax(cardId, fid) {
+    if (!this.state[`${fid}password`] || (this.state[`${fid}password`] && this.state[`${fid}password`].trim().length === 0)) {
+      message.error('密码不能为空');
+      return;
+    }
+    if (this.state.unbindLoading) {
+      return;
+    }
+    this.setState({ unbindLoading: true });
+    const response = await securityCentreService.unbindBankCard({
+      accountId: this.props.accountId,
+      bankcard: cardId,
+      password: this.state[`${fid}password`].trim()
+    });
+    this.setState({ unbindLoading: false });
+    if (response.code === 0) {
+      this.getBankCardListAjax()
+      // for (let i = 0, len = this.state.cardList.length; i < len; i++) {
+      //   if (this.state.cardList[i].fbankcard === cardId) {
+      //     this.state.cardList.splice(1, i);
+      //     break;
+      //   }
+      // }
+      // this.setState({ cardList: this.state.cardList });
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
+  show(index){
+    console.log(1111,index)
+    this.setState({
+      // [`showModal${index}`]: !this.state[`showModal${index}`]
+      showModal:true
+      })
+  }
 
   render() {
     // 初始化数据
-    console.log("safeData", safeData);
-    console.log("path",Path);
-    const { safeData, status, distribution, url } = this.state;
+    const safeData = this.props.safeData;
+    const { status, distribution, url } = this.state;
+
+    const dataArr = [{title:'人形数据'},{title:'运营商数据'},{title:'社保数据'},{title:'公积金数据'},{title:'学信数据'},{title:'京东数据'},{title:'苏宁数据'}]
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -143,7 +201,7 @@ export default class RealName extends React.Component {
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">开户中心</span>
-                  <span className="registrationTime">注册时间:2018/05/18 19:25</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
                   {/* <div style={{ marginBottom: 23 }}>
@@ -165,20 +223,19 @@ export default class RealName extends React.Component {
                       <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                       <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>企业开通借款账户</span>
                       <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                      <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>
+                      {safeData.userSecurityCenter.fThirdAccount ? null : <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>}
                     </div>
                     <div style={{ marginTop: 9, marginBottom: 5 }}>
                       <img alt="" src={require('../../../../assets/img/ucenter/u4288.png')} />
                     </div>
                     {
-                      safeData.userSecurityCenter ?
-
+                      safeData.userSecurityCenter.fThirdAccount ?
                         <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
-                          <span style={{ color: 'black' }} >西安金凡翻译有限公司</span>
+                          <span style={{ color: 'black' }} >{safeData.fRealName}</span>
                           <span className="line" >|</span>
-                          <span style={{ color: 'black' }} >91130528601068705W</span>
+                          <span style={{ color: 'black' }} >{safeData.fIdcardNo}</span>
                           <span className="line" >|</span>
-                          <span style={{ color: 'black' }} >钱多多账户：2560434</span>
+                          <span style={{ color: 'black' }} >钱多多账户：{safeData.fThirdAccountNo}</span>
                           <div className="findPass">
                             <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                             <span className="line" >|</span>
@@ -223,7 +280,7 @@ export default class RealName extends React.Component {
                 <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                 <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>我的银行卡</span>
                 <span className="middle">至少绑定一张本人开户的银行卡，最多可绑定5个银行卡</span>
-                <a className="right">设置</a>
+                <a className="right" style={{display:'none'}}>设置</a>
               </div>
 
               <div className="cardBox">
@@ -294,7 +351,19 @@ export default class RealName extends React.Component {
                 <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>账户授权</span>
               </div>
             </div>
-
+             <div style={{margin:'35px 0px 20px 10px'}}>
+             {
+               dataArr.map((data,index)=>{
+                 return(
+                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:'10px'}}>
+                    <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
+                    <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(index)}>授权</p>
+                  </div>
+                 )
+               })
+             }
+               
+             </div>
             <div className="safeCenter">
               <div className="line">
                 <div className="block1">
@@ -319,10 +388,7 @@ export default class RealName extends React.Component {
 
           </div>
 
-          <div className="fr uc-rbody" style={{
-            marginTop: '30px', padding: 0, display: 'flex',
-            justifyContent: 'space-between'
-          }}>
+          <div className="fr uc-rbody" style={{ marginTop: '30px', padding: 0 }}>
             {/* <div className="baseInfo">
               <i className="zjb zjb-moban"></i>
               <h3 onClick={() => { this.props.history.push(Path.USER_BASIC) }}>基础资料</h3>
@@ -330,13 +396,13 @@ export default class RealName extends React.Component {
               <p><span>****</span>*</p>
             </div> */}
 
-            <div className="baseInfo">
+            <div className="baseInfo" style={{display:'inline-block'}}>
               <i className="zjb zjb-mima1"></i>
               <h3 onClick={() => { this.props.history.push(Path.CHANGE_LPWD) }}>修改登陆密码</h3>
               <p>定期更改登录密码让你的账户更安全</p>
               <span>2018/6/15</span>
             </div>
-            <div className="baseInfo">
+            <div className="baseInfo" style={{display:'inline-block'}}>
               <i className="zjb zjb-youxiang"></i>
               <h3 onClick={() => { this.props.history.push(Path.CHANGE_BINDEMAIL) }}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
@@ -362,7 +428,12 @@ export default class RealName extends React.Component {
             <input id="NotifyURL" name="NotifyURL" value={distribution.notifyURL ? distribution.notifyURL : ''} />
             <input id="SignInfo" name="SignInfo" value={distribution.signInfo ? distribution.signInfo : ''} />
           </form> : null}
+
+
+          <ModalData  visable={this.state.showModal} operateModal={()=>this.setState({showModal: !this.state.showModal})}/>
       </div>
+
+
     );
   }
 }

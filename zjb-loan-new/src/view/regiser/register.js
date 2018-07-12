@@ -238,7 +238,7 @@ export default class Register extends React.Component {
       fpwd: regPwd.trim(),
       // fpwd: regPwd,
       authcode:regAuthCode.trim(),
-      type: 0, //投资用户
+      type: 1, //投资用户
     };
     // 调用注册接口
     try {
@@ -263,7 +263,7 @@ export default class Register extends React.Component {
       }
     } catch (e) {
       this.setState({regLoading: false});
-      message.error('服务器繁忙，请稍后重试');
+      console.log('服务器繁忙，请稍后重试');
     }
   }
 

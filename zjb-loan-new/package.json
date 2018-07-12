@@ -9,12 +9,17 @@
     "babel-plugin-import": "^1.8.0",
     "babel-polyfill": "^6.26.0",
     "cos-js-sdk-v5": "^0.4.7",
+    "draftjs-to-html": "^0.8.4",
     "dva": "^2.3.1",
     "echarts": "^4.1.0",
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "react": "^16.2.0",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-amap": "^1.2.7",
     "react-dom": "^16.2.0",
+    "react-draft-wysiwyg": "^1.12.13",
+    "react-toolbar": "^0.1.1",
     "swiper": "^4.3.3"
   },
   "devDependencies": {

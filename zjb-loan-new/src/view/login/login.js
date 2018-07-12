@@ -62,7 +62,7 @@ export default class Login extends React.Component {
     const login = {
       loginName: loginPhone,
       password: loginPwd,
-      type:0,
+      type:1,
     };
     this.props.dispatch({
       type: 'login/login',

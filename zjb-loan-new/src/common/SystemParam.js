@@ -39,7 +39,7 @@ if (build === 'production') {
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
   SOCKET_URL = 'http://192.168.1.173:8001';
-  
+
 }
 
 // 导出环境变量配置
@@ -87,7 +87,7 @@ export const china_REG = /^[\u4E00-\u9FA5]+$/;
 export const USER_REG = /^[a-zA-Z0-9_-]{2,16}$/;
 
 // 营业执照号正则
-export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{15}$)/;
+export const LICENSE = /^([0-9a-zA-Z]{18}$|\d{19}$)/;
 
 // 邮箱验证正则
 export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -269,5 +269,53 @@ export function scrollToAnchor(anchorName) {
   if (anchorName) {
     let anchorElement = document.getElementById(anchorName);
     if(anchorElement) { anchorElement.scrollIntoView(); }
+  }
+}
+
+// 根据项目状态 展示给借款用户显示当前状态文字信息
+export function formatFlagToText(flag) {
+  switch(flag) {
+    case 0:
+    return '正在编辑';
+    case 1: 
+    return '待初审';
+    case 2: 
+    return '待大数据缴费';
+    case 3: 
+    return '待风控审核';
+    case 4: 
+    return '待风控审核';
+    case 5: 
+    return '待风控审核';
+    case 6: 
+    return '待风控审核';
+    case 7: 
+    return '待用户确认利率';
+    case 14: 
+    return '待配置优惠券';
+    case 8: 
+    return '待审核';
+    case 9: 
+    return '待用户重新排版';
+    case 15: 
+    return '待项目上线';
+    case 10:
+    return '筹款中';
+    case 11: 
+    return '待放款';
+    case 12: 
+    return '还款中';
+    case 13: 
+    return '完成';
+    case -1: 
+    return '流标';
+    case -2: 
+    return '风控打回';
+    case -3: 
+    return '终止';
+    case -4: 
+    return '逾期';
+    case -5: 
+    return '坏账';
   }
 }

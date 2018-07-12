@@ -32,10 +32,14 @@ export const CouponService = {
 
 // 账户服务
 export const accountService={
+    // 获取账户总览首页数据
+
+    getPersonalData: async () => req.get('/account/company/totality/info'),
+    
     
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
-    getAccountStatement:async(param)=>req.post('/zjb-dc/capital/dynamic',param),
+    getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
     /**
      * 投资记录
      * pageParam 
@@ -50,13 +54,41 @@ export const accountService={
     //获取投资回款明细
     getInvestmentPlan:async(param)=>req.get('/invRecord/MyInvRecord/plan',param),
     repayPlan:async(param)=>req.get('/account/getRepayPlan',param),
+  // 提交充值信息 获取充值所需数据
+    getRecharge:async(param)=>req.post('/account/getRechargeInfo',param),
+    // 银行卡绑定
+    bindBankCard:async(param)=>req.post('/bankcard/add',param),
+    // 银行卡信息校验——聚合数据校验
+    verifyBankCard:async(param)=>req.get('/jh/bankCardInfo?bankCard='+param),
+    // 获取已绑定的银行卡列表
+    getBankCardList:async(param)=>req.get('/bankcard/list/person'),
+    //提交提现表单信息接口
+    putInformation:async(param)=>req.post('/withdrawals/param',param),
+}
+
+
+// 基础信息 dbb
+
+export const baseService={
+    //获取省份对应的城市
+    getCity:async(param)=>req.get('/common/cities?provinceId='+param),
+    // 获取项目行业编码类别接口
+
+    getProjectType: async () => req.get('/apply/getProjectCode'),
+    
+// 获取当前项目的 委员会确认结果
+    getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
+      // 获取之前的 借款信息接口
+      getLoanInfo: async () => req.get('/apply/getOne'),
     
 }
 
+  
+
 //登录 dbb
 export const doLogin={
-	 userLogin:async(param)=>req.post('/login/login',param),
-	 
+
+	 userLogin:async(param)=>req.post('/company/login',param),	 
 	 //忘记密码获取验证码及检验是否实名认证
 	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
 	  //登录-忘记密码时获取验证码
@@ -65,7 +97,18 @@ export const doLogin={
     fp_checkInfo:async(param)=>req.post('/userInfo/checkAuthCode',param),
     //修改密码
     changePassword:async(param)=>req.post('/userInfo/updatePwd',param), 
+    // 获取用户基础信息的接口
+    getUserBaseData:async(param)=>req.get('/userInfo/findOne'),
+    //修改登陆密码
+    UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+    changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+ 
 }
+
+
+
+
+
 
 //注册-wfl
 export const regiserAccount = {
@@ -156,6 +199,8 @@ export const mineloan = {
 //实名认证 - momei
 export const securityCentreService = {
   getSafeData: async () => req.get('/securityCenter/findByuserId'),
+  createAccount: async(param) => req.post('/account/add', param),
+  /** 开户 */
   createAccount: async(param) => req.post('/zjb-dc/account/add', param),
   /** 获取当前用户的企业开户所需信息 */
   getCompanyRealInfo: async() => req.get(''),
@@ -169,13 +214,23 @@ export const securityCentreService = {
   unbindBankCard: async(param) => req.post('/bankcard/delete',param),
 
   /** 获取授权所需参数 */
-  distribution: async(willStr, companyNo, returnUrl) => req.get(`/zjb-dc/author/open?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+  distribution: async(willStr, companyNo, returnUrl) => req.get(`/author/open?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
 
   /** 查询已授权的状态 */
-  authorizationState: async(companyNo) => req.get(`/zjb-dc/author/authorized?companyNo=${companyNo}`),
+  authorizationState: async(companyNo) => req.get(`/author/authorized?companyNo=${companyNo}`),
 
   /** 取消授权 */
-  closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/zjb-dc/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+  closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
+
+  /** 获取用户基础信息的接口 */
+  getUserBaseData: async() => req.get('/zjb-website/userInfo/findOne'),
+
+  /** 为修改密码发送验证码 */
+  UpdatePass: async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+  /** 验证修改密码时的验证码 */
+  changePass: async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+  
+  
 
 }
    

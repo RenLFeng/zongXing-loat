@@ -31,6 +31,7 @@ export default {
       try {
         //向后台请求登录接口
         const response = yield call(doLogin.userLogin, payload);
+        console.log(response);
         //请求结束，请求状态修改为未请求状态
         //登录成功做的操作
         if (response.code === 0) {
@@ -70,8 +71,7 @@ export default {
           message.error(response.msg);
         }
       } catch (e) {
-        console.log(e);
-        message.error('服务器繁忙，请稍后重试');
+        console.log('服务器繁忙，请稍后重试');
         yield put({
           type: 'changeLoginStatus',
           payload: {
