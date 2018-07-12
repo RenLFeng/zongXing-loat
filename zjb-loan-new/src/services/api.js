@@ -80,10 +80,18 @@ export const baseService={
     getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
       // 获取之前的 借款信息接口
       getLoanInfo: async () => req.get('/apply/getOne'),
-    
+    // 还款计划详情
+    getDetailPlane:async(param)=>req.get('/project/borrowPlanInfo?projectId='+param.projectId+"&forPayTime="+param.forPayTime),
+    // 手动还款接口
+    manualReimpayment:async(param)=>req.post('/repayment/manually',param),
+    // 获取还款计划
+    getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
 }
 
   
+
+  
+
 
 //登录 dbb
 export const doLogin={

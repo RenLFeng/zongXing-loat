@@ -88,12 +88,12 @@
   }
   &>.recent-repany{
     margin-top: 10px;
-    &>.title{
+   .title{
       margin: 30px 0 15px;
       font-size: 14px;
       color: #000;
     }
-    &>.repany-content{
+    .repany-content{
       height: 65px;
       background-color:#fffdf8; 
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
@@ -136,8 +136,8 @@
         text-decoration: underline;
       } 
     }
-    &>.sub-content{
-      margin-top: 30px;
+    .sub-content{
+      margin-top: 18px;
       &>span{
         font-size: 14px;
         &.txt1{
@@ -149,9 +149,10 @@
         }
       }
     }
-    &>.chufa{
+    .chufa{
       float: right;
       color: #ff3b35;
+      margin-top: -24px;
     }
   } 
   &>.my-loan{
