@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:20:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-06 17:51:32
+ * @Last Modified time: 2018-07-12 14:20:20
  * 步骤条
  */
 import React from 'react';
@@ -26,17 +26,16 @@ class LoanStep extends React.Component{
      
     }
     render(){
-        console.log(this.props.stepdata,'ppp')
-        const {fname,fproject_no,fflag} = this.props.stepdata;
+        const {fname,fproject_no,fflag,fleve_name} = this.props.stepdata;
         let step = [];
         let num = 0; 
         for(let i of stepDate){
-            if(fflag === i.state){
-                step.push(<div key={i.state} className='ready-bag'>
-                <p className='ready'>{i.name}</p> 
+            if(i.state.includes(fflag)){
+                step.push(<div key={i.state[0]} className='ready-bag'>
+                <p className={[2,3].includes(fflag) ? 'ready-long' : 'ready'}>{i.name}</p> 
              </div>)
             }else{
-                step.push(<div key={i.state} className='unready-bag'>
+                step.push(<div key={i.state[0]} className='unready-bag'>
                        <p className={num === 0 ? 'unready-fir' : 'unready'}>{i.name}
                        {num < stepDate.length-1 ? <Icon type="caret-right" style={{fontSize:' 12px'}} /> : ''}</p> 
                     </div>)
@@ -47,7 +46,12 @@ class LoanStep extends React.Component{
             <div className="loan-step" >
                 {this.props.type === 0 ? '' : step}
                 <p>项目编号:<span>{fproject_no}</span></p>
-                <p>项目名称:<span>{fname}</span><span></span></p>
+                <p style={{display:'inline-block',width: '50%'}}>项目名称:<span>{fname}</span></p>
+                {fleve_name ? 
+                <p style={{display:'inline-block',width: '50%',textAlign: 'right'}}>
+                    项目评级:<span style={{color: 'red'}}>{fleve_name}</span>
+                    </p> :
+                    ''}
             </div>
         )
     }

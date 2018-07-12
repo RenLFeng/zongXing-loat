@@ -2,26 +2,43 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-06 16:46:46
+ * @Last Modified time: 2018-07-12 14:20:09
  * @des: 日历 - 日期  金钱相关方法
  */
 
-//方法
+//保留两位小数 方法 单位：万
 export function returnFloat(value){
-	var value=Math.round(parseFloat(value / 10000)*100)/100;
-	var s=value.toString().split(".");
+	let values = Math.round(parseFloat(value / 10000)*100)/100;
+	let s=values.toString().split(".");
 	if(s.length==1){
-		value=value.toString()+".00";
-		return value;
+		values=values.toString()+".00";
+		return values;
 	}
 	if(s.length>1){
 		if(s[1].length<2){
-			value=value.toString()+"0";
+			values=values.toString()+"0";
 		}
-		return value;
+		return values;
 	}
 }
 
+//保留两位小数 方法 单位：元
+export function returnff(value){
+	let values = Math.round(parseFloat(value*100))/100;
+    let s=values.toString().split(".");
+	if(s.length==1){
+		values=values.toString()+".00";
+		return values;
+	}
+	if(s.length>1){
+		if(s[1].length<2){
+			values=values.toString()+"0";
+		}
+		return values;
+	}
+}
+
+//日期格式化
 export function parseTime(time, cFormat) {
 	if (arguments.length === 0) {
 		return null;
@@ -242,11 +259,11 @@ export function yearToMonth() {
 
 export function nowDay() {
     let date = new Date();
-    var formetDate = date;
-    var Year = 0;
-    var Month = 0;
-    var Day = 0;
-    var CurrentDate = "";
+    let formetDate = date;
+    let Year = 0;
+    let Month = 0;
+    let Day = 0;
+    let CurrentDate = "";
     Year = formetDate.getFullYear(); //ie火狐下都可以
     Month = formetDate.getMonth() + 1;
     Day = formetDate.getDate();
@@ -262,4 +279,33 @@ export function nowDay() {
         CurrentDate += "0" + Day;
     }
     return CurrentDate;
+}
+
+
+//获取时间间隔
+export function getTime(time1, time2){
+    let date1 = ''; //开始时间
+    if(time2){
+        date1=new Date(time2);   
+    }else{
+        date1=new Date();
+    }
+    let date2=new Date(time1);    //结束时间
+    let date3=date1.getTime()-date2.getTime(); //时间差秒
+    //计算出相差天数
+    let days=Math.floor(date3/(24*3600*1000));
+     
+    //计算出小时数
+    let leave1=date3%(24*3600*1000);  //计算天数后剩余的毫秒数
+    let hours=Math.floor(leave1/(3600*1000));
+     
+    //计算相差分钟数
+    let leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+    let minutes=Math.floor(leave2/(60*1000));
+     
+    //计算相差秒数
+    let leave3=leave2%(60*1000);     //计算分钟数后剩余的毫秒数
+    let seconds=Math.round(leave3/1000);
+    
+    return (days > 0 ? days +'天' : '' )+ (hours > 9 ? hours : '0' + hours ) + ":" + (minutes > 9 ? minutes : '0' + minutes )  + ":" + (seconds > 9 ? seconds : '0' + seconds ) 
 }

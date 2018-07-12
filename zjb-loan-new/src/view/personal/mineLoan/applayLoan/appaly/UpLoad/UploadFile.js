@@ -72,7 +72,7 @@ export default class UploadFile extends React.Component {
           console.log(this.state.fileList);
         });
         console.log(this.props.baseUrl + this.props.prefix + realName);
-        this.props.onChange([{uid: -1, url: this.props.baseUrl + this.props.prefix + realName, status: 'done',name: fileName}]);
+        this.props.onChange([{uid: -1, url: this.props.baseUrl + this.props.prefix + realName, status: 'done',name: fileName,fileurl: this.props.prefix + realName}]);
       }
     });
   };

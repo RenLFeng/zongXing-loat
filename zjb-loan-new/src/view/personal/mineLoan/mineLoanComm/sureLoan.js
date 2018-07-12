@@ -2,20 +2,39 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:42:28 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-06 16:49:39
+ * @Last Modified time: 2018-07-12 14:09:59
  * 我的借款--确认借款 
  */
 import React from 'react';
 import './sureloan.scss';
 import {connect} from 'dva';
 import {parseTime, returnFloat} from '../dateformat/date';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
+import {mineloan} from '../../../../services/api';
 
 class SureLoan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            data: []
+            suredata: []
+        }
+    }
+
+    componentDidMount(){
+        this.getSureDate();
+    }
+
+    async getSureDate(){
+        let data = {
+            projectId: this.props.suredata.fid
+        }
+        let res = await mineloan.getSureDate(data);
+        if(res.code === 0){
+            this.setState({
+                suredata: res.data
+            })
+        }else{
+            message.error(res.msg)
         }
     }
 

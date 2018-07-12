@@ -410,12 +410,12 @@ async getPlanData() {
             <em>单位：元</em>
           </div>
           <div className="sub-info">
-            <i>累计利息支出</i>
-            <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
-            <i>累计借款金额</i>
-            <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
-            <div className='to-loan' style={{ cursor: 'pointer' }} onClick={() => { this.props.history.push() }}>
-              <span></span> 申请借款
+              <i>累计利息支出</i>
+              <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
+              <i>累计借款金额</i>
+              <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
+              <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push(Path.APPALY_LOAN)}}>
+                  <span></span> 申请借款
               </div>
           </div>
         </div>
@@ -515,8 +515,109 @@ async getPlanData() {
         }
         <div className="per_account">
           <div className="ptit">
+<<<<<<< .mine
             <i>账户总资产</i>
           </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+              <i>我的借款</i> 
+          </div> 
+          <div className="my-loan" >
+            <p className='loan-lable'>
+              {
+                lables.map(item=>{
+                  if(item.fflag == this.state.activeFlag){
+                    return  <span className='active'>{item.text}</span>
+                  }else{
+                    return <span>{item.text}</span>
+                  } 
+                })
+              }  
+            </p>
+            <p className='project-info'>
+              <span className='txt1'>项目编号：</span>
+              <span className='txt2'>{myBorrowVo.fprojectNo}</span>
+            </p>
+            <p className='project-info'>
+              <span className='txt1'>项目名称：</span>
+              <span className='txt2'>{myBorrowVo.fname}</span>
+            </p>
+            <table className='loan-table'>
+              <tr>
+                <td>借款金额</td>
+                <td>借款期数</td>
+                <td>借款利率</td>
+                <td>创建时间</td>
+                <td style={{color: '#333'}}>状态</td>
+                <td>操作</td>
+              </tr>
+              <tr>
+                <td>{myBorrowVo.fcreditMoney?`${myBorrowVo.fcreditMoney/1000}`.fm()+'万元': ''}</td>
+                <td>{myBorrowVo.fcreditMonth?`${myBorrowVo.fcreditMonth}`+'个月':''}</td>
+                <td>{myBorrowVo.frate?`${myBorrowVo.frate}`.fm()+'%':''}</td>
+                <td>{moment(myBorrowVo.fcreateTime).format('YYYY-MM-DD HH:mm')}</td>
+                <td>{formatFlagToText(myBorrowVo.fflag)}</td>
+                <td>
+                  <a href="javascript:;" onClick={()=>this.props.history.push('/uCenter/receivePlan')}>还款计划</a>
+                </td>
+              </tr>
+            </table>
+          </div>  
+        </div> : 
+        null
+      }
+        <div className="per_account"> 
+          <div className="ptit">
+              <i>账户总资产</i> 
+          </div> 
+>>>>>>> .theirs
           <div className="total-acount" >
             <PieReact width='600px' height="200px" option={this.state.pieOption} />
             <div className='account-info'>

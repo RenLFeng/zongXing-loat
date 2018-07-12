@@ -1,8 +1,14 @@
 import React from 'react';
-import { Form, Input,InputNumber , Button, Select, Radio, DatePicker, Cascader, Spin,Checkbox,Row, Col,Upload, Icon, message } from 'antd';
-
+import { Form, Input,InputNumber , Button, Select, Radio, DatePicker,Cascader, Spin,Checkbox,Row, Col,Upload, Icon, message } from 'antd';
+import {city} from '../../../common/cityData.js'
 const FormItem = Form.Item;
+const CheckboxGroup = Checkbox.Group;
+const plainOptions = ['广东省深圳市南山区沙河路XX大厦详细地址  18682056589', '上海浦东新区江江高科XX大厦详细地址  15174698544', '北京海淀区XX某详细地址  13174695545'];
 export default class Coupon extends React.Component {
+
+  filter = (inputValue, path) => {
+    return (path.some(city => (city.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1));
+  };
 
   render(){
     return(
@@ -41,11 +47,28 @@ export default class Coupon extends React.Component {
             <FormItem
               label="优惠券数量："
               >
-              <Input placeholder="5" style={{width:'45px',textAlign:'center'}} />*
+              <Input defaultValue={5} style={{width:'45px',textAlign:'center'}} />*
               <InputNumber min={5} max={20} defaultValue={5}/>
+            </FormItem>
+            <FormItem
+              label="" className="how"
+              >
+              <Input defaultValue={'优惠券数量666张'} style={{width:'90%',textAlign:'center',color:'#f90',border:'none'}} />
+            </FormItem>
+            <FormItem
+              label="失效日期："
+              >
             </FormItem>
           </Form>
         </div>
+
+
+
+
+
+
+
+
         <div className="send-coupon-info fl">
           <p className="top-bg"><span style={{marginLeft:'-18px'}}>游客</span></p>
           <div className="coupon-info clearfix">
@@ -80,10 +103,31 @@ export default class Coupon extends React.Component {
             <FormItem
               label="优惠券数量："
               >
-              <Input placeholder="5" style={{width:'45px',textAlign:'center'}} />*
-              <InputNumber min={5} max={20} defaultValue={5}/>
+              <Input defaultValue={5} style={{width:'100px',textAlign:'center'}} />张
+            </FormItem>
+            <FormItem
+              label="" className="how"
+              >
+              <Input defaultValue={''} style={{width:'90%',textAlign:'center',color:'#f90',border:'none'}} />
+            </FormItem>
+            <FormItem
+              label="失效日期："
+              >
             </FormItem>
           </Form>
+        </div>
+        <div className="adds">
+          <FormItem
+            label="使用地址:"
+            >
+            <Cascader options={city} placeholder={'请选择'} showSearch={this.filter} notFoundContent={'无匹配项'}/>
+            <Input placeholder="详细地址" />
+            <Input placeholder="联系电话" />
+            <a>保存地址</a>
+          </FormItem>
+          <FormItem>
+            <CheckboxGroup options={plainOptions} />
+          </FormItem>
         </div>
       </div>
     )}

@@ -90,12 +90,21 @@ export default class ImgUpload extends React.Component {
 
   handleCancel() {
     this.setState({visible: false})
+    this.setState({
+      imageUrl: ''
+    })
   }
 
   changeReview(type) {
     if (this.state.imageUrl) {
       this.setState({showReview: type});
     }
+  }
+
+  setPicture(val){
+    this.setState({
+      imageUrl: val
+    })
   }
 
   render() {
