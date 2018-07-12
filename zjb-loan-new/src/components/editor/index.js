@@ -44,7 +44,7 @@ export default class EditorComponent extends React.Component {
     const { editorState } = this.state;
     return (
       <div>
-        <Editor
+       <Editor
          editorState={editorState}
          wrapperClassName={styles["demo-wrapper"]}
          editorClassName={styles['demo-editor']}
