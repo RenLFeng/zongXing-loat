@@ -6,7 +6,7 @@ import Path from '../../common/PagePath';
 import { connect } from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
-import { accountService } from '../../services/api';
+import { accountService, baseService } from '../../services/api';
 import { Modal, message } from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';  

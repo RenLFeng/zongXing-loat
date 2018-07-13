@@ -228,7 +228,7 @@ export const securityCentreService = {
   getSafeData: async () => req.get('/securityCenter/findByuserId'),
   createAccount: async(param) => req.post('/account/add', param),
   /** 开户 */
-  createAccount: async(param) => req.post('/zjb-dc/account/add', param),
+  //createAccount: async(param) => req.post('/zjb-dc/account/add', param),
   /** 获取当前用户的企业开户所需信息 */
   getCompanyRealInfo: async() => req.get(''),
   /** 获取企业基本信息 */
