@@ -41,7 +41,7 @@ class Loaninfo extends React.Component {
          })
         }
         this.setState({
-            monthList:arr 
+            monthList:arr
         })
     }
     componentDidMount() {
@@ -119,7 +119,7 @@ class Loaninfo extends React.Component {
                 <div>
                 </div>
                 <Form layout="inline" onSubmit={this.submits.bind(this)} ref="froms">
-                    <Row style={{ display: 'inline-flex' }} > 
+                    <Row style={{ display: 'inline-flex' }} >
                         <div style={{ width: '30%', display: 'contents' }}>
                             <Form.Item layout="inline" label={
                                 <RequireLabel>要借多钱</RequireLabel>}>
@@ -207,7 +207,7 @@ class Loaninfo extends React.Component {
                         </div>
                     </Row>
                     {
-                        this.props.hasUnfinishProject ? null: 
+                        this.props.hasUnfinishProject ? null:
                         <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>
                             <Button style={{width: 140, margin: '0 auto'}} type={'primary'} onClick={this.submits.bind(this)} loading={this.props.loading}>保存</Button>
                         </div>

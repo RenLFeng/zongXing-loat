@@ -100,7 +100,7 @@ onShowSizeChange = (current, pageSize) => {
       this.getCoupon()
   });
 }
-  
+
 
   //切换页面
   changePage(flags){
@@ -176,7 +176,7 @@ render(){
           render:(text,val)=>{
             return (
               <span>{val === 1 ?'投资类' : '游客类'}</span>
-            )     
+            )
           }
         }, {
           title: '发行日期',
@@ -184,7 +184,7 @@ render(){
           key: 'creatTime',
           align:'center',
           render:(val) => {
-            return   moment(val).format('YYYY-MM-DD HH:mm') 
+            return   moment(val).format('YYYY-MM-DD HH:mm')
           }
         }, {
           title: '失效日期',
@@ -199,7 +199,7 @@ render(){
           dataIndex: ' couponState',
           key: 'couponState',
           align:'center',
-        
+
         },
         , {
           title: '操作',
@@ -209,7 +209,7 @@ render(){
             return(
               <a style={{color:'#669bff'}} >查看</a>
               // <a style={{color:'#669bff'}} onClick={()=>{this.see(record)}}>查看</a>
-            )  
+            )
           },
         },
   ];
@@ -251,7 +251,7 @@ render(){
         render: (text,record) => {
           return(
             <a style={{color:'#669bff'}} onClick={()=>{console.log(record)}}>查看</a>
-          )  
+          )
         },
       },
   ];
@@ -293,7 +293,7 @@ render(){
       render: (text,record) => {
         return(
           <a style={{color:'#669bff'}} onClick={()=>{console.log(record)}}>查看</a>
-        )  
+        )
       },
     },
   ];
@@ -313,7 +313,7 @@ render(){
                 this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo}/> : null
               }
                 <SendCoupon />
-                
+
                   <div className="graph-box">
                   <div className="tit clearfix">
                     <p className="fl">
@@ -323,7 +323,7 @@ render(){
                     <p className="send fr">发优惠券</p>
                   </div>
                   {
-                    this.state.chart === 'bar'  ? 
+                    this.state.chart === 'bar'  ?
                       <div className="graph">
                         <BarE useStatistics={this.state.useStatistics} />
                       </div> :
@@ -331,9 +331,9 @@ render(){
                         <PieE statistics={this.state.statistics}/>
                       </div>
                    }
-                </div> 
+                </div>
 
-                
+
 
                 <div className="table-box">
                   <div className="tit">
@@ -344,21 +344,21 @@ render(){
                     </p>
                   </div>
                   {
-                    this.state.flag === 'noUse' ? 
+                    this.state.flag === 'noUse' ?
                     <div className="tab">
                       <p className="nub">共<span>{this.state.dataSourceNum ? this.state.dataSourceNum : 0}</span>张</p>
                       <Table
                        columns={columns}
                        locale = {locale}
                        pagination={false}
-                       dataSource={this.state.dataSource} 
+                       dataSource={this.state.dataSource}
                        bordered
-                       size="small" 
+                       size="small"
                        style={{padding:'0 !important' }}
                       />
                        {
-                       Math.ceil(this.state.dataSourceNum/this.state.pageSize) > 1 ?  
-                       <Pagination 
+                       Math.ceil(this.state.dataSourceNum/this.state.pageSize) > 1 ?
+                       <Pagination
                         total={this.state.dataSourceNum }
                         current={this.state.pageCurrent}
                         pageSize={this.state.pageSize}
@@ -375,15 +375,15 @@ render(){
                         <Table
                           columns={columns_}
                           locale = {locale}
-                          pagination={false}  
-                          dataSource={this.state.dataSource_} 
+                          pagination={false}
+                          dataSource={this.state.dataSource_}
                           bordered
-                          size="small" 
+                          size="small"
                           style={{padding:'0 !important' }}
                         />
                          {
-                       Math.ceil(this.state.dataSourceNum_/this.state.pageSize) > 1 ?  
-                       <Pagination 
+                       Math.ceil(this.state.dataSourceNum_/this.state.pageSize) > 1 ?
+                       <Pagination
                         total={this.state.dataSourceNum_ }
                         current={this.state.pageCurrent}
                         pageSize={this.state.pageSize}
@@ -395,20 +395,20 @@ render(){
                       </div>
                      :
                       (this.state.flag === 'failed') ?
-                      <div className="tab"> 
+                      <div className="tab">
                         <p className="nub">共<span>{this.state.dataSourceNums ? this.state.dataSourceNums :0}</span>张</p>
                         <Table
                           columns={column}
                           locale = {locale}
-                          pagination={false} 
-                          dataSource={this.state.dataSources}  
+                          pagination={false}
+                          dataSource={this.state.dataSources}
                           bordered
-                          size="small" 
+                          size="small"
                           style={{padding:'0 !important' }}
                         />
                          {
-                       Math.ceil(this.state.dataSourceNums/this.state.pageSize) > 1 ?  
-                       <Pagination 
+                       Math.ceil(this.state.dataSourceNums/this.state.pageSize) > 1 ?
+                       <Pagination
                         total={this.state.dataSourceNums}
                         current={this.state.pageCurrent}
                         pageSize={this.state.pageSize}
@@ -420,7 +420,6 @@ render(){
                       </div>
                       : null
                   }
-                  
                 </div>
               </div>
          </div>
