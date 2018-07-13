@@ -2,7 +2,11 @@ import "babel-polyfill";
 import dva from 'dva';
 import './index.css';
 import onErrorHandle from './onError';
-
+require('es5-shim');
+require('es5-shim/es5-sham');
+require('console-polyfill');
+require('fetch-ie8');
+require('babel-polyfill');
 // 1. Initialize
 const app = dva({
   onError(err, dispatch) {
