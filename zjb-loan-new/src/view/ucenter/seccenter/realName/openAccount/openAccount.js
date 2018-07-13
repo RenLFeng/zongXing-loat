@@ -4,7 +4,7 @@ import { Icon, Input, Button, message, Spin } from 'antd';
 import '../realName.scss';
 import { securityCentreService } from '../../../../../services/api';
 import Path from '../../../../../common/PagePath';
-import {TURN_BACK ,LICENSE,VER_PHONE} from '../../../../../common/SystemParam'
+import {TURN_BACK ,LICENSE,VER_PHONE, NOTIFY_URL} from '../../../../../common/SystemParam'
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
 
 export default class Authentication extends React.Component {
@@ -79,7 +79,7 @@ export default class Authentication extends React.Component {
       identificationNo: this.state.idcard.trim(),
       mobile: this.state.phone.trim(),
       accountType: 1,
-      notifyPageUrl: `https://www.baidu.com`,
+      notifyPageUrl: `${NOTIFY_URL}/index/uCenter/personAccount`,
     };
 
     let msgIdcard = '';

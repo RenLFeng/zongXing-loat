@@ -1,7 +1,7 @@
 import React from 'react';
 import './Sideslip.css';
 import { Card } from 'antd';
-//import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 /**
  * 组件还未完成
  * 还需要补充调用方式
@@ -28,18 +28,18 @@ class Sideslip extends React.Component {
          * transitionLeave 组件销毁 transitionName-leave
          * 注意  过渡动画时长不要超过500ms
         */
-       /*<ReactCSSTransitionGroup
-                transitionName='show'
-                transitionAppear={true}
-                transitionEnter={true}
-                transitionLeave={true}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}
+       
+        return (
+            <ReactCSSTransitionGroup
+            transitionName='show'
+            transitionAppear={true}
+            transitionEnter={true}
+            transitionLeave={true}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
             >
             {Child}
-            </ReactCSSTransitionGroup>*/
-        return (
-          null
+            </ReactCSSTransitionGroup>
         )
     }
 }

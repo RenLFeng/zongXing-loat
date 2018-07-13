@@ -37,7 +37,15 @@ export default class RealName extends React.Component {
       status: '', //授权状态
       url: '',     // 提交表单乾多多链接
       cardList: [], //银行卡列表
-      showModal:false   
+      showModal:false,
+      yysurl:{},
+      sburl:{},
+      gjjurl:{},
+      xxurl:{},
+      jdurl:{},
+      snurl:{},
+      urlObj:null,
+      id:0,
     }
   }
 
@@ -166,34 +174,41 @@ export default class RealName extends React.Component {
     this.setState({ unbindLoading: false });
     if (response.code === 0) {
       this.getBankCardListAjax()
-      // for (let i = 0, len = this.state.cardList.length; i < len; i++) {
-      //   if (this.state.cardList[i].fbankcard === cardId) {
-      //     this.state.cardList.splice(1, i);
-      //     break;
-      //   }
-      // }
-      // this.setState({ cardList: this.state.cardList });
     } else {
       response.msg && message.error(response.msg);
     }
   }
 
-  show(index){
-    console.log(1111,index)
+  show(key){
+    if (!this.state.urlObj) {
+      this.authorize(key);
+      return;
+    }
+    console.log(key);
     this.setState({
-      // [`showModal${index}`]: !this.state[`showModal${index}`]
-      showModal:true
+      showModal:true,
+      authUrl:key
+    })
+  }
+
+  //授权
+  async authorize(key){
+    const response = await securityCentreService.getAccredit();
+    if(response.code === 0){
+      this.setState({
+        urlObj: response.data,
+        showModal:true,
+        authUrl:key
       })
+    }
   }
 
   render() {
-    console.log("loginBaseData",this.props.baseData);
-    console.log("accountId",this.props.accountId);
     // 初始化数据
     const safeData = this.props.safeData;
     const { status, distribution, url } = this.state;
 
-    const dataArr = [{title:'人形数据'},{title:'运营商数据'},{title:'社保数据'},{title:'公积金数据'},{title:'学信数据'},{title:'京东数据'},{title:'苏宁数据'}]
+    const dataArr = [{title:'运营商数据',key:'yysUrl'},{title:'社保数据',key:'shebaoUrl'},{title:'公积金数据',key:'gjjUrl'},{title:'学信数据',key:'chsiUrl'},{title:'京东数据',key:'jdUrl'},{title:'苏宁数据',key:'snUrl'}]
     return (
       <div>
         <LeftMenu param={this.props}/>
@@ -257,23 +272,7 @@ export default class RealName extends React.Component {
                         : null
                     }
                   </div>
-                  {/* <Steps progressDot direction="vertical" current={this._judgeAccount(safeData)}>
-                    <Step title="第一步"
-                      description={
-                        
-                      }
-                    />
-                    <Step
-                      title="第二步"
-                      description={
-                        
-                      } />
-                    <Step
-                      title="第三步" description={
-                        
-                      }
-                    />
-                  </Steps> */}
+
                 </div>
               </div> : null}
           <div className="fr uc-rbody" style={{marginTop:'30px'}}>
@@ -357,9 +356,9 @@ export default class RealName extends React.Component {
              {
                dataArr.map((data,index)=>{
                  return(
-                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',marginRight:'10px'}}>
+                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',margin:'15px'}}>
                     <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
-                    <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(index)}>授权</p>
+                    <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(data.key)}>授权</p>
                   </div>
                  )
                })
@@ -432,7 +431,7 @@ export default class RealName extends React.Component {
           </form> : null}
 
 
-          <ModalData  visable={this.state.showModal} operateModal={()=>this.setState({showModal: !this.state.showModal})}/>
+          <ModalData  visable={this.state.showModal} operateModal={()=>this.setState({showModal: !this.state.showModal})} url={this.state.urlObj?this.state.urlObj[`${this.state.authUrl}`]:''} id={this.state.id}/>
       </div>
 
 

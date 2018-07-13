@@ -57,6 +57,7 @@ export default class MyCoupon extends React.Component {
       pageSize:this.state.pageSize
     }
     const response = await CouponService.getCouponInfo(param);
+    console.log('shshshshshhs',response)
     if(response.code === 0){
       this.setState({
         dataSource:response.data.tableStatistical.unUsed.infoList,
@@ -228,10 +229,27 @@ render(){
             }
         }, {
           title: '状态',
-          dataIndex: ' couponState',
+          dataIndex: 'couponState',
           key: 'couponState',
           align:'center',
-        
+          render:(val) => {
+              switch (val) {
+                case 0:
+                    return <span>待生效</span>
+                case 1:
+                    return <span>待领取</span>
+                case 2:
+                    return <span>待使用</span>
+                case 3:
+                    return <span>兑换券(待使用)</span>
+                case 4:
+                    return <span>已过期</span>
+                case 5:
+                    return <span>流标</span>
+                case 6:
+                    return <span>已使用</span>
+            }
+          }
         },
         , {
           title: '操作',
@@ -239,7 +257,6 @@ render(){
           align:'center',
           render: (text,record) => {
             return(
-              // <a style={{color:'#669bff'}} >查看</a>
               <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>
             )  
           },
@@ -281,15 +298,27 @@ render(){
         align:'center',
       }, {
         title: '状态',
-        dataIndex: ' couponState',
+        dataIndex: 'couponState',
         key: 'couponState',
         align:'center',
-        // render:(text,val)=>{
-        //   console.log('状态数据',val)
-        //   return (
-        //     <span>{val === 1 ?'投资类' : '游客类'}</span>
-        //   )     
-        // }
+        render:(val) => {
+          switch (val) {
+            case 0:
+                return <span>待生效</span>
+            case 1:
+                return <span>待领取</span>
+            case 2:
+                return <span>待使用</span>
+            case 3:
+                return <span>兑换券(待使用)</span>
+            case 4:
+                return <span>已过期</span>
+            case 5:
+                return <span>流标</span>
+            case 6:
+                return <span>已使用</span>
+        }
+      }
       }, {
         title: '操作',
         dataIndex: 'do',
@@ -340,6 +369,24 @@ render(){
       dataIndex: ' couponState',
       key: 'couponState',
       align:'center',
+      render:(val) => {
+        switch (val) {
+          case 0:
+              return <span>待生效</span>
+          case 1:
+              return <span>待领取</span>
+          case 2:
+              return <span>待使用</span>
+          case 3:
+              return <span>兑换券(待使用)</span>
+          case 4:
+              return <span>已过期</span>
+          case 5:
+              return <span>流标</span>
+          case 6:
+              return <span>已使用</span>
+      }
+    }
     }, {
       title: '操作',
       dataIndex: 'do',

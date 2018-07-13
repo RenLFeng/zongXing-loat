@@ -257,6 +257,8 @@ export const securityCentreService = {
   /** 验证修改密码时的验证码 */
   changePass: async(param) => req.post('/userInfo/verifyForPassword',param),
   
+  //授权
+  getAccredit: async() => req.get('/mohe/getORcode'),
   
 
 }

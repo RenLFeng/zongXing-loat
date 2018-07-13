@@ -6,13 +6,22 @@ export default class AddModal extends React.Component{
     closeModal = () => {
         this.props.operateModal();
     }
+
+    getUrl(){
+        for(let obj of this.props.url){
+           obj.id = this.props.id
+        }
+    }
     render(){
+        const {url} = this.props;
+        console.log('url222222222222222',this.props)
+
         return(
             <Modal visable={this.props.visable} closeModal={this.closeModal} >
               <div className="modal_warp">
                 <div className="content">
-                  {/* <iframe src="https://open.shujumohe.com/box/jd?box_token=310CF7ACA225403FA765BA9A7DE3590A" className="h5_iframe" id="h5_iframe" style={{width:'100%',height:'100%'}} > */}
-                  <iframe className="h5_iframe" id="h5_iframe" style={{width:'100%',height:'100%'}} >
+                  <iframe src={this.props.url.url} className="h5_iframe" id="h5_iframe" style={{width:'100%',height:'100%'}} >
+                 
                   </iframe>
                 </div>
               </div>

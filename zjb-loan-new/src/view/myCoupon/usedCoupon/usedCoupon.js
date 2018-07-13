@@ -43,7 +43,7 @@ export default class UsedCoupon extends React.Component {
                 <div className="coupon-address">
                 <p className="tit">可使用地址：</p>
                 <ul>
-                    {/* {
+                    {
                     place  ?
                         place.map((data,index)=>{
                             return(
@@ -53,15 +53,7 @@ export default class UsedCoupon extends React.Component {
                             </li> 
                             )
                         }) : null
-                    } */}
-                            <li >
-                                <p>gjghjghfjfgjhgfhjfghjgfhj</p>
-                                <p>1212121</p>
-                            </li>
-                            <li >
-                                <p>梵蒂冈反对和淀粉加工环节</p>
-                                <p>42453453453</p>
-                            </li>
+                    }
                 </ul>
                 </div>
                 <p>失效日期：</p>

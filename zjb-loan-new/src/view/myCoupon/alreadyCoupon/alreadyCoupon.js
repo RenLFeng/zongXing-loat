@@ -40,9 +40,9 @@ export default class AlreadyCoupon extends React.Component {
                 <p> 项目编号：<span>{couponInfo.projectNo}</span></p>
                 <p> 项目名称：<span>{couponInfo.projectName}</span></p>
                 </div>
-                <div className="coupon-address">
+                {/* <div className="coupon-address">
                 <p className="tit">可使用地址：</p>
-                {/* <ul>
+                <ul>
                     {
                     place  ?
                         place.map((data,index)=>{
@@ -54,9 +54,11 @@ export default class AlreadyCoupon extends React.Component {
                             )
                         }) : null
                     }
-                </ul> */}
-                </div>
-                <a className="btn">未使用</a>
+                </ul>
+                </div> */}
+                <p style={{color:'#f29827'}}>使用日期：</p>
+                <p style={{fontSize:24,color:'#f29827'}}>{moment(couponInfo.fconsume_time).format('YYYY-MM-DD HH:mm:ss')}</p>
+                <a className="btn">已使用</a>
             </div>
         </div>
      
