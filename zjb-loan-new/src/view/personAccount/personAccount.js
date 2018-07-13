@@ -6,10 +6,10 @@ import { connect } from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 
-import { accountService ,baseService} from '../../services/api';
+import { accountService,baseService } from '../../services/api';
 import { Modal, message } from 'antd';
 import './personal.scss';
-import Statement from '../statement/Statement';  
+import Statement from '../statement/Statement';
 import { formatFlagToText } from '../../common/SystemParam';
 
 
@@ -56,7 +56,7 @@ export default class PersonAccount extends React.Component {
               }
             }
           },
-          
+
           formatter: function (name) {
             if (name === '可用余额') {
               return `${name}  {c|0.00}`
@@ -101,13 +101,13 @@ export default class PersonAccount extends React.Component {
                 position: 'center'
               },
             },
-            
+
             labelLine: {
               normal: {
                 show: false
               }
             },
-           
+
             data: [
               { value: 0, name: '可用余额' },
               { value: 0, name: '冻结金额' },
@@ -147,7 +147,7 @@ export default class PersonAccount extends React.Component {
             textStyle: {
               fontFamily: 'Arial',
               fontSize: 16,
-             
+
               rich: {
                 b: {
                   fontSize: 16,
@@ -156,7 +156,7 @@ export default class PersonAccount extends React.Component {
                   width: 100,
                   fontWeight: 'bold',
                 },
-              
+
                 c: {
                   fontSize: 16,
                   align: 'right',
@@ -167,48 +167,48 @@ export default class PersonAccount extends React.Component {
                 }
               }
             },
-           
+
             formatter: function (name) {
               if (name === '可用余额') {
                 return `${name}  {c|${`${companyTotalAssetsVo.availableBalance || 0}`.fm()}}`
               } else if (name === '冻结金额') {
-           
+
                 return `${name}  {b|${`${companyTotalAssetsVo.freezingAmount || 0}`.fm()}}`
               } else if (name === '待还本金') {
-               
+
                 return `${name}  {b|${`${companyTotalAssetsVo.forReturnPrincipal || 0}`.fm()}}`
               } else {
-             
+
                 return `${name}  {b|${`${companyTotalAssetsVo.forReturnInterest || 0}`.fm()}}`
               }
             },
             left: '60%',
             y: 'center',
-           
+
             data: [{
               name: '可用余额',
               icon: 'circle'
-           
+
             }, {
               name: '冻结金额',
               icon: 'circle'
-           
+
             }, {
               name: '待还本金',
               icon: 'circle'
-           
+
             }, {
               name: '待还利息',
               icon: 'circle'
             }]
           },
-          
+
           grid: {
             right: '70%'
           },
           series: [
             {
-         
+
               name: '金额',
               type: 'pie',
               radius: ['100%', '90%'],
@@ -226,7 +226,7 @@ export default class PersonAccount extends React.Component {
                   show: false
                 }
               },
-              
+
               data: [
                 { value: companyTotalAssetsVo.availableBalance || 0, name: '可用余额' },
                 { value: companyTotalAssetsVo.freezingAmount || 0, name: '冻结金额' },
@@ -237,7 +237,7 @@ export default class PersonAccount extends React.Component {
           ]
         }
       })
-      
+
     }
   }
 
@@ -288,14 +288,14 @@ export default class PersonAccount extends React.Component {
       mm='0'+mm
     }
     console.log(date.getMinutes())
-    return date.getFullYear()+"/"+m+"/"+d +" "+h+':'+mm; 
+    return date.getFullYear()+"/"+m+"/"+d +" "+h+':'+mm;
   }
 //手动还款
 repayment(val){
   console.log(val)
   this.getDetailPlaneAjax(val)
 }
- 
+
 
 
 
@@ -366,7 +366,7 @@ async getPlanData() {
     })
     // -2 是没有还款计划
   } else if (response.code === -2) {
-    
+
   } else {
     if (response.msg !== '该企业下没有正在还款的项目') {
       response.msg && message.error(response.msg);
@@ -379,64 +379,64 @@ async getPlanData() {
   render() {
     const lables = [
       {
-       
+
         text: '借款申请',
         fflag: 0
       },
       {
-       
+
         text: '进入初审',
         fflag: 1
       },
       {
-        
+
         text: '大数据风控',
         fflag: 3
       },
       {
-       
+
         text: '进入终审',
         fflag: 6
       },
       {
-      
+
         text: '确认借款',
         fflag: 7
       },
       {
-        
+
         text: '发放优惠',
         fflag: 14
       },
       {
-        
+
         text: '上线筹款',
         fflag: 10
       },
       {
-        
+
         text: '满标放款',
         fflag: 11
       },
       {
-        
+
         text: '按月还款',
         fflag: 12
       },
       {
-        
+
         text: '还清借款',
         fflag: 13
       },
     ];
-   
+
     // 当前借款金额  近期还款  我的借款  账户金额  资金动态
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     console.log(recentForRepanymentVo, "reduxs")
     const { data, dataSource, paymentParam } = this.state;
     return (
       <div>
-       
+
         <LeftMenu param={this.props} />
         <div className="per_account">
           <div className="ptit">
@@ -452,17 +452,17 @@ async getPlanData() {
               <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push(Path.APPALY_LOAN)}}>
                   <span></span> 申请借款
               </div>
-          
+
           </div>
         </div>
-       
+
         <div className="per_account">
           <div className="ptit">
-              
+
             <i>近期还款</i>
           </div>
           <div className="recent-repany" >
-             
+
           <p className='title'>{ recentForRepanymentVo && recentForRepanymentVo.length>0? '近期应还':' '} </p>
             {
               recentForRepanymentVo && recentForRepanymentVo.length>0 ?
@@ -494,18 +494,18 @@ async getPlanData() {
                 </div> :''
                 }
               </div>
-                         
+
               }):''
             }
 
           </div>
         </div>
-       
+
         {myBorrowVo ?
           <div className="per_account">
             <div className="ptit">
               <i>我的借款</i>
-          </div> 
+          </div>
           <div className="my-loan" >
             <p className='loan-lable'>
               {
@@ -514,9 +514,9 @@ async getPlanData() {
                     return  <span className='active'>{item.text}</span>
                   }else{
                     return <span>{item.text}</span>
-                  } 
+                  }
                 })
-              }  
+              }
             </p>
             <p className='project-info'>
               <span className='txt1'>项目编号：</span>
@@ -546,20 +546,20 @@ async getPlanData() {
                 </td>
               </tr>
             </table>
-          </div>  
-        </div> : 
+          </div>
+        </div> :
         null
       }
-        <div className="per_account"> 
+        <div className="per_account">
           <div className="ptit">
-              <i>账户总资产</i> 
-          </div> 
+              <i>账户总资产</i>
+          </div>
 
           <div className="total-acount" >
-           
+
             <PieReact width='600px' height="200px" option={this.state.pieOption} />
             <div className='account-info'>
-             
+
               <p>{`${companyTotalAssetsVo.totalAssets || 0}`.fm()}</p>
               <p>账户总资产</p>
             </div>
@@ -567,10 +567,10 @@ async getPlanData() {
         </div>
 
 
-    
+
         <div className="per_account">
           <div className="ptit">
-           
+
             <i>资金动态</i>
           </div>
           <div className="my-statement" style={{ paddingTop: 20 }}>
@@ -580,7 +580,7 @@ async getPlanData() {
                   return <Statement data={item} key={index}></Statement>
                 }) :
                 <span className="no-statement">暂无资金动态</span>
-            
+
             }
           </div>
         </div>

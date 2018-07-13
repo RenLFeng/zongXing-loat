@@ -57,7 +57,7 @@ export default class MyCoupon extends React.Component {
       pageSize:this.state.pageSize
     }
     const response = await CouponService.getCouponInfo(param);
-    console.log('shshshshshhs',response)
+
     if(response.code === 0){
       this.setState({
         dataSource:response.data.tableStatistical.unUsed.infoList,
@@ -229,6 +229,7 @@ render(){
             }
         }, {
           title: '状态',
+
           dataIndex: 'couponState',
           key: 'couponState',
           align:'center',

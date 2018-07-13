@@ -1,4 +1,4 @@
- 
+
 import $ from 'jquery';
 import Swiper from 'swiper';
 export function startAnimate() {
@@ -7,6 +7,7 @@ export function startAnimate() {
 }
 
 function initPage() {
+
     var swiper = new Swiper('.tab3con1 .swiper-container', {
         autoplay: 5000,
         speed: 1000,
@@ -74,9 +75,11 @@ function bindEvent() {
     window.av.top(d.offsetTop - 130);
   });
   $('body').on('click', '.sec-qa .q', function () {
-    $(this).toggleClass('close');
+    $(this).toggleClass('act').next().slideToggle();
   });
-
+  $(".sec-qa > .w > .fl .t2").on("click",function(){
+    $(this).addClass("act").siblings().removeClass("act");
+  })
   let d1 = $('.topnav'),
     d2 = $('.sec-tabs .tabs');
   let d2top = 0;
@@ -85,7 +88,7 @@ function bindEvent() {
   });
   $(window).on('scroll', function () {
     if (!d2top) d2top = d2.offset().top - 74;
-    let top = window.av.top(); 
+    let top = window.av.top();
     if (top > 120) {
       d1.addClass('fix');
     } else {

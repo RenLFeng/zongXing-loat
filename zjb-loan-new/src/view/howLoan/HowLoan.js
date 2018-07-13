@@ -18,6 +18,11 @@ export default class HowLoan extends React.Component {
       <div  className='hl-content'>
         <div className="banner1 autosize">
           <img className="big" src={require('./img/bg0.png')} />
+          <div className="w">
+            <a className="btn "
+               onClick={()=>{
+                 $("#fix").removeClass('fix');}}>我要借款</a>
+          </div>
         </div>
         {/* 借款流程 */}
         <div className="section sec-tab3">
