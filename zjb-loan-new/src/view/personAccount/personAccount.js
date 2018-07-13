@@ -5,6 +5,7 @@ import Path from '../../common/PagePath';
 import { connect } from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
+
 import { accountService ,baseService} from '../../services/api';
 import { Modal, message } from 'antd';
 import './personal.scss';
@@ -493,9 +494,10 @@ async getPlanData() {
                 </div> :''
                 }
               </div>
-                             
+                         
               }):''
             }
+
           </div>
         </div>
        
@@ -582,6 +584,7 @@ async getPlanData() {
             }
           </div>
         </div>
+
 
 
         <Modal
