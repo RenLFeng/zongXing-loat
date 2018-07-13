@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Card, Form, Col, Row, Input, Select, InputNumber, Alert, Icon, Tooltip,Button } from 'antd';
+import { Card, Form, Col, Row, Input, Select, InputNumber, Alert, Icon, Tooltip,Button,message } from 'antd';
 import Title from './title'
 import { MONEY_REG, MUN_INTEGER, IMG_BASE_URL, LIMIT_MOENY, } from '../../../../../common/SystemParam';
 import styles from './loanInfo.scss';

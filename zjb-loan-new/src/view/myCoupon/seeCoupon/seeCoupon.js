@@ -1,30 +1,30 @@
 import React from 'react';
 import $ from 'jquery';
 import './seeCoupon.scss';
+import moment from 'moment';
+
 export default class SeeCoupon extends React.Component {
- state={
-  showSeeCoupon:this.props.showSeeCoupon,
-  couponInfo:this.props.couponInfo,
- }
   render(){
-    console.log('777777',this.props)
-    const {couponInfo} = this.state;
+    const {couponInfo} = this.props;
+    console.log('优惠券详情',couponInfo)
+    let place = couponInfo.couponUsePlaces;
+    console.log('palce',place)
     return(
       <div className="see-box send-coupon-info">
         <p className="top-bg"><span>投资人</span></p>
-        <a className="close" onClick={()=>{this.props.close()}}>x</a>
+        <a className="close" onClick={()=>{this.props.close('unUse')}}>x</a>
         <div className="coupon-nub">
           <p>优惠券编码</p>
           <p>{couponInfo.couponCode}</p>
         </div>
         <div className="coupon-info clearfix">
           <div className="fl">
-            <p className="tit">美丽人生现金优惠券</p>
+            <p className="tit">{couponInfo.couponName}</p>
             <div>
-              <p className="money">￥<span>50</span>元</p>
+              <p className="money">￥<span>{couponInfo.fullSubMoney}</span>元</p>
               <p className="ins">
-                <i>使用规则：满150减50</i>
-                <i>失效日期：2018-07-30</i>
+                <i>使用规则：满{couponInfo.fullSubCondition}减{couponInfo.fullSubMoney}</i>
+                <i>失效日期：{moment(couponInfo.endTime).format('YYYY-MM-DD')}</i>
               </p>
             </div>
           </div>
@@ -35,24 +35,23 @@ export default class SeeCoupon extends React.Component {
           </div>
         </div>
         <div className="coupon-name">
-          <p> 项目编号：<span>P18060006</span></p>
-          <p> 项目名称：<span>海底捞火锅新店扩张</span></p>
+          <p> 项目编号：<span>{couponInfo.projectNo}</span></p>
+          <p> 项目名称：<span>{couponInfo.projectName}</span></p>
         </div>
         <div className="coupon-address">
           <p className="tit">可使用地址：</p>
           <ul>
-            <li>
-              <span>广东省深圳市南山区沙河路XX大厦详细地址</span>
-              <span>18682056589</span>
-            </li>
-            <li>
-              <span>广东省深圳市南山区沙河路XX大厦详细地址</span>
-              <span>18682056589</span>
-            </li>
-            <li>
-              <span>广东省深圳市南山区沙河路XX大厦详细地址</span>
-              <span>18682056589</span>
-            </li>
+            {
+              place  ?
+                place.map((data,index)=>{
+                    return(
+                      <li key={index}>
+                        <p>{data.address}</p>
+                        <p>{data.fmobile}</p>
+                      </li> 
+                    )
+                }) : null
+            }
           </ul>
         </div>
         <a className="btn">未使用</a>

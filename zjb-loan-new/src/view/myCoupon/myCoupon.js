@@ -2,6 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 import SeeCoupon from './seeCoupon/seeCoupon';
+import AlreadyCoupon from './alreadyCoupon/alreadyCoupon';
+import UsedCoupon from './usedCoupon/usedCoupon';
 import SendCoupon from './sendCoupon/sendCoupon.js';
 import BarE from './useCoupons';
 import PieE from './CouponIssuance';
@@ -55,7 +57,6 @@ export default class MyCoupon extends React.Component {
       pageSize:this.state.pageSize
     }
     const response = await CouponService.getCouponInfo(param);
-    console.log('response====',response);
     if(response.code === 0){
       this.setState({
         dataSource:response.data.tableStatistical.unUsed.infoList,
@@ -73,7 +74,6 @@ export default class MyCoupon extends React.Component {
 
   async getCouponDetail(id){
     const response = await CouponService.myCouponDetail(id);
-    console.log('reskkkkkk',response);
     if(response.code === 0){
       this.setState({
         couponInfo:response.data
@@ -106,17 +106,23 @@ onShowSizeChange = (current, pageSize) => {
   changePage(flags){
     if( flags==='noUse'){
       this.setState({
-       flag:'noUse'
+       flag:'noUse',
+       showAlreadyCoupon:false,
+       showFailedCoupon:false,
       })
     }
     if( flags==='alreadyUse'){
       this.setState({
-       flag:'alreadyUse'
+       flag:'alreadyUse',
+       showSeeCoupon:false,
+       showFailedCoupon:false,
       })
     }
     if( flags==='failed'){
       this.setState({
-       flag:'failed'
+       flag:'failed',
+       showSeeCoupon:false,
+       showAlreadyCoupon:false,
       })
     }
   }
@@ -135,21 +141,47 @@ onShowSizeChange = (current, pageSize) => {
   }
 
   //获取优惠券数据
-  see(data){
-    console.log('5555555',data)
-    this.setState({
-      showSeeCoupon:true,
-     })
+  see(data,type){
+    if(type === 'unUse'){
+      this.setState({
+        showSeeCoupon:true,
+       })
+    }
+    if(type === 'alreadyUse'){
+      this.setState({
+        showAlreadyCoupon:true,
+       })
+    }
+    if(type === 'used'){
+      this.setState({
+        showFailedCoupon:true,
+       })
+    }
      let param = {
       couponUserId:data.couponUserId
      }
      this.getCouponDetail(param)
   }
 
-  close(){
-    this.setState({
-      showSeeCoupon:false,
-     })
+  close(type){
+    if(type === 'unUse'){
+      this.setState({
+        showSeeCoupon:false,
+       })
+    }
+    if(type === 'alreadyUse'){
+      this.setState({
+        showAlreadyCoupon:false,
+       })
+    }
+    if(type === 'used'){
+      this.setState({
+        showFailedCoupon:false,
+       })
+    }
+    // this.setState({
+    //   showSeeCoupon:false,
+    //  })
   }
 
 render(){
@@ -207,8 +239,8 @@ render(){
           align:'center',
           render: (text,record) => {
             return(
-              <a style={{color:'#669bff'}} >查看</a>
-              // <a style={{color:'#669bff'}} onClick={()=>{this.see(record)}}>查看</a>
+              // <a style={{color:'#669bff'}} >查看</a>
+              <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>
             )  
           },
         },
@@ -219,6 +251,9 @@ render(){
         dataIndex: 'consumeTime',
         key: 'consumeTime',
         align:'center',
+        render:(val) => {
+          return   moment(val).format('YYYY-MM-DD HH:mm') 
+        }
       }, {
         title: '面值',
         dataIndex: 'fullSubMoney',
@@ -234,6 +269,11 @@ render(){
         dataIndex: 'couponType',
         key: 'couponType',
         align:'center',
+        render:(text,val)=>{
+          return (
+            <span>{val === 1 ?'投资类' : '游客类'}</span>
+          )     
+        }
       }, {
         title: '优惠券编码',
         dataIndex: 'couponCode',
@@ -244,13 +284,19 @@ render(){
         dataIndex: ' couponState',
         key: 'couponState',
         align:'center',
+        // render:(text,val)=>{
+        //   console.log('状态数据',val)
+        //   return (
+        //     <span>{val === 1 ?'投资类' : '游客类'}</span>
+        //   )     
+        // }
       }, {
         title: '操作',
         dataIndex: 'do',
         align:'center',
         render: (text,record) => {
           return(
-            <a style={{color:'#669bff'}} onClick={()=>{console.log(record)}}>查看</a>
+            <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'alreadyUse')}}>查看</a>
           )  
         },
       },
@@ -261,6 +307,9 @@ render(){
       dataIndex: 'endTime',
       key: 'endTime',
       align:'center',
+      render:(val) => {
+        return   moment(val).format('YYYY-MM-DD HH:mm') 
+      }
     }, {
       title: '面值',
       dataIndex: 'fullSubMoney',
@@ -276,6 +325,11 @@ render(){
       dataIndex: 'couponType',
       key: 'couponType',
       align:'center',
+      render:(text,val)=>{
+        return (
+          <span>{val === 1 ?'投资类' : '游客类'}</span>
+        )     
+      }
     }, {
       title: '优惠券编码',
       dataIndex: 'couponCode',
@@ -292,7 +346,7 @@ render(){
       align:'center',
       render: (text,record) => {
         return(
-          <a style={{color:'#669bff'}} onClick={()=>{console.log(record)}}>查看</a>
+          <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'used')}}>查看</a>
         )  
       },
     },
@@ -312,6 +366,14 @@ render(){
               {
                 this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo}/> : null
               }
+              {
+                 this.state.showAlreadyCoupon ?   <AlreadyCoupon couponInfo={this.state.couponInfo} close={this.close}/> :null
+              }
+              {
+                this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
+              }
+              
+               
                 <SendCoupon />
                 
                   <div className="graph-box">
