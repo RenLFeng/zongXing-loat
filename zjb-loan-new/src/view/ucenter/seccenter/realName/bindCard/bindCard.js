@@ -40,7 +40,7 @@ const btnLayout = {
 @connect((state) => ({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
-  accountId: state.account.personal.totalAssets.accountId
+  accountId: state.login.baseData.accountId,
 }))
 class BindCard extends React.Component {
   constructor(props) {

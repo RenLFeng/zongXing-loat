@@ -28,8 +28,7 @@ class Sideslip extends React.Component {
          * transitionLeave 组件销毁 transitionName-leave
          * 注意  过渡动画时长不要超过500ms
         */
-        return (
-        {/*<ReactCSSTransitionGroup
+       /*<ReactCSSTransitionGroup
                 transitionName='show'
                 transitionAppear={true}
                 transitionEnter={true}
@@ -38,7 +37,9 @@ class Sideslip extends React.Component {
                 transitionLeaveTimeout={500}
             >
             {Child}
-            </ReactCSSTransitionGroup>*/}
+            </ReactCSSTransitionGroup>*/
+        return (
+          null
         )
     }
 }
