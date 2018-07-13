@@ -43,19 +43,17 @@ export default class EditorComponent extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <div>
        <Editor
-         editorState={editorState}
-         wrapperClassName={styles["demo-wrapper"]}
-         editorClassName={styles['demo-editor']}
-         toolbarStyle={{display: 'none'}}
-         readOnly={true}
-         onEditorStateChange={this.onEditorStateChange}
-         toolbar={{
-         options: [],
-         }}
+          editorState={editorState}
+          wrapperClassName={styles["demo-wrapper"]}
+          editorClassName={styles['demo-editor']}
+          toolbarStyle={{display: 'none'}}
+          readOnly={true}
+          onEditorStateChange={this.onEditorStateChange}
+          toolbar={{
+          options: [],
+          }}
          />
-      </div>
     )
   }
 }

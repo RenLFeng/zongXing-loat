@@ -131,9 +131,9 @@ export default class AccountStatement extends React.Component {
 				loading: false,
 			});
 			if(typeof e === 'object' && e.name === 288) {
-				localStorage.removeItem('accessToken');
+				localStorage.removeItem('accessTokenCompany');
 				this.props.history.push('/index/login');
-			}
+			}``
 			//console.log(e);
 		}
 	}

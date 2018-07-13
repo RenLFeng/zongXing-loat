@@ -2,14 +2,20 @@ import React from 'react';
 import $ from 'jquery';
 import './seeCoupon.scss';
 export default class SeeCoupon extends React.Component {
+ state={
+  showSeeCoupon:this.props.showSeeCoupon,
+  couponInfo:this.props.couponInfo,
+ }
   render(){
+    console.log('777777',this.props)
+    const {couponInfo} = this.state;
     return(
-      <div className="see-box send-coupon-info none">
+      <div className="see-box send-coupon-info">
         <p className="top-bg"><span>投资人</span></p>
-        <a className="close">x</a>
+        <a className="close" onClick={()=>{this.props.close()}}>x</a>
         <div className="coupon-nub">
           <p>优惠券编码</p>
-          <p>20180618000100003</p>
+          <p>{couponInfo.couponCode}</p>
         </div>
         <div className="coupon-info clearfix">
           <div className="fl">

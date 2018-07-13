@@ -3,13 +3,10 @@ import Title from './title'
 import React, { PureComponent } from 'react';
 import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, message, Tooltip } from 'antd';
 
-
-
-
 import styles from './loanInfo.scss';
 import _ from 'lodash';
 
-import Editor from '../../../../../components/editor'
+import Editor from '../../../../../components/editorEdit'
 
 import UploadSingle from './UpLoad/UpLoadSingle';
 import UploadPicMultipleFile from './UpLoad/UploadPicMultipleFile';
@@ -24,12 +21,12 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const formItemLayout = {
   labelCol: {
-    xs: { span: 6 },
-    sm: { span: 5 },
+    xs: { span: 3 },
+    sm: { span: 3 },
   },
   wrapperCol: {
-    xs: { span: 18 },
-    sm: { span: 16 },
+    xs: { span: 21 },
+    sm: { span: 21 },
   },
 };
 
@@ -91,8 +88,9 @@ class Loaninfo extends React.Component {
   marker = null;
 
   componentDidMount() {
-    // console.log(window,new AMap(),"-4154545454545445")
-    // var map = new AMap.Map("container", {
+    // console.log(window,"-4154545454545445")
+    // const AMap = window.AMap;
+    // let map = new AMap.Map("container", {
     //   resizeEnable: true,
     //   zoom: 10
     // });
@@ -101,14 +99,14 @@ class Loaninfo extends React.Component {
     //   icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
     // });
     // this.marker.setMap(map);
-    // var clickEventListener = map.on('click', (e) => {
+    // let clickEventListener = map.on('click', (e) => {
     //   document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
     //   this.marker.setPosition([e.lnglat.getLng(), e.lnglat.getLat()]);
     //   this.setState({
     //     latLng: `${e.lnglat.getLng()},${e.lnglat.getLat()}`
     //   })
     // });
-    // var auto = new AMap.Autocomplete({
+    // let auto = new AMap.Autocomplete({
     //   input: "tipinput"
     // });
     // AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
@@ -121,46 +119,6 @@ class Loaninfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("---------------------------------", Editor);
-    if (this.props.num !== nextProps.num) {
-      if (this.props.visible) {
-        this.props.form.validateFieldsAndScroll((error, values) => {
-          if (!error) {
-            // submit the values
-            console.log(values);
-            values.fvideo_path = typeof values.fvideo_path !== 'string' ? JSON.stringify(values.fvideo_path) : values.fvideo_path;
-            // 拿到富文本编辑器的值，整理值
-            let modulesArr = this.state.dataList;
-            for (let i = 0; i < modulesArr.length; i++) {
-              console.log(this[`editor${i}`].returnValue, "---------------------------------", Editor);
-              modulesArr[i].fcontent = draftToHtml(convertToRaw(this[`editor${i}`].returnValue().getCurrentContent()));
-            }
-            let arr = _.cloneDeep(modulesArr);
-            let i = 0;
-            for (let obj of arr) {
-              if (typeof obj.fid === 'number') {
-                obj.fid = null;
-              }
-              obj.fsort = i;
-              i++
-            }
-            values.projectModules = arr;
-            values.flocation = this.state.latLng;
-            if (this.props.saveNO !== nextProps.saveNO) {
-              this.props.changeData('project', values, true, true);
-            } else {
-              if (this.props.commit !== nextProps.commit) {
-                this.props.changeData('project', values, true, false, true);
-              } else {
-                this.props.changeData('project', values, true, false);
-              }
-            }
-          } else {
-            this.props.changeData('project', values, false);
-          }
-        });
-      }
-    }
     // if (this.props.data.flocation !== nextProps.data.flocation) {
     //   if (nextProps.data.flocation) {
     //     this.marker.setPosition(nextProps.data.flocation.split(','));
@@ -175,6 +133,35 @@ class Loaninfo extends React.Component {
   }
   componentWillUnmount() {
 
+  }
+  getChildData = () => {
+    let val = null;
+    this.props.form.validateFieldsAndScroll((error, values) => {
+      if (!error) {
+        // submit the values
+        values.fvideo_path = typeof values.fvideo_path !== 'string' ? JSON.stringify(values.fvideo_path) : values.fvideo_path;
+        // 拿到富文本编辑器的值，整理值
+        let modulesArr = this.state.dataList;
+        for (let i = 0; i < modulesArr.length; i++) {
+          modulesArr[i].fcontent = draftToHtml(convertToRaw(this[`editor${i}`].returnValue().getCurrentContent()));
+        }
+        let arr = _.cloneDeep(modulesArr);
+        let i = 0;
+        for (let obj of arr) {
+          if (typeof obj.fid === 'number') {
+            obj.fid = null;
+          }
+          obj.fsort = i;
+          i++
+        }
+        values.projectModules = arr;
+        values.flocation = this.state.latLng;
+        val = values;
+      } else {
+        val = null;
+      }
+    });
+    return val;
   }
 
 
@@ -283,32 +270,48 @@ class Loaninfo extends React.Component {
   help(title) {
     if (title === '我的自述') {
       return (
-        <div>
+        <div style={{display: 'inline-block',position: 'absolute', right: -20}}>
           <Tooltip title={<p>填写说明：<br />1、可以从个人基本信息开始，包括姓名、籍贯、个人经历，个人特长、创业经历等； <br />2、照片上传为个人生活照。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ right: -40, top: 10 }} /></Tooltip>
         </div>
       )
     } else if (title === '我的项目') {
       return (
-        <div>
+        <div style={{display: 'inline-block',position: 'absolute', right: -20}}>
           <Tooltip title={<p>填写说明：<br />对项目做个简单介绍，包括但不局限于店铺的名称、位置、项目起源、开始项目的机缘、包括个人对于该项目的观点分析以及未来发展前景、项目的优势、未来的发展机遇等。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ right: -40, top: 10 }} /></Tooltip>
         </div>
       )
     } else if (title === '为何众借') {
       return (
-        <div>
+        <div style={{display: 'inline-block',position: 'absolute', right: -20}}>
           <Tooltip title={<p>填写说明：<br />1、可以从项目的基本规划开始，从投入资金角度进行分析，比如项目计划总投资、自有资金、已筹措资金、预计资金缺口；<br />2、介绍目前已到位资金使用情况，已使用资金用在了哪些板块，项目进度目前如何。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ right: -40, top: 10 }} /></Tooltip>
         </div>
       )
     } else if (title === '还款计划') {
       return (
-        <div>
+        <div style={{display: 'inline-block',position: 'absolute', right: -20}}>
           <Tooltip title={<p>填写说明：<br />1、还款来源主要以经营现金流为主，请您简要介绍一下经营计划，例如大致营业开始时间、预估计营业额、利润率等；<br />2、投资人做出承诺，及时还款；<br />3、优惠券发放方案。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ right: -40, top: 10 }} /></Tooltip>
         </div>
       )
     }
   }
   submit() {
-    alert(3)
+    const val = this.getChildData();
+    if (val == null) {
+        message.error('请检查数据格式');
+        return;
+    } else {
+        this.props.changeOldData(val, 'SAVE');
+    }
+  }
+
+  commmitSubmit() {
+    const val = this.getChildData();
+    if (val == null) {
+        message.error('请检查数据格式');
+        return;
+    } else {
+        this.props.changeOldData(val, 'COMMIT');
+    }
   }
 
   render() {
@@ -328,23 +331,24 @@ class Loaninfo extends React.Component {
                 <Col lg={13} md={13} sm={24}>
                   <Form.Item label={<RequireLabel>项目名称</RequireLabel>}>
                     {/* <div>
-                  <Tooltip title={<p>填写说明：<br/>参考：<br/>XXX店或XXX店XXX分店<br/>
-     字数不得超过16字。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{left:80,top:-26}}/></Tooltip>
-     </div> */}
+                    <Tooltip title={<p>填写说明：<br/>参考：<br/>XXX店或XXX店XXX分店<br/>
+                     字数不得超过16字。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{left:80,top:-26}}/></Tooltip>
+                    </div> */}
                     {getFieldDecorator('projectName', {
-                      // initialValue: data.projectName ? data.projectName : '',
+                      initialValue: data.projectName ? data.projectName : '',
                       rules: []
                     })(<Input placeholder="请输入" maxLength={15} />)}
                   </Form.Item>
                 </Col>
+                {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}
                 <Col lg={11} md={11} sm={24}>
                   <Form.Item label={<RequireLabel></RequireLabel>} className="video_tip" >
                     {getFieldDecorator('fvideo_path', {
-                      // initialValue: data.fvideo_path ? JSON.parse(data.fvideo_path) : [],
+                      initialValue: data.fvideo_path ? JSON.parse(data.fvideo_path) : [],
                       rules: [],
                     })(
-                      <div>
-                        <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo> <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span></div>
+                      
+                        <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo>
                     )}
 
                   </Form.Item>
@@ -356,10 +360,10 @@ class Loaninfo extends React.Component {
             <Form layout="vertical" hideRequiredMark>
               <Row gutter={16}>
                 <Col lg={8} md={12} sm={24}>
-                  <Form.Item label={<RequireLabel>借款项目展示封面图</RequireLabel>}    >
+                  <Form.Item label={<RequireLabel>借款项目展示封面图</RequireLabel>}>
                     {/* <div><Tooltip title={<p>填写说明：<br />1、可展示该项目最具代表性的图片<br />2、裁剪成适当的大小。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
                     {getFieldDecorator('fcard_pic_path', {
-                      // initialValue: data.fcard_pic_path ? data.fcard_pic_path : '',
+                      initialValue: data.fcard_pic_path ? data.fcard_pic_path : '',
                       rules: [],
                     })(
                       <UploadSingle {...this.data} prefix={dataPath} tipText="借款项目展示封面图" className="second-img-uploads-mag" />
@@ -370,7 +374,7 @@ class Loaninfo extends React.Component {
                   <Form.Item label={<RequireLabel>经营场所实景图</RequireLabel>} >
                     {/* <div><Tooltip title={<p>填写说明：<br />对于项目封面图和经营场所实景图，图片选择可参考首页部分展示项目。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
                     {getFieldDecorator('fbanner_pic_path', {
-                      // initialValue: data.fbanner_pic_path ? data.fbanner_pic_path : '',
+                     initialValue: data.fbanner_pic_path ? data.fbanner_pic_path : '',
                       rules: [],
                     })(
                       <UploadSingle {...this.data} prefix={dataPath} tipText="经营场所实景图" className="second-img-uploads-mag" />
@@ -381,27 +385,15 @@ class Loaninfo extends React.Component {
             </Form>
           </div>
           <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
-            <div>
-
-
-
-
+            <div style={{paddingTop: 20}}>
               <RequireLabel>经营场所实景图</RequireLabel>
             </div>
-
           </div>
-
-
-
-
-
           <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
-
-
             {
               this.state.dataList.map((item, index) => {
                 return (
-                  <Row key={item.fid} style={{ width: '90%' }}>
+                  <Row key={item.fid} >
                     <Col xl={{ span: 12 }} lg={{ span: 12 }} md={{ span: 12 }} sm={24}>
                       <Card type="inner" style={{ width: '200%', marginBottom: 10, position: 'relative' }}>
                         {item.ftype == 1 ? null :
@@ -418,7 +410,7 @@ class Loaninfo extends React.Component {
                             {this.help.call(this, item.ftitle)}
                             {getFieldDecorator(`title${item.fid}`, {
                               rules: [],
-                              // initialValue: item.ftitle ? item.ftitle: '',
+                              initialValue: item.ftitle ? item.ftitle: '',
                             })(
                               <Input
                                 placeholder='请输入'
@@ -428,7 +420,6 @@ class Loaninfo extends React.Component {
                                   arr[index].ftitle = e.target.value;
                                   this.setState({
                                     dataList: arr
-                                  }, () => {
                                   })
                                 }}
                               />
@@ -446,32 +437,32 @@ class Loaninfo extends React.Component {
                         <Row>
                           <Form.Item label={'项目详情图片'} {...formItemLayout}>
                             {
-                              //     getFieldDecorator(`pictures${item.fid}`, {
-                              //     rules: [],
-                              //     // initialValue: item.fpictures ? JSON.parse(item.fpictures): []
-                              //   }
-                              // )
-                              // (
-                              // <UploadPicMultipleFile
-                              //   {...this.data}
-                              //   prefix={dataPath}
-                              //   onChange={(e)=> {
-                              //     let arr = this.state.dataList;
-                              //     let valArr = _.cloneDeep(e);
-                              //     for (let i = 0; i<valArr.length; i++) {
-                              //       if (valArr[i].status !== 'done') {
-                              //         valArr.splice(i, 1);
-                              //       }
-                              //     }
-                              //     arr[index].fpictures = JSON.stringify(valArr);
-                              //     this.setState({
-                              //       dataList: arr
-                              //     }, () => {
-                              //       console.log(this.state.dataList);
-                              //     })
-                              //   }}
-                              // >项目详情图片</UploadPicMultipleFile>
-                              // )
+                                  getFieldDecorator(`pictures${item.fid}`, {
+                                  rules: [],
+                                  initialValue: item.fpictures ? JSON.parse(item.fpictures): []
+                                }
+                              )
+                              (
+                              <UploadPicMultipleFile
+                                {...this.data}
+                                prefix={dataPath}
+                                onChange={(e)=> {
+                                  let arr = this.state.dataList;
+                                  let valArr = _.cloneDeep(e);
+                                  for (let i = 0; i<valArr.length; i++) {
+                                    if (valArr[i].status !== 'done') {
+                                      valArr.splice(i, 1);
+                                    }
+                                  }
+                                  arr[index].fpictures = JSON.stringify(valArr);
+                                  this.setState({
+                                    dataList: arr
+                                  }, () => {
+                                    console.log(this.state.dataList);
+                                  })
+                                }}
+                              >项目详情图片</UploadPicMultipleFile>
+                              )
                             }
                           </Form.Item>
                         </Row>
@@ -479,7 +470,7 @@ class Loaninfo extends React.Component {
                       {index === this.state.dataList.length - 1 ?
                         <Button type="dashed" onClick={this.add} style={{ width: '200%' }}>
                           <Icon type="plus" /> 增加项目详情模块
-                    </Button> : null
+                        </Button> : null
                       }
                     </Col>
                   </Row>
@@ -512,15 +503,13 @@ class Loaninfo extends React.Component {
                 </div>
               </Col>
             </Row>
-
           </Card>
-
         </div>
-        <Row>
-          <div className="loan-aoolays-btns" onClick={this.submit.bind(this)}>
-            <a  >保存</a>
-          </div>
-        </Row>
+        {this.props.hasUnfinishProject ? null: 
+        <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>
+          <Button style={{width: 140, marginRight: '50px'}} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
+          <Button style={{width: 140}} type={'primary'} onClick={this.commmitSubmit.bind(this)} loading={this.props.loading}>提交</Button>
+        </div>}
       </div>
     )
   }

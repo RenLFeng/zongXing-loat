@@ -1,7 +1,7 @@
 import React from 'react';
 import {Upload, Button, Icon, message} from 'antd';
 import {PIC_BUCKET as Bucket, REGION as Region } from '../../../../../../common/SystemParam';
-import { createKey } from '../../../../../../services/api';
+import { baseService } from '../../../../../../services/api';
 
 export default class UploadVideo extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ export default class UploadVideo extends React.Component {
   };
 
   getKey = (callback) => {
-    createKey()
+    baseService.createKey()
       .then((data)=>{
         console.log(data);
         if (data.code === 0) {
@@ -46,7 +46,7 @@ export default class UploadVideo extends React.Component {
         message.error('获取签名失败');
       })
   };
-
+  
   uploadRequest = (data) => {
     console.log(123);
     const file = data.file;

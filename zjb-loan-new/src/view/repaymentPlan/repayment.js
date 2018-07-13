@@ -11,7 +11,7 @@ export default class Repayment extends React.Component {
       super();
       this.state = {
         paymentArr:[],
-        recentRepay:[{"repayBillCount":"2","principal":500,"interest":33.34,"commission":0.33,"overdue":37,"overdueMoney":6.25,"payTime":null,"fsort":1,"borrowInterest":539.59,"ispay":false,"forPayTime":"2018-06-03T16:00:00.000+0000","canPay":false},{"repayBillCount":"2","principal":500,"interest":33.34,"commission":0.33,"overdue":7,"overdueMoney":1.75,"payTime":null,"fsort":2,"borrowInterest":535.09,"ispay":false,"forPayTime":"2018-07-03T16:00:00.000+0000","canPay":false},{"repayBillCount":"2","principal":500,"interest":33.34,"commission":0.33,"overdue":7,"overdueMoney":1.75,"payTime":null,"fsort":2,"borrowInterest":535.09,"ispay":false,"forPayTime":"2018-07-03T16:00:00.000+0000","canPay":false},{"repayBillCount":"2","principal":500,"interest":33.34,"commission":0.33,"overdue":7,"overdueMoney":1.75,"payTime":null,"fsort":2,"borrowInterest":535.09,"ispay":false,"forPayTime":"2018-07-03T16:00:00.000+0000","canPay":false}],
+        recentRepay:[],
         project:{},
         date:null,
         word:'',
@@ -29,19 +29,13 @@ export default class Repayment extends React.Component {
 
     getTime(){
         let myDate = new Date();//获取系统当前时间
-        myDate.getTime();
-        console.log('0000',moment(myDate.getTime()).format('YYYY/MM/DD HH:mm:ss'))
         this.setState({
             date:moment(myDate.getTime()).format('YYYY/MM/DD HH:mm')
         })
     }
 
     async getBorrowPlan (){
-        let param = {
-            // projectId:'f88ab7e51b8e4b33b4c594fae0127b91'
-            projectId:'47463ef4c6ae48389e538aae169f55e0'      
-        }
-        const response = await personal.borrowPlan(param);
+        const response = await personal.borrowPlan();
         if(response.code === 0){
            this.setState({
             paymentArr:response.data.bills,
@@ -166,8 +160,7 @@ export default class Repayment extends React.Component {
                         
                         {
                            this.state.recentRepay.length > 0 ? 
-                             <p style={{float:'right',color:'#ff3b35',marginTop:15,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{fontSize:16,verticalAlign: 'middle',fontWeight:'bold',marginRight:5}}></i>逾期处罚措施</p> :null}
-                       
+                             <p style={{float:'right',color:'#ff3b35',marginTop:15,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{fontSize:16,verticalAlign: 'middle',fontWeight:'bold',marginRight:5}}></i>逾期处罚措施</p> :null}  
                      </div>
 
                         
@@ -176,7 +169,7 @@ export default class Repayment extends React.Component {
                 
 
                 {
-                    this.state.project_ ? null :
+                    !this.state.project_ ? null :
 
                     <div className="fr uc-rbody S" style={{marginTop:10}}>
                     <div className="project">

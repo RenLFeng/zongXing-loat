@@ -5,9 +5,9 @@ import {message} from 'antd';
 export default {
   namespace: 'login',
   state: {
-    status: localStorage.getItem('accessToken')? true: false,
+    status: localStorage.getItem('accessTokenCompany')? true: false,
     submitting: false,
-    nickName: localStorage.getItem('accessToken')?JSON.parse(localStorage.getItem('accessToken')).nickName:"",
+    nickName: localStorage.getItem('accessTokenCompany')?JSON.parse(localStorage.getItem('accessTokenCompany')).nickName:"",
     baseData: { // 登录基础数据
       userSecurityCenter: {
         
@@ -36,7 +36,7 @@ export default {
         //登录成功做的操作
         if (response.code === 0) {
           const access = {webToken:response.data.webToken,nickName: response.data.companyName};
-          localStorage.setItem('accessToken', JSON.stringify(access));
+          localStorage.setItem('accessTokenCompany', JSON.stringify(access));
           yield put(routerRedux.push('/'));
           yield put({
             type: 'changeLoginStatus',
@@ -96,7 +96,7 @@ export default {
           nickName: ''
         },
       });
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem('accessTokenCompany');
       yield put(routerRedux.replace('/'));
     },
     *logoutData(_, { put }) {
@@ -107,7 +107,7 @@ export default {
           nickName: ''
         },
       });
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem('accessTokenCompany');
     },
     *changeNickName({payload}, { put }) {
       yield put({

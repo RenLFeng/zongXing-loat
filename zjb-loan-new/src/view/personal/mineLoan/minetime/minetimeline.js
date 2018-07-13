@@ -5,23 +5,26 @@ import './timeline.scss';
 import LoanTitle from '../mineLoanComm/loanTitle';
 import {IMG_BASE_URL} from '../../../../common/SystemParam';
 import UploadImg from '../../../../components/imgupload/ImgUpload';
+import DelModal from '../mineLoanComm/deleteModal/deleteModal';
 import {mineloan} from '../../../../services/api';
 import {connect} from 'dva';
 const { TextArea } = Input;
 
 const imgurl = 'https://zjb-test-1255741041.picgz.myqcloud.com/'
 @connect((state)=>({
-    projectId: state.mineloan.projectId,
-    projectName: state.mineloan.projectName,
+    
 }))
 class MineTimel extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            delId: '',
             timeDate: [],
             loading: false,
             loadingadd: false,
+            loadingdel: false,
             modal2Visible: false,
+            visible: false,
             fContent: '',
             fPicJson: '',
             fid: '',
@@ -73,6 +76,7 @@ class MineTimel extends React.Component{
         await this.setState({
             fContent: '',
             modal2Visible: false,
+            fPicJson: '',
             edit: false
         })
         this.refs.upload.handleCancel();
@@ -80,21 +84,31 @@ class MineTimel extends React.Component{
     //新增历程
     async saveCourse(){
         let data = {}
+        const { fContent, fPicJson } = this.state;
+        if(fContent.trim().length === 0){
+            message.info('请输入内容')
+            return
+        }
+        if(fPicJson === ''){
+            message.info('请上传图片')
+            return
+        }
+
         this.setState({
             loadingadd: true
         })
         if(this.state.edit){
             data = this.state.editDate;
             data.fProjectId = this.props.projectId;
-            data.fContent = this.state.fContent;
-            data.fPicJson = this.state.fPicJson;
+            data.fcontent = fContent;
+            data.fPicJson = fPicJson;
             data.fId = data.fid
             data.fTime = data.ftime
         }else{
             data = {
                 fProjectId: this.props.projectId,
-                fContent: this.state.fContent,
-                fPicJson: this.state.fPicJson,
+                fcontent: fContent,
+                fPicJson: fPicJson,
                 ftype: '1',
             }
         }
@@ -103,7 +117,8 @@ class MineTimel extends React.Component{
             this.cancelAdd();
             this.getTimeLine();
             this.setState({
-                loadingadd: false
+                loadingadd: false,
+                edit: false
             })
         }else{
             message.error(res.msg);
@@ -127,10 +142,43 @@ class MineTimel extends React.Component{
     }
     //删除历程
     delCourse(item){
-        console.log(item,'item')
+        this.setState({
+            delId: item.fid,
+            visible: true
+        })
     }
+    cnacelDel(){
+        this.setState({
+            delId: '',
+            visible: false
+        })
+    }
+    //确认删除
+    async delTimeLine(){
+        let data = {
+            fid: this.state.delId
+        }
+        this.setState({
+            loadingdel: true,
+            visible: true
+        })
+        let res = await mineloan.delTimeLine(data);
+        if(res.code === 0){
+            this.getTimeLine();
+            this.setState({
+                loadingdel: false,
+                fid: '',
+                visible: false
+            })
+        }else{
+            this.setState({
+                loadingdel: false,
+            })
+            message.error(res.msg);
+        }
+    }
+
     onChange(val){
-        console.info(val,'val')
         this.setState({
             fPicJson: val
         })
@@ -189,6 +237,10 @@ class MineTimel extends React.Component{
                         <UploadImg ref="upload" {...this.data} prefix={'personal/'} tipText="上传照片" onChange={this.onChange.bind(this)}/>
                     </Spin>
                 </Modal>
+                <DelModal ref="delmodal" visible={this.state.visible} content="确定要删除该历程吗？" 
+                          loading={this.state.loadingdel} comitDel={() => this.delTimeLine()} 
+                          cnacelDel={() => this.cnacelDel()} key="3"
+                          sure="确定" cancel="取消"></DelModal>
             </div>
         )
     }

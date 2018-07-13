@@ -28,6 +28,9 @@ export const CouponService = {
 
     getAccountCoupon:async(param) =>req.get('/account/mycoupon',param),
     
+    getCouponInfo:async(param)=> req.post('coupon/borrow/mycoupon/statistics',param)
+    
+    
 };
 
 // 账户服务
@@ -76,14 +79,33 @@ export const baseService={
 
     getProjectType: async () => req.get('/apply/getProjectCode'),
     
-// 获取当前项目的 委员会确认结果
+    // 获取当前项目的 委员会确认结果
     getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
       // 获取之前的 借款信息接口
       getLoanInfo: async () => req.get('/apply/getOne'),
-    
+
+    // 还款计划详情
+    getDetailPlane:async(param)=>req.get('/project/borrowPlanInfo?projectId='+param.projectId+"&forPayTime="+param.forPayTime),
+    // 手动还款接口
+    manualReimpayment:async(param)=>req.post('/repayment/manually',param),
+    // 获取还款计划
+    getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
+// 保存 借款信息接口
+    saveLoanInfo: async (param) => req.post('/apply/save', param),
+    // 提交借款信息接口
+    commitInfo: async (param) => req.post('/apply/submit', param),
+    // 项目可选城市获取
+    getProCityList: async () => req.get('/apply/getCity'),
+    getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),
+    // 获取上传视频的签名
+    createKey: async ()=>req.get('/getUploadSignature')
+
 }
 
   
+
+  
+
 
 //登录 dbb
 export const doLogin={
@@ -144,7 +166,8 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async (param) => req.get('/project/getBorrowPlan',param),
+
+
 }
     
 
@@ -162,10 +185,13 @@ export const mineloan = {
     getTimeLine: async (param) => req.get('/projectJourney/getOne', param), 
     //添加项目历程
     addTimeLine: async (param) => req.post('/projectJourney/save', param), 
-    //修改项目历程
-    editTimeLine: async (param) => req.post('/projectNotice/save', param), 
+    //删除项目历程
+    delTimeLine: async (param) => req.get('/projectJourney/delete', param),  
     //获取项目等级 和利率/project/getRateAndLevel 
-    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param), 
+
+    getProjectdl: async (param) => req.get('/project/getRateAndLevel', param),
+    //删除项目
+    delProject: async (param) => req.get('/project/delete', param), 
 
     //投前咨询
     getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),
@@ -194,6 +220,7 @@ export const mineloan = {
     saveCou: (param) => req.post('/coupon/save', param),
     //获取优惠券
     getSendCou: (param) => req.get('/coupon/self/coupon', param),
+    
 
 }
 //实名认证 - momei
