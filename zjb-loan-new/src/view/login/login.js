@@ -2,7 +2,7 @@ import React from 'react';
 import './login.scss';
 import { VER_PHONE, AUTH_CODE_TIME } from '../../common/SystemParam';
 import { connect } from 'dva';
-import {Spin} from 'antd';
+import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from 'antd';
 import { phoneExist, regUser,regiserAccount } from '../../services/api';
 
 @connect((state) => ({
@@ -71,7 +71,6 @@ export default class Login extends React.Component {
   }
 // 判断  手机号是否已被注册过
   async checkPhone() {
-    console.log(111)
     const {loginPhone} = this.state;
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号|用户名不能为空'})
@@ -89,7 +88,6 @@ export default class Login extends React.Component {
     	mobile:loginPhone
     }
     const response = await regiserAccount.getPhoneExist(param);
-    console.log('登陆结果为',response)
     this.setState({checkPhoneLoading: false});
     if (response.code === 0) {
       this.setState({loginError: false});
@@ -108,14 +106,50 @@ export default class Login extends React.Component {
   render() {
     const { showReg, showAuthCode, countDown, regPhone, regPwd, regAuthCode, loginPhone, loginPwd, readStatus } = this.state;
     return (
-      <div className="logindiv1 shadow">
-        { 
-        <div className="form logf" onChange={this.onChange}>
-          <div className="hd center">
-            <h1 className="hover"  style={{fontSize: 28,color: '#666666'}}>欢迎登录</h1>
+      <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
+      <Modal
+          visible={this.state.authPhone}
+          title="解除账号锁定"
+          okText="提交"
+          cancelText="取消"
+          confirmLoading={this.state.relieveLoading}
+          onOk={() => this.relieveAccountLock()}
+          onCancel={() => {
+            if (this.state.relieveLoading) {
+              message.warning('请求处理中请稍后');
+              return;
+            }
+            this.setState({authPhone: false});
+          }}
+        >
+          <Row>
+            <Col span={3}>手机号</Col>
+            <Col span={15}>
+              <Input value={this.state.phoneNumber} disabled/>
+            </Col>
+            <Col span={6} style={{textAlign: 'right'}}>
+              <Button type="primary" loading={this.state.sendErrorCodeLoading} onClick={()=>this.sendErrorCodeAuth()} disabled={this.state.errorTime !== 60}>
+                {this.state.errorTime === 60 ? '发送验证码' : `${this.state.errorTime}s后重试`}
+              </Button>
+            </Col>
+          </Row>
+          <Row style={{marginTop: 20}}>
+            <Col span={3}>
+              验证码
+            </Col>
+            <Col span={21}>
+            <Input type="password" value={this.state.errorAuthCode} placeholder="请输入" onChange={(e)=>this.setState({errorAuthCode: e.target.value})} maxLength={10}/>
+            </Col>
+          </Row>
+        </Modal>
 
-          </div>
-           <Spin tip="登录中..." spinning={this.props.submitting}>
+        <div className="back">
+                <div className="form logf" onChange={this.onChange}>
+                  <div className="hd center">
+                    <a className="hover">欢迎登录</a>
+                  </div>
+                  <Spin tip="登录中..." spinning={this.props.submitting} style={{width:400}}>
+                    <div className="spinContent" style={{width:400}}>
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
@@ -150,26 +184,21 @@ export default class Login extends React.Component {
                           忘记密码
                         </a>
                     </div>
-                    <div style={{width:329,marginTop:60}}>
+                    <div style={{marginTop:96,width:329}}>
                       <a className="btn" onClick={this.submitLogin}>登录</a>
                     </div>
-                    <p className="safe-info" style={{marginRight:46}}>
+                    <p className="safe-info" style={{marginRight:90}}>
                       <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>
                       您的信息已使用SSL加密技术，数据传输安全
-                    </p>
+                    </p> 
+                    </div>
+                   
                   </Spin>
-          <div>
-        
-            <p className="other">
-        <span>
-            {/*<i className="fl c6">其他登录方式</i>*/}
-            {/*<a className="qq"/>*/}
-            {/*<a className="weixin"/>*/}
-            {/*<a className="sina"/>*/}
-        </span>
-            </p>
-          </div>
-        </div> }
+                </div> 
+        </div>
+        <div className="back_">
+          <img src={require('../../assets/img/login_03.png')} />
+        </div>
       </div>
     );
   }
