@@ -39,6 +39,11 @@ export default {
     *getCompanyNum({payload}){
 
     },
+    *clearData({payload},{put}) {
+      yield put({
+        type: 'clearDataSave',
+      });
+    },
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
       const response = yield call(personal.getPersonAccountNew, payload); 
@@ -127,6 +132,29 @@ export default {
     }
   },
   reducers: {
+    clearDataSave(state) {
+      return {
+        ...state,
+        message: '',
+        openStatus: localStorage.getItem(webToken)?localStorage.getItem(webToken):0,
+        personal: {
+          accountDynamicVos: [],
+          plan: [],
+          totalAssets: {}
+        },
+        companyListStatus: false,
+        companyList: [],
+        company: [],
+        personalStatus: false,
+        companyStatus: false,
+        num: 0,
+        company_page : {
+          accountDynamicVos: [],
+          plan: {},
+          totalAssets: {}
+        }
+      }
+    },
     savePersonal(state, {payload}) {
       saveOpenStatus(payload.openStatus);
       return {

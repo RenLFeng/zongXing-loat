@@ -2,11 +2,11 @@ import React from 'react';
 import { Icon, Input, Button, Steps, Modal, message } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
-import { AUTH_ADDRESS } from '../../../../common/SystemParam';
+import { AUTH_ADDRESS, } from '../../../../common/SystemParam';
 import Path from '../../../../common/PagePath'
 import LeftMenu from '../../../../components/leftmenu/leftMenu';
 import './realName.scss';
-import {securityCentreService} from '../../../../services/api';
+import {securityCentreService, accountService} from '../../../../services/api';
 import ModalData from './authorization/authorization';
 
 
@@ -28,6 +28,8 @@ const formItemLayout = {
   safeDataLoading: state.safeCenter.safeDataLoading,
   accountId: state.login.baseData.accountId,
   baseData: state.login.baseData,
+  openStatus: state.personal.openStatus,
+  openFailMsg: state.personal.openFailMsg,
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -58,8 +60,53 @@ export default class RealName extends React.Component {
     this.getBankCardListAjax(); 
     //获取已经授权的授权代码
     this.getAuthorizationState();
-  
-    
+    // 获取开户状态信息
+    this.getOpenStatus();
+  }
+
+  async getOpenStatus() {
+     // 借款用户 账户总览信息 数据获取 存入redux
+    const response = await accountService.getPersonalData();
+    if (response.code === 0) {
+      this.props.dispatch({
+        type: 'personal/getPersonalAccount',
+        payload: response.data
+      })
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 1, // 开户成功 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户未开户') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: -1, // 未开户 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/openAccount');
+    } else if (response.code === -1 && response.msg === '该账户正在开户中') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 2, // 开户中 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户开户失败') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 0, // 开户失败 
+          openFailMsg: response.data
+        }
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
 
   /** 初始化安全中心信息 */
@@ -203,11 +250,26 @@ export default class RealName extends React.Component {
     }
   }
 
+  // 查询认证状态
+  async checkAuthStatus() {
+    if (this.state.loadingAuth) {
+      return;
+    }
+    this.setState({loadingAuth: true});
+    const res = await accountService.getRealAuthByMoneyMore();
+    this.setState({loadingAuth: false});
+    if (res.code === 0) {
+      this.getOpenStatus();
+    } else {
+      message.error(res.msg);
+    }
+  }
+
   render() {
     // 初始化数据
     const safeData = this.props.safeData;
     const { status, distribution, url } = this.state;
-
+    console.log('safeData', safeData)
     const dataArr = [{title:'运营商数据',key:'yysUrl'},{title:'社保数据',key:'shebaoUrl'},{title:'公积金数据',key:'gjjUrl'},{title:'学信数据',key:'chsiUrl'},{title:'京东数据',key:'jdUrl'},{title:'苏宁数据',key:'snUrl'}]
     return (
       <div>
@@ -221,34 +283,21 @@ export default class RealName extends React.Component {
                   <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
-                  {/* <div style={{ marginBottom: 23 }}>
-                    <div className="first">
-                      <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
-                      <span className="left">身份认证</span>
-                      <span className="middle">用于提升账户安全性，认证后不能修改</span>
-                      {!safeData.userSecurityCenter ? <a className="right" onClick={() => this.props.history.push(AUTHENTICATION)}>立即认证</a> : null}
-                    </div>
-                    {safeData.userSecurityCenter ?
-                      <div className="personal" style={{ background: '#f9f9f9' }}>
-                        <span className="name">{safeData.fRealName}&nbsp;|</span>
-                        <span className="id">{safeData.fIdcardNo}</span>
-                        <span className="result" >认证通过</span>
-                      </div> : null}
-                  </div> */}
                   <div style={{ marginBottom: 23 }}>
                     <div className="first">
                       <i className="zjb zjb-bixutian" style={{ color: 'red', fontSize: '22px', lineHeight: '22px', position: 'absolute', left: '24px', top: '37px' }}></i>
                       <span className="left"><span style={{ color: '#FF9900' }}>*&nbsp;</span>企业开通借款账户</span>
                       <span className="middle">开通资金托管账户，将投资人、借款人、平台三者的资金完全隔离</span>
-                      {safeData.userSecurityCenter.fThirdAccount ? null : <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>}
+                      {this.props.openStatus == 0 || this.props.openStatus == -1 ?  <a className="right" onClick={() => this.props.history.push(Path.OPEN_ACCOUNT)}>开通账户</a>:null}
+                      {this.props.openStatus == 1 && !safeData.userSecurityCenter.fidcardBind ?  <a className="right" onClick={() => this.checkAuthStatus()}>查询认证状态</a>:null}
                     </div>
                     <div style={{ marginTop: 9, marginBottom: 5 }}>
                       <img alt="" src={require('../../../../assets/img/ucenter/u4288.png')} />
                     </div>
                     {
-                      safeData.userSecurityCenter.fThirdAccount ?
+                      safeData.userSecurityCenter.faccountBind && safeData.userSecurityCenter.fidcardBind ?
                         <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
-                          <span style={{ color: 'black' }} >{safeData.fRealName}</span>
+                          <span style={{ color: 'black' }} >{safeData.realName}</span>
                           <span className="line" >|</span>
                           <span style={{ color: 'black' }} >{safeData.fIdcardNo}</span>
                           <span className="line" >|</span>
@@ -260,6 +309,17 @@ export default class RealName extends React.Component {
                           </div>
                         </div>
                         : null
+                    }
+                    { 
+                       <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
+                        {this.props.openStatus == 2 ?
+                          <span>开户中，请稍后刷新页面查看结果</span> : null }
+                        {this.props.openStatus == 0 ?
+                          <span>开户失败，{this.props.openFailMsg}，请重新开通</span> : null }
+                        {this.props.openStatus == 1 && !safeData.userSecurityCenter.fidcardBind ?
+                          <span>开户成功，请前往<a style={{color: 'blue'}} onClick={()=>window.location.href=AUTH_ADDRESS}>实名认证</a>或点击查询认证状态按钮查询</span> : null }
+
+                       </div>
                     }
                     {
                       this.state.showMMMChangepayPassword === true ?
@@ -275,6 +335,7 @@ export default class RealName extends React.Component {
 
                 </div>
               </div> : null}
+        { safeData.userSecurityCenter.faccountBind && safeData.userSecurityCenter.fidcardBind ?
           <div className="fr uc-rbody" style={{marginTop:'30px'}}>
             <div className="rn-content">
               <div className="first">
@@ -342,8 +403,9 @@ export default class RealName extends React.Component {
                   </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
               </div>
             </div>
-          </div>
+          </div> : null}
     
+        { safeData.userSecurityCenter.faccountBind && safeData.userSecurityCenter.fidcardBind ?
           <div className="fr uc-rbody" style={{ marginTop: '30px'}}>
 
             <div className="rn-content">
@@ -387,8 +449,8 @@ export default class RealName extends React.Component {
               </div>
             </div>
 
-          </div>
-
+          </div>:null
+        }
           <div className="fr uc-rbody" style={{ marginTop: '30px', padding: 0 }}>
             {/* <div className="baseInfo">
               <i className="zjb zjb-moban"></i>

@@ -5,10 +5,11 @@ import LoanUserInfo from './appaly/loanUserInfo'
 import LoanCompanyInfo from './appaly/loanCompanyInfo'
 import LoanProInfo from './appaly/loanProInfo'
 import './appalyloan.scss'
-import { baseService } from '../../../../services/api';
+import { baseService, accountService } from '../../../../services/api';
 import {message, Alert, Modal } from 'antd';
 import moment from 'moment';
 
+@connect(()=>({}))
 export default class Appalyloan extends React.Component {
   constructor(props) {
     super(props);
@@ -67,6 +68,55 @@ export default class Appalyloan extends React.Component {
       cityList: []
     };
   }
+
+  componentDidMount() {
+    this.getOpenStatus()
+  }
+
+  async getOpenStatus() {
+    // 借款用户 账户总览信息 数据获取 存入redux
+   const response = await accountService.getPersonalData();
+   if (response.code === 0) {
+     this.props.dispatch({
+       type: 'personal/getPersonalAccount',
+       payload: response.data
+     })
+     this.props.dispatch({
+       type: 'personal/savePersonalStatus',
+       payload: {
+         openStatus: 1, // 开户成功 
+         openFailMsg: ''
+       }
+     })
+   } else if (response.code === -1 && response.msg === '该账户未开户') {
+     this.props.dispatch({
+       type: 'personal/savePersonalStatus',
+       payload: {
+         openStatus: -1, // 未开户 
+         openFailMsg: ''
+       }
+     })
+     this.props.history.push('/index/uCenter/openAccount');
+   } else if (response.code === -1 && response.msg === '该账户正在开户中') {
+     this.props.dispatch({
+       type: 'personal/savePersonalStatus',
+       payload: {
+         openStatus: 2, // 开户中 
+         openFailMsg: ''
+       }
+     })
+   } else if (response.code === -1 && response.msg === '该账户开户失败') {
+     this.props.dispatch({
+       type: 'personal/savePersonalStatus',
+       payload: {
+         openStatus: 0, // 开户失败 
+         openFailMsg: response.data
+       }
+     })
+   } else {
+     response.msg && message.error(response.msg);
+   }
+ }
   
   handlerClcikLable(item) {
     let val = null; // 从子组件拿到的数据

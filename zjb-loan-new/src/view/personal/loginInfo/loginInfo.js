@@ -178,10 +178,10 @@ class LoginInfo extends React.Component {
                                          } 
                                     </div>
                                 </div>
-                                {baseData.userSecurityCenter.fThirdAccount ?
+                                {baseData.userSecurityCenter.fidcardBind ?
                                     <Button className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
                                 }
-                                {baseData.userSecurityCenter.fThirdAccount ?
+                                {baseData.userSecurityCenter.fidcardBind ?
 
                                     <Button type="primary" className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null
                                 }
