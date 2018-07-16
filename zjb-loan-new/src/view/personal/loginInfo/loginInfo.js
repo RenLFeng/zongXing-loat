@@ -109,7 +109,7 @@ class LoginInfo extends React.Component {
                                     <p className="t1">
                                         {/* <span>{this.props.nickName}</span> */}
                                         {/* <span className="split">|</span> */}
-                                        {this.props.baseData.mobile}
+                                        {this.props.baseData.nickName}
                                         <a onClick={() => this.props.dispatch({ type: 'login/logout' })}>退出登录</a>
                                     </p>
                                     <p className="uinfo" style={{ position: 'relative' }}>
@@ -119,9 +119,9 @@ class LoginInfo extends React.Component {
 
                                         <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fmobileBind ? 'active' : ''}`}></i>
                                         {
-                                            baseData.userSecurityCenter.fCertification ? 
-                                            <i title="身份证认证" className="zjb zjb-moban active"></i>:
-                                            <i title="身份证认证" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.OPEN_ACCOUNT)}}></i>
+                                            baseData.userSecurityCenter.faccountBind ? 
+                                            <i title="企业开户" className="zjb zjb-moban active"></i>:
+                                            <i title="企业开户" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.OPEN_ACCOUNT)}}></i>
                                         }
                                         {
                                             baseData.userSecurityCenter.fBankCardBinding ?  
@@ -133,12 +133,12 @@ class LoginInfo extends React.Component {
                                 </div>
                                 <div className="fr">
                                     <div className="account-content">
-                                        <p>待领取代金券</p>
+                                        <p>未使用优惠券</p>
                                         <p className="account-money">{baseData.countCoupon || '0'}张</p>
                                     </div >
                                     <i></i>
                                     <div className="account-content">
-                                        <p>券额</p>
+                                        <p>待还款总额</p>
                                         <p className="account-money">￥{`${baseData.sumCoupon || 0}`.fm()}</p>
                                     </div>
                                     <i></i>

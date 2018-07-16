@@ -6,8 +6,12 @@ import { securityCentreService } from '../../../../../services/api';
 import Path from '../../../../../common/PagePath';
 import {TURN_BACK ,LICENSE,VER_PHONE, NOTIFY_URL} from '../../../../../common/SystemParam'
 import { POINT_CONVERSION_COMPRESSED } from 'constants';
+import { connect } from 'dva';
 
-export default class Authentication extends React.Component {
+@connect((state)=>({
+  baseData: state.login.baseData
+}))
+export default class OpenAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,7 +81,7 @@ export default class Authentication extends React.Component {
     const param = {
       realName: this.state.realName.trim(),
       identificationNo: this.state.idcard.trim(),
-      mobile: this.state.phone.trim(),
+      mobile: this.props.baseData.mobile?this.props.baseData.mobile.trim():'',
       accountType: 1,
       notifyPageUrl: `${NOTIFY_URL}/index/uCenter/personAccount`,
     };
@@ -132,12 +136,12 @@ export default class Authentication extends React.Component {
     }
   };
 
-
-
   render() {
     const {submitParam,msgIdcard,msgRealName,msgPhone } = this.state;
+    console.log(this.props.baseData);
+    const mobile = this.props.baseData.mobile || '';
     return (
-      <div className="pages">
+      <div className="pages" style={{width: '1248px'}}>
         <div className="real_title_">
           <span className="safeCenter_" onClick={()=>this.props.history.push('/index/uCenter/realName')}>企业开通借款账户</span>
         </div>
@@ -171,7 +175,7 @@ export default class Authentication extends React.Component {
                   </div>
 
                   <div className="inp">
-                    <Input placeholder="手机号（默认）" onChange={this.updatePhone} style={{marginTop:3}}/>
+                    <Input placeholder="手机号（默认）" value={mobile} readOnly onChange={()=>{}} style={{marginTop:3}}/>
                     <img alt="身份证id" src={require('../../../../../assets/img/ph.png')}  className="img3"/>
                     <span className="span_2">|</span>
                     {
@@ -181,7 +185,7 @@ export default class Authentication extends React.Component {
                     }
                   </div>
       
-                  <span onClick={this.handleSubmit} type="primary" loading={this.state.loading} className="Button" style={{top:247,left:449}}>提交开户</span>
+                  <span onClick={this.handleSubmit} type="primary"  className="Button" style={{top:247,left:474}}>提交开户</span>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?

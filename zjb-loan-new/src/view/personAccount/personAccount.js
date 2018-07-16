@@ -7,7 +7,7 @@ import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 
 import { accountService,baseService } from '../../services/api';
-import { Modal, message } from 'antd';
+import { Modal, message, Tooltip } from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';
 import { formatFlagToText } from '../../common/SystemParam';
@@ -20,7 +20,6 @@ export default class PersonAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       loading:false,
       earlyMoney: {}, //提前还款金额
 			paymentParam: {}, //还款调用参数
@@ -56,7 +55,6 @@ export default class PersonAccount extends React.Component {
               }
             }
           },
-
           formatter: function (name) {
             if (name === '可用余额') {
               return `${name}  {c|0.00}`
@@ -128,12 +126,10 @@ export default class PersonAccount extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.personal !== nextProps.personal) {
-
       const { companyTotalAssetsVo, myBorrowVo } = nextProps.personal;
-
+      console.log(nextProps.personal)
       this.setState({
-
-        activeFlag: myBorrowVo.fflag || 0,
+        activeFlag: myBorrowVo?myBorrowVo.fflag: 0,
         pieOption: {
           tooltip: {
             trigger: 'item',
@@ -172,13 +168,10 @@ export default class PersonAccount extends React.Component {
               if (name === '可用余额') {
                 return `${name}  {c|${`${companyTotalAssetsVo.availableBalance || 0}`.fm()}}`
               } else if (name === '冻结金额') {
-
                 return `${name}  {b|${`${companyTotalAssetsVo.freezingAmount || 0}`.fm()}}`
               } else if (name === '待还本金') {
-
                 return `${name}  {b|${`${companyTotalAssetsVo.forReturnPrincipal || 0}`.fm()}}`
               } else {
-
                 return `${name}  {b|${`${companyTotalAssetsVo.forReturnInterest || 0}`.fm()}}`
               }
             },
@@ -246,28 +239,28 @@ export default class PersonAccount extends React.Component {
     const response = await accountService.getPersonalData();
 
     if (response.code === 0) {
-      console.log(response, "-------------------------")
-      // 存入redux
       this.props.dispatch({
         type: 'personal/getPersonalAccount',
         payload: response.data
       })
+    } else if (response.code === -1 && response.msg === '该账户未开户') {
+      this.props.history.push('/index/uCenter/openAccount');
     } else {
       response.msg && message.error(response.msg);
     }
   }
   //格式化时间
   format(val){
-  if(val==null){
-    return
-  }else{
-    let date=new Date(val)
-    let m=date.getMonth()+1;
-    if(m<10){
-      m='0'+m
+    if(val==null){
+      return
+    }else{
+      let date=new Date(val)
+      let m=date.getMonth()+1;
+      if(m<10){
+        m='0'+m
+      }
+      return date.getFullYear()+"/"+m+"/"+ date.getDate();
     }
-    return date.getFullYear()+"/"+m+"/"+ date.getDate();
-  }
   }
   formatNewDate(){
     let date=new Date()
@@ -449,13 +442,15 @@ async getPlanData() {
               <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
               <i>累计借款金额</i>
               <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
-              <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push(Path.APPALY_LOAN)}}>
-                  <span></span> 申请借款
-              </div>
+              <Tooltip title="">
+                <div className='to-loan' style={{cursor: 'pointer'}} onClick={()=>{this.props.history.push(Path.APPALY_LOAN)}}>
+                    <span></span> 申请借款
+                </div>
+              </Tooltip>
 
           </div>
         </div>
-
+        {recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
         <div className="per_account">
           <div className="ptit">
 
@@ -499,7 +494,7 @@ async getPlanData() {
             }
 
           </div>
-        </div>
+        </div> : null}
 
         {myBorrowVo ?
           <div className="per_account">
