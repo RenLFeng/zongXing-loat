@@ -133,12 +133,12 @@ class LoginInfo extends React.Component {
                                 </div>
                                 <div className="fr">
                                     <div className="account-content">
-                                        <p>待领取代金券</p>
+                                        <p>未使用代金券</p>
                                         <p className="account-money">{baseData.countCoupon || '0'}张</p>
                                     </div >
                                     <i></i>
                                     <div className="account-content">
-                                        <p>券额</p>
+                                        <p>待还款总额</p>
                                         <p className="account-money">￥{`${baseData.sumCoupon || 0}`.fm()}</p>
                                     </div>
                                     <i></i>

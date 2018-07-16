@@ -1,16 +1,15 @@
 .my-coupon{
   .send-coupon{
-    width:80%;
+    width:90%;
     height:auto;
     background: #f0f0f0;
     position: absolute;
-    top: 50%;
+    top: 54%;
     margin-top: -400px;
-    left:50%;
+    left:45%;
     margin-left: -400px;
     z-index: 99;
     padding-top: 0;
-    padding-bottom: 80px;
     box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.6);
     .top-bg{
       height: 66px;
@@ -88,9 +87,12 @@
         }
         .ant-form-item-label{
           width:90px;
+          text-align: left;
+          margin-left: 15px;
         }
         .ant-form-item-control-wrapper{
           display: inline-block;
+          margin-left: 0px !important;
           .ant-form-item-children{
             .ant-input-number{
               width: 70px;
@@ -127,6 +129,11 @@
       .ant-checkbox-group-item{
         display: block;
       }
+      .ant-radio-group{
+        .ant-radio-wrapper{
+          width:350px;
+        }
+      }
     }
     .btns{
       position: absolute;
@@ -150,3 +157,5 @@
     }
   }
 }
+
+
