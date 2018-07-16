@@ -97,6 +97,18 @@ export default {
         },
       });
       localStorage.removeItem('accessTokenCompany');
+      yield put({
+        type: 'account/clearData',
+      });
+      yield put({
+        type: 'mineloan/clearData',
+      });
+      yield put({
+        type: 'personal/clearData',
+      });
+      yield put({
+        type: 'safeCenter/clearData',
+      });
       yield put(routerRedux.replace('/'));
     },
     *logoutData(_, { put }) {

@@ -11,7 +11,7 @@ let TURN_BACK = 'http://testmanage.5izjb.com'; // 从大众网页跳到企业后
 let LIMIT_MOENY = true;  // 金额限制 true进行限制 false不进行限制
 let AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/' // 乾多多地址
 let SOCKET_URL = 'http://192.168.1.36:8899';
-let NOTIFY_URL = `${window.location.host}/#`;
+let NOTIFY_URL = `http://${window.location.host}/#`;
 /*测试楼下配置*/
 if (build === 'production') {
   // 远端
@@ -50,7 +50,7 @@ if (build === 'production') {
    LIMIT_MOENY = false;
    AUTH_ADDRESS = 'http://test.moneymoremore.com:88/main/';
    SOCKET_URL = 'http://192.168.1.173:8001';
-   NOTIFY_URL = `${window.location.host}/zjbmanage/#`;
+   NOTIFY_URL = `http://${window.location.host}/zjbmanage/#`;
 }
 
 // 导出环境变量配置

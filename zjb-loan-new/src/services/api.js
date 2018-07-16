@@ -43,6 +43,8 @@ export const accountService={
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
+    // 获取实名认证状态接口
+    getRealAuthByMoneyMore: async ()=>req.get('/account/mmm/state'),
     /**
      * 投资记录
      * pageParam 

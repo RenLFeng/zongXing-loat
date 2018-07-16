@@ -51,13 +51,32 @@
       margin-left: 22px;
       margin-right: 95px;
     }
-    &>.to-loan{
+    &>.to-loan {
       margin-top: -5px;
       float: right;
       width: 152px;
       height: 39px;
       background-position: 0px 122px;
       background-image: url('./img/img.png');
+      text-align: center;
+      color: #fff;
+      font-size: 14px; 
+      padding-top: 8px;
+      &>span{ 
+        margin-bottom: -2px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-position: 0px 0px;
+        background-image: url('./img/img.png');
+      }
+    }
+    &>.to-loan-un {
+      margin-top: -5px;
+      float: right;
+      width: 152px;
+      height: 39px;
+      background-color: #A0B3C4;
       text-align: center;
       color: #fff;
       font-size: 14px; 

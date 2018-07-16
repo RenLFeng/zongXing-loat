@@ -227,9 +227,9 @@ class NoLoan extends React.Component{
                     return <div className="action">
                             { record.fflag == 0 ?
                                 <div>
-                                    <a className="ac-commit" onClick={() => this.submitLoan(text,record,index)}>提交</a>
+                                    <a className="ac-commit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>提交</a>
                                     <span>|</span>
-                                    <a className="ac-edit" onClick={() => this.editLoan(text,record,index)}>编辑</a>
+                                    <a className="ac-edit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>编辑</a>
                                     <span>|</span>
                                     <a className="ac-del" onClick={() => this.deleteLoan(text,record,index)}>删除</a>
                                 </div>:
