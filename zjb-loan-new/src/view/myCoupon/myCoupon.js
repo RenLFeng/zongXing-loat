@@ -4,11 +4,12 @@ import LeftMenu from '../../components/leftmenu/leftMenu';
 import SeeCoupon from './seeCoupon/seeCoupon';
 import AlreadyCoupon from './alreadyCoupon/alreadyCoupon';
 import UsedCoupon from './usedCoupon/usedCoupon';
-import SendCoupon from './sendCoupon/sendCoupon.js';
+
+import SendCoupons from './sendCoupon/sendCoupon';
 import BarE from './useCoupons';
 import PieE from './CouponIssuance';
 import './myCoupon.scss';
-import { Table,Pagination } from 'antd';
+import { Table,Pagination ,Tooltip } from 'antd';
 import {CouponService} from '../../services/api';
 import moment from 'moment';
 
@@ -22,6 +23,7 @@ export default class MyCoupon extends React.Component {
       showSeeCoupon:false,
       showAlreadyCoupon:false,
       showFailedCoupon:false,
+      SendCouponShow:false,
       pageCurrent:1,
       pageSize:3,
       dataSource:[],    //未使用的优惠券数据
@@ -33,21 +35,13 @@ export default class MyCoupon extends React.Component {
       chart:'bar',
       useStatistics:null,   //使用统计
       statistics:{},       //发放统计
-      couponInfo:{}    //优惠券数据
+      couponInfo:{},     //优惠券数据
+      project:{},     //项目信息
     }
     this.close = this.close.bind(this)
+    this.close_ = this.close_.bind(this)
   }
   componentDidMount() {
-  //  $(".see").on("click",function(){
-  //    $(".see-box").removeClass("none");
-  //  })
-    $(".send").on("click",function(){
-      $(".send-coupon").removeClass("none");
-    })
-    $(".close").on("click",function(){
-      $(".see-box,.send-coupon").addClass("none");
-    })
-
     this.getCoupon();
   }
 
@@ -57,7 +51,7 @@ export default class MyCoupon extends React.Component {
       pageSize:this.state.pageSize
     }
     const response = await CouponService.getCouponInfo(param);
-
+    console.log('12121212ssssssss',response)
     if(response.code === 0){
       this.setState({
         dataSource:response.data.tableStatistical.unUsed.infoList,
@@ -68,8 +62,8 @@ export default class MyCoupon extends React.Component {
         dataSourceNums:response.data.tableStatistical.invalid.totalNumber,
         useStatistics:response.data.companyCouponChartsVo.useStatistical,
         statistics:response.data.companyCouponChartsVo.grantStatistical,
+        project:response.data.projectInfo
       })
-
     }
   }
 
@@ -164,6 +158,7 @@ onShowSizeChange = (current, pageSize) => {
      this.getCouponDetail(param)
   }
 
+  //查看优惠券关闭
   close(type){
     if(type === 'unUse'){
       this.setState({
@@ -180,9 +175,26 @@ onShowSizeChange = (current, pageSize) => {
         showFailedCoupon:false,
        })
     }
-    // this.setState({
-    //   showSeeCoupon:false,
-    //  })
+  }
+
+  //发放优惠券关闭
+  close_(){
+    this.setState({
+      SendCouponShow:false
+    })
+  }
+
+  send(){
+    if(!this.state.project.fid){
+      this.setState({
+        SendCouponShow:true,
+        background:true
+      })
+    } else {
+      this.setState({
+        background:false
+      })
+    }
   }
 
 render(){
@@ -240,13 +252,13 @@ render(){
                 case 1:
                     return <span>待领取</span>
                 case 2:
-                    return <span>待使用</span>
+                    return <span style={{color:'#ed7d31'}}>·未使用</span>
                 case 3:
-                    return <span>兑换券(待使用)</span>
+                    return <span>兑换券(未使用)</span>
                 case 4:
-                    return <span>已过期</span>
+                    return <span style={{color:'#FD0018'}}>·已过期</span>
                 case 5:
-                    return <span>流标</span>
+                    return <span style={{color:'#FD0018'}}>·流标</span>
                 case 6:
                     return <span>已使用</span>
             }
@@ -309,13 +321,13 @@ render(){
             case 1:
                 return <span>待领取</span>
             case 2:
-                return <span>待使用</span>
+                return <span style={{color:'#ed7d31'}}>·未使用</span>
             case 3:
-                return <span>兑换券(待使用)</span>
+                return <span>兑换券(未使用)</span>
             case 4:
-                return <span>已过期</span>
+                return <span style={{color:'#FD0018'}}>·已过期</span>
             case 5:
-                return <span>流标</span>
+                return <span style={{color:'#FD0018'}}>·流标</span>
             case 6:
                 return <span>已使用</span>
         }
@@ -367,7 +379,7 @@ render(){
       align:'center',
     }, {
       title: '状态',
-      dataIndex: ' couponState',
+      dataIndex: 'couponState',
       key: 'couponState',
       align:'center',
       render:(val) => {
@@ -377,13 +389,13 @@ render(){
           case 1:
               return <span>待领取</span>
           case 2:
-              return <span>待使用</span>
+              return <span style={{color:'#ed7d31'}}>·未使用</span>
           case 3:
-              return <span>兑换券(待使用)</span>
+              return <span>兑换券(未使用)</span>
           case 4:
-              return <span>已过期</span>
+              return <span style={{color:'#FD0018'}}>·已过期</span>
           case 5:
-              return <span>流标</span>
+              return <span style={{color:'#FD0018'}}>·流标</span>
           case 6:
               return <span>已使用</span>
       }
@@ -406,7 +418,7 @@ render(){
     filterReset: '重置',
     emptyText: '暂无数据',
   }
-
+  console.log('this.propsthis.props',this.state.project)
         return(
          <div>
               <LeftMenu param={this.props} />
@@ -420,9 +432,10 @@ render(){
               {
                 this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
               }
-              
-               
-                <SendCoupon />
+              {
+                this.state.SendCouponShow ? <SendCoupons close={this.close_} project={this.state.project}/> : null
+              }
+                
                 
                   <div className="graph-box">
                   <div className="tit clearfix">
@@ -430,7 +443,11 @@ render(){
                       <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    <p className="send fr">发优惠券</p>
+                    {
+                      !this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
+                      <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
+                    }
+                   
                   </div>
                   {
                     this.state.chart === 'bar'  ? 
