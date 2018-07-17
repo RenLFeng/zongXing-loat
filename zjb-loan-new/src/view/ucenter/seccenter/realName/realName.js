@@ -54,8 +54,6 @@ export default class RealName extends React.Component {
   componentDidMount() {
     //初始化安全中心信息
     this.initFetchSafeData();
-    // 第三方开户成功再去获取用户银行卡信息
-    console.log("this.props.safeData.userSecurityCenter.fThirdAccount",this.props.safeData.userSecurityCenter.fThirdAccount);
     // 获取用户绑定银行卡
     this.getBankCardListAjax(); 
     //获取已经授权的授权代码
@@ -111,7 +109,6 @@ export default class RealName extends React.Component {
 
   /** 初始化安全中心信息 */
   initFetchSafeData() {
-    console.log("getInitData running ...")
     this.props.dispatch({
       type: 'safeCenter/getSafe'
     });
@@ -259,7 +256,12 @@ export default class RealName extends React.Component {
     const res = await accountService.getRealAuthByMoneyMore();
     this.setState({loadingAuth: false});
     if (res.code === 0) {
+      if (res.msg == '该企业账号未认证') {
+        message.info(res.msg);
+        return;
+      }
       this.getOpenStatus();
+      this.initFetchSafeData();
     } else {
       message.error(res.msg);
     }
@@ -297,7 +299,7 @@ export default class RealName extends React.Component {
                     {
                       safeData.userSecurityCenter.faccountBind && safeData.userSecurityCenter.fidcardBind ?
                         <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
-                          <span style={{ color: 'black' }} >{safeData.realName}</span>
+                          <span style={{ color: 'black' }} >{safeData.fRealName}</span>
                           <span className="line" >|</span>
                           <span style={{ color: 'black' }} >{safeData.fIdcardNo}</span>
                           <span className="line" >|</span>
@@ -310,7 +312,7 @@ export default class RealName extends React.Component {
                         </div>
                         : null
                     }
-                    { 
+                    { this.props.openStatus == 1 && safeData.userSecurityCenter.fidcardBind ? null :
                        <div className="personal" style={{ marginTop: 0, background: '#f9f9f9' }}>
                         {this.props.openStatus == 2 ?
                           <span>开户中，请稍后刷新页面查看结果</span> : null }
@@ -318,7 +320,6 @@ export default class RealName extends React.Component {
                           <span>开户失败，{this.props.openFailMsg}，请重新开通</span> : null }
                         {this.props.openStatus == 1 && !safeData.userSecurityCenter.fidcardBind ?
                           <span>开户成功，请前往<a style={{color: 'blue'}} onClick={()=>window.location.href=AUTH_ADDRESS}>实名认证</a>或点击查询认证状态按钮查询</span> : null }
-
                        </div>
                     }
                     {
@@ -359,7 +360,7 @@ export default class RealName extends React.Component {
                             <div className="card_text">
                               <p>{data.fbank}</p>
                               {/* <span>{data.fcardType}</span> */}
-                              <span>储蓄卡</span>
+                              <span>借记卡</span>
                             </div>
                           </div>
                           <span className="id_num">
@@ -376,9 +377,10 @@ export default class RealName extends React.Component {
                             type={this.state[`${data.fid}hide`] ? 'text' : 'password'}
                             className="unbind_password"
                             placeholder="请输入登录密码"
+                            value={this.state[`${data.fid}password`]}
                             onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
                             prefix={<Icon type="lock" />}
-                            suffix={<Icon type="eye-o" onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                            suffix={ <i className={this.state[`${data.fid}hide`]?'zjb zjb-htmal5icon08': 'zjb zjb-mimakejian'} onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
                           />
                           <Button
                             type="primary"
@@ -461,7 +463,7 @@ export default class RealName extends React.Component {
 
             <div className="baseInfo" style={{display:'inline-block'}}>
               <i className="zjb zjb-mima1"></i>
-              <h3 onClick={() => { this.props.history.push(Path.CHANGE_LPWD) }}>修改登陆密码</h3>
+              <h3 onClick={() => { this.props.history.push(Path.CHANGE_LPWD) }}>修改登录密码</h3>
               <p>定期更改登录密码让你的账户更安全</p>
               <span>2018/6/15</span>
             </div>
@@ -470,7 +472,7 @@ export default class RealName extends React.Component {
               <h3 onClick={() => { this.props.history.push(Path.CHANGE_BINDEMAIL) }}>变更绑定邮箱</h3>
               <p>绑定电子邮箱后便于接收平台各种通知</p>
               {
-                safeData.userSecurityCenter.fEmailBinding ?
+                safeData.userSecurityCenter.femailBind ?
                   <p><span>{safeData.fEmail}</span></p> :
                   <p><span>还未绑定邮箱，</span><a onClick={() => { this.props.history.push(Path.BIND_EMAIL) }}>点击绑定</a></p>
               }

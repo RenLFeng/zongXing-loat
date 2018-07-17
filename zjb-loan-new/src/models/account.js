@@ -62,7 +62,7 @@ export default {
             }
           });
           saveOpenStatus(NO_OPEN);
-          payload.jumpAuth()
+          // payload.jumpAuth()
         } else {
           if (response.data && response.data.fflag === 0) {
             yield put({

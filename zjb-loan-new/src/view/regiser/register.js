@@ -294,7 +294,7 @@ export default class Register extends React.Component {
           regAuthCode: '',
           showAuthCode: true,
         });
-        message.info('注册成功,即将自动跳转到登陆界面')
+        message.info('注册成功,即将自动跳转到登录界面')
         setTimeout(function(){
           that.history.push('./login')
         },3000)
