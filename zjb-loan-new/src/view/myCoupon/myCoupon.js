@@ -9,7 +9,7 @@ import SendCoupons from './sendCoupon/sendCoupon';
 import BarE from './useCoupons';
 import PieE from './CouponIssuance';
 import './myCoupon.scss';
-import { Table,Pagination } from 'antd';
+import { Table,Pagination ,Tooltip } from 'antd';
 import {CouponService} from '../../services/api';
 import moment from 'moment';
 
@@ -62,7 +62,7 @@ export default class MyCoupon extends React.Component {
         dataSourceNums:response.data.tableStatistical.invalid.totalNumber,
         useStatistics:response.data.companyCouponChartsVo.useStatistical,
         statistics:response.data.companyCouponChartsVo.grantStatistical,
-        projrct:response.data.projectInfo
+        project:response.data.projectInfo
       })
     }
   }
@@ -185,8 +185,15 @@ onShowSizeChange = (current, pageSize) => {
   }
 
   send(){
-    if(this.state.project.fid === null){
-       console.log(1111155557777888)
+    if(!this.state.project.fid){
+      this.setState({
+        SendCouponShow:true,
+        background:true
+      })
+    } else {
+      this.setState({
+        background:false
+      })
     }
   }
 
@@ -411,7 +418,7 @@ render(){
     filterReset: '重置',
     emptyText: '暂无数据',
   }
-
+  console.log('this.propsthis.props',this.state.project)
         return(
          <div>
               <LeftMenu param={this.props} />
@@ -426,7 +433,7 @@ render(){
                 this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
               }
               {
-                this.state.SendCouponShow ? <SendCoupons close={this.close_}/> : null
+                this.state.SendCouponShow ? <SendCoupons close={this.close_} project={this.state.project}/> : null
               }
                 
                 
@@ -436,7 +443,11 @@ render(){
                       <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    <p className="send fr" onClick={()=>{this.setState({SendCouponShow:true})}}>发优惠券</p>
+                    {
+                      !this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
+                      <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
+                    }
+                   
                   </div>
                   {
                     this.state.chart === 'bar'  ? 

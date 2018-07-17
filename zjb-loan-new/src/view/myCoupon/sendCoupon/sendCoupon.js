@@ -41,7 +41,7 @@ export default class SendCoupons extends React.Component {
     filterReset: '重置',
     emptyText: '暂无数据',
   }
-
+  console.log('this.props',this.props)
     return(
       <div className="send-coupon">
         <a className="close" onClick={()=>{this.props.close()}}>x</a>
@@ -58,7 +58,7 @@ export default class SendCoupons extends React.Component {
             bordered
           />
          
-           <SendCoupon />
+           <SendCoupon project={this.props.project}/>
          
         
         </div>

@@ -120,7 +120,7 @@ class LoginInfo extends React.Component {
 
                                         <i title="绑定手机号" className={`zjb zjb-shouji-copy ${baseData.userSecurityCenter.fmobileBind ? 'active' : ''}`}></i>
                                        
-                                            baseData.userSecurityCenter.faccountBind ? 
+                                        { baseData.userSecurityCenter.faccountBind ? 
                                             <i title="企业开户" className="zjb zjb-moban active"></i>:
                                             <i title="企业开户" className="zjb zjb-moban" onClick={()=>{this.props.history.push(Path.OPEN_ACCOUNT)}}></i>
                                         }
