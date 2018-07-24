@@ -100,7 +100,13 @@ export const baseService={
     getProCityList: async () => req.get('/apply/getCity'),
     getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),
     // 获取上传视频的签名
-    createKey: async ()=>req.get('/getUploadSignature')
+    createKey: async ()=>req.get('/getUploadSignature'),
+
+    //体现时判断是否缴纳佣金
+    payCommission: async()=>req.get('withdrawals/kickback/bill'),
+    
+    //提交佣金
+    putCommission: async(param)=>req.get('/kickback/mmm/param',param)
 
 }
 

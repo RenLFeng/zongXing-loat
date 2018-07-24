@@ -1,6 +1,6 @@
 import React from 'react';
 import '../login/login.scss';
-import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg, LICENSE} from '../../common/SystemParam';
+import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,china_REG, LICENSE} from '../../common/SystemParam';
 import { connect } from 'dva';
 import $ from 'jquery';
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
@@ -173,7 +173,7 @@ infoCheck(){
       message2:''
     })
   }
-  if(!word_reg.test(realName)){
+  if(!china_REG.test(realName)){
      this.setState({
        message2:'请输入汉字'
      })
