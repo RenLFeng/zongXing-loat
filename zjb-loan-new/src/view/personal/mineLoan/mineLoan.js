@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:16:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 18:36:16
+ * @Last Modified time: 2018-07-24 20:02:54
  */
 import React from 'react';
 import './mineloan.scss';
@@ -31,7 +31,7 @@ class MineLoan extends React.Component{
     render(){
         const haveData = [];
         this.props.data.map((item,index) =>{
-            if(item.fflag !== 13 && item.fflag !== -3 && item.fflag !== -1){
+            if(item.fflag !== 16 && item.fflag !== -3 && item.fflag !== -1){
                 haveData.push(item)
             }
         });

@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-16 10:36:10
+ * @Last Modified time: 2018-07-24 20:16:44
  * 有借款记录
  */
 import React from 'react';
@@ -19,45 +19,48 @@ import {IMG_BASE_URL} from '../../../../common/SystemParam';
 import SendCoupon from './sendCoupon';
 import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
-import {Row, Col, message} from 'antd';
+import {Row, Col, message, Spin} from 'antd';
 import {parseTime, returnFloat, getTime, loanDelay} from '../dateformat/date';
 import { Table } from 'antd';
-import '../mineloan.scss'
+import '../mineloan.scss';
+import Appalyloan from './projectDetails/detailEdit';
 
 function getStatu(flag){
     switch(flag){
         case 0:
             return '待提交';
         case 1:
-            return '待初审';
+            return '项目初审(待初审)';
         case 2:
             return '待缴费';       
         case 3:
             return '待大数据风控';
         case 4:
-            return '待补充资料';//'待配置问题';
+            return '项目背调';//'待配置问题';
         case 5:
-            return '项目背调';   
+            return '待补充资料';   
         case 6:
             return '待委员会审核';
         case 7:
-            return '待确认借款';
+            return '待委员会定价';
         case 8:
-            return '待排版发布';
+            return '待确认借款';
         case 9:
-            return '项目排版';
+            return '待发放优惠券';
         case 10:
-            return '筹款中';       
+            return '待项目排版审核';
         case 11:
-            return '待放款';
+            return '待完善项目信息';       
         case 12:
-            return '还款中';
+            return '待排期上线';
         case 13:
-            return '还清借款';   
+            return '筹款中';
         case 14:
-            return '待配置优惠券';
+            return '待放款';   
         case 15:
-            return '待审核优惠券';
+            return '还款中';
+        case 16:
+            return '完成';
         case -1:
             return '流标';
         case -2:
@@ -87,6 +90,7 @@ class NoLoan extends React.Component{
         super(props);
         this.state = {
             loadingdel: false,
+            loadingpay: false,
             delId: '',
             visible: false,
             upfile: {},
@@ -107,6 +111,7 @@ class NoLoan extends React.Component{
             delId: record.fid,
             visible: true
         })
+
     }
     cnacelDel(){
         this.setState({
@@ -143,13 +148,59 @@ class NoLoan extends React.Component{
     componentDidMount(){
        
     }
+    //提交补充资料
+    async commitData() {
+        let data = {
+          projectId: this.props.projectId,
+        }
+        this.setState({loading: true})
+        let res = await mineloan.commitwsInfo(data);
+        if(res.code === 0){
+          this.props.dispatch({
+            type: 'mineloan/getMineLoan',
+            payload: ''
+          })
+          this.setState({loading: false})
+        }else{
+          message.error(res.msg);
+          this.setState({loading: false})
+        }
+      }
     //缴费
-    pay(text,record,index){
+    async pay(text,record,index){
         console.log(text,record,index)
+        this.setState({
+            loadingpay: true
+        })
+        let data = {
+            projectId: record.fid,
+            notifyPageUrl: window.location.href
+        }
+        let res = await mineloan.payLoan(data);
+        if(res.code === 0){
+            console.log(res,'----')
+            this.setState({
+                loadingpay: false
+            })
+            this.props.dispatch({
+                type: 'mineloan/getMineLoan',
+                payload: ''
+            })
+        }else{
+            message.error(res.msg);
+            this.setState({
+                loadingpay: false
+            })
+        }
+
     }
     //数据授权
-    dataLicense(text,record,index){
-        console.log(text,record,index,'888')
+    async dataLicense(text,record,index){
+        await this.props.dispatch({
+            type: 'mineloan/gotoRealName',
+            payload: true
+        })
+        await this.props.history.push('/index/uCenter/realName');
     }
     //确认借款
     sureBorrow(text,record,index){
@@ -163,14 +214,37 @@ class NoLoan extends React.Component{
     
     //还款计划
     payPlan(){
-
+        this.props.history.push('/index/uCenter/receivePlan')
     }
 
     //上传资料
-    onChange(val){
+    async onChange(val,item){
+        console.log(val,item,'-----')
+        if(val.length === 0){
+            message.info('请上传补充资料！');
+            return;
+        }
         this.setState({
-            upfile: val
+            loadingpay: true
         })
+        let data = {
+            remark: item[0].fileurl,
+            projectId: val.fid
+        }
+        let res = await mineloan.upbcInfo(data);
+        if(res.code === 0){
+            this.setState({
+                loadingpay: false
+            })
+            this.props.dispatch({
+                type: 'mineloan/getMineLoan',
+                payload: ''
+            })
+        }else{
+            this.setState({
+                loadingpay: false
+            })
+        }
     }
 
     //完善项目信息
@@ -227,7 +301,7 @@ class NoLoan extends React.Component{
                 key: 'state',
                 render: (text,record, index) =>{
                     return <p className="wait-commit">
-                            •{getStatu(record.fflag)} {record.fflag === 5 ? <span style={{color: '#000'}}>(待背调)</span>: ''}
+                            •{getStatu(record.fflag)} {record.fflag === 4 ? <span style={{color: '#000'}}>(待背调)</span>: ''}
                         </p>
                 } 
             },
@@ -250,10 +324,10 @@ class NoLoan extends React.Component{
                                     <a className="ac-commit" onClick={() => this.pay(text,record,index)}>缴费</a>:
                                 record.fflag === 3 ?    
                                     <a className="ac-commit" onClick={() => this.dataLicense(text,record,index)}>数据授权</a>:
-                                record.fflag === 4 ?    
-                                    <UploadFile {...this.fileData} prefix={'person/'} onChange={this.onChange.bind(this)}>上传补充资料</UploadFile>:
+                                record.fflag === 5 ?    
+                                    <UploadFile {...this.fileData} prefix={'person/'} onChange={this.onChange.bind(this,record)} className="loaninfo-up">上传补充资料</UploadFile>:
                                     // <a className="ac-commit" onClick={() => this.uploadInfo(text,record,index)}>上传补充资料</a>:
-                                record.fflag === 7 ?  
+                                record.fflag === 8 ?  
                                     <a className="ac-commit" onClick={() => this.sureBorrow(text,record,index)}>确认借款</a>:
                                 ''    
                             }
@@ -317,7 +391,7 @@ class NoLoan extends React.Component{
                 render: (text,record,index) =>{
                     return <div className="action">
                             {
-                                record.fflag === 9 ? 
+                                record.fflag === 11 ? 
                                 <a className="ac-commit" onClick={() => this.fullProjectInfo(text,record,index)}>完善项目信息</a>:
                                 ''
                             }
@@ -613,13 +687,13 @@ class NoLoan extends React.Component{
           ];
         
         this.props.data.map((item,index)=>{
-            if(item.fflag === 13 || item.fflag === -1 || item.fflag === -3){
+            if(item.fflag === 16 || item.fflag === -1 || item.fflag === -3){
                 // alredy.push(item)
             }else{
                 doing.push(item)
             }
         })
-        this.updatstate(doing);
+        // this.updatstate(doing);
         const locale = {
             filterTitle: '筛选',
             filterConfirm: '确定',
@@ -639,31 +713,44 @@ class NoLoan extends React.Component{
                 <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px 15px',marginTop: `${index === 0 ? 0 : '8px'}`}}>
                     <LoanTitle title="我的借款"></LoanTitle>
                     <LoanStep stepdata={item}></LoanStep>
+                    <Spin spinning={this.state.loadingpay}>
                     <Table
                         bordered size="small"
                         locale={locale}
                         pagination={false}
-                        dataSource={this.state.doingData}
+                        dataSource={[item]}
                         columns={item.fflag <= 7 ? columns :
-                            [8,9,14,15].includes(item.fflag) ? columns8_9 : 
-                            item.fflag === 10 ? columns10 :
-                            item.fflag === 12 ? columns12:
-                            item.fflag === 11 ? columns11:
+                            [9,10,11].includes(item.fflag) ? columns8_9 : 
+                            item.fflag === 13 ? columns10 :
+                            item.fflag === 15 ? columns12:
+                            item.fflag === 14 ? columns11:
                             columns13}
                         rowClassName="editable-row"
                         loading={this.props.loading}
                     />
-                    {item.fflag === 4 ? '请上传缺少的资料' : ''}
-                    {item.fflag === 7 ? <SureLoan suredata={item}></SureLoan>: 
-                    (item.fflag === 10 || item.fflag === 11) ? <InvestRecord indata={item}></InvestRecord> : 
-                    item.fflag === 14 ? <SendCoupon coudata={item}></SendCoupon> : ''}
+                    </Spin>
+                    {item.fflag === 0 ? !item.fis_pass ? 
+                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
+                                        <span>初审驳回：{item.fremark}</span></p> : '' : ''}
+                    {item.fflag === 5 ? !item.fis_pass ? 
+                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
+                                        <span>{item.fremark}</span></p> : '' : ''}
+                    {item.fflag === 8 ? <SureLoan suredata={item}></SureLoan>: 
+                    (item.fflag === 13 || item.fflag === 14) ? <InvestRecord indata={item}></InvestRecord> : 
+                    item.fflag === 9 ? <SendCoupon coudata={item}></SendCoupon> : ''}
+                    {item.fflag === 9 && !item.fis_pass ? 
+                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
+                                        <span>优惠券审核不通过：{item.fremark}</span></p> : ''}
+
+                    {item.fflag === 11 ? <Appalyloan projectId={item.fid} commitData={this.commitData.bind(this)}>
+                                        </Appalyloan> : ''}
                 </div>
             )
         })
 
         return(
             <div className="mineloan">
-                {table}    
+                {table}
                 {/* 投资咨询 */}
                 <ConSult projectId={doing[0].fid}></ConSult>
                 <Row className="personal-rbody" style={{marginTop:' 8px',padding: 0,backgroundColor: '#f5f5f5'}}>

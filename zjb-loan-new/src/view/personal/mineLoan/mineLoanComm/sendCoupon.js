@@ -2,7 +2,7 @@
  * @Author: wfl
  * @Date: 2018-07-05 11:48:42
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:20:31
+ * @Last Modified time: 2018-07-24 17:40:06
  * 发放优惠券
  */
 import React from 'react';
@@ -373,8 +373,30 @@ class SendCoupon extends React.Component{
     }
 
     //提交
-    commitCou(){
-
+    async commitCou(){
+        let data = {
+            projectId: this.props.coudata.fid,
+            remark: '',
+            isPass: ''
+        }
+        this.setState({
+            loading: true
+        })
+        let res = await mineloan.commitCou(data);
+        if(res.code === 0){
+            this.setState({
+                loading: false
+            })
+            this.props.dispatch({
+                type: 'mineloan/getMineLoan',
+                payload: ''
+            })
+        }else{
+            message.error(res.msg);
+            this.setState({
+                loading: false
+            })
+        }
     }
 
     async saveAddress(){

@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-16 09:34:15
+ * @Last Modified time: 2018-07-24 20:10:56
  * @des: 日历 - 日期  金钱相关方法
  */
 
@@ -302,9 +302,9 @@ export function getTime(time){
 
 //筹款进度
 export function loanDelay(money1, money2){
-   let jindu = Math.floor(((money1 - money2) / money1) * 100 / 100) * 100;
+   let jindu = Math.floor((money2 / money1) * 100 / 100) * 100;
    if(jindu === 0){
-       if(money1 - money2 > 0){
+       if(money2 !== 0){
            jindu = 1;
        }
    }else if(jindu === 100){
