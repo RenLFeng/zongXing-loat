@@ -2,21 +2,27 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:42:28 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:09:59
+ * @Last Modified time: 2018-07-24 17:14:51
  * 我的借款--确认借款 
  */
 import React from 'react';
 import './sureloan.scss';
 import {connect} from 'dva';
 import {parseTime, returnFloat} from '../dateformat/date';
-import { Table, message } from 'antd';
+import { Table, message,Input, Spin } from 'antd';
 import {mineloan} from '../../../../services/api';
+const { TextArea } = Input;
 
+@connect((state) =>({
+    
+}))
 class SureLoan extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            suredata: []
+            suredata: [],
+            bzInfo: '同意借款',
+            loading: false
         }
     }
 
@@ -38,16 +44,39 @@ class SureLoan extends React.Component{
         }
     }
 
-    agree(){
-
+    getNewInfo(){
+        this.props.dispatch({
+            type: 'mineloan/getMineLoan',
+            payload: ''
+        })
     }
 
-    unagree(){
-
-    }
-
-    stopSubject(){
-
+    async agreeOrUnagree(statu){
+        const {suredata, bzInfo} = this.state;
+        console.log(suredata,'suredata')
+        let data = {
+            remark: bzInfo,
+            isPass: statu,
+            projectId: this.props.suredata.fid
+        }
+        if([0,-1].includes(statu)){
+            if(data.remark === ''){
+                message.info(`请输入${statu === 0 ? '不同意' : '拒绝'}理由！`)
+            }
+            return;
+        }else{
+            if(data.remark === ''){
+                data.remark = '同意借款';
+            }
+        }
+        this.setState({loading: true})
+        let res = await mineloan.isAgreeBorrow(data);
+        if(res.code === 0){
+            this.getNewInfo();
+            this.setState({loading: false})
+        }else{
+            this.setState({loading: false})
+        }
     }
     
     render(){
@@ -79,10 +108,10 @@ class SureLoan extends React.Component{
             { 
                 title: '借款利率', 
                 align: 'center',
-                dataIndex: 'frate_predict', 
-                key: 'frate_predict',
+                dataIndex: 'frate_last', 
+                key: 'frate_last',
                 render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
+                    return <span>{record.frate_last}%</span>
                 }  
             },
             { 
@@ -94,10 +123,10 @@ class SureLoan extends React.Component{
             { 
                 title: '评级时间', 
                 align: 'center',
-                dataIndex: 'fcreate_time', 
-                key: 'fcreate_time',
+                dataIndex: 'frate_last_date', 
+                key: 'frate_last_date',
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                    return <span style={{ margin:' 8px 0',display: 'inline-block',color:' #999999'}}>{parseTime(record.frate_last_date,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
           ];
@@ -111,18 +140,21 @@ class SureLoan extends React.Component{
                         bordered size="small"
                         locale={locale}
                         pagination={false}
-                        dataSource={[this.props.suredata]}
+                        dataSource={[this.state.suredata]}
                         columns={columns}
                         rowClassName="editable-row"
                         loading={this.state.loading}
                     />
                 </div>
-                <p>备注:<span>这是备注</span></p> 
-                <div className="ac-button">
-                    <a className="agree" onClick={this.agree()}>同意</a>
-                    <a className="unagree" onClick={this.unagree()}>不同意</a>
-                    <a className="stop" onClick={this.stopSubject()}>终止项目</a>
-                </div>
+                <Spin spinning={this.state.loading}>
+                    <span>备注:</span>
+                    <TextArea placeholder="备注" value={this.state.bzInfo} onChange={(e) =>{ this.setState({bzInfo: e.target.value})} } autosize={{ minRows: 2, maxRows: 4 }} />
+                    <div className="ac-button">
+                        <a className="agree" onClick={()=>this.agreeOrUnagree(1)}>同意</a>
+                        <a className="unagree" onClick={()=>this.agreeOrUnagree(0)}>不同意</a>
+                        <a className="stop" onClick={()=>this.agreeOrUnagree(-1)}>终止项目</a>
+                    </div>
+                </Spin>
             </div>
         )
     }

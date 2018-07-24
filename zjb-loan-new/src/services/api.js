@@ -111,6 +111,24 @@ export const baseService={
 }
 
   
+export const wsbaseService={
+   
+    //获取风控审核记录
+    getAuditRecord: async (param)=>req.post('/projectApproval/getByProjectId',param),
+    //获取项目详情
+    getPDetail: async (param)=>req.get('/project/getOne',param),
+    //获取视频签名
+    createKey: async ()=>req.get('/getUploadSignature'),
+    // 获取图片签名token
+    getAuth: async (param)=>req.get('/common/sign', param),
+    //项目排版-项目详情
+    getEditDetail:async (param)=>req.get('/projectInfo/getOne',param),
+    //项目排版-保存
+    saveEditDetail:async (param)=>req.post('/projectInfo/updateProjectInfo',param),
+    
+    //项目初审
+    firstView:async (param)=>req.post('/projectApproval/submitFirstTrial',param),
+}
 
   
 
@@ -212,6 +230,15 @@ export const mineloan = {
 
     //
     getSureDate: async (param) => req.get('/project/getRateAndLevel', param),
+
+    //缴费
+    payLoan: async (param) => req.get('/risk/payment', param),
+    //获取项目级别
+    getSureDate: async (param) => req.get('/project/getRateAndLevel', param), 
+    //同意？终止？不同意？
+    isAgreeBorrow: async (param) => req.post('/projectApproval/userVerifyRate', param), 
+    //补充资料
+    upbcInfo:  async (param) => req.post('/projectApproval/updateFile', param),
     /**
      * 
      * 优惠券
@@ -228,7 +255,10 @@ export const mineloan = {
     saveCou: (param) => req.post('/coupon/save', param),
     //获取优惠券
     getSendCou: (param) => req.get('/coupon/self/coupon', param),
-    
+    //提交优惠券
+    commitCou: (param) => req.post('/projectApproval/subCoupon', param),
+    //提交完善信息
+    commitwsInfo: (param) => req.post('/projectApproval/subPendRelease', param),
 
 }
 //实名认证 - momei

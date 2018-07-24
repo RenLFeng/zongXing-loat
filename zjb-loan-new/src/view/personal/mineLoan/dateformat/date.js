@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:20:09
+ * @Last Modified time: 2018-07-24 20:10:56
  * @des: 日历 - 日期  金钱相关方法
  */
 
@@ -40,8 +40,8 @@ export function returnff(value){
 
 //日期格式化
 export function parseTime(time, cFormat) {
-	if (arguments.length === 0) {
-		return null;
+	if (!time) {
+		time = new Date();
 	}
 	const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}';
 	let date;
@@ -282,30 +282,35 @@ export function nowDay() {
 }
 
 
-//获取时间间隔
-export function getTime(time1, time2){
-    let date1 = ''; //开始时间
-    if(time2){
-        date1=new Date(time2);   
-    }else{
-        date1=new Date();
-    }
-    let date2=new Date(time1);    //结束时间
-    let date3=date1.getTime()-date2.getTime(); //时间差秒
-    //计算出相差天数
-    let days=Math.floor(date3/(24*3600*1000));
-     
-    //计算出小时数
-    let leave1=date3%(24*3600*1000);  //计算天数后剩余的毫秒数
-    let hours=Math.floor(leave1/(3600*1000));
-     
-    //计算相差分钟数
-    let leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
-    let minutes=Math.floor(leave2/(60*1000));
-     
-    //计算相差秒数
-    let leave3=leave2%(60*1000);     //计算分钟数后剩余的毫秒数
-    let seconds=Math.round(leave3/1000);
-    
-    return (days > 0 ? days +'天' : '' )+ (hours > 9 ? hours : '0' + hours ) + ":" + (minutes > 9 ? minutes : '0' + minutes )  + ":" + (seconds > 9 ? seconds : '0' + seconds ) 
+//筹款时长
+export function getTime(time){
+        let date3 = time; //时间差秒
+        //计算出相差天数
+        let days=Math.floor(date3/(24*3600*1000));
+        //计算出小时数
+        let leave1=date3%(24*3600*1000);  //计算天数后剩余的毫秒数
+        let hours=Math.floor(leave1/(3600*1000));
+        //计算相差分钟数
+        let leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+        let minutes=Math.floor(leave2/(60*1000));
+        //计算相差秒数
+        let leave3=leave2%(60*1000);     //计算分钟数后剩余的毫秒数
+        let seconds=Math.round(leave3/1000);
+        return (days > 0 ? days +'天' : '' )+ (hours > 9 ? hours : '0' + hours ) + ":" + (minutes > 9 ? minutes : '0' + minutes )  + ":" + (seconds > 9 ? seconds : '0' + seconds ) 
+}
+
+
+//筹款进度
+export function loanDelay(money1, money2){
+   let jindu = Math.floor((money2 / money1) * 100 / 100) * 100;
+   if(jindu === 0){
+       if(money2 !== 0){
+           jindu = 1;
+       }
+   }else if(jindu === 100){
+       if(money1 - money2 !== 0){
+           jindu = 99
+       }
+   }
+   return jindu;
 }
