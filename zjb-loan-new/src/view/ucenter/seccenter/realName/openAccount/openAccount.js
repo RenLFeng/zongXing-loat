@@ -46,7 +46,7 @@ export default class OpenAccount extends React.Component {
   updateRealName = (e) => {
     let msg = '';
     if(!e.target.value){
-      msg = '真实姓名不能为空';
+      msg = '企业名称不能为空';
     }
     this.setState({ msgRealName:msg,realName: e.target.value });
     
@@ -155,7 +155,7 @@ export default class OpenAccount extends React.Component {
                 <div className="info">
                   <div className="inp">
                     <Input placeholder="请输入企业全称" onChange={this.updateRealName} />
-                    <img alt="真实姓名" src={require('../../../../../assets/img/u186.png')} className="img1"/>
+                    <img alt="企业名称" src={require('../../../../../assets/img/u186.png')} className="img1"/>
                     <span className="span_">|</span>
                     {
                       msgRealName ? 
@@ -165,7 +165,7 @@ export default class OpenAccount extends React.Component {
                   </div>
                   <div className="inp">
                     <Input placeholder="请输入企业统一社会信用代码" onChange={this.updateIdcard} style={{marginTop:3}}/>
-                    <img alt="身份证id" src={require('../../../../../assets/img/u192.png')}  className="img2"/>
+                    <img alt="统一社会信用代码" src={require('../../../../../assets/img/u192.png')}  className="img2"/>
                     <span className="span_1">|</span>
                     {
                       msgIdcard ? 

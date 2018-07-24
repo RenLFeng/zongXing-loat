@@ -85,6 +85,7 @@ export default class ChangeBindEmail extends React.Component {
       oldEmail:email,
       newEmail:newEmail
     }
+    console.log(param);
     const sendTime = localStorage.getItem(param);
     if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
       alert(`${AUTH_CODE_TIME}秒内仅能获取一次验证码，请稍后重试`);
@@ -95,6 +96,7 @@ export default class ChangeBindEmail extends React.Component {
     }
     this.setState({ loading: true });
     try{
+      
       const response = await personal.UpdateEmail(param);
       if(response.code === 0){
         message.info(response.msg)
@@ -138,6 +140,7 @@ export default class ChangeBindEmail extends React.Component {
         verificationCode:code
       }
       this.setState({sureloading:true})
+      console.log(param);
      const response = await personal.UpdateEmail_(param);
      console.log('11111',response);
      if(response.code === 0){
@@ -228,11 +231,8 @@ export default class ChangeBindEmail extends React.Component {
                     <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>
                   </p>
                 </div>
-
             </div>
             }
-
-
         </div>
 
     );

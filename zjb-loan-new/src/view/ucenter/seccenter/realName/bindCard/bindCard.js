@@ -4,7 +4,7 @@ import { Link } from 'dva/router';
 import { Icon, Input, Button, message, Row, Col, Form, Select, Checkbox } from 'antd';
 
 import '../realName.scss';
-import { securityCentreService } from '../../../../../services/api';
+import { securityCentreService, accountService } from '../../../../../services/api';
 import moneyBank from '../../../../../common/moneyBank';
 import moneyCity from '../../../../../common/moneyCity';
 import Path from '../../../../../common/PagePath';
@@ -40,7 +40,7 @@ const btnLayout = {
 @connect((state) => ({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
-  accountId: state.login.baseData.accountId,
+  userData: state.personal.data.companyTotalAssetsVo
 }))
 class BindCard extends React.Component {
   constructor(props) {
@@ -54,14 +54,56 @@ class BindCard extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.dispatch({
-      type: 'account/getPersonalAccount',
-      payload:{
-        showNumInfo:4,
-      }
-    });
+    this.getOpenStatus()
     this.queryUserBaseInfo();
     this.sort();
+  }
+
+
+  async getOpenStatus() {
+    const response = await accountService.getPersonalData();
+    if (response.code === 0) {
+      this.props.dispatch({
+        type: 'personal/getPersonalAccount',
+        payload: response.data
+      })
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 1, // 开户成功 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户未开户') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: -1, // 未开户 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/openAccount');
+    } else if (response.code === -1 && response.msg === '该账户正在开户中') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 2, // 开户中 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/realName');
+    } else if (response.code === -1 && response.msg === '该账户开户失败') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 0, // 开户失败 
+          openFailMsg: response.data
+        }
+      })
+      this.props.history.push('/index/uCenter/realName');
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
   // 查询当前登录的用户
   queryUserBaseInfo = async () => {
@@ -258,7 +300,7 @@ class BindCard extends React.Component {
       fcityCode: this.state.cityId,
       fprovinceCode: this.state.provinceId,
       fbankType: this.state.fbankType, // 银行类型id
-      faccountId: this.props.accountId,
+      faccountId: this.props.userData.accountId,
       idcard: this.state.idcard,
       realname: this.state.realname,
       fbankcard: this.state.bankCard.trim(),
@@ -289,10 +331,10 @@ class BindCard extends React.Component {
  
 
   render() {
-    console.log("this.props.accountId:",this.props.accountId);
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
+    console.log(this.props.userData);
     return (
       <div className="pages" style={{padding: '30px', width: '100%'}}>
         <div className="real_title_">
@@ -302,7 +344,7 @@ class BindCard extends React.Component {
         <div className="forms">
           <div className="bind_item_view">
             <span className="name">持卡人姓名</span> 
-            <span>{this.state.userBaseInfo.freal_name}</span> 
+            <span style={{width: '220px'}}>{this.state.userBaseInfo.freal_name}</span> 
           </div>
           {/* <i title="绑定手机号" className="zjb zjb-zhengque" style={{color:'green', fontSize: 24}}></i> */}
           <div className="bind_item_view">
@@ -349,13 +391,13 @@ class BindCard extends React.Component {
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
               <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
-              <i className="zjb zjb-htmal5icon08" onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
+              <i className={this.state.showPwd?'zjb zjb-htmal5icon08': 'zjb zjb-mimakejian'} onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
             </div>
           </div>
           <div className="bind_item_view">
             <span/>
             <div className="bind_desc">
-              <input type="checkbox" onChange={(e) => this.setState({checkboxStatus: !this.state.checkboxStatus})}/>
+              <input style={{width: '15px'}} type="checkbox" onChange={(e) => this.setState({checkboxStatus: !this.state.checkboxStatus})}/>
               <span>同意《<a>用户协议</a>》</span>
             </div>
           </div>
@@ -366,7 +408,7 @@ class BindCard extends React.Component {
                 this.state.checkLoading||this.state.editing||!this.state.checkboxStatus||
                 !this.state.bankCard|| !this.state.openName || !this.state.provinceId || !this.state.cityId
                 || !this.state.userPassword || this.state.cardType==='信用卡' || !this.state.bankCardImg ||
-                this.state.bankCardImg === 'error'
+                this.state.bankCardImg === 'error'||!this.props.userData.accountId
               } 
               className="bind_btn" loading={this.state.commmitLoading} type="primary" onClick={this.bindBank}>绑定</Button>
           </div>

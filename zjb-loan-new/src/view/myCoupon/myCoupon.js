@@ -480,7 +480,6 @@ render(){
                        dataSource={this.state.dataSource} 
                        bordered
                        size="small" 
-                       style={{padding:'0 !important' }}
                       />
                        {
                        Math.ceil(this.state.dataSourceNum/this.state.pageSize) > 1 ?  
