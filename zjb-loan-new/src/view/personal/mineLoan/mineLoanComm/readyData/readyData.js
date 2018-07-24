@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 16:44:51
+ * @Last Modified time: 2018-07-23 09:10:37
  * 有借款记录
  */
 import React from 'react';
@@ -282,7 +282,7 @@ class ReadyData extends React.Component{
         })
         alredy.map((item,index)=>{
             alredytable.push(
-                    <div style={{ margin:' 20px 0'}}>
+                    <div style={{ margin:' 20px 0'}} key={index}>
                         <LoanStep stepdata={item} type={0}></LoanStep>
                         <Table
                             bordered size="small"
@@ -300,7 +300,7 @@ class ReadyData extends React.Component{
         return(
             <div className="mineloan">
                 <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px',marginTop: '8px'}}>
-                    <LoanTitle title="历史记录"></LoanTitle>
+                    <LoanTitle title="历史借款"></LoanTitle>
                     {/* 历史借款 */}
                     {alredytable}
                 </div>

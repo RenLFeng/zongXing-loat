@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 16:45:13
+ * @Last Modified time: 2018-07-16 10:36:10
  * 有借款记录
  */
 import React from 'react';
@@ -20,7 +20,7 @@ import SendCoupon from './sendCoupon';
 import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
 import {Row, Col, message} from 'antd';
-import {parseTime, returnFloat, getTime} from '../dateformat/date';
+import {parseTime, returnFloat, getTime, loanDelay} from '../dateformat/date';
 import { Table } from 'antd';
 import '../mineloan.scss'
 
@@ -89,7 +89,8 @@ class NoLoan extends React.Component{
             loadingdel: false,
             delId: '',
             visible: false,
-            upfile: {}
+            upfile: {},
+            doingData: []
         }
     };
 
@@ -176,6 +177,18 @@ class NoLoan extends React.Component{
     fullProjectInfo(){
         
     }
+
+    async updatstate(val){
+        let time = val[0].loanTime;
+        await setInterval(()=>{
+            this.setState({
+                doingData: [{
+                    ...this.state.doingData,
+                    loanTime: time++
+                }]
+            },1000)
+        })
+    }
     render(){
         const doing = [];
         // fflag = 其它
@@ -248,7 +261,6 @@ class NoLoan extends React.Component{
                 } 
             },
           ];
-          
         const columns8_9 = [
             { 
                 title: '借款金额', 
@@ -367,16 +379,16 @@ class NoLoan extends React.Component{
                 dataIndex: ' ', 
                 key: ' ' ,
                 render: (text,record) =>{
-                    return <span>{Math.floor(((record.fcredit_money - record.invMoney) / record.fcredit_money) * 100 / 100) * 100}%</span>
+                    return <span>{loanDelay(record.fcredit_money,record.invMoney)}%</span>
                 } 
             },
             { 
                 title: '筹款时长', 
                 align: 'center',
-                dataIndex: 'fcreate_time', 
-                key: 'fcreate_time' ,
+                dataIndex: 'loanTime', 
+                key: 'loanTime' ,
                 render: (text,record) =>{
-                    return <span>{getTime(record.fpublish_time,record.fcollet_over_time)}</span>
+                    return <span>{getTime(record.loanTime)}</span>
                 }
             },
             { 
@@ -607,6 +619,7 @@ class NoLoan extends React.Component{
                 doing.push(item)
             }
         })
+        this.updatstate(doing);
         const locale = {
             filterTitle: '筛选',
             filterConfirm: '确定',
@@ -630,9 +643,9 @@ class NoLoan extends React.Component{
                         bordered size="small"
                         locale={locale}
                         pagination={false}
-                        dataSource={[item]}
+                        dataSource={this.state.doingData}
                         columns={item.fflag <= 7 ? columns :
-                            [8,9].includes(item.fflag) ? columns8_9 : 
+                            [8,9,14,15].includes(item.fflag) ? columns8_9 : 
                             item.fflag === 10 ? columns10 :
                             item.fflag === 12 ? columns12:
                             item.fflag === 11 ? columns11:
@@ -642,8 +655,8 @@ class NoLoan extends React.Component{
                     />
                     {item.fflag === 4 ? '请上传缺少的资料' : ''}
                     {item.fflag === 7 ? <SureLoan suredata={item}></SureLoan>: 
-                      (item.fflag === 10 || item.fflag === 11) ? <InvestRecord indata={item}></InvestRecord> : 
-                      item.fflag === 8 ? <SendCoupon coudata={item}></SendCoupon> : ''}
+                    (item.fflag === 10 || item.fflag === 11) ? <InvestRecord indata={item}></InvestRecord> : 
+                    item.fflag === 14 ? <SendCoupon coudata={item}></SendCoupon> : ''}
                 </div>
             )
         })
