@@ -8,8 +8,8 @@ const OPENING = 1;
 const OPEN_FAIL = 2;
 const OPEN_SUCCESS = 3;
 let webToken = null;
-if (localStorage.getItem('accessToken')) {
-  const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+if (localStorage.getItem('accessTokenCompany')) {
+  const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
   webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
 }
 
@@ -39,6 +39,11 @@ export default {
     *getCompanyNum({payload}){
 
     },
+    *clearData({payload},{put}) {
+      yield put({
+        type: 'clearDataSave',
+      });
+    },
     *getPersonalAccount({payload}, {call, put}) {
       let webToken = '';
       const response = yield call(personal.getPersonAccountNew, payload); 
@@ -57,7 +62,7 @@ export default {
             }
           });
           saveOpenStatus(NO_OPEN);
-          payload.jumpAuth()
+          // payload.jumpAuth()
         } else {
           if (response.data && response.data.fflag === 0) {
             yield put({
@@ -127,6 +132,29 @@ export default {
     }
   },
   reducers: {
+    clearDataSave(state) {
+      return {
+        ...state,
+        message: '',
+        openStatus: localStorage.getItem(webToken)?localStorage.getItem(webToken):0,
+        personal: {
+          accountDynamicVos: [],
+          plan: [],
+          totalAssets: {}
+        },
+        companyListStatus: false,
+        companyList: [],
+        company: [],
+        personalStatus: false,
+        companyStatus: false,
+        num: 0,
+        company_page : {
+          accountDynamicVos: [],
+          plan: {},
+          totalAssets: {}
+        }
+      }
+    },
     savePersonal(state, {payload}) {
       saveOpenStatus(payload.openStatus);
       return {
@@ -157,8 +185,8 @@ export default {
 function saveOpenStatus(param) {
   console.log('保存开户状态', param);
   let webToken = '';
-  if (localStorage.getItem('accessToken')) {
-    const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+  if (localStorage.getItem('accessTokenCompany')) {
+    const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
     webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
   }
   if (webToken) {

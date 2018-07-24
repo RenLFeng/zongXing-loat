@@ -1,4 +1,4 @@
-@import '../../assets/common/_var.scss'; 
+@import '../../assets/common/_var.scss';
 
 .sec-qa {
     padding:0;
@@ -13,41 +13,46 @@
                 color: $f90;
             }
         }
-        .t1 { 
-            font-size: 24px;  
-            padding: 10px 0;
-            color: #333;
-            text-align: center;
-            border-bottom: 1px solid #ccc;
+        .t1 {
+          font-size: 20px;
+          padding: 10px 0;
+          color: #333;
+          text-align: center;
+          border-bottom: 1px solid #999;
         }
         .t2 {
-            padding: 5px 0;
-            font-size: 18px;
-            line-height: 40px;
-            border-bottom: 1px solid #eee;
-            a {
-                display: block;
-                color: #666
-            } 
+          padding: 5px 0;
+          font-size: 16px;
+          line-height: 40px;
+          border-bottom: 1px dashed #ccc;
+          a {
+            display: block;
+            color: #666;
+          }
         }
+      .t2.act{
+        a{
+          color:#f90;
+        }
+      }
     }
     &>.w>.fr {
-        width: 900px; 
+        width: 900px;
         background-color: $f5;
         padding-bottom: 0px;
         height: 600px;
         overflow-y: auto;
         .c6 {
-            font-size: 18px; 
-            padding: 20px;
-            background-color: #fff;
-            text-align: left;
+          font-size: 17px;
+          padding:30px 20px;
+          background-color: #fff;
+          text-align:left;
         }
         .q {
             padding: 0 20px;
-            font-size: 18px;
+            font-size: 16px;
             line-height: 40px;
-            border-top: 1px solid #ddd;
+            // border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
             background-color: #fff;
             cursor: pointer;
@@ -60,8 +65,15 @@
                 -ms-transform: rotate(45deg);
                 transform: rotate(45deg);
                 margin-top: 20px;
+                transition:all .3s;
             }
         }
+      .q.act{
+        .dl{
+          -ms-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+        }
+      }
         .q.close {
             .dl {
                 -ms-transform: rotate(-135deg);
@@ -72,25 +84,24 @@
             }
         }
         .a {
-            font-size: 16px;
-            padding: 20px;
+          font-size: 15px;
+          padding: 10px 10px 10px 38px;
             p{
-                color: #666;
-                line-height: 30px;
+              color: rgb(121, 121, 121);
+              line-height: 25px;
             }
         }
-    } 
+    }
     .center{
         width: 258px;
         padding:0 26px;
-        min-height: 570px; 
+        min-height: 570px;
     }
     .fr {
         width: 900px;
-        margin-bottom: 40px;  
+        margin-bottom: 40px;
         height: 505px;
         overflow-y: scroll;
       }
-    
+
 }
-  

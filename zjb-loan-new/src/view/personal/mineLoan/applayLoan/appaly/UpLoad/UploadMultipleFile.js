@@ -15,7 +15,6 @@ export default class UploadMultipleFile extends React.Component {
       this.setState({
         fileList: nextProps.value,
       });
-      console.log(this.state.fileList)
     }
   }
 

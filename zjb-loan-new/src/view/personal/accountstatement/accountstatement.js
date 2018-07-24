@@ -121,6 +121,9 @@ export default class AccountStatement extends React.Component {
 					touziData: [],
 					huiKuanData: []
 				});
+				if (res.msg === '账户信息不存在') {
+					return;
+				}
 				res.msg && message.error(res.msg);
 			}
 			this.setState({
@@ -131,7 +134,7 @@ export default class AccountStatement extends React.Component {
 				loading: false,
 			});
 			if(typeof e === 'object' && e.name === 288) {
-				localStorage.removeItem('accessToken');
+				localStorage.removeItem('accessTokenCompany');
 				this.props.history.push('/index/login');
 			}
 			//console.log(e);

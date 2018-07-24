@@ -50,9 +50,9 @@ class MineLoan extends React.Component{
             	<div>
                   <Spin spinning={this.props.loading}>
             	    <LeftMenu param={this.props}/>
-            	    <HaveLoan></HaveLoan>
+            	    <HaveLoan history={this.props.history}></HaveLoan>
                     <ReadyData></ReadyData>
-                 </Spin>
+                  </Spin>
             	</div>
             )
         }

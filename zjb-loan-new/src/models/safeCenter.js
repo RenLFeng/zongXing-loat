@@ -43,8 +43,22 @@ export default {
         console.log('服务器繁忙，请稍后重试');
       }
     },
+    *clearData(_, {call, put}) {
+      yield put({
+        type: 'clearDataSave',
+      });
+    }
   },
   reducers: {
+    clearDataSave(state) {
+      return {
+        ...state,
+        safeData: {
+          userSecurityCenter: {}
+        },
+        safeDataLoading: false
+      }
+    },
     startSafeData(state) {
       return {
         ...state,

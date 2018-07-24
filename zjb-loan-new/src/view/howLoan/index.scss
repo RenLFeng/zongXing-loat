@@ -1,10 +1,10 @@
-@import '../../assets/common/_var.scss'; 
- 
+@import '../../assets/common/_var.scss';
+
 
 
 .topnav {
     position: fixed;
-    .zjb-logo{ 
+    .zjb-logo{
         height: 70px;
     }
 }
@@ -14,13 +14,36 @@
     transition: all ease 0.3s;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
-  
+
 .hl-content{
     &>.banner1 {
         background: url(./img/banner.jpg) no-repeat center center;
         background-size: cover;
         min-height: 700px;
+      .btn {
+        position: absolute;
+        left: 50%;
+        margin-left: -23px;
+        padding: 6px 10px;
+        bottom: 80px;
+        width: 160px;
+        font-size: 24px !important;
+        color:#fff;
+        background-color: rgba(255,255,255,0.3);
+        border: 1px solid #fff;
+        border-radius: 18px;
+        transition: all .3s;
+        &:hover{
+          background-color: rgba(255,255,255,0.8);
+          border-color: #f90;
+          color: #f90;
+        }
+        &>i {
+          line-height: 54px;
+        }
+      }
     }
+
     &>.sec-tab3 {
         background-color: #212121;
         padding: 80px 0;
@@ -75,8 +98,8 @@
                     color: #ccc;
                     padding: 0 28px;
                 }
-              } 
-            .swiper-pagination { 
+              }
+            .swiper-pagination {
                 .swiper-pagination-switch {
                     width: 15px;
                     height: 15px;
@@ -91,9 +114,9 @@
                     bottom: -4px;
                 }
             }
-          }  
+          }
     }
-    .sec-tabs.g { 
+    .sec-tabs.g {
         .tabs {
             background-color: #fff;
             border-bottom: 1px solid #ddd;
@@ -133,10 +156,10 @@
                     border-radius: 0;
                 }
             }
-            
+
         }
         .tabcon1 {
-            p { 
+            p {
                 color: #595757;
                 line-height: 2em;
             }
@@ -167,7 +190,7 @@
               }
             }
         }
-    } 
+    }
     .sec-profit1 {
         padding: 124px 0 10px 0;
         .tit {
@@ -185,7 +208,7 @@
                 top: -36px;
             }
         }
-        .box61{ 
+        .box61{
             cursor: pointer;
         }
         .box61>div {
@@ -311,7 +334,7 @@
             }
         }
     }
-    
+
 }
 
 .circle-chart {

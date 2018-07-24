@@ -51,13 +51,32 @@
       margin-left: 22px;
       margin-right: 95px;
     }
-    &>.to-loan{
+    &>.to-loan {
       margin-top: -5px;
       float: right;
       width: 152px;
       height: 39px;
       background-position: 0px 122px;
       background-image: url('./img/img.png');
+      text-align: center;
+      color: #fff;
+      font-size: 14px; 
+      padding-top: 8px;
+      &>span{ 
+        margin-bottom: -2px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-position: 0px 0px;
+        background-image: url('./img/img.png');
+      }
+    }
+    &>.to-loan-un {
+      margin-top: -5px;
+      float: right;
+      width: 152px;
+      height: 39px;
+      background-color: #A0B3C4;
       text-align: center;
       color: #fff;
       font-size: 14px; 
@@ -88,12 +107,12 @@
   }
   &>.recent-repany{
     margin-top: 10px;
-    &>.title{
+   .title{
       margin: 30px 0 15px;
       font-size: 14px;
       color: #000;
     }
-    &>.repany-content{
+    .repany-content{
       height: 65px;
       background-color:#fffdf8; 
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
@@ -136,8 +155,8 @@
         text-decoration: underline;
       } 
     }
-    &>.sub-content{
-      margin-top: 30px;
+    .sub-content{
+      margin-top: 18px;
       &>span{
         font-size: 14px;
         &.txt1{
@@ -149,9 +168,10 @@
         }
       }
     }
-    &>.chufa{
+    .chufa{
       float: right;
       color: #ff3b35;
+      margin-top: -24px;
     }
   } 
   &>.my-loan{

@@ -9,8 +9,8 @@ import {personal, mineloan} from '../services/api';
 import {message} from 'antd';
 
 let webToken = null;
-if (localStorage.getItem('accessToken')) {
-  const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+if (localStorage.getItem('accessTokenCompany')) {
+  const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
   webToken = webTokenObj.webToken ? webTokenObj.webToken : '';
 }
 
@@ -23,6 +23,11 @@ export default {
     loading: false,
   },
   effects: {
+    *clearData({payload},{put}) {
+      yield put({
+        type: 'clearDataSave',
+      });
+    },
     *getMineLoan({payload}, {call, put}){
       try {
         yield put({
@@ -50,6 +55,15 @@ export default {
     },
   },
   reducers: {
+    clearDataSave(state) {
+      return {
+        ...state,
+        data: [],
+        projectId: '',
+        projectName: '',
+        loading: false,
+      }
+    },
     saveMineLoan(state, {payload}) {
       return {
         ...state,

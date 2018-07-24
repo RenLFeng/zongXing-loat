@@ -6,7 +6,6 @@ import {Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input} from '
 import {regiserAccount} from '../../services/api';
 import { setTimeout } from 'timers';
 
-
 const Step = Steps.Step;
 
 @connect((state) => ({
@@ -26,8 +25,12 @@ export default class Register extends React.Component {
       regPhone: '', //注册手机号
       regPwd: '', //注册密码
       regAuthCode: '', //注册验证码
-      readStatus: true, //阅读注册协议状态
+      loginPhone: '', //登录手机号
+      loginPwd: '', //登录密码
+      readStatus: false, //阅读注册协议状态
       regLoading: false,
+      loginNameErr: '', //登录用户名提示
+      loginPwdErr: '', //登录密码提示
       regNameErr: '',  //注册手机号提示
       regAuthErr: '', //验证码提示
       regPwdErr: '', //注册密码提示
@@ -35,12 +38,30 @@ export default class Register extends React.Component {
       authLoading: false, //验证码接口发送状态
       errorTime: 60,
       flag: 1,  //显示登陆页面
+      loginName: '',  //验证身份时的手机号或用户名
+      mobile: '',
+      authCode: '',
+      codeNameErr1: '',   //验证手机号码提示
+      codeNameErr2: '',   //验证验证码提示语
+      newPass: '',  //
+      newPass_: '',
+      message1: '', //第一次输入密码时提示
+      message2: '',  //第二次输入密码时提示
       password: '',
+      code: '', //忘记密码时验证码
+
+      flagShow: false, //验证码发送之后提示语
+
       registerShow:true,  //校验是否显示已注册提示
       registerShow_:true,  //校验手机号是否存在时，发送验证码按钮的状态
       loginError: true,
       regPwdErrShow: true,
+
+      infoCurrent:false,  //注册信息完整
+      
       status:false,  //密码是否可见
+      disabled_:false  //是否可点
+
     };
     this.getAuthCode = this.getAuthCode.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -65,8 +86,24 @@ export default class Register extends React.Component {
     }
   }
 
+  
+  checkInfo(){
+    const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
+    if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 ){
+      console.log(regPhone,regPwd,regAuthCode)
+      this.setState({
+        disabled_:true
+      })
+    } else {
+      this.setState({
+        disabled_:false
+      })
+    }
+  }
+
   //检验手机号是否存在
   async checkPhoneNumber() {
+    
     const phoneNum = this.state.regPhone;
     if (phoneNum.length === 0) {
       this.setState({regNameErr: '请输入手机号'});
@@ -80,11 +117,12 @@ export default class Register extends React.Component {
     } else {
       this.setState({regNameErr: ''});
     }
+
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      let date = {
-        mobile: phoneNum
+      let param = {
+        mobile:phoneNum
       }
-      const response = await regiserAccount.getPhoneExist(date);
+      const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
         if (response.msg === '该手机号已注册，请直接登录！') {
           this.setState({
@@ -92,18 +130,20 @@ export default class Register extends React.Component {
             registerShow_: false,
             loginError: false
           });
+         
           return;
         }
         this.setState({
           regNameErr: response.msg,
           // registerShow: true,
-        });
+        }); 
       } else {
         this.setState({
           registerShow: true,
           registerShow_:true
         },()=>{
           this.setState({regNameErr: ''});
+          this.checkInfo()
         })  
       }
     }
@@ -126,18 +166,17 @@ export default class Register extends React.Component {
     this.setState({regNameErr: ''});
     // 发送验证码的时间存在本地
     const sendTime = localStorage.getItem(regPhone);
-    console.log(sendTime, new Date().getTime() - sendTime * 1,'***')
     if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
       alert(`${AUTH_CODE_TIME}秒内仅能获取一次验证码，请稍后重试`);
       return;
     }
     //调用获取验证码接口
     this.setState({authLoading: true});
-    let date = {
-      mobile: regPhone
-    }
     try {
-      const response = await regiserAccount.getAuthCode(date);
+      let param = {
+        mobile:regPhone
+      }
+      const response = await regiserAccount.getAuthCode(param);
       this.setState({authLoading: false});
       if (response.code === 0) {
         message.info('发送成功');
@@ -172,14 +211,17 @@ export default class Register extends React.Component {
     });
   }
 
+
   //注册提交方法
   async submitReg() {
+    console.log(11111111)
     if (this.state.regLoading) {
       return;
     }
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     let that = this.props;
     let flag = true;
+   
     if (regPhone.trim().length === 0) {
       this.setState({regNameErr: '请输入手机号'});
       flag = false;
@@ -219,9 +261,9 @@ export default class Register extends React.Component {
     } else {
       this.setState({regPwdErr: '',regPwdErrShow:true});
     }
-    if (!readStatus) {
+    if (readStatus) {
       this.setState({textErr: '请先阅读注册协议'});
-      flag = false;
+      flag = true;
     } else {
       this.setState({textErr: ''});
     }
@@ -236,7 +278,6 @@ export default class Register extends React.Component {
     const reg = {
       fmobile: regPhone.trim(),
       fpwd: regPwd.trim(),
-      // fpwd: regPwd,
       authcode:regAuthCode.trim(),
       type: 1, //投资用户
     };
@@ -253,7 +294,7 @@ export default class Register extends React.Component {
           regAuthCode: '',
           showAuthCode: true,
         });
-        message.info('注册成功,即将自动跳转到登陆界面')
+        message.info('注册成功,即将自动跳转到登录界面')
         setTimeout(function(){
           that.history.push('./login')
         },3000)
@@ -263,7 +304,7 @@ export default class Register extends React.Component {
       }
     } catch (e) {
       this.setState({regLoading: false});
-      console.log('服务器繁忙，请稍后重试');
+      message.error('服务器繁忙，请稍后重试');
     }
   }
 
@@ -281,17 +322,13 @@ export default class Register extends React.Component {
   }
 
   render() {
-    const { showAuthCode, countDown, regPhone, regPwd, regAuthCode, readStatus } = this.state;
+    const {showReg, showAuthCode, authCode, countDown, countDown_, regPhone, regPwd, regAuthCode, loginPwd, readStatus, flag, loginName, codeNameErr, newPass, newPass_, show, code, flagShow} = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
        
-      <div className="regiserdiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
+      <div className="logindiv1"  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
         <div className="back">
-                {/* <div className="hd center">
-                  <p className="hover">注册</p>
-                  <div></div>
-                </div> */}
-                <div className="form logf" onChange={this.onChange}  style={{paddingTop:80}}>
+                <div className="form logf" onChange={this.onChange} style={{paddingTop:80}}>
                   <Spin tip="注册中..." spinning={this.props.submitting} >
                     <div className="row" style={{position:'relative'}}>   
                       <input className="put "  value={regPhone} maxLength={20}
@@ -302,16 +339,21 @@ export default class Register extends React.Component {
                       
                       {
                         this.state.registerShow ?this.state.regNameErr?
-                        <p className="prompts">{this.state.regNameErr}</p>:
+                        <p className="prompts" style={{marginLeft:0}}>{this.state.regNameErr}</p>:
                         <p className="registration-prompts"> &nbsp;</p> : 
                         <p className="registration-prompts">该手机号已注册，<a onClick={() => this.props.history.push('./login')}>立即登录</a></p>
                        }
                      
                     </div>
-                    <div className="row relative" style={{marginBottom:30}}>
+                    <div className="row relative" style={{marginBottom:15}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}}/>
-                      <p className="prompts">{this.state.regAuthErr}</p>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} onBlur={()=>{this.checkInfo()}}/>
+                            {
+                              this.state.regAuthErr ?
+                             <p className="prompts" style={{marginLeft:0}}>{this.state.regAuthErr}</p> :
+                            <p className="prompts" style={{marginLeft:0}}>&nbsp;</p> }
+                      
+
                       {// 根据倒计时时间显示是否可以点击获取验证码按钮
                         this.state.registerShow_ ? 
                           ((showAuthCode) ?
@@ -327,7 +369,7 @@ export default class Register extends React.Component {
                              <div>
                                   <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" />
+                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
@@ -336,7 +378,7 @@ export default class Register extends React.Component {
                              <div>
                                <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" />
+                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
@@ -344,7 +386,7 @@ export default class Register extends React.Component {
                             
                            }
                            
-                      <p className="prompts">{this.state.regPwdErr}</p>
+                      <p className="prompts" style={{marginLeft:0}} >{this.state.regPwdErr}</p>
                       {
                         this.state.regPwdErrShow ?  <p className="registration-prompts">密码不可纯数字，区分大小写，8-15位字符</p>  : null
                       }
@@ -358,7 +400,7 @@ export default class Register extends React.Component {
                           checked={readStatus}
                           type="checkbox"
                           onChange={() => this.setState({readStatus: !readStatus})}
-                          style={{position:'absolute',top:-3}}
+                          style={{position:'absolute',top:-3,left:-92}}
                         />
                         <label className="fl"  style={{ marginLeft:17,color:'#333333',marginTop:-7}}>
                           <i>已阅读并接受</i>
@@ -368,10 +410,12 @@ export default class Register extends React.Component {
                       </p>
                     
                     <div style={{marginTop:95}}>
-                      {
-                        this.state.readStatus ? <a className="btn" onClick={this.submitReg}>注册</a> :<a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
-                      }
-                      
+                     {
+                       this.state.disabled_  && this.state.readStatus? 
+                       <a className="btn" onClick={this.submitReg} loading={this.state.regLoading}>注册</a>:
+                       <a className="btn" style={{backgroundColor: '#D1D1D1'}}>注册</a>
+                    }
+        
                     </div>
                     <p className="safe-info">
                       <i className="zjb zjb-renzheng1" style={{color:'#4cd964',fontSize:14,marginRight:5}}/>
@@ -381,7 +425,7 @@ export default class Register extends React.Component {
                 </div> 
         </div>
         <div className="back_">      
-          <img  src={require('../../assets/img/注册_03.png')}  />
+          <img src={require('../../assets/img/register_03.png')}  />
         </div>
       </div>
       

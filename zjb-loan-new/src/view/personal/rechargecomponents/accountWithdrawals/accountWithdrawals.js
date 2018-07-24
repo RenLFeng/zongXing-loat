@@ -79,7 +79,6 @@ export default class EnterprisePresentation extends React.Component {
       // this.props.history.push('/index/uCenter/realName');
       return;
     }
-     this.getCardInformation();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -91,18 +90,7 @@ export default class EnterprisePresentation extends React.Component {
     }
   }
 
-  //获取银行卡
-  async getCardInformation() {
-    const response = await accountService.getBankCardList();
-    console.log('提现银行卡接口',response);
-    if (response.code === 0) {
-      this.setState({
-        bankcardInfos: response.data
-      });
-    } else {
-      message.error(response.msg);
-    }
-  }
+
 
   submit_() {
     this.formId.submit();

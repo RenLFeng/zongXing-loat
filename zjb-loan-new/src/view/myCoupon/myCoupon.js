@@ -1,127 +1,551 @@
 import React from 'react';
 import $ from 'jquery';
 import LeftMenu from '../../components/leftmenu/leftMenu';
-import SeeCoupon from './seeCoupon/seeCoupon.js';
-import SendCoupon from './sendCoupon/sendCoupon.js';
-import BarReact from '../../components/Echarts/BarReact.js';
+import SeeCoupon from './seeCoupon/seeCoupon';
+import AlreadyCoupon from './alreadyCoupon/alreadyCoupon';
+import UsedCoupon from './usedCoupon/usedCoupon';
+
+import SendCoupons from './sendCoupon/sendCoupon';
+import BarE from './useCoupons';
+import PieE from './CouponIssuance';
 import './myCoupon.scss';
+import { Table,Pagination ,Tooltip } from 'antd';
+import {CouponService} from '../../services/api';
+import moment from 'moment';
+
+
 export default class MyCoupon extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      barOption: {
-        title:{
-          text:'ECharts 数据统计'
-        },
-        xAxis: [
-          {
-            data: ["未使用","","","","",""],
-            axisLine: {
-              lineStyle: {
-                type: 'solid',
-                width:'2'
-              }
-            },
-            axisLabel: {
-              textStyle: {
-                color: '#f90'
-              }
-            }
-          },
-        ],
-        yAxis: {
-          splitLine:{ show:false}
-        },
-        series: [{
-          name: '',
-          type: 'bar',
-          data:[500,200,"",360,100],
-          barWidth : 30,
-          itemStyle: {
-            normal:{
-              label: {
-                show: true,
-                textStyle: {
-                  fontWeight: 'bolder',
-                  fontSize: '12',
-                  fontFamily: '微软雅黑',
-                  color:"#666"
-                },
-                position: 'top'
-              },
-              color: function (params){
-                var colorList = ['rgb(255,153,0)','rgb(42,170,227)','rgb(255,255,255)','rgb(255,153,0)','rgb(42,170,227)'];
-                return colorList[params.dataIndex];
-              }
-            },
-            //鼠标悬停时：
-            emphasis: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        }]
-      }
+      flag:'noUse',
+      // flagCoupon:'noUse',
+      showSeeCoupon:false,
+      showAlreadyCoupon:false,
+      showFailedCoupon:false,
+      SendCouponShow:false,
+      pageCurrent:1,
+      pageSize:3,
+      dataSource:[],    //未使用的优惠券数据
+      dataSource_:[],    //已使用的优惠券数据
+      dataSources:[],    //已失效的优惠券数据
+      dataSourceNum:0,    //未使用总条数
+      dataSourceNum_:0,    //已使用总条数
+      dataSourceNums:0,    //已失效总条数
+      chart:'bar',
+      useStatistics:null,   //使用统计
+      statistics:{},       //发放统计
+      couponInfo:{},     //优惠券数据
+      project:{},     //项目信息
     }
+    this.close = this.close.bind(this)
+    this.close_ = this.close_.bind(this)
   }
   componentDidMount() {
-   $(".see").on("click",function(){
-     $(".see-box").removeClass("none");
-   })
-    $(".send").on("click",function(){
-      $(".send-coupon").removeClass("none");
-    })
-    $(".close").on("click",function(){
-      $(".see-box,.send-coupon").addClass("none");
+    this.getCoupon();
+  }
+
+  async getCoupon(){
+    let param = {
+      pageCurrent:this.state.pageCurrent,
+      pageSize:this.state.pageSize
+    }
+    const response = await CouponService.getCouponInfo(param);
+    console.log('12121212ssssssss',response)
+    if(response.code === 0){
+      this.setState({
+        dataSource:response.data.tableStatistical.unUsed.infoList,
+        dataSource_:response.data.tableStatistical.used.infoList,
+        dataSources:response.data.tableStatistical.invalid.infoList,
+        dataSourceNum:response.data.tableStatistical.unUsed.totalNumber,
+        dataSourceNum_:response.data.tableStatistical.used.totalNumber,
+        dataSourceNums:response.data.tableStatistical.invalid.totalNumber,
+        useStatistics:response.data.companyCouponChartsVo.useStatistical,
+        statistics:response.data.companyCouponChartsVo.grantStatistical,
+        project:response.data.projectInfo
+      })
+    }
+  }
+
+  async getCouponDetail(id){
+    const response = await CouponService.myCouponDetail(id);
+    if(response.code === 0){
+      this.setState({
+        couponInfo:response.data
+       })
+
+    }
+  }
+
+  //翻页触发的事件
+onchange = (page) => {
+  this.setState({
+      pageCurrent: page,
+  },()=>{
+  this.getCoupon();
+  });
+}
+
+//页码数改变触发的事件
+onShowSizeChange = (current, pageSize) => {
+  this.setState({
+      pageSize: pageSize,
+      pageCurrent: current,
+  },()=>{
+      this.getCoupon()
+  });
+}
+  
+
+  //切换页面
+  changePage(flags){
+    if( flags==='noUse'){
+      this.setState({
+       flag:'noUse',
+       showAlreadyCoupon:false,
+       showFailedCoupon:false,
+      })
+    }
+    if( flags==='alreadyUse'){
+      this.setState({
+       flag:'alreadyUse',
+       showSeeCoupon:false,
+       showFailedCoupon:false,
+      })
+    }
+    if( flags==='failed'){
+      this.setState({
+       flag:'failed',
+       showSeeCoupon:false,
+       showAlreadyCoupon:false,
+      })
+    }
+  }
+
+  changeChart(type){
+    if(type === 'bar'){
+      this.setState({
+        chart: 'bar'
+      })
+    }
+    if(type === 'pie'){
+      this.setState({
+        chart: 'pie'
+      })
+    }
+  }
+
+  //获取优惠券数据
+  see(data,type){
+    if(type === 'unUse'){
+      this.setState({
+        showSeeCoupon:true,
+       })
+    }
+    if(type === 'alreadyUse'){
+      this.setState({
+        showAlreadyCoupon:true,
+       })
+    }
+    if(type === 'used'){
+      this.setState({
+        showFailedCoupon:true,
+       })
+    }
+     let param = {
+      couponUserId:data.couponUserId
+     }
+     this.getCouponDetail(param)
+  }
+
+  //查看优惠券关闭
+  close(type){
+    if(type === 'unUse'){
+      this.setState({
+        showSeeCoupon:false,
+       })
+    }
+    if(type === 'alreadyUse'){
+      this.setState({
+        showAlreadyCoupon:false,
+       })
+    }
+    if(type === 'used'){
+      this.setState({
+        showFailedCoupon:false,
+       })
+    }
+  }
+
+  //发放优惠券关闭
+  close_(){
+    this.setState({
+      SendCouponShow:false
     })
   }
-    render(){
+
+  send(){
+    if(!this.state.project.fid){
+      this.setState({
+        SendCouponShow:true,
+        background:true
+      })
+    } else {
+      this.setState({
+        background:false
+      })
+    }
+  }
+
+render(){
+  const columns = [{
+          title: '优惠券编码',
+          dataIndex: 'couponCode',
+          key: 'couponCode',
+          align:'center',
+        }, {
+          title: '面值',
+          dataIndex: 'fullSubMoney',
+          key: 'fullSubMoney',
+          align:'center',
+        }, {
+          title: '使用规则',
+          dataIndex: 'fullSubCondition',
+          key: 'fullSubCondition',
+          align:'center',
+        },{
+          title: '类型',
+          dataIndex: 'couponType',
+          key: 'couponType',
+          align:'center',
+          render:(text,val)=>{
+            return (
+              <span>{val === 1 ?'投资类' : '游客类'}</span>
+            )     
+          }
+        }, {
+          title: '发行日期',
+          dataIndex: 'creatTime',
+          key: 'creatTime',
+          align:'center',
+          render:(val) => {
+            return   moment(val).format('YYYY-MM-DD HH:mm') 
+          }
+        }, {
+          title: '失效日期',
+          dataIndex: 'endTime',
+          key: 'endTime',
+          align:'center',
+          render:(val) => {
+              return   moment(val).format('YYYY-MM-DD HH:mm')
+            }
+        }, {
+          title: '状态',
+
+          dataIndex: 'couponState',
+          key: 'couponState',
+          align:'center',
+          render:(val) => {
+              switch (val) {
+                case 0:
+                    return <span>待生效</span>
+                case 1:
+                    return <span>待领取</span>
+                case 2:
+                    return <span style={{color:'#ed7d31'}}>·未使用</span>
+                case 3:
+                    return <span>兑换券(未使用)</span>
+                case 4:
+                    return <span style={{color:'#FD0018'}}>·已过期</span>
+                case 5:
+                    return <span style={{color:'#FD0018'}}>·流标</span>
+                case 6:
+                    return <span>已使用</span>
+            }
+          }
+        }, {
+          title: '操作',
+          dataIndex: 'do',
+          align:'center',
+          render: (text,record) => {
+            return(
+              <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>
+            )  
+          },
+        },
+  ];
+
+  const columns_ = [{
+        title: '使用日期',
+        dataIndex: 'consumeTime',
+        key: 'consumeTime',
+        align:'center',
+        render:(val) => {
+          return   moment(val).format('YYYY-MM-DD HH:mm') 
+        }
+      }, {
+        title: '面值',
+        dataIndex: 'fullSubMoney',
+        key: 'fullSubMoney',
+        align:'center',
+      }, {
+        title: '使用规则',
+        dataIndex: 'fullSubCondition',
+        key: 'fullSubCondition',
+        align:'center',
+      },{
+        title: '类型',
+        dataIndex: 'couponType',
+        key: 'couponType',
+        align:'center',
+        render:(text,val)=>{
+          return (
+            <span>{val === 1 ?'投资类' : '游客类'}</span>
+          )     
+        }
+      }, {
+        title: '优惠券编码',
+        dataIndex: 'couponCode',
+        key: 'couponCode',
+        align:'center',
+      }, {
+        title: '状态',
+        dataIndex: 'couponState',
+        key: 'couponState',
+        align:'center',
+        render:(val) => {
+          switch (val) {
+            case 0:
+                return <span>待生效</span>
+            case 1:
+                return <span>待领取</span>
+            case 2:
+                return <span style={{color:'#ed7d31'}}>·未使用</span>
+            case 3:
+                return <span>兑换券(未使用)</span>
+            case 4:
+                return <span style={{color:'#FD0018'}}>·已过期</span>
+            case 5:
+                return <span style={{color:'#FD0018'}}>·流标</span>
+            case 6:
+                return <span>已使用</span>
+        }
+      }
+      }, {
+        title: '操作',
+        dataIndex: 'do',
+        align:'center',
+        render: (text,record) => {
+          return(
+            <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'alreadyUse')}}>查看</a>
+          )  
+        },
+      },
+  ];
+
+  const column = [{
+      title: '失效日期',
+      dataIndex: 'endTime',
+      key: 'endTime',
+      align:'center',
+      render:(val) => {
+        return   moment(val).format('YYYY-MM-DD HH:mm') 
+      }
+    }, {
+      title: '面值',
+      dataIndex: 'fullSubMoney',
+      key: 'fullSubMoney',
+      align:'center',
+    }, {
+      title: '使用规则',
+      dataIndex: 'fullSubCondition',
+      key: 'fullSubCondition',
+      align:'center',
+    },{
+      title: '类型',
+      dataIndex: 'couponType',
+      key: 'couponType',
+      align:'center',
+      render:(text,val)=>{
+        return (
+          <span>{val === 1 ?'投资类' : '游客类'}</span>
+        )     
+      }
+    }, {
+      title: '优惠券编码',
+      dataIndex: 'couponCode',
+      key: 'couponCode',
+      align:'center',
+    }, {
+      title: '状态',
+      dataIndex: 'couponState',
+      key: 'couponState',
+      align:'center',
+      render:(val) => {
+        switch (val) {
+          case 0:
+              return <span>待生效</span>
+          case 1:
+              return <span>待领取</span>
+          case 2:
+              return <span style={{color:'#ed7d31'}}>·未使用</span>
+          case 3:
+              return <span>兑换券(未使用)</span>
+          case 4:
+              return <span style={{color:'#FD0018'}}>·已过期</span>
+          case 5:
+              return <span style={{color:'#FD0018'}}>·流标</span>
+          case 6:
+              return <span>已使用</span>
+      }
+    }
+    }, {
+      title: '操作',
+      dataIndex: 'do',
+      align:'center',
+      render: (text,record) => {
+        return(
+          <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'used')}}>查看</a>
+        )  
+      },
+    },
+  ];
+
+  const locale = {
+    filterTitle: '筛选',
+    filterConfirm: '确定',
+    filterReset: '重置',
+    emptyText: '暂无数据',
+  }
+  console.log('this.propsthis.props',this.state.project)
         return(
          <div>
               <LeftMenu param={this.props} />
               <div className="fr uc-rbody my-coupon ">
-                <SeeCoupon />
-                <SendCoupon />
-                <div className="graph-box">
+              {
+                this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo}/> : null
+              }
+              {
+                 this.state.showAlreadyCoupon ?   <AlreadyCoupon couponInfo={this.state.couponInfo} close={this.close}/> :null
+              }
+              {
+                this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
+              }
+              {
+                this.state.SendCouponShow ? <SendCoupons close={this.close_} project={this.state.project}/> : null
+              }
+                
+                
+                  <div className="graph-box">
                   <div className="tit clearfix">
                     <p className="fl">
-                      <span className="act">优惠券使用统计</span>
-                      <span>优惠券发放统计</span>
+                      <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
+                      <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    <p className="send fr">发优惠券</p>
+                    {
+                      !this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
+                      <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
+                    }
+                   
                   </div>
-                  <div className="graph">
-                    <BarReact width='600px' height="400px"  option={this.state.barOption}/>
-                  </div>
-                </div>
+                  {
+                    this.state.chart === 'bar'  ? 
+                      <div className="graph">
+                        <BarE useStatistics={this.state.useStatistics} />
+                      </div> :
+                      <div className="graph">
+                        <PieE statistics={this.state.statistics}/>
+                      </div>
+                   }
+                </div> 
+
+                
+
                 <div className="table-box">
                   <div className="tit">
-                    <p className="t1"><span className="bord">未使用</span><span>已使用</span><span>已失效</span></p>
-                    <p className="nub">共<span>153</span>张</p>
+                    <p className="t1">
+                      <span className={ this.state.flag === 'noUse' ? "bord": ""} onClick={()=>{this.changePage('noUse')}}>未使用</span>
+                      <span className={ this.state.flag === 'alreadyUse' ? "bord": ""} onClick={()=>{this.changePage('alreadyUse')}}>已使用</span>
+                      <span className={ this.state.flag === 'failed' ? "bord": ""} onClick={()=>{this.changePage('failed')}}>已失效</span>
+                    </p>
                   </div>
-                  <table border="1">
-                    <tr>
-                      <td>优惠券编码</td>
-                      <td>面值</td>
-                      <td>使用规则</td>
-                      <td>类型</td>
-                      <td>发行日期</td>
-                      <td>失效日期</td>
-                      <td>状态</td>
-                      <td>操作</td>
-                    </tr>
-                    <tr>
-                      <td>项目编号-0001</td>
-                      <td>50元</td>
-                      <td>满100减</td>
-                      <td>投资类</td>
-                      <td></td>
-                      <td></td>
-                      <td className="state">未使用</td>
-                      <td className="see">查看</td>
-                    </tr>
-                  </table>
+                  {
+                    this.state.flag === 'noUse' ? 
+                    <div className="tab">
+                      <p className="nub">共<span>{this.state.dataSourceNum ? this.state.dataSourceNum : 0}</span>张</p>
+                      <Table
+                       columns={columns}
+                       locale = {locale}
+                       pagination={false}
+                       dataSource={this.state.dataSource} 
+                       bordered
+                       size="small" 
+                      />
+                       {
+                       Math.ceil(this.state.dataSourceNum/this.state.pageSize) > 1 ?  
+                       <Pagination 
+                        total={this.state.dataSourceNum }
+                        current={this.state.pageCurrent}
+                        pageSize={this.state.pageSize}
+                        onChange={this.onchange}
+                        onShowSizeChange={this.onShowSizeChange}
+                        style={{marginTop:30,textAlign:'center'}}
+                        /> :null
+                      }
+                    </div>
+                    :
+                      (this.state.flag === 'alreadyUse') ?
+                      <div className="tab">
+                        <p className="nub">共<span>{this.state.dataSourceNum_ ? this.state.dataSourceNum_ : 0}</span>张</p>
+                        <Table
+                          columns={columns_}
+                          locale = {locale}
+                          pagination={false}  
+                          dataSource={this.state.dataSource_} 
+                          bordered
+                          size="small" 
+                          style={{padding:'0 !important' }}
+                        />
+                         {
+                       Math.ceil(this.state.dataSourceNum_/this.state.pageSize) > 1 ?  
+                       <Pagination 
+                        total={this.state.dataSourceNum_ }
+                        current={this.state.pageCurrent}
+                        pageSize={this.state.pageSize}
+                        onChange={this.onchange}
+                        onShowSizeChange={this.onShowSizeChange}
+                        style={{marginTop:30,textAlign:'center'}}
+                        /> :null
+                      }
+                      </div>
+                     :
+                      (this.state.flag === 'failed') ?
+                      <div className="tab"> 
+                        <p className="nub">共<span>{this.state.dataSourceNums ? this.state.dataSourceNums :0}</span>张</p>
+                        <Table
+                          columns={column}
+                          locale = {locale}
+                          pagination={false} 
+                          dataSource={this.state.dataSources}  
+                          bordered
+                          size="small" 
+                          style={{padding:'0 !important' }}
+                        />
+                         {
+                       Math.ceil(this.state.dataSourceNums/this.state.pageSize) > 1 ?  
+                       <Pagination 
+                        total={this.state.dataSourceNums}
+                        current={this.state.pageCurrent}
+                        pageSize={this.state.pageSize}
+                        onChange={this.onchange}
+                        onShowSizeChange={this.onShowSizeChange}
+                        style={{marginTop:30,textAlign:'center'}}
+                        /> :null
+                      }
+                      </div>
+                      : null
+                  }
+                  
                 </div>
               </div>
          </div>

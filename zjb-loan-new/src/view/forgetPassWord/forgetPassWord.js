@@ -1,6 +1,6 @@
 import React from 'react';
 import '../login/login.scss';
-import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg} from '../../common/SystemParam';
+import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,word_reg, LICENSE} from '../../common/SystemParam';
 import { connect } from 'dva';
 import $ from 'jquery';
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
@@ -10,8 +10,8 @@ import { regiserAccount, doLogin,  getAuthCode, regUser, changePW, changePasswor
 const Step = Steps.Step;
 
 @connect((state) => ({
-login: state.login,
-submitting: state.login.submitting
+    login: state.login,
+    submitting: state.login.submitting
 }))
 @Form.create()
 export default class ForgetPassWord extends React.Component {
@@ -165,7 +165,7 @@ infoCheck(){
   const { realName} = this.state;
   if(realName.length === 0){
     this.setState({
-      message2:'姓名不能为空'
+      message2:'企业名称不能为空'
     })
     return
   } else {
@@ -189,13 +189,13 @@ infoCheck_(){
   const { idCard } = this.state;
   if(idCard.length === 0){
     this.setState({
-      message3:'身份证号不能为空'
+      message3:'统一社会信用代码不能为空'
     })
     return
   }
-  if(!CARD_REG.test(idCard)){
+  if(!LICENSE.test(idCard)){
     this.setState({
-      message3:'身份证号码格式不正确'
+      message3:'统一社会信用代码格式不正确'
     })
     return
   } else{
@@ -362,7 +362,7 @@ infoCheck_(){
           <div className="forget_btnGroup">
             <Steps current={this.state.currentNum}>
               <Step title="验证手机" />
-              <Step title="验证身份" />
+              <Step title="验证企业身份" />
               <Step title="重设密码" />
               <Step title="找回成功" />
             </Steps>
@@ -415,7 +415,7 @@ infoCheck_(){
                     this.state.whetherAuthentication ?
                       <div style={{marginTop:20}}>
                         <div className="forget_inp">
-                          <Input placeholder="请输入姓名" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} style={{width:329,marginTop:-2}} onBlur={()=>{this.infoCheck()}}/>
+                          <Input placeholder="请输入企业全称" value={realName} onChange={(e) => { this.setState({ realName: e.target.value }) }} style={{width:329,marginTop:-2}} onBlur={()=>{this.infoCheck()}}/>
                           <i className="zjb zjb-moban forget_name" />
                           <span style={{position:'absolute',top:'3px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         </div>
@@ -425,7 +425,7 @@ infoCheck_(){
                             <p className="forget-prompts">  &nbsp;</p> 
                          }
                         <div className="forget_inp">
-                          <Input placeholder="请输入身份证号" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}} onBlur={()=>{this.infoCheck_()}}/>
+                          <Input placeholder="请输入企业统一社会信用代码" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}} onBlur={()=>{this.infoCheck_()}}/>
                           <i className="zjb zjb-credentials forget_card" />
                           <span style={{position:'absolute',top:'1px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         </div>

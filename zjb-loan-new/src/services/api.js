@@ -28,6 +28,9 @@ export const CouponService = {
 
     getAccountCoupon:async(param) =>req.get('/account/mycoupon',param),
     
+    getCouponInfo:async(param)=> req.post('coupon/borrow/mycoupon/statistics',param)
+    
+    
 };
 
 // 账户服务
@@ -40,6 +43,8 @@ export const accountService={
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
+    // 获取实名认证状态接口
+    getRealAuthByMoneyMore: async ()=>req.get('/account/mmm/state'),
     /**
      * 投资记录
      * pageParam 
@@ -76,14 +81,33 @@ export const baseService={
 
     getProjectType: async () => req.get('/apply/getProjectCode'),
     
-// 获取当前项目的 委员会确认结果
+    // 获取当前项目的 委员会确认结果
     getConfirmResult: async (param) => req.get('project/getRateAndLevel?projectId='),
       // 获取之前的 借款信息接口
       getLoanInfo: async () => req.get('/apply/getOne'),
-    
+
+    // 还款计划详情
+    getDetailPlane:async(param)=>req.get('/project/borrowPlanInfo?projectId='+param.projectId+"&forPayTime="+param.forPayTime),
+    // 手动还款接口
+    manualReimpayment:async(param)=>req.post('/repayment/manually',param),
+    // 获取还款计划
+    getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
+// 保存 借款信息接口
+    saveLoanInfo: async (param) => req.post('/apply/save', param),
+    // 提交借款信息接口
+    commitInfo: async (param) => req.post('/apply/submit', param),
+    // 项目可选城市获取
+    getProCityList: async () => req.get('/apply/getCity'),
+    getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),
+    // 获取上传视频的签名
+    createKey: async ()=>req.get('/getUploadSignature')
+
 }
 
   
+
+  
+
 
 //登录 dbb
 export const doLogin={
@@ -100,8 +124,8 @@ export const doLogin={
     // 获取用户基础信息的接口
     getUserBaseData:async(param)=>req.get('/userInfo/findOne'),
     //修改登陆密码
-    UpdatePass:async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
-    changePass:async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+    UpdatePass:async(param) => req.post('/userInfo/updatePassword',param),
+    changePass:async(param) => req.post('/userInfo/verifyForPassword',param),
  
 }
 
@@ -144,7 +168,8 @@ export const personal = {
     //回款计划
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
-     borrowPlan: async (param) => req.get('/project/getBorrowPlan',param),
+
+
 }
     
 
@@ -165,6 +190,7 @@ export const mineloan = {
     //删除项目历程
     delTimeLine: async (param) => req.get('/projectJourney/delete', param),  
     //获取项目等级 和利率/project/getRateAndLevel 
+
     getProjectdl: async (param) => req.get('/project/getRateAndLevel', param),
     //删除项目
     delProject: async (param) => req.get('/project/delete', param), 
@@ -196,6 +222,7 @@ export const mineloan = {
     saveCou: (param) => req.post('/coupon/save', param),
     //获取优惠券
     getSendCou: (param) => req.get('/coupon/self/coupon', param),
+    
 
 }
 //实名认证 - momei
@@ -203,7 +230,7 @@ export const securityCentreService = {
   getSafeData: async () => req.get('/securityCenter/findByuserId'),
   createAccount: async(param) => req.post('/account/add', param),
   /** 开户 */
-  createAccount: async(param) => req.post('/zjb-dc/account/add', param),
+  //createAccount: async(param) => req.post('/zjb-dc/account/add', param),
   /** 获取当前用户的企业开户所需信息 */
   getCompanyRealInfo: async() => req.get(''),
   /** 获取企业基本信息 */
@@ -225,13 +252,15 @@ export const securityCentreService = {
   closeAuthorization: async(willStr,companyNo,returnUrl) => req.get(`/author/close?willStr=${willStr}&companyNo=${companyNo}&notifyPageUrl=${returnUrl}`),
 
   /** 获取用户基础信息的接口 */
-  getUserBaseData: async() => req.get('/zjb-website/userInfo/findOne'),
+  getUserBaseData: async() => req.get('/userInfo/findOne'),
 
   /** 为修改密码发送验证码 */
-  UpdatePass: async(param) => req.post('/zjb-website/userInfo/updatePassword',param),
+  UpdatePass: async(param) => req.post('/userInfo/updatePassword',param),
   /** 验证修改密码时的验证码 */
-  changePass: async(param) => req.post('/zjb-website/userInfo/verifyForPassword',param),
+  changePass: async(param) => req.post('/userInfo/verifyForPassword',param),
   
+  //授权
+  getAccredit: async() => req.get('/mohe/getORcode'),
   
 
 }

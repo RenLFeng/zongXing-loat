@@ -21,7 +21,8 @@ export default class Loaninfo extends React.Component {
       recharge: {},  //提交表单后返回的数据
       loading: false,
       id: '',
-  
+      accountId: ''
+
       //  提交表单参数
     }
   }
@@ -40,14 +41,27 @@ export default class Loaninfo extends React.Component {
       })
       console.log('n45454545454545m', nextProps.param)
     }
+    console.log(this.props, nextProps.param,"666666666666666666666666666666666666666666")
   }
+  componentDidMount() {
+    // this.getinit();
+    this.getUserINfo();
+  }
+  async getUserINfo() {
+    const response = await accountService.getPersonalData();
 
+    if (response.code === 0) {
+      this.setState({
+        accountId: response.data.companyTotalAssetsVo.accountId
+      })
+    }
+  }
   handleSubmit = () => {
     if (this.state.amountError) {
       return;
     }
     let param = {
-      accountId: this.state.activeObj.faccountId,
+      accountId: this.state.accountId,
       rechargeType: this.state.rechargeType,
       amount: this.state.amount
     }
@@ -96,7 +110,7 @@ export default class Loaninfo extends React.Component {
 
   submitMoney() {
 
-    console.log(this.formId,"this.formId")
+    console.log(this.formId, "this.formId")
     this.formId.submit();
 
     // Modal.confirm({
@@ -109,14 +123,14 @@ export default class Loaninfo extends React.Component {
   }
 
   render() {
-    const {recharge} = this.state;
+    const { recharge } = this.state;
     return (
       <div className="recharge-form">
         <div className="containers">
-          <p style={{ width: 500 }}>
+          {/* <p style={{ width: 500 }}>
             <span className="label_text-card">   充值银行卡 </span> <span className="card-info-title">{this.state.activeObj.fbank} 尾号 {this.sub(this.state.activeObj.fbankcard
             )} </span>
-          </p>
+          </p> */}
           <div>
             <div className="rech_center">
               <div className="label_div" style={{ width: '116px' }}>
@@ -137,22 +151,22 @@ export default class Loaninfo extends React.Component {
               <Button type="primary" onClick={this.handleSubmit} style={{ width: 325, height: 38 }}>发起充值</Button>
             </div>
           </div>
-           <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
-          <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
-          <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
-          <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
-          <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
-          <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
-          <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
-          <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
-          <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
-          <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
-          <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
-          <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
-          <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
-          <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden"  />
-          <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
-        </form>
+          <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">
+            <input id="RechargeMoneymoremore" name="RechargeMoneymoremore" value={recharge.rechargeMoneymoremore} type="hidden" />
+            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={recharge.platformMoneymoremore} type="hidden" />
+            <input id="OrderNo" name="OrderNo" value={recharge.orderNo} type="hidden" />
+            <input id="Amount" name="Amount" value={recharge.amount} type="hidden" />
+            <input id="RechargeType" name="RechargeType" value={recharge.rechargeType} type="hidden" />
+            <input id="FeeType" name="FeeType" value={recharge.feeType} type="hidden" />
+            <input id="CardNo" name="CardNo" value={recharge.cardNo} type="hidden" />
+            <input id="RandomTimeStamp" name="RandomTimeStamp" value={recharge.randomTimeStamp} type="hidden" />
+            <input id="Remark1" name="Remark1" value={recharge.remark1} type="hidden" />
+            <input id="Remark2" name="Remark2" value={recharge.remark2} type="hidden" />
+            <input id="Remark3" name="Remark3" value={recharge.remark3} type="hidden" />
+            <input id="ReturnURL" name="ReturnURL" value={recharge.returnURL} type="hidden" />
+            <input id="NotifyURL" name="NotifyURL" value={recharge.notifyURL} type="hidden" />
+            <input id="SignInfo" name="SignInfo" value={recharge.signInfo} type="hidden" />
+          </form>
         </div>
       </div>
     )

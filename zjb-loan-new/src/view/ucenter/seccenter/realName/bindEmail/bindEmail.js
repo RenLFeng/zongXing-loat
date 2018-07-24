@@ -70,7 +70,7 @@ import {connect} from 'dva';
      }
      this.setState({ loading: true });
      try{
-      const response = await personal.checkEmail(email);
+      const response = await personal.checkEmail({email: email});
       if(response.code === 0){
         message.info(response.msg)
         this.setState({
@@ -105,12 +105,16 @@ import {connect} from 'dva';
     //绑定邮箱
      async bindEmail(){
       const {email,code} = this.state;
+      if (email.trim().length === 0) {
+        message.error('邮箱不能为空');
+        return;
+      }
       if(code.trim().length === 0){
         message.error('验证码不能为空');
         return
       }
       this.setState({sureloading:true})
-      const response = await personal.bindEmail(email);
+      const response = await personal.bindEmail({authCode: code, email: email});
       if(response.code === 0){
         this.setState({
           firstShow:false,

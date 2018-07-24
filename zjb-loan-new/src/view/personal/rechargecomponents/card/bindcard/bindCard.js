@@ -37,7 +37,7 @@ const btnLayout = {
 @connect((state) => ({
   safeData: state.safeCenter.safeData,
   safeDataLoading: state.safeCenter.safeDataLoading,
-  accountId: state.account.personal.totalAssets.accountId
+  accountId: state.personal.data.companyTotalAssetsVo.accountId
 }))
 class BindCard extends React.Component {
   constructor(props) {
@@ -63,13 +63,53 @@ class BindCard extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.dispatch({
-      type: 'account/getPersonalAccount',
-      payload: {
-        showNumInfo: 4,
-      }
-    });
+    this.getOpenStatus()
     this.queryUserBaseInfo();
+  }
+  async getOpenStatus() {
+    const response = await accountService.getPersonalData();
+    if (response.code === 0) {
+      this.props.dispatch({
+        type: 'personal/getPersonalAccount',
+        payload: response.data
+      })
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 1, // 开户成功 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户未开户') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: -1, // 未开户 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/openAccount');
+    } else if (response.code === -1 && response.msg === '该账户正在开户中') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 2, // 开户中 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/realName');
+    } else if (response.code === -1 && response.msg === '该账户开户失败') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 0, // 开户失败 
+          openFailMsg: response.data
+        }
+      })
+      this.props.history.push('/index/uCenter/realName');
+    } else {
+      response.msg && message.error(response.msg);
+    }
   }
 
   // 查询当前登录的用户

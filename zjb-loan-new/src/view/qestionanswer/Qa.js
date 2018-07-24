@@ -1,12 +1,15 @@
 import React from 'react';
+import $ from 'jquery';
 import {loanQa} from './LoanQa';
 import './qa.scss';
- 
+
 export default class Qa extends React.Component {
   state = {
     answerArr: loanQa[0].data
   }
-
+  componentDidMount() {
+    $(".sec-qa > .w > .fl .t2").eq(0).addClass("act");
+  }
   chooseType (data) {
     for (let obj of loanQa) {
       if (obj.type === data) {

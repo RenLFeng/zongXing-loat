@@ -6,7 +6,7 @@
     height: 544px;
     left: 50%;
     z-index: 10;
-    background: url(../../assets/img/登陆_03.png) no-repeat right center #fff;
+    background: url(../../assets/img/login_03.png) no-repeat right center #fff;
     transform: translate(0,200px);
     transition: transform ease 0.5s;
     a.blue {
@@ -47,7 +47,7 @@
     .hd {
         margin-bottom: 50px;
         margin-top: 80px;
-        margin-right: 46px;
+        margin-right: 90px;
         a {
             width: 80px;
             height: 18px;
@@ -253,6 +253,10 @@
         top:-160px;
         left:300px;
     }
+
+    // .ant-spin-container{
+    //     width:400px;
+    // }
 }
 .back_{
     position: absolute;
@@ -589,3 +593,5 @@
         background: #0F9B30;
     }
 }
+
+

@@ -15,8 +15,11 @@ if (build === 'production') {
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.59:8001';
-  document.title ="众借帮--开发环境"; 
+  BASE_URL = 'http://192.168.1.61:8001';
+  document.title ="众借帮--本地测试环境"; 
+} else if (build === 'ys') {
+  BASE_URL = 'http://193.112.97.50:8001';
+  document.title ="众借帮--演示测试环境"; 
 }
 const codeMessage = {
   200: '服务器成功返回请求的数据',
@@ -64,8 +67,8 @@ export const req = {
 
     // 判断上一次请求的时间
     let token = '';
-    if (localStorage.getItem('accessToken')) {
-      const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+    if (localStorage.getItem('accessTokenCompany')) {
+      const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
       token = webTokenObj.webToken ? webTokenObj.webToken : '';
     }
     const Options = {
@@ -104,8 +107,8 @@ export const req = {
     }
     // 判断上一次请求的时间
     let token = '';
-    if (localStorage.getItem('accessToken')) {
-      const webTokenObj = JSON.parse(localStorage.getItem('accessToken'));
+    if (localStorage.getItem('accessTokenCompany')) {
+      const webTokenObj = JSON.parse(localStorage.getItem('accessTokenCompany'));
       token = webTokenObj.webToken ? webTokenObj.webToken : '';
     }
     const newOptions = {
