@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-05 09:44:19 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:08:08
+ * @Last Modified time: 2018-07-24 15:24:34
  * 我的借款
  */
 import {personal, mineloan} from '../services/api';
@@ -21,11 +21,18 @@ export default {
     projectId: '',
     projectName: '',
     loading: false,
+    gotoRealName: false,
   },
   effects: {
     *clearData({payload},{put}) {
       yield put({
         type: 'clearDataSave',
+      });
+    },
+    *gotoRealName({payload},{put}){
+      yield put({
+        type: 'changeRealName',
+        payload: payload
       });
     },
     *getMineLoan({payload}, {call, put}){
@@ -62,6 +69,12 @@ export default {
         projectId: '',
         projectName: '',
         loading: false,
+      }
+    },
+    changeRealName(state,{payload}){
+      return {
+        ...state,
+        gotoRealName: true,
       }
     },
     saveMineLoan(state, {payload}) {

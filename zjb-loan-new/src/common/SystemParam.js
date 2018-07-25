@@ -148,6 +148,7 @@ export const CARD_REG = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))((
 //密码校验
 export const pass_reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$/;
 
+
 //一天多少秒
 const DATE_SECONDS = 86400;
 //一小时多少秒

@@ -48,8 +48,6 @@ export default class Loaninfo extends React.Component {
         } else {
             message.error(response.msg);
         }
-        debugger
-
     }
     handleOk = (e) => {
         console.log(e);

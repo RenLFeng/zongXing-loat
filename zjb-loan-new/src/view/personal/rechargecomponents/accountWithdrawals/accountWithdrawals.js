@@ -73,7 +73,7 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props,"45465456465")
+
     // 获取跳转类型 0：个人 1：企业
     if (!this.props.accountId) {
       // this.props.history.push('/index/uCenter/realName');
@@ -148,7 +148,6 @@ export default class EnterprisePresentation extends React.Component {
   }
 
   handleSubmit = () => {
-       console.log("this.state.selectedCard:",this.state.carardActive);
        this.state.carardActive ? this.setState({selectedCardError: false}) : this.setState({selectedCardError: true});
         if(this.moneyError){
           return;
@@ -248,6 +247,7 @@ export default class EnterprisePresentation extends React.Component {
       return  val.substring(val.length-4)
     }
    }
+   
   render() {
     const {withdrawals} = this.state;
     const {baseData, safeData} = this.props;
@@ -275,6 +275,7 @@ export default class EnterprisePresentation extends React.Component {
             {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
             <Button type="primary" style={{width: 279, marginTop: 30,height:35,fontSize: 17, marginBottom:30}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
+
           <form ref={ref => this.formId = ref} action={withdrawals.submitURL} method="post" target="_blank" style={{display:'none'}}>
             <input id="WithdrawMoneymoremore" name="WithdrawMoneymoremore" value={withdrawals.withdrawMoneymoremore} />
             <input id="OrderNo" name="OrderNo" value={withdrawals.orderNo} />

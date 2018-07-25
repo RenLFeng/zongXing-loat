@@ -4,7 +4,6 @@ import $ from 'jquery';
 import { connect } from 'dva';
 import { Button, Divider,message } from 'antd';
 import './loginInfo.scss';
-import { ACCOUNT_RECHARGE, ACCOUNT_WITHDRAWALS } from '../../../common/PagePath';
 import { personal } from '../../../services/api';
 import Path from '../../../common/PagePath';
 import moment from 'moment';
@@ -78,7 +77,6 @@ class LoginInfo extends React.Component {
             pageSize:this.state.pageSize
         }
         const response = await personal.getSiteNotice(param);
-        console.log('系统消息数据',response)
         if (response.code === 0) {
             this.setState({
                 dataInfo: response.data.notices,
@@ -92,7 +90,6 @@ class LoginInfo extends React.Component {
 
     render() {
         const { baseData } = this.props;
-        console.log('baseData',baseData);
         return (
             <div className='lg-login'>
                 {
@@ -182,12 +179,12 @@ class LoginInfo extends React.Component {
                                 </div>
                                
                                 {baseData.userSecurityCenter.fidcardBind ?
-                                    <Button className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_WITHDRAWALS)}>提现</Button> : null
+                                    <Button className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(Path.ACCOUNT_WITHDRAWALS)}>提现</Button> : null
                                 }
                                 
                                 {baseData.userSecurityCenter.fidcardBind ?
 
-                                    <Button type="primary" className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(ACCOUNT_RECHARGE)}>充值</Button> : null
+                                    <Button type="primary" className="buttonl" style={{ width: '64px', height: '34px' }} onClick={() => this.props.history.push(Path.ACCOUNT_RECHARGE)}>充值</Button> : null
                                 }
                             </div>
                         </div> : ''

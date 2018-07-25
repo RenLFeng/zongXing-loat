@@ -447,62 +447,8 @@ export default class Appalyloan extends React.Component {
     if (oldData.projectModules && oldData.projectModules.length > 0)  {
       arr = oldData.projectModules
     }
-    let obj = {
-      "同事":1,
-      "母亲":2,
-      "父亲":3,
-      "其他亲属":4,
-      "朋友":5,
-      "配偶":6,
-      "其他":7,
-      "子女":8,
-      "上下游供应商":9,
-      "合伙人":10,
-    };
     console.log('oldData', oldData);
     const newData = {
-      companyInfo: {
-        fname: oldData.companyName,
-        fbankName: oldData.fcbank_name,
-        fbankNo: oldData.fcbank_no,
-        fbusAddress: oldData.fbus_address,
-        fbusTrade: oldData.fbus_trade,
-        ftelephone: oldData.fctelephone,
-        ftopshFile: oldData.ftopsh_file,
-        fbusLicense: oldData.fbus_license,
-        fbankPermit: oldData.fbank_permit,
-        fotherFile1: oldData.fother_file1,
-        fauditFile: oldData.faudit_file,
-        fstatementFile: oldData.fstatement_file,
-        fjoinFile: oldData.fjoin_file,
-        fplaceLease: oldData.fplace_lease,
-        fcompanyGovern: oldData.fcompany_govern,
-        femployeeRecord: oldData.femployee_record,
-        fratepayingRecord: oldData.fratepaying_record,
-        flivingPayment: oldData.fliving_payment,
-      },
-      lender: {
-        fname: oldData.lenderName,
-        fidcardNo: oldData.fidcard_no,
-        fmobile: oldData.fmobile,
-        ftelephone: oldData.ftelephone,
-        fmarriage: oldData.fmarriage,
-        fqq: oldData.fqq,
-        feducation: oldData.feducation,
-        fweichat: oldData.fweichat,
-        fbankNo: oldData.fbank_no,
-        fbankName: oldData.fbank_name,
-        fcompanyEmail: oldData.fcompany_email,
-        faddress: oldData.faddress,
-        fidcardPic1: oldData.fidcard_pic1,
-        fidcardPic2: oldData.fidcard_pic2,
-        fidcardPic3: oldData.fidcard_pic3,
-        fcarPic: oldData.fcar_pic,
-        fhousePic1: oldData.fhouse_pic1,
-        fotherPicJson: oldData.fother_pic_json,
-        fcreditReport: oldData.fcredit_report,
-        fdealLog: oldData.fdeal_log
-      },
       project: {
         fid: this.state.projectId?this.state.projectId: oldData.projectId,
         fname: oldData.projectName,
@@ -520,29 +466,6 @@ export default class Appalyloan extends React.Component {
         fvideoPath: oldData.fvideo_path? oldData.fvideo_path: '',
         flocation: oldData.flocation?oldData.flocation: '',
       },
-      lenderOtherContactList: [
-        {
-          ftype: 1,
-          fname: oldData.tlo1Name,
-          fidcardNo: oldData.tlo1Idcard,
-          fphone: oldData.tlo1phone,
-          frelation: oldData.tlo1relation
-        },
-        {
-          ftype: 2,
-          fname: oldData.tlo2Name,
-          fidcardNo: oldData.tlo2Idcard,
-          fphone: oldData.tlo2phone,
-          frelation: oldData.tlo2relation
-        },
-        {
-          ftype: 3,
-          fname: oldData.tlo3Name,
-          fidcardNo: oldData.tlo3Idcard,
-          fphone: oldData.tlo3phone,
-          frelation: oldData.tlo3relation
-        },
-      ],
       projectModules: arr
     };
     return newData;

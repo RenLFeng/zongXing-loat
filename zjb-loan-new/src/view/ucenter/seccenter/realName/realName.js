@@ -30,6 +30,7 @@ const formItemLayout = {
   baseData: state.login.baseData,
   openStatus: state.personal.openStatus,
   openFailMsg: state.personal.openFailMsg,
+  gotoRealName: state.mineloan.gotoRealName
 }))
 export default class RealName extends React.Component {
   constructor(props) {
@@ -60,6 +61,14 @@ export default class RealName extends React.Component {
     this.getAuthorizationState();
     // 获取开户状态信息
     this.getOpenStatus();
+    console.log(this.props.gotoRealName,'******')
+  }
+
+  componentDidUpdate(){
+    //定位到授权位置
+    if(this.props.gotoRealName){
+      window.scrollTo(0,850)
+    }
   }
 
   async getOpenStatus() {

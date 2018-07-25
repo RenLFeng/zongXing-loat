@@ -263,8 +263,7 @@ render(){
                     return <span>已使用</span>
             }
           }
-        },
-        , {
+        }, {
           title: '操作',
           dataIndex: 'do',
           align:'center',

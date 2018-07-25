@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:12 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:03:05
+ * @Last Modified time: 2018-07-24 15:49:31
  */
 
 @import '../../../assets/common/_var.scss';
@@ -10,6 +10,9 @@
 $weight: 600;
 .mineloan {
   font-family: '微软雅黑';
+  tr{
+    height: 54px;
+  }
   .personal-rbody {
     width: 992px;
     padding: 30px;
@@ -202,5 +205,21 @@ $weight: 600;
       text-align: left;
       color: #cccccc !important;
     }
+  }
+
+  .loan-cs-bh{
+    color: #cccccc;
+    padding-top: 13px;
+    margin-bottom: -15px;
+    span {
+      color: red;
+      margin-left: 30px;
+    }
+  }
+
+  .loaninfo-up{
+    .action{
+      margin-bottom: -19px !important;
+    } 
   }
 }

@@ -39,9 +39,7 @@ export default class Loaninfo extends React.Component {
       this.setState({
         activeObj: nextProps.param
       })
-      console.log('n45454545454545m', nextProps.param)
     }
-    console.log(this.props, nextProps.param,"666666666666666666666666666666666666666666")
   }
   componentDidMount() {
     // this.getinit();
@@ -76,7 +74,6 @@ export default class Loaninfo extends React.Component {
       console.log(response);
       this.setState({ loading: false });
       if (response.code === 0) {
-        this.setState({ recharge: response.data });
         Modal.confirm({
           title: '提示',
           content: '确认充值吗?',
@@ -109,8 +106,6 @@ export default class Loaninfo extends React.Component {
   }
 
   submitMoney() {
-
-    console.log(this.formId, "this.formId")
     this.formId.submit();
 
     // Modal.confirm({
