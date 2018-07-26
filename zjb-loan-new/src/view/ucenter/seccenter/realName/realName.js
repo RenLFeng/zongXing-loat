@@ -55,15 +55,26 @@ export default class RealName extends React.Component {
   componentDidMount() {
     //初始化安全中心信息
     this.initFetchSafeData();
+    if (this.props.safeData.userSecurityCenter.faccountBind) {
+      this.getBankCardListAjax(); // 获取用户绑定银行卡
+    }
+ 
     // 获取用户绑定银行卡
-    this.getBankCardListAjax(); 
+    // this.getBankCardListAjax(); 
     //获取已经授权的授权代码
     this.getAuthorizationState();
     // 获取开户状态信息
     this.getOpenStatus();
-    console.log(this.props.gotoRealName,'******')
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.safeData.userSecurityCenter.faccountBind !== nextProps.safeData.userSecurityCenter.faccountBind) {
+      this.getBankCardListAjax(); // 获取用户绑定银行卡
+    }
+    if (this.props.accountId !== nextProps.accountId) {
+      this.getBankCardListAjax(nextProps.accountId); // 获取用户绑定银行卡
+    }
+  }
   componentDidUpdate(){
     //定位到授权位置
     if(this.props.gotoRealName){
@@ -126,6 +137,7 @@ export default class RealName extends React.Component {
    /** 获取用户绑定银行卡 */ 
    getBankCardListAjax = async (param) => {
     const response = await securityCentreService.getBankCardList(param?param:this.props.accountId);
+    console.log('银行卡列表',response)
     if (response.code === 0) {
       if (response.data) {
         this.setState({
@@ -233,11 +245,11 @@ export default class RealName extends React.Component {
   }
 
   show(key){
+    console.log('key',key)
     if (!this.state.urlObj) {
       this.authorize(key);
       return;
     }
-    console.log(key);
     this.setState({
       showModal:true,
       authUrl:key
@@ -247,12 +259,15 @@ export default class RealName extends React.Component {
   //授权
   async authorize(key){
     const response = await securityCentreService.getAccredit();
+    console.log('response111111',response)
     if(response.code === 0){
       this.setState({
         urlObj: response.data,
         showModal:true,
         authUrl:key
       })
+    } else {
+      response.msg && message.error(response.msg);
     }
   }
 
@@ -280,7 +295,6 @@ export default class RealName extends React.Component {
     // 初始化数据
     const safeData = this.props.safeData;
     const { status, distribution, url } = this.state;
-    console.log('safeData', safeData)
     const dataArr = [{title:'运营商数据',key:'yysUrl'},{title:'社保数据',key:'shebaoUrl'},{title:'公积金数据',key:'gjjUrl'},{title:'学信数据',key:'chsiUrl'},{title:'京东数据',key:'jdUrl'},{title:'苏宁数据',key:'snUrl'}]
     return (
       <div>
@@ -389,7 +403,7 @@ export default class RealName extends React.Component {
                             value={this.state[`${data.fid}password`]}
                             onChange={(e) => this.setState({ [`${data.fid}password`]: e.target.value })}
                             prefix={<Icon type="lock" />}
-                            suffix={ <i className={this.state[`${data.fid}hide`]?'zjb zjb-htmal5icon08': 'zjb zjb-mimakejian'} onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
+                            suffix={ <i className={this.state[`${data.fid}hide`]?'zjb zjb-mimakejian': 'zjb zjb-htmal5icon08'} onClick={() => this.setState({ [`${data.fid}hide`]: !this.state[`${data.fid}hide`] })} />}
                           />
                           <Button
                             type="primary"
@@ -429,14 +443,13 @@ export default class RealName extends React.Component {
              {
                dataArr.map((data,index)=>{
                  return(
-                  <div style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',margin:'15px'}}>
+                  <div key={index} style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',margin:'15px'}}>
                     <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
                     <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(data.key)}>授权</p>
                   </div>
                  )
                })
-             }
-               
+             } 
              </div>
             <div className="safeCenter">
               <div className="line">

@@ -108,7 +108,6 @@ class BindCard extends React.Component {
   // 查询当前登录的用户
   queryUserBaseInfo = async () => {
     let response = await securityCentreService.getUserBaseData();
-    console.log("this.state.userBaseInfo",response);
     if (response.code === 0) {
       this.setState({ userBaseInfo: response.data });
     } else {
@@ -118,31 +117,31 @@ class BindCard extends React.Component {
 
 
   updateRealName = (e) => {
-    console.log('updateRealName', e.target.value);
     this.setState({ realName: e.target.value });
   };
   updateIdcard = (e) => {
-    console.log('updateIdcard', e.target.value);
     this.setState({ idcard: e.target.value });
   };
 
   verifyBankCard = () => {
-    console.log("verifyBankCard,bankcard:",this.state.bankCardNo);
+
   }
+
   updateBankCard = (e) => {
     this.setState({ bankCardNo: e.target.value });
   }
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log("submit.value:",values);
-      if (!err) {
 
-      }
 
-      this.props.history.push(Path.REALNAME_AUTHENTICATION);
-    });
-  };
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.props.form.validateFieldsAndScroll((err, values) => {
+  //     if (!err) {
+
+  //     }
+
+  //     this.props.history.push(Path.REALNAME_AUTHENTICATION);
+  //   });
+  // };
 
   // 银行卡号校验
   checkBank = async () => {
@@ -308,7 +307,7 @@ class BindCard extends React.Component {
     }
     console.log("submit param",param);
     const response = await securityCentreService.bindBankCard(param);
-    
+    console.log('绑定银行卡结果', response)
     this.setState({commmitLoading: false});
     if (response.code === 0) {
       this.props.history.push('/index/uCenter/realName');
@@ -319,14 +318,12 @@ class BindCard extends React.Component {
 
   /** 按名称给银行排序 */
   sort(){
-    console.log('开户行',moneyBank)
     let array = moneyBank;
     let resultArray = array.sort(
      function compareFunction(param1, param2) {
       return param1.fname.localeCompare(param2.fname,"zh");
      }
     );
-    console.log('resultArray',resultArray);
   }
  
 
@@ -334,7 +331,6 @@ class BindCard extends React.Component {
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.userData);
     return (
       <div className="pages" style={{padding: '30px', width: '100%'}}>
         <div className="real_title_">
@@ -391,7 +387,7 @@ class BindCard extends React.Component {
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
               <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
-              <i className={this.state.showPwd?'zjb zjb-htmal5icon08': 'zjb zjb-mimakejian'} onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
+              <i className={this.state.showPwd?'zjb zjb-mimakejian': ' zjb zjb-htmal5icon08'} onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
             </div>
           </div>
           <div className="bind_item_view">
