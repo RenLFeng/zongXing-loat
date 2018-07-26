@@ -295,15 +295,18 @@ class BindCard extends React.Component {
     }
     this.setState({commmitLoading: true});
     let param = {
-      fbankCode: this.state.openName,
-      fcityCode: this.state.cityId,
-      fprovinceCode: this.state.provinceId,
-      fbankType: this.state.fbankType, // 银行类型id
-      faccountId: this.props.userData.accountId,
-      idcard: this.state.idcard,
-      realname: this.state.realname,
-      fbankcard: this.state.bankCard.trim(),
-      fcardType: this.state.cardType
+        accountBankCard:{
+        fbankCode: this.state.openName,
+        fcityCode: this.state.cityId,
+        fprovinceCode: this.state.provinceId,
+        fbankType: this.state.fbankType, // 银行类型id
+        faccountId: this.props.userData.accountId,
+        idcard: this.state.idcard,
+        realname: this.state.realname,
+        fbankcard: this.state.bankCard.trim(),
+        fcardType: this.state.cardType
+      },
+      userPassword: this.state.userPassword.trim()
     }
     console.log("submit param",param);
     const response = await securityCentreService.bindBankCard(param);
@@ -377,10 +380,6 @@ class BindCard extends React.Component {
             </Select>
           </div>
           <span className="bind_tip_msg">{this.state.tipCityName===' undefined' || this.state.tipCityName==='undefined ' ?'':this.state.tipCityName}</span>
-          <div className="bind_item_view">
-            <span>卡类型</span>
-            <Input size="large" value={this.state.cardType} readOnly/>
-          </div>
           <span className="bind_error_msg">{this.state.cardType==='信用卡'?'不支持信用卡':null}</span>
           <div className="bind_item_view">
             <span/>
