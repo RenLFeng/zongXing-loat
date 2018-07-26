@@ -19,6 +19,7 @@ export default class DetailEdit extends React.Component{
         super();
         this.state = {
             information:{},
+            loading: false,
             pic1Url:'',
             pic2Url:'',
             projectArr:[],
@@ -126,7 +127,7 @@ export default class DetailEdit extends React.Component{
 
     render(){
         const dataPath_ = this.state.information.fcompany_no+'/';
-        const {pic1Url,pic2Url,information} = this.state;
+        const {pic1Url,pic2Url,information,loading} = this.state;
 
         return(
             <div className="edit">
@@ -177,7 +178,7 @@ export default class DetailEdit extends React.Component{
                     {
                         this.state.projectArr.map((data,index)=>{
                             return(
-                            <div className="textBox" key={index} className={index === 0 ? 'info-div-box' : ''}> 
+                            <div key={index} className={index === 0 ? 'info-div-box textBox' : 'textBox'}> 
                                 <p className="title" style={{position:"relative"}}>
                                     <i className="zjb zjb-bixutian icon"/>{data.ftitle}<Icon type="question-circle-o" className="icon p_icon"/>
                                     {index === 0 ?
@@ -231,8 +232,8 @@ export default class DetailEdit extends React.Component{
                 </div>
 
                 <div className="btnGroup">
-                  <Button style={{background:'#2088FC'}} onClick={()=>this.saveDetail()}>保存</Button>
-                  <Button style={{background:'#19C61E'}} onClick={()=>this.props.commitData()}>提交</Button>
+                  <Button style={{background:'#2088FC'}} loading={loading} onClick={()=>this.saveDetail()}>保存</Button>
+                  <Button style={{background:'#19C61E'}} loading={loading} onClick={()=>this.props.commitData(this.props.projectId)}>提交</Button>
                 </div>    
             </div>
         )

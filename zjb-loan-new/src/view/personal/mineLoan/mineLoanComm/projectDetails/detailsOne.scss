@@ -69,14 +69,14 @@
       .text_{
     
         display: inline-block;
-        width:55%;
+        width:60%;
         // padding:10px;
         vertical-align: top;
       }
       .img{
     
         display: inline-block;
-        width:45%;
+        width:40%;
         padding-left:10px;
         .imgs{
           display: inline-block;
@@ -157,13 +157,13 @@
     .text_{
   
       display: inline-block;
-      width:55%;
+      width:60%;
       // padding:10px;
       vertical-align: top;
     }
     .img{
       display: inline-block;
-      width:45%;
+      width:40%;
       padding-left:10px;
       .imgs{
         display: inline-block;
@@ -265,8 +265,9 @@
 
   .btnGroup{
     z-index: 9;
+    text-align: right;
     Button{
-      margin-right:15%;
+      margin-right:50px;
       color:#ffffff;
     }
   }

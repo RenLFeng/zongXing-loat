@@ -566,7 +566,7 @@ export default class PersonAccount extends React.Component {
                   <td>操作</td>
                 </tr>
                 <tr>
-                  <td>{myBorrowVo.fcreditMoney ? `${myBorrowVo.fcreditMoney / 1000}`.fm() + '万元' : ''}</td>
+                  <td>{myBorrowVo.fcreditMoney ? `${myBorrowVo.fcreditMoney / 10000}`.fm() + '万元' : ''}</td>
                   <td>{myBorrowVo.fcreditMonth ? `${myBorrowVo.fcreditMonth}` + '个月' : ''}</td>
                   <td>{myBorrowVo.frate ? `${myBorrowVo.frate}`.fm() + '%' : ''}</td>
                   <td>{moment(myBorrowVo.fcreateTime).format('YYYY-MM-DD HH:mm')}</td>
