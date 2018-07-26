@@ -36,6 +36,7 @@ export default {
         //登录成功做的操作
         if (response.code === 0) {
           const access = {webToken:response.data.webToken,nickName: response.data.companyName};
+          console.log(localStorage.setItem('accessTokenCompany', JSON.stringify(access)));
           localStorage.setItem('accessTokenCompany', JSON.stringify(access));
           yield put(routerRedux.push('/'));
           yield put({
