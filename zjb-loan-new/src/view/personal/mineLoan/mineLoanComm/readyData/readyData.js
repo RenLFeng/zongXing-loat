@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-23 09:10:37
+ * @Last Modified time: 2018-07-26 13:47:35
  * 有借款记录
  */
 import React from 'react';
@@ -299,11 +299,18 @@ class ReadyData extends React.Component{
         })
         return(
             <div className="mineloan">
-                <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px',marginTop: '8px'}}>
-                    <LoanTitle title="历史借款"></LoanTitle>
-                    {/* 历史借款 */}
-                    {alredytable}
-                </div>
+            {
+               alredytable.length > 0 
+               ?  
+                    <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px',marginTop: '8px'}}>
+                            <LoanTitle title="历史借款"></LoanTitle>
+                            {/* 历史借款 */}
+                            {alredytable}
+                    </div>
+               :
+                    ''
+            }
+                
             </div>
         )
     }

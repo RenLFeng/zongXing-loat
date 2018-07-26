@@ -2,24 +2,25 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-24 20:10:56
+ * @Last Modified time: 2018-07-26 15:11:31
  * @des: 日历 - 日期  金钱相关方法
  */
 
 //保留两位小数 方法 单位：万
 export function returnFloat(value){
-	let values = Math.round(parseFloat(value / 10000)*100)/100;
-	let s=values.toString().split(".");
-	if(s.length==1){
-		values=values.toString()+".00";
-		return values;
-	}
-	if(s.length>1){
-		if(s[1].length<2){
-			values=values.toString()+"0";
-		}
-		return values;
-	}
+	// let values = Math.round(parseFloat(value / 10000)*100)/100;
+	// let s=values.toString().split(".");
+	// if(s.length==1){
+	// 	values=values.toString()+".00";
+	// 	return values;
+	// }
+	// if(s.length>1){
+	// 	if(s[1].length<2){
+	// 		values=values.toString()+"0";
+	// 	}
+	// 	return values;
+    // }
+    return value
 }
 
 //保留两位小数 方法 单位：元

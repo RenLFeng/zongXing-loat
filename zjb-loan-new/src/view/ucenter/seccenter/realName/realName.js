@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Input, Button, Steps, Modal, message } from 'antd';
+import { Icon, Input, Button, Steps, Modal, message ,Spin } from 'antd';
 import moment from 'moment';
 import { connect } from 'dva';
 import { AUTH_ADDRESS, } from '../../../../common/SystemParam';
@@ -49,6 +49,7 @@ export default class RealName extends React.Component {
       snurl:{},
       urlObj:null,
       id:0,
+      grantLoading:false
     }
   }
 
@@ -238,7 +239,8 @@ export default class RealName extends React.Component {
     });
     this.setState({ unbindLoading: false });
     if (response.code === 0) {
-      this.getBankCardListAjax()
+      this.getBankCardListAjax();
+      message.info('解除绑定成功')
     } else {
       response.msg && message.error(response.msg);
     }
@@ -258,15 +260,18 @@ export default class RealName extends React.Component {
 
   //授权
   async authorize(key){
+    this.setState({grantLoading:true})
     const response = await securityCentreService.getAccredit();
     console.log('response111111',response)
     if(response.code === 0){
       this.setState({
         urlObj: response.data,
         showModal:true,
-        authUrl:key
+        authUrl:key,
+        grantLoading:false
       })
     } else {
+      this.setState({grantLoading:false})
       response.msg && message.error(response.msg);
     }
   }
@@ -305,7 +310,7 @@ export default class RealName extends React.Component {
               <div className="fr uc-rbody">
                 <div className="real_title">
                   <span className="safeCenter_">开户中心</span>
-                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fCreattime).format('YYYY/MM/DD HH:mm')}</span>
+                  <span className="registrationTime">注册时间:{moment(safeData.userSecurityCenter.fcreateTime).format('YYYY/MM/DD HH:mm')}</span>
                 </div>
                 <div className="rn-content">
                   <div style={{ marginBottom: 23 }}>
@@ -418,6 +423,7 @@ export default class RealName extends React.Component {
                 })}
                 {/* 绑定银行卡 */}
                 {this.props.accountId ?
+                  (this.state.cardList.length < 5) ? 
                   <div className="unbind_div" onClick={() => this.props.history.push(Path.BINDCARD)} >
                     <i className="zjb zjb-add icon-plus"></i>
                     <span className="bind_new_bank" >绑定新银行卡</span>
@@ -425,7 +431,7 @@ export default class RealName extends React.Component {
                       className="bind_new_bank"
                       style={{ color: '#e6e6e6', fontSize: 14, color: '#e6e6e6' }}
                     >(只支持储蓄卡)</span>
-                  </div> : <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
+                  </div> :null: <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
               </div>
             </div>
           </div> : null}
@@ -440,16 +446,20 @@ export default class RealName extends React.Component {
               </div>
             </div>
              <div style={{margin:'35px 0px 20px 10px'}}>
-             {
-               dataArr.map((data,index)=>{
-                 return(
-                  <div key={index} style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',margin:'15px'}}>
-                    <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
-                    <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(data.key)}>授权</p>
-                  </div>
-                 )
-               })
-             } 
+             <Spin  spinning={this.state.grantLoading}>
+              {
+                dataArr.map((data,index)=>{
+                  return(
+                    
+                      <div key={index} style={{width:120,height:120,display:'inline-block',border:'1px dashed #ccc',margin:'15px'}}>
+                        <p style={{textAlign:'center',marginTop:38}}>{data.title}</p>
+                        <p style={{textAlign:'center',color:'red',cursor:'pointer'}} onClick={()=>this.show(data.key)}>授权</p>
+                      </div>
+                  
+                  )
+                })
+              } 
+              </Spin >
              </div>
             <div className="safeCenter">
               <div className="line">
