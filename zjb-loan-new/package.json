@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "roadhog server",
+    "start": "set ESLINT=none&&roadhog dev",
     "build": "roadhog build"
   },
   "dependencies": {

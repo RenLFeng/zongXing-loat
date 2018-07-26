@@ -54,15 +54,15 @@ export default class MyCoupon extends React.Component {
     console.log('12121212ssssssss',response)
     if(response.code === 0){
       this.setState({
-        dataSource:response.data.tableStatistical.unUsed.infoList,
-        dataSource_:response.data.tableStatistical.used.infoList,
-        dataSources:response.data.tableStatistical.invalid.infoList,
-        dataSourceNum:response.data.tableStatistical.unUsed.totalNumber,
-        dataSourceNum_:response.data.tableStatistical.used.totalNumber,
-        dataSourceNums:response.data.tableStatistical.invalid.totalNumber,
-        useStatistics:response.data.companyCouponChartsVo.useStatistical,
-        statistics:response.data.companyCouponChartsVo.grantStatistical,
-        project:response.data.projectInfo
+        dataSource:response.data.tableStatistical?response.data.tableStatistical.unUsed.infoList:[],
+        dataSource_:response.data.tableStatistical?response.data.tableStatistical.used.infoList:[],
+        dataSources:response.data.tableStatistical?response.data.tableStatistical.invalid.infoList:[],
+        dataSourceNum:response.data.tableStatistical?response.data.tableStatistical.unUsed.totalNumber:0,
+        dataSourceNum_:response.data.tableStatistical?response.data.tableStatistical.used.totalNumber:0,
+        dataSourceNums:response.data.tableStatistical?response.data.tableStatistical.invalid.totalNumber:0,
+        useStatistics:response.data.tableStatistical?response.data.companyCouponChartsVo.useStatistical:null,
+        statistics:response.data.tableStatistical?response.data.companyCouponChartsVo.grantStatistical:{},
+        project:response.data.projectInfo?response.data.projectInfo:{}
       })
     }
   }

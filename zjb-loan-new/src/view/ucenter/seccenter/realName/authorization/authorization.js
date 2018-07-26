@@ -14,8 +14,6 @@ export default class AddModal extends React.Component{
     }
     render(){
         const {url} = this.props;
-        console.log('url222222222222222',this.props)
-
         return(
             <Modal visable={this.props.visable} closeModal={this.closeModal} >
               <div className="modal_warp">

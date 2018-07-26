@@ -21,7 +21,7 @@ import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
 import {Row, Col, message, Spin} from 'antd';
 import {parseTime, returnFloat, getTime, loanDelay} from '../dateformat/date';
-import { Table } from 'antd';
+import { Table,Modal } from 'antd';
 import '../mineloan.scss';
 import Appalyloan from './projectDetails/detailEdit';
 
@@ -169,7 +169,7 @@ class NoLoan extends React.Component{
       }
     //缴费
     async pay(text,record,index){
-        console.log(text,record,index)
+        console.log('缴费',text,record,index)
         this.setState({
             loadingpay: true
         })
@@ -181,8 +181,18 @@ class NoLoan extends React.Component{
         if(res.code === 0){
             console.log(res,'----')
             this.setState({
-                loadingpay: false
-            })
+                loadingpay: false,
+                upfile:res.data
+            }, ()=> {
+                Modal.confirm({
+                    title: '提示',
+                    content: '确认缴费吗?',
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => this.submitMoney()
+                  });
+              })
             this.props.dispatch({
                 type: 'mineloan/getMineLoan',
                 payload: ''
@@ -193,8 +203,13 @@ class NoLoan extends React.Component{
                 loadingpay: false
             })
         }
-
     }
+
+    
+  submitMoney() {
+    this.formId.submit();
+  }
+
     //数据授权
     async dataLicense(text,record,index){
         await this.props.dispatch({
@@ -751,7 +766,7 @@ class NoLoan extends React.Component{
                 </div>
             )
         })
-
+        const {upfile} = this.state;
         return(
             <div className="mineloan">
                 {table}
@@ -767,6 +782,24 @@ class NoLoan extends React.Component{
                           loading={this.state.loadingdel} comitDel={() => this.comitdeleteLoan()} 
                           cnacelDel={() => this.cnacelDel()} key="1"
                           sure="确定" cancel="取消"></DelModal>
+
+                        <form ref={ref => this.formId = ref} id="form1" name="form1" action={upfile.submitURL} method="post" target="_blank">
+                            <input id="Action" name="Action" value={upfile.action} type="hidden" />
+                            <input id="ArrivalTime" name="ArrivalTime" value={upfile.arrivalTime} type="hidden" />
+                            <input id="LoanJsonList" name="LoanJsonList" value={upfile.loanJsonList} type="hidden" />
+                            <input id="NeedAudit" name="NeedAudit" value={upfile.needAudit} type="hidden" />
+                            <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={upfile.platformMoneymoremore} type="hidden" />
+                            <input id="RandomTimeStamp" name="RandomTimeStamp" value={upfile.randomTimeStamp} type="hidden" />
+                            <input id="TransferAction" name="TransferAction" value={upfile.transferAction} type="hidden" />
+                            <input id="TransferType" name="TransferType" value={upfile.transferType} type="hidden" />
+                            <input id="RandomTimeStamp" name="RandomTimeStamp" value={upfile.randomTimeStamp} type="hidden" />
+                            <input id="Remark1" name="Remark1" value={upfile.remark1} type="hidden" />
+                            <input id="Remark2" name="Remark2" value={upfile.remark2} type="hidden" />
+                            <input id="Remark3" name="Remark3" value={upfile.remark3} type="hidden" />
+                            <input id="ReturnURL" name="ReturnURL" value={upfile.returnURL} type="hidden" />
+                            <input id="NotifyURL" name="NotifyURL" value={upfile.notifyURL} type="hidden" />
+                            <input id="SignInfo" name="SignInfo" value={upfile.signInfo} type="hidden" />
+                        </form>
             </div>
         )
     }

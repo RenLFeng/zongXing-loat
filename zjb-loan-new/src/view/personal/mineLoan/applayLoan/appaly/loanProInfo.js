@@ -12,6 +12,7 @@ import UploadSingle from './UpLoad/UpLoadSingle';
 import UploadPicMultipleFile from './UpLoad/UploadPicMultipleFile';
 import UploadVideo from './UpLoad/UploadVideo';
 
+import { Map, Marker } from 'react-amap';
 import { EditorState, convertToRaw, ContentState, convertFromRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
@@ -38,6 +39,7 @@ const RequireLabel = ({ children }) => (
 );
 class Loaninfo extends React.Component {
   state = {
+    markerPosition: { longitude: 120, latitude: 30 },
     width: '100%',
     cityList: [],
     num: 5,
@@ -86,47 +88,25 @@ class Loaninfo extends React.Component {
     baseUrl: IMG_BASE_URL
   };
   marker = null;
+  first = 1;
 
   componentDidMount() {
-    // console.log(window,"-4154545454545445")
-    // const AMap = window.AMap;
-    // let map = new AMap.Map("container", {
-    //   resizeEnable: true,
-    //   zoom: 10
-    // });
-    // //为地图注册click事件获取鼠标点击出的经纬度坐标
-    // this.marker = new AMap.Marker({
-    //   icon: "http://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
-    // });
-    // this.marker.setMap(map);
-    // let clickEventListener = map.on('click', (e) => {
-    //   document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
-    //   this.marker.setPosition([e.lnglat.getLng(), e.lnglat.getLat()]);
-    //   this.setState({
-    //     latLng: `${e.lnglat.getLng()},${e.lnglat.getLat()}`
-    //   })
-    // });
-    // let auto = new AMap.Autocomplete({
-    //   input: "tipinput"
-    // });
-    // AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
-    // function select(e) {
-    //   if (e.poi && e.poi.location) {
-    //     map.setZoom(15);
-    //     map.setCenter(e.poi.location);
-    //   }
-    // }
+
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (this.props.data.flocation !== nextProps.data.flocation) {
-    //   if (nextProps.data.flocation) {
-    //     this.marker.setPosition(nextProps.data.flocation.split(','));
-    //     this.setState({
-    //       latLng: nextProps.data.flocation
-    //     })
-    //   }
-    // }
+    console.log('nextProps.data.flocation', nextProps.data.flocation)
+    if (this.props.data.flocation !== nextProps.data.flocation) {
+      if (nextProps.data.flocation) {
+        if (this.mapInstance) {
+          this.mapInstance.setZoomAndCenter(15, nextProps.data.flocation.split(','));
+          this.setState({
+            markerPosition: { longitude: nextProps.data.flocation.split(',')[0], latitude: nextProps.data.flocation.split(',')[1] },
+          });
+          document.getElementById("lnglat").value = nextProps.data.flocation;
+        }
+      }
+    }
     if (this.props.dataList !== nextProps.dataList) {
       this.setState({ dataList: nextProps.dataList });
     }
@@ -155,7 +135,7 @@ class Loaninfo extends React.Component {
           i++
         }
         values.projectModules = arr;
-        values.flocation = this.state.latLng;
+        values.flocation = this.state.markerPosition?`${this.state.markerPosition.longitude},${this.state.markerPosition.latitude}`:''
         val = values;
       } else {
         val = null;
@@ -313,6 +293,49 @@ class Loaninfo extends React.Component {
         this.props.changeOldData(val, 'COMMIT');
     }
   }
+
+
+  amapEvents = {
+    created: (mapInstance) => {
+      this.mapInstance = mapInstance;
+      mapInstance.setZoom(15);
+      // 确认第一次点击
+      mapInstance.on('click', (e) => {
+        this.setState({
+          markerPosition: { longitude: e.lnglat.getLng(), latitude: e.lnglat.getLat() },
+        })
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+         // 确认第一次点击 否则不出来点位坐标
+        if (this.first === 1) {
+          mapInstance.setZoom(14);
+          this.first += 1
+        }
+      });
+      console.log(window);
+      window.AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+          var autoOptions = {
+              input: "tipinput"//使用联想输入的input的id
+          };
+          const autocomplete= new AMap.Autocomplete(autoOptions);
+          var placeSearch = new AMap.PlaceSearch({
+              map:mapInstance
+          })
+          window.AMap.event.addListener(autocomplete, "select", function(e){
+              //TODO 针对选中的poi实现自己的功能
+              console.log(e.poi.location);
+              if (e.poi && e.poi.location) {
+                mapInstance.setZoom(15);
+                mapInstance.setCenter(e.poi.location);
+              }
+          });
+      });
+    }
+  };
+
+  markerEvents = {
+    created: (markerInstance) => {
+    }
+  };
 
   render() {
     const { form, dispatch, submitting } = this.props;
@@ -480,7 +503,11 @@ class Loaninfo extends React.Component {
           <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
             <Row>
               <Col style={{ height: 500 }}>
-                {/* <div id="container" style={{width: '100%', height: 500}}/> */}
+                <div id="container" style={{width: '100%', height: 500}}>
+                  <Map amapkey={'58195b2aee5f18c85bf15134f7b56ce7'} events={this.amapEvents}>
+                    <Marker position={this.state.markerPosition} events={this.markerEvents} />
+                  </Map>
+                </div>
                 <div id="myPageTop">
                   <table>
                     <tr>
