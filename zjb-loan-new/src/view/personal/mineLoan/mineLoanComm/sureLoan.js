@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 18:42:28 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-24 17:14:51
+ * @Last Modified time: 2018-07-26 12:23:39
  * 我的借款--确认借款 
  */
 import React from 'react';
@@ -53,7 +53,7 @@ class SureLoan extends React.Component{
 
     async agreeOrUnagree(statu){
         const {suredata, bzInfo} = this.state;
-        console.log(suredata,'suredata')
+        console.log(suredata,bzInfo,'suredata')
         let data = {
             remark: bzInfo,
             isPass: statu,
@@ -62,8 +62,8 @@ class SureLoan extends React.Component{
         if([0,-1].includes(statu)){
             if(data.remark === ''){
                 message.info(`请输入${statu === 0 ? '不同意' : '拒绝'}理由！`)
+                return;
             }
-            return;
         }else{
             if(data.remark === ''){
                 data.remark = '同意借款';

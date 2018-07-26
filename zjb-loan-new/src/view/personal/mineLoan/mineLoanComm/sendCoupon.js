@@ -2,7 +2,7 @@
  * @Author: wfl
  * @Date: 2018-07-05 11:48:42
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-24 17:40:06
+ * @Last Modified time: 2018-07-26 15:21:13
  * 发放优惠券
  */
 import React from 'react';
@@ -30,6 +30,9 @@ class SendCoupon extends React.Component{
         this.state = {
             losedateErrin: false,//投资失效日期是否合法
             losedateErrver: false,//游客失效日期是否合法
+            isSave: false, //是否以保存
+            haveAddress: false,
+            couponUsePlaces: [],//返回的地址
             yerr: y,
             merr: m,
             dayerr: day,
@@ -279,7 +282,7 @@ class SendCoupon extends React.Component{
         })
     }
     //保存
-    saveCou(){
+    saveCou(status){
         let {invest, tourist, saveAddress, losedateErrin, losedateErrver} = this.state;
         let places = [];
         let citys = [];
@@ -341,9 +344,10 @@ class SendCoupon extends React.Component{
             couponUsePlaces: places
         }
         this.toSaveCou(data);
-        this.toSaveCou(datas);
+        this.toSaveCou(datas,status);
     }
-    async toSaveCou(data){
+    //保存
+    async toSaveCou(data,status){
         this.setState({
             loading: true
         })
@@ -352,6 +356,9 @@ class SendCoupon extends React.Component{
             this.setState({
                 loading: false
             })
+            if(status){
+                this.commitCou();
+            }
         }else{
             message.error(res.msg);
             this.setState({
@@ -365,8 +372,31 @@ class SendCoupon extends React.Component{
             projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
-        if(res.code === 0){
-
+        if(res.code === 0 && res.data.length > 0){
+            this.setState({
+                isSave: true,
+                couponUsePlaces: res.data[0].couponUsePlaces,
+                tourist:{
+                    name: this.props.projectName,
+                    value: res.data[0].fullSubMoney,//面值
+                    rule: res.data[0].fullSubCondition,//满减？
+                    num: res.data[0].couponName,//多少张
+                    year: new Date(res.data[0].endTime).getFullYear(),
+                    month: (new Date(res.data[0].endTime).getMonth()) + 1,
+                    day: new Date(res.data[0].endTime).getDay(),
+                    imgsrc:  IMG_BASE_URL+res.data[0].logo,
+                },
+                invest:{
+                    name: this.props.projectName,
+                    value: res.data[1].fullSubMoney,//面值
+                    rule: res.data[1].fullSubCondition,//满减？
+                    inrule: res.data[0].invMoney,//投资150发放一张
+                    year: new Date(res.data[1].endTime).getFullYear(),
+                    month: (new Date(res.data[1].endTime).getMonth()) + 1,
+                    day: new Date(res.data[1].endTime).getDay(),
+                    imgsrc: IMG_BASE_URL+res.data[1].logo,
+                },
+            })
         }else{
             message.error(res.msg);
         }
@@ -374,6 +404,10 @@ class SendCoupon extends React.Component{
 
     //提交
     async commitCou(){
+        if(!this.state.isSave){
+            this.saveCou(true);
+            return;
+        }
         let data = {
             projectId: this.props.coudata.fid,
             remark: '',
@@ -399,6 +433,7 @@ class SendCoupon extends React.Component{
         }
     }
 
+    //保存地址
     async saveAddress(){
         let arr = [{
             provnice: this.state.provnice,
@@ -417,21 +452,27 @@ class SendCoupon extends React.Component{
     }
 
     editAddress(index){
-        let arr = this.state.saveAddress;
-        let obj = arr[index];
-        arr.splice(index,1)
-        this.getCity(obj.provnice);
-        this.getArea(obj.city);
-        this.setState({
-            provnice: obj.provnice,
-            city: obj.city,
-            area: obj.area,
-            deiladdress: obj.deiladdress,
-            phone: obj.phone,
-            saveAddress: arr
-        },()=>{
+        if(this.state.couponUsePlaces.length > 0){
+            this.setState({
+                couponUsePlaces: []
+            })
+        }else{
+            let arr = this.state.saveAddress;
+            let obj = arr[index];
+            arr.splice(index,1)
+            this.getCity(obj.provnice);
+            this.getArea(obj.city);
+            this.setState({
+                provnice: obj.provnice,
+                city: obj.city,
+                area: obj.area,
+                deiladdress: obj.deiladdress,
+                phone: obj.phone,
+                saveAddress: arr
+            },()=>{
 
-        })
+            })
+        }
     }
     render(){
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
@@ -463,7 +504,7 @@ class SendCoupon extends React.Component{
                             </Col>
                             <Col span={8} className="business-img">
                                 {/* <div className="sj-logo"> */}
-                                    <UploadImg {...this.data} prefix={'personal/'} tipText="上传商家图片" onChange={this.onChange.bind(this,'invest')}/>
+                                    <UploadImg {...this.data} prefix={'personal/'} value={invest.imgsrc !== '' ? invest.imgsrc : ''} tipText="上传商家图片" onChange={this.onChange.bind(this,'invest')}/>
                                 {/* </div> */}
                             </Col>
                             <div className="send-form" style={{marginTop: 175}}>
@@ -489,10 +530,10 @@ class SendCoupon extends React.Component{
                                                     onChange={(e)=> this.setState({invest:{...invest,inrule: e}})} step={10}
                                                     />
                                     <span className="full-ff">元发放1张优惠券</span>
-                                <p>优惠券数量666张</p>
+                                    <p>  </p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>
-                                <div className="send-form-div">
+                                <div className="send-form-div"  style={{ marginTop: 35}}>
                                     <span className="fir-span">失效日期:</span>
                                     <Select defaultValue={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
                                         {
@@ -542,7 +583,9 @@ class SendCoupon extends React.Component{
                             </div>
                         </Col>
                         <Col span={8} className="business-img">
-                            <UploadImg {...this.data} prefix={'personal/'} tipText="上传商家图片" onChange={this.onChange.bind(this,'tourist')}/>
+                            <UploadImg {...this.data} prefix={'personal/'} tipText="上传商家图片" 
+                                value={tourist.imgsrc !== '' ? tourist.imgsrc : ''}
+                                onChange={this.onChange.bind(this,'tourist')}/>
                         </Col>
                         <div  className="send-form" style={{marginTop: 175}}>
                                 <div className="send-form-div">
@@ -570,7 +613,7 @@ class SendCoupon extends React.Component{
                                         <span style={{paddingLeft: '10px'}}>张</span>
                                         <p className="error-imput">{tourist.num >= 50 ? '' : '优惠券发放数量不能低于50张'}</p>
                                 </div>
-                                <div className="send-form-div" style={{marginTop:' 31px'}}>
+                                <div className="send-form-div">
                                     <span className="fir-span">失效日期:</span>
                                     <Select defaultValue={tourist.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'tourist')}>
                                         {
@@ -635,11 +678,20 @@ class SendCoupon extends React.Component{
                                         onChange={(e)=> this.setState({phone: e.target.value })}
                                         style={{display: 'inline-block',width: '123px'}}/>
                                 <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a>
-                                <p className="error-imput" style={{paddingLeft: '82px'}}>{deiladdress.length < 6 ? '详细信息请具体到门牌号' : (!/^1\d{10}$/.test(phone) && !/0\d{2}-\d{7,8}/.test(phone)) ? '联系电话格式不正确' : '' }</p>
+                                <p className="error-imput" style={{paddingLeft: '82px'}}>{deiladdress.length < 6 ? '详细地址请具体到门牌号' : (!/^1\d{10}$/.test(phone) && !/0\d{2}-\d{7,8}/.test(phone)) ? '联系电话格式不正确' : '' }</p>
                         </Spin>
                     </div>
                 )
-                    {
+                    { this.state.couponUsePlaces.length > 0 ? 
+                        this.state.couponUsePlaces.map((item, index) =>{
+                            radiogroup.push(
+                                <Radio value={index} key={index} style={radioStyle}>
+                                    {`${item.address}   ${item.fmobile}`}
+                                    {radioChoose === index ? <a className="edit-address" onClick={this.editAddress.bind(this,index)}>编辑</a> : ''}
+                                </Radio>
+                            )
+                        })
+                        : 
                         saveAddress.map((item, index) =>{
                             radiogroup.push(
                             <Radio value={index} key={index} style={radioStyle}>

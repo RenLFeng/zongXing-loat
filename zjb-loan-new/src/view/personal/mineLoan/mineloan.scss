@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:12 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-24 15:49:31
+ * @Last Modified time: 2018-07-26 12:03:44
  */
 
 @import '../../../assets/common/_var.scss';
@@ -72,7 +72,7 @@ $weight: 600;
       }
       span {
         padding: 0 8px;
-        color: #f2f2f2;
+        // color: #f2f2f2;
       }
     }
     .loan-step {
@@ -221,5 +221,8 @@ $weight: 600;
     .action{
       margin-bottom: -19px !important;
     } 
+    span{
+      color: #797878;
+    }
   }
 }

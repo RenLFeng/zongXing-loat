@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-24 20:16:44
+ * @Last Modified time: 2018-07-26 18:02:18
  * 有借款记录
  */
 import React from 'react';
@@ -40,7 +40,7 @@ function getStatu(flag){
         case 5:
             return '待补充资料';   
         case 6:
-            return '待委员会审核';
+            return '项目终审';
         case 7:
             return '待委员会定价';
         case 8:
@@ -94,7 +94,8 @@ class NoLoan extends React.Component{
             delId: '',
             visible: false,
             upfile: {},
-            doingData: []
+            doingData: [],
+            timeLong: '',
         }
     };
 
@@ -149,9 +150,9 @@ class NoLoan extends React.Component{
        
     }
     //提交补充资料
-    async commitData() {
+    async commitData(fid) {
         let data = {
-          projectId: this.props.projectId,
+          projectId: fid,
         }
         this.setState({loading: true})
         let res = await mineloan.commitwsInfo(data);
@@ -273,7 +274,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 } 
             },
             { 
@@ -325,8 +326,11 @@ class NoLoan extends React.Component{
                                 record.fflag === 3 ?    
                                     <a className="ac-commit" onClick={() => this.dataLicense(text,record,index)}>数据授权</a>:
                                 record.fflag === 5 ?    
-                                    <UploadFile {...this.fileData} prefix={'person/'} onChange={this.onChange.bind(this,record)} className="loaninfo-up">上传补充资料</UploadFile>:
-                                    // <a className="ac-commit" onClick={() => this.uploadInfo(text,record,index)}>上传补充资料</a>:
+                                    <div>
+                                        <UploadFile {...this.fileData} prefix={'person/'} onChange={this.onChange.bind(this,record)} className="loaninfo-up">上传补充资料</UploadFile>
+                                        <p>上传资料可以是word文档、图片 ，只允许上传一个文档，多个文档压缩上传；</p>
+                                    </div>
+                                    :
                                 record.fflag === 8 ?  
                                     <a className="ac-commit" onClick={() => this.sureBorrow(text,record,index)}>确认借款</a>:
                                 ''    
@@ -342,7 +346,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 }  
             },
             { 
@@ -408,7 +412,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 } 
             },
             { 
@@ -444,7 +448,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'invMoney', 
                 key: 'invMoney' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.invMoney)}万元</span>
+                    return <span>{returnFloat(record.invMoney)}元</span>
                 } 
             },
             { 
@@ -462,7 +466,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'loanTime', 
                 key: 'loanTime' ,
                 render: (text,record) =>{
-                    return <span>{getTime(record.loanTime)}</span>
+                    return getTime(record.loanTime)
                 }
             },
             { 
@@ -494,7 +498,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 } 
             },
             { 
@@ -548,7 +552,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'invMoney,', 
                 key: 'invMoney,' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.invMoney)}万元</span>
+                    return <span>{returnFloat(record.invMoney)}元</span>
                 }
             },
             { 
@@ -571,7 +575,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 } 
             },
             { 
@@ -595,10 +599,10 @@ class NoLoan extends React.Component{
             { 
                 title: '放款日期', 
                 align: 'center',
-                dataIndex: 'fcreate_time', 
-                key: 'fcreate_time' ,
+                dataIndex: 'fpublish_time', 
+                key: 'fpublish_time' ,
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                    return <span>{parseTime(record.fpublish_time,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
             { 
@@ -632,7 +636,7 @@ class NoLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 }  
             },
             { 
@@ -720,7 +724,7 @@ class NoLoan extends React.Component{
                         pagination={false}
                         dataSource={[item]}
                         columns={item.fflag <= 7 ? columns :
-                            [9,10,11].includes(item.fflag) ? columns8_9 : 
+                            [9,10,11,12].includes(item.fflag) ? columns8_9 : 
                             item.fflag === 13 ? columns10 :
                             item.fflag === 15 ? columns12:
                             item.fflag === 14 ? columns11:
@@ -729,10 +733,10 @@ class NoLoan extends React.Component{
                         loading={this.props.loading}
                     />
                     </Spin>
-                    {item.fflag === 0 ? !item.fis_pass ? 
+                    {item.fflag === 0 ? item.fis_pass && !item.fis_pass ? 
                                         <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
                                         <span>初审驳回：{item.fremark}</span></p> : '' : ''}
-                    {item.fflag === 5 ? !item.fis_pass ? 
+                    { [4,5].includes(item.fflag) ? !item.fis_pass ? 
                                         <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
                                         <span>{item.fremark}</span></p> : '' : ''}
                     {item.fflag === 8 ? <SureLoan suredata={item}></SureLoan>: 

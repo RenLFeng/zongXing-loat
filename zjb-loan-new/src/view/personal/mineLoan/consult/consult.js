@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:16:51 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-12 14:20:04
+ * @Last Modified time: 2018-07-26 13:51:14
  * 我的借款
  * /projectTopic/getOne
  */
@@ -154,16 +154,24 @@ class Consult extends React.Component{
                       </div>)
         })
         return(
-            <div className="pe personal-rbody" style={{marginTop: '8px'}}>
-                <LoanTitle title="投资咨询"></LoanTitle>
-                <div className="reply-statu">
-                    <a className="statu-a" onClick={() =>this.getReply(0)}>待回复<span>({this.state.waitReply > 99 ? '99+' : this.state.waitReply})</span></a>
-                    <a className="statu-a" onClick={() =>this.getReply(1)}>已回复<span></span></a>
-                    <a className="statu-a" onClick={() =>this.getReply(-1)}>已举报<span></span></a>
-                </div>
-                <Spin spinning={this.state.loading}>
-                    {list}
-                </Spin>
+            <div>
+                {
+                    list.length > 0 
+                    ?
+                        <div className="pe personal-rbody" style={{marginTop: '8px'}}>
+                            <LoanTitle title="投资咨询"></LoanTitle>
+                            <div className="reply-statu">
+                                <a className="statu-a" onClick={() =>this.getReply(0)}>待回复<span>({this.state.waitReply > 99 ? '99+' : this.state.waitReply})</span></a>
+                                <a className="statu-a" onClick={() =>this.getReply(1)}>已回复<span></span></a>
+                                <a className="statu-a" onClick={() =>this.getReply(-1)}>已举报<span></span></a>
+                            </div>
+                            <Spin spinning={this.state.loading}>
+                                {list}
+                            </Spin>
+                        </div>
+                    :
+                    ''    
+                }
             </div>
         )
     }

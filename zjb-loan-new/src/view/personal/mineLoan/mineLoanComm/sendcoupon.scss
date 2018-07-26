@@ -46,7 +46,9 @@ $bottom: #F0F0F0;
     .num {
       position: relative;
       top: 53px;
-      left: 6%;
+      left: 4%;
+      width: 100px;
+      display: inline-block;
     }
     .per-type {
       position: relative;
@@ -107,7 +109,7 @@ $bottom: #F0F0F0;
     .send-form-div {
       margin: 15px 0 ;
       p {
-        padding-left: 116px;
+        padding-left: 87px;
         color: #F29827;
         font-size: 12px;
         margin-top: 0;
