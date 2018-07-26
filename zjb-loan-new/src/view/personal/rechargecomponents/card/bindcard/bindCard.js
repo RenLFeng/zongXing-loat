@@ -296,7 +296,7 @@ class BindCard extends React.Component {
 
   render() {
     //console.log("this.props:",this.props);
-    console.log('this.state.tipCityName', this.state.tipCityName)
+    console.log('this.state.cardType', this.state.cardType)
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;

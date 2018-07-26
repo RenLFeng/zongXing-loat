@@ -296,6 +296,7 @@ class BindCard extends React.Component {
     }
     this.setState({commmitLoading: true});
     let param = {
+      
       accountBankCard:{
         fbankCode: this.state.openName,
         fcityCode: this.state.cityId,
@@ -383,27 +384,28 @@ class BindCard extends React.Component {
           <span className="bind_tip_msg">{this.state.showBankName?this.state.showBankName:''}</span>
           <div className="bind_item_view">
             <span>开户省市</span>
+           
             <Select size="large" placeholder="请选择省份" notFoundContent="暂无数据" value={this.state.provinceId} style={{width: 130,height: 42}} onChange={(val)=>this.chooseCity(val)} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {moneyCity.provincerList.map((data,index)=>{
-                return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
+              
               })}
             </Select>
+           
             <Select size="large" placeholder="请选择城市" notFoundContent="暂无数据" value={this.state.cityId} style={{width: 130,height: 42}} onChange={(val)=>this.setState({cityId: val})}showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {this.state.cityArr?this.state.cityArr.map((data,index)=>{
+              
                 return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               }): null}
             </Select>
           </div>
           <span className="bind_tip_msg">{this.state.tipCityName===' undefined' || this.state.tipCityName==='undefined ' ?'':this.state.tipCityName}</span>
-          <div className="bind_item_view">
-            <span>卡类型</span>
-            <Input size="large" value={this.state.cardType} readOnly/>
-          </div>
+         
           <span className="bind_error_msg">{this.state.cardType==='信用卡'?'不支持信用卡':null}</span>
           <div className="bind_item_view">
             <span/>
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
+          
               <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})} onBlur={()=>this.checkPass(this.state.userPassword)}/>
               <i className={this.state.showPwd?'zjb zjb-mimakejian': ' zjb zjb-htmal5icon08'} onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
               {
@@ -413,6 +415,7 @@ class BindCard extends React.Component {
               
             </div>
           </div>
+         
           <div className="bind_item_view" style={{marginTop:10}}>
             <span/>
             <div className="bind_desc">
