@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-10 09:36:57 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-11 16:46:29
+ * @Last Modified time: 2018-07-27 15:44:06
  */
 //获取未来15年
 export function getYears(){
@@ -40,4 +40,51 @@ export function getDays(date) {
     return days;
 }
 
-
+export function checkTime(endtime){
+    let y = Number.parseInt(new Date().getFullYear());
+    let m = Number.parseInt(new Date().getMonth() + 1);
+    let day = Number.parseInt(new Date().getDate());
+    let now = y+'-'+m+'-'+day;
+    var time1 = new Date(y+'-'+m+'-'+day).getTime();
+    var time2 = new Date(endtime).getTime();
+    if(time1 > time2){
+        return false;
+    }
+    //判断时间跨度是否大于6个月
+    var arr1 = now.split('-');
+    var arr2 = endtime.split('-');
+    arr1[1] = parseInt(arr1[1]);
+    arr1[2] = parseInt(arr1[2]);
+    arr2[1] = parseInt(arr2[1]);
+    arr2[2] = parseInt(arr2[2]);
+    var flag = true;
+    if(arr1[0] == arr2[0]){//同年
+        if(arr2[1]-arr1[1] < 6){ //月间隔小于6个月
+            flag = false;
+        }else if(arr2[1]-arr1[1] == 6){ //月相隔6个月，比较日
+            if(arr2[2] < arr1[2]){ //结束日期的日小于开始日期的日
+                flag = false;
+            }
+        }
+    }else{ //不同年
+        if(arr2[0] - arr1[0] < 0){
+            flag = false;
+        }else if(arr2[0] - arr1[0] == 1){
+            if(arr1[1] < 6){ //开始年的月份于6时，不需要跨年
+                if(arr2[1] - arr1[2] < 6){
+                    flag = false;
+                }
+            }else if(arr1[1]+6-arr2[1] > 12){ //月相隔小于6个月
+                flag = false;
+            }else if(arr1[1]+6-arr2[1] == 12){ //月相隔6个月，比较日
+                if(arr2[2] < arr1[2]){ //结束日期的日大于开始日期的日
+                    flag = false;
+                }
+            }
+        }
+    }
+    if(!flag){
+        return false;
+    }
+    return true;
+}
