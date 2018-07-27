@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-06 16:20:43 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-26 15:11:31
+ * @Last Modified time: 2018-07-27 09:22:50
  * @des: 日历 - 日期  金钱相关方法
  */
 
@@ -287,16 +287,16 @@ export function nowDay() {
 export function getTime(time){
         let date3 = time; //时间差秒
         //计算出相差天数
-        let days=Math.floor(date3/(24*3600*1000));
+        let days=Math.floor(date3/(24*3600));
         //计算出小时数
-        let leave1=date3%(24*3600*1000);  //计算天数后剩余的毫秒数
-        let hours=Math.floor(leave1/(3600*1000));
+        let leave1=date3%(24*3600);  //计算天数后剩余的毫秒数
+        let hours=Math.floor(leave1/3600);
         //计算相差分钟数
-        let leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
-        let minutes=Math.floor(leave2/(60*1000));
+        let leave2=leave1%(3600);        //计算小时数后剩余的毫秒数
+        let minutes=Math.floor(leave2/60);
         //计算相差秒数
-        let leave3=leave2%(60*1000);     //计算分钟数后剩余的毫秒数
-        let seconds=Math.round(leave3/1000);
+        let leave3=leave2%60;     //计算分钟数后剩余的毫秒数
+        let seconds=Math.round(leave3);
         return (days > 0 ? days +'天' : '' )+ (hours > 9 ? hours : '0' + hours ) + ":" + (minutes > 9 ? minutes : '0' + minutes )  + ":" + (seconds > 9 ? seconds : '0' + seconds ) 
 }
 

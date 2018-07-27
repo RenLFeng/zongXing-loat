@@ -296,40 +296,40 @@ class Loaninfo extends React.Component {
 
 
   amapEvents = {
-    created: (mapInstance) => {
-      this.mapInstance = mapInstance;
-      mapInstance.setZoom(15);
-      // 确认第一次点击
-      mapInstance.on('click', (e) => {
-        this.setState({
-          markerPosition: { longitude: e.lnglat.getLng(), latitude: e.lnglat.getLat() },
-        })
-        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
-         // 确认第一次点击 否则不出来点位坐标
-        if (this.first === 1) {
-          mapInstance.setZoom(14);
-          this.first += 1
-        }
-      });
-      console.log(window);
-      window.AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
-          var autoOptions = {
-              input: "tipinput"//使用联想输入的input的id
-          };
-          const autocomplete= new AMap.Autocomplete(autoOptions);
-          var placeSearch = new AMap.PlaceSearch({
-              map:mapInstance
-          })
-          window.AMap.event.addListener(autocomplete, "select", function(e){
-              //TODO 针对选中的poi实现自己的功能
-              console.log(e.poi.location);
-              if (e.poi && e.poi.location) {
-                mapInstance.setZoom(15);
-                mapInstance.setCenter(e.poi.location);
-              }
-          });
-      });
-    }
+    // created: (mapInstance) => {
+    //   this.mapInstance = mapInstance;
+    //   mapInstance.setZoom(15);
+    //   // 确认第一次点击
+    //   mapInstance.on('click', (e) => {
+    //     this.setState({
+    //       markerPosition: { longitude: e.lnglat.getLng(), latitude: e.lnglat.getLat() },
+    //     })
+    //     document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+    //      // 确认第一次点击 否则不出来点位坐标
+    //     if (this.first === 1) {
+    //       mapInstance.setZoom(14);
+    //       this.first += 1
+    //     }
+    //   });
+    //   console.log(window);
+    //   window.AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
+    //       var autoOptions = {
+    //           input: "tipinput"//使用联想输入的input的id
+    //       };
+    //       const autocomplete= new AMap.Autocomplete(autoOptions);
+    //       var placeSearch = new AMap.PlaceSearch({
+    //           map:mapInstance
+    //       })
+    //       window.AMap.event.addListener(autocomplete, "select", function(e){
+    //           //TODO 针对选中的poi实现自己的功能
+    //           console.log(e.poi.location);
+    //           if (e.poi && e.poi.location) {
+    //             mapInstance.setZoom(15);
+    //             mapInstance.setCenter(e.poi.location);
+    //           }
+    //       });
+    //   });
+    // }
   };
 
   markerEvents = {
