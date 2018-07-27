@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-26 18:02:18
+ * @Last Modified time: 2018-07-27 09:43:29
  * 有借款记录
  */
 import React from 'react';
@@ -279,6 +279,17 @@ class NoLoan extends React.Component{
             },1000)
         })
     }
+
+    goingTime(val){
+        let time = val.loanTime;
+        setInterval(()=>{
+            this.setState({
+                timeLong: time
+            })
+            time++;
+        },1000)
+    }
+
     render(){
         const doing = [];
         // fflag = 其它
@@ -481,7 +492,8 @@ class NoLoan extends React.Component{
                 dataIndex: 'loanTime', 
                 key: 'loanTime' ,
                 render: (text,record) =>{
-                    return getTime(record.loanTime)
+                    // return getTime(record.loanTime)
+                    return getTime(this.state.timeLong)
                 }
             },
             { 
@@ -765,6 +777,9 @@ class NoLoan extends React.Component{
                                         </Appalyloan> : ''}
                 </div>
             )
+            if(item.fflag === 13){
+                this.goingTime()
+            }
         })
         const {upfile} = this.state;
         return(

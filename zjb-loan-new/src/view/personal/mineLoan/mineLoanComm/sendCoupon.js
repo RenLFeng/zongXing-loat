@@ -2,7 +2,7 @@
  * @Author: wfl
  * @Date: 2018-07-05 11:48:42
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-26 15:21:13
+ * @Last Modified time: 2018-07-27 14:43:17
  * 发放优惠券
  */
 import React from 'react';
@@ -69,7 +69,7 @@ class SendCoupon extends React.Component{
                 day: day,
                 imgsrc: '',
             },
-            deiladdress: [],
+            deiladdress: '',
             phone: '',
             couponnum: 0,
         };
@@ -372,31 +372,34 @@ class SendCoupon extends React.Component{
             projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
-        if(res.code === 0 && res.data.length > 0){
-            this.setState({
-                isSave: true,
-                couponUsePlaces: res.data[0].couponUsePlaces,
-                tourist:{
-                    name: this.props.projectName,
-                    value: res.data[0].fullSubMoney,//面值
-                    rule: res.data[0].fullSubCondition,//满减？
-                    num: res.data[0].couponName,//多少张
-                    year: new Date(res.data[0].endTime).getFullYear(),
-                    month: (new Date(res.data[0].endTime).getMonth()) + 1,
-                    day: new Date(res.data[0].endTime).getDay(),
-                    imgsrc:  IMG_BASE_URL+res.data[0].logo,
-                },
-                invest:{
-                    name: this.props.projectName,
-                    value: res.data[1].fullSubMoney,//面值
-                    rule: res.data[1].fullSubCondition,//满减？
-                    inrule: res.data[0].invMoney,//投资150发放一张
-                    year: new Date(res.data[1].endTime).getFullYear(),
-                    month: (new Date(res.data[1].endTime).getMonth()) + 1,
-                    day: new Date(res.data[1].endTime).getDay(),
-                    imgsrc: IMG_BASE_URL+res.data[1].logo,
-                },
-            })
+        if(res.code === 0){
+            if(res.data.length > 0){
+               await this.setState({
+                    isSave: true,
+                    couponUsePlaces: res.data[0].couponUsePlaces,
+                    tourist:{
+                        name: this.props.projectName,
+                        value: res.data[0].fullSubMoney,//面值
+                        rule: res.data[0].fullSubCondition,//满减？
+                        num: res.data[0].couponName ? res.data[0].couponName : 50,//多少张
+                        year: new Date(res.data[0].endTime).getFullYear(),
+                        month: new Date(res.data[0].endTime).getMonth() + 1,
+                        day: new Date(res.data[0].endTime).getDay(),
+                        imgsrc:  IMG_BASE_URL+res.data[0].logo,
+                    },
+                    invest:{
+                        name: this.props.projectName,
+                        value: res.data[1].fullSubMoney,//面值
+                        rule: res.data[1].fullSubCondition,//满减？
+                        inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
+                        year: new Date(res.data[1].endTime).getFullYear(),
+                        month: new Date(res.data[1].endTime).getMonth() + 1,
+                        day: new Date(res.data[1].endTime).getDay(),
+                        imgsrc: IMG_BASE_URL+res.data[1].logo,
+                    },
+                })
+            }
+            console.log(new Date(res.data[0].endTime).getMonth(),new Date(res.data[1].endTime).getMonth())
         }else{
             message.error(res.msg);
         }
@@ -435,6 +438,10 @@ class SendCoupon extends React.Component{
 
     //保存地址
     async saveAddress(){
+        if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.length < 6  || this.state.phone === ''){
+            message.info('请完善地址信息！');
+            return;
+        }
         let arr = [{
             provnice: this.state.provnice,
             provnicena: this.state.provnicena,
@@ -533,7 +540,7 @@ class SendCoupon extends React.Component{
                                     <p>  </p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>
-                                <div className="send-form-div"  style={{ marginTop: 35}}>
+                                <div className="send-form-div"  style={{ marginTop: 0}}>
                                     <span className="fir-span">失效日期:</span>
                                     <Select defaultValue={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
                                         {
