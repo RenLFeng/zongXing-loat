@@ -9,8 +9,8 @@ import SendCoupons from './sendCoupon/sendCoupon';
 import BarE from './useCoupons';
 import PieE from './CouponIssuance';
 import './myCoupon.scss';
-import { Table,Pagination ,Tooltip } from 'antd';
-import {CouponService} from '../../services/api';
+import { Table,Pagination ,Tooltip,message } from 'antd';
+import {CouponService,personal} from '../../services/api';
 import moment from 'moment';
 
 
@@ -37,12 +37,14 @@ export default class MyCoupon extends React.Component {
       statistics:{},       //发放统计
       couponInfo:{},     //优惠券数据
       project:{},     //项目信息
+      dataInfo:{},    //发优惠券的项目
     }
     this.close = this.close.bind(this)
     this.close_ = this.close_.bind(this)
   }
   componentDidMount() {
     this.getCoupon();
+    this.getproject();
   }
 
   async getCoupon(){
@@ -51,7 +53,6 @@ export default class MyCoupon extends React.Component {
       pageSize:this.state.pageSize
     }
     const response = await CouponService.getCouponInfo(param);
-    console.log('12121212ssssssss',response)
     if(response.code === 0){
       this.setState({
         dataSource:response.data.tableStatistical?response.data.tableStatistical.unUsed.infoList:[],
@@ -198,6 +199,18 @@ onShowSizeChange = (current, pageSize) => {
       })
     }
   }
+
+  async getproject(){
+    const response = await personal.couponGetProject();
+    if(response.code === 0){
+      this.setState({
+        dataInfo:response.data
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
+
 
 render(){
   const columns = [{
@@ -433,7 +446,7 @@ render(){
                 this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
               }
               {
-                this.state.SendCouponShow ? <SendCoupons close={this.close_} project={this.state.project}/> : null
+                this.state.SendCouponShow ? <SendCoupons close={this.close_} project={this.state.project}  dataInfo={this.state.dataInfo}/> : null
               }
                 
                 
@@ -443,10 +456,17 @@ render(){
                       <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    {
+                    {/* {
                       this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
                       <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
+                    } */}
+                    {
+                      this.state.dataInfo.fflag > 0 && this.state.dataInfo.fflag < 15 ? 
+                      <p className="send fr" onClick={()=>{this.setState({ SendCouponShow:true})}} >发优惠券</p> :
+                      <Tooltip title="您还没有可以发放优惠券的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
                     }
+
+                    
                    
                   </div>
                   {

@@ -778,7 +778,7 @@ class NoLoan extends React.Component{
                 </div>
             )
             if(item.fflag === 13){
-                this.goingTime()
+                this.goingTime(item)
             }
         })
         const {upfile} = this.state;
