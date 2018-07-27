@@ -2,7 +2,7 @@
  * @Author: wfl 
  * @Date: 2018-07-04 17:17:00 
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-27 09:43:29
+ * @Last Modified time: 2018-07-27 16:05:55
  * 有借款记录
  */
 import React from 'react';
@@ -96,6 +96,7 @@ class NoLoan extends React.Component{
             upfile: {},
             doingData: [],
             timeLong: '',
+            isGoing: false,
         }
     };
 
@@ -281,12 +282,13 @@ class NoLoan extends React.Component{
     }
 
     goingTime(val){
-        let time = val.loanTime;
+        let time = val;
         setInterval(()=>{
-            this.setState({
-                timeLong: time
+           this.setState({
+                timeLong: getTime(time),
+                isGoing: true
             })
-            time++;
+            time = time+1;
         },1000)
     }
 
@@ -493,7 +495,7 @@ class NoLoan extends React.Component{
                 key: 'loanTime' ,
                 render: (text,record) =>{
                     // return getTime(record.loanTime)
-                    return getTime(this.state.timeLong)
+                    return this.state.timeLong
                 }
             },
             { 
@@ -777,10 +779,14 @@ class NoLoan extends React.Component{
                                         </Appalyloan> : ''}
                 </div>
             )
-            if(item.fflag === 13){
-                this.goingTime(item)
-            }
+           
         })
+        if(doing[0].fflag === 13){
+            if(!this.state.isGoing){
+                this.goingTime(doing[0].loanTime);
+            }
+       
+        }
         const {upfile} = this.state;
         return(
             <div className="mineloan">
