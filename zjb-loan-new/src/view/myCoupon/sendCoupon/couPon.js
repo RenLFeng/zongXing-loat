@@ -151,9 +151,8 @@ class SendCoupon extends React.Component{
                 invest: {
                     ...this.state.invest,
                     imgsrc: val
-                }
-               
-             },()=>{ console.log('000000000000000000000000000000',this.state.invest.imgsrc)})
+                }               
+             })
         }else{
             await this.setState({
                 tourist: {

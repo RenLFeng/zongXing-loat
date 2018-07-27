@@ -174,7 +174,7 @@ class Loaninfo extends React.Component {
                                 {getFieldDecorator('fcredit_use', {
                                     initialValue: data.fcredit_use? data.fcredit_use :'',
                                 })(
-                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} />
+                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} maxLength={20}/>
                                 )}
                             </Form.Item>
 

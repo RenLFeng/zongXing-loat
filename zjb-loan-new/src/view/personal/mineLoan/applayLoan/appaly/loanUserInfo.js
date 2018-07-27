@@ -128,7 +128,7 @@ class Loaninfo extends React.Component {
                   {getFieldDecorator('lenderName', {
                     initialValue: data.lenderName ? data.lenderName : ''
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={20}/>
                   )}
                 </Form.Item>
               </Col>
@@ -139,7 +139,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: VER_PHONE, message: '请填写正确的手机'
                     }]
-                  })(<Input placeholder="请输入" />)}
+                  })(<Input placeholder="请输入" maxLength={20}/>)}
                 </Form.Item>
               </Col>
 
@@ -151,7 +151,7 @@ class Loaninfo extends React.Component {
                       pattern: QQ_REG, message: '请填写正确的QQ号'
                     }],
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={20}/>
                   )}
                 </Form.Item>
               </Col>
@@ -168,7 +168,7 @@ class Loaninfo extends React.Component {
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={22}/>
                   )}
                 </Form.Item>
               </Col>
@@ -193,7 +193,7 @@ class Loaninfo extends React.Component {
                       pattern: WeChat_REG, message: '请填写正确的微信号'
                     }],
                   })(
-                    <Input placeholder="请输入" style={{ marginLeft: "-8px" }} />
+                    <Input placeholder="请输入" style={{ marginLeft: "-8px" }} maxLength={20}/>
                   )}
                 </Form.Item>
               </Col>
@@ -207,7 +207,7 @@ class Loaninfo extends React.Component {
                       pattern: BANK_CARD, message: '请输入正确的银行卡号'
                     }],
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={33}/>
                   )}
                 </Form.Item>
               </Col>
@@ -234,7 +234,7 @@ class Loaninfo extends React.Component {
                       pattern: E_MAIL, message: '请输入正确的电子邮箱'
                     }]
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={50}/>
                   )}
                 </Form.Item>
               </Col>
@@ -249,7 +249,7 @@ class Loaninfo extends React.Component {
                     initialValue: data.fbank_name ? data.fbank_name : '',
                     rules: [],
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={45} />
                   )}
                 </Form.Item>
               </Col>
@@ -261,7 +261,7 @@ class Loaninfo extends React.Component {
                       pattern: TEL_PHONE, message: '请填写正确的座机号'
                     }],
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={30} />
                   )}
                 </Form.Item>
               </Col>
@@ -275,7 +275,7 @@ class Loaninfo extends React.Component {
                       { validator: this.validateStr }
                     ]
                   })(
-                    <Input placeholder="请输入" />
+                    <Input placeholder="请输入" maxLength={100}/>
                   )}
                 </Form.Item>
               </Col>
@@ -302,7 +302,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" />)}
+                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" maxLength={20}/>)}
                 </Form.Item>
 
               </div>
@@ -313,7 +313,7 @@ class Loaninfo extends React.Component {
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" />)}
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '25%', }}>
@@ -352,7 +352,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" />)}
+                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" maxLength={20}/>)}
                 </Form.Item>
 
               </div>
@@ -363,7 +363,7 @@ class Loaninfo extends React.Component {
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" />)}
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '25%', }}>
@@ -389,7 +389,7 @@ class Loaninfo extends React.Component {
                     rules: [
                         { pattern: MONEY_REG, message: '请输入姓名' },
                     ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" />)}
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
@@ -399,7 +399,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" />)}
+                  })(<Input style={{ width: 300, marginLeft: 6 }} placeholder="身份证号" maxLength={20}/>)}
                 </Form.Item>
 
               </div>
@@ -410,7 +410,7 @@ class Loaninfo extends React.Component {
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" />)}
+                  })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="手机号" maxLength={20}/>)}
                 </Form.Item>
               </div>
               <div style={{ width: '25%', }}>
@@ -467,7 +467,7 @@ class Loaninfo extends React.Component {
                   <Icon type="question-circle-o" className={styles.toolTip} style={{left:120,top:-27}}/></Tooltip> */}
                 </div>
                 {getFieldDecorator('fidcard_pic3', {
-                    initialValue: data.fidcard_pic3 ? data.fidcard_pic3 : '',
+                  initialValue: data.fidcard_pic3 ? data.fidcard_pic3 : '',
                   rules: [],
                 })(
                   <UploadSingle {...this.data} prefix={dataPath} tipText="手持身份证" />
@@ -521,7 +521,7 @@ class Loaninfo extends React.Component {
                 </div>
                 {getFieldDecorator('fcredit_report', {
                     initialValue: data.fcredit_report ? JSON.parse(data.fcredit_report) : [],
-                  rules: [],
+                    rules: [],
                 })(
                   <UploadFile {...this.fileData} prefix={dataPath}>个人征信报告</UploadFile>
                 )}
@@ -567,7 +567,8 @@ class Loaninfo extends React.Component {
             <Button style={{width: 140, margin: '0 auto'}} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
           </div>}
         </div>
-      </div>);
+      </div>
+    );
   }
 }
 export default Form.create()(Loaninfo);

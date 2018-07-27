@@ -152,6 +152,13 @@ export default class EnterprisePresentation extends React.Component {
         if(this.moneyError||this.state.loading){
           return;
         }
+        if (isNaN(this.state.amount*1)) {
+          return;
+        }
+        if (!this.state.carardActive.fbankcard) {
+          this.setState({moneyError:true, moneyErrorMsg: '请先选择银行卡'})
+          return;
+        }
         if(Number(this.state.amount) < 2){
           this.setState({moneyError:true, moneyErrorMsg: '金不能小于1'})
           return 
@@ -232,11 +239,12 @@ export default class EnterprisePresentation extends React.Component {
   changeMoney = (event) => {
     console.log("money:",event.target.value);
     if(isNaN(Number(event.target.value))){
-      this.setState({ moneyError: true, moneyErrorMsg: '只能输入数字' })
-      this.setState({})
+      this.setState({ 
+        moneyError: true, moneyErrorMsg: '只能输入数字',
+        amount:event.target.value
+       })
     }else{
-      this.setState({ moneyError: false })
-      this.setState({amount:event.target.value})
+      this.setState({ moneyError: false, amount:event.target.value })
     }
   }
   sub(val){
@@ -247,6 +255,18 @@ export default class EnterprisePresentation extends React.Component {
       return  val.substring(val.length-4)
     }
    }
+
+  // 计算手续费
+  calFee(value) {
+    if (!value || (value && value * 1 == 0)) {
+      return 0;
+    }
+    if (value * 0.0025 < 1) {
+      return 1.00;
+    }
+    return (value*0.0025).toFixed(2);
+  }
+
    
   render() {
     const {withdrawals} = this.state;
@@ -269,10 +289,10 @@ export default class EnterprisePresentation extends React.Component {
                 <input type="text" className="input_money" onChange={this.changeMoney} value={this.state.amount}/>
                 <span className="rate_text_position" style={{display: 'inline-block'}}>账户可提现金额￥{baseData ? baseData.balance : 0}</span>
               </div>
-              <span className="rate_text">提现手续费￥<span>{(this.state.amount * 0.0025).toFixed(2)}</span>（费率0.25%）</span>
+              <span className="rate_text">提现手续费￥<span>{isNaN(this.calFee(this.state.amount))?'':this.calFee(this.state.amount)}</span>（费率0.25%）</span>
             </div>
             {this.state.selectedCardError ? <div><span style={{ color:'red', fontSize:'10px' }}>请选择到账银行卡</span></div> : null}
-            {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px' }}>{this.state.moneyErrorMsg}</span></div> : null}
+            {this.state.moneyError ? <div><span style={{ color:'red', fontSize:'10px', marginLeft: 116 }}>{this.state.moneyErrorMsg}</span></div> : null}
             <Button type="primary" loading={this.state.loading} style={{width: 279, marginTop: 30,height:35,fontSize: 17, marginBottom:30,marginLeft: 40}} onClick={this.handleSubmit}>发起提现</Button>
           </div>
 
