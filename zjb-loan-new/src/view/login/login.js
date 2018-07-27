@@ -50,13 +50,15 @@ export default class Login extends React.Component {
 
   //登录提交方法
   submitLogin() {
-    const { loginPhone, loginPwd } = this.state;
+    let { loginPhone, loginPwd } = this.state;
+    loginPhone = loginPhone.trim();
+    loginPwd = loginPwd.trim();
     if (loginPhone.length === 0) {
-      alert('登录手机号不能为空');
+      loginPhone.warning('登录手机号不能为空');
       return;
     }
     if (loginPwd.length === 0) {
-      alert('登录密码不能为空');
+      loginPwd.warning('登录密码不能为空');
       return;
     }
     const login = {
@@ -70,14 +72,14 @@ export default class Login extends React.Component {
     })
   }
 // 判断  手机号是否已被注册过
-  async checkPhone() {
-    const {loginPhone} = this.state;
+  async checkPhone(e) {
+    let loginPhone = e.target.value.trim();
     if (loginPhone.length === 0) {
       this.setState({loginNameErr:'手机号不能为空'})
       return;
     }
     if (loginPhone.length < 6 || loginPhone.length > 16) {
-      this.setState({loginNameErr:'手机号长度不正确',loginError: true})
+      this.setState({loginNameErr:'手机号或用户名长度不正确',loginError: true})
       return;
     }
     if (this.state.checkPhoneLoading) {
@@ -151,9 +153,9 @@ export default class Login extends React.Component {
                   <Spin tip="登录中..." spinning={this.props.submitting} style={{width:400}}>
                     <div className="spinContent" style={{width:400}}>
                     <div className="row" style={{position:'relative'}}>
-                      <input className="put" value={loginPhone} maxLength={20}
-                            onChange={(e) => {this.setState({loginPhone: e.target.value})}} name="loginPhone" type="tel"
-                            placeholder="手机号" onBlur={()=>this.checkPhone()} onKeyDown={(e)=>this.pressKey(e)}/>
+                      <input className="put" value={loginPhone.trim()} maxLength={20}
+                            onChange={(e) => {this.setState({loginPhone: e.target.value.trim()})}} name="loginPhone" type="tel"
+                            placeholder="手机号或用户名" onBlur={(e)=>this.checkPhone(e)} onKeyDown={(e)=>this.pressKey(e)}/>
                             <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
                             <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>      
                       {

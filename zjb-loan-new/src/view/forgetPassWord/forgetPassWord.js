@@ -437,7 +437,7 @@ infoCheck_(){
                       </div> : null
                   } 
                   <div className="forget_inp" style={{ marginBottom: 15,marginTop:5 }}>
-                    <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
+                    <Input placeholder="输入短信验证码" className="input1" value={code.trim()} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
                     {// 根据倒计时时间显示是否可以点击获取验证码按钮
                       this.state.showAuthCode ?
                         <Button className="input2" onClick={() => this.fp_getCodes()} loading={this.state.loading}>点击获取验证码</Button> :
