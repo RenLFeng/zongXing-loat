@@ -63,6 +63,8 @@ export default class MyCoupon extends React.Component {
         useStatistics:response.data.tableStatistical?response.data.companyCouponChartsVo.useStatistical:null,
         statistics:response.data.tableStatistical?response.data.companyCouponChartsVo.grantStatistical:{},
         project:response.data.projectInfo?response.data.projectInfo:{}
+      },() => {
+        this.send();
       })
     }
   }
@@ -185,7 +187,7 @@ onShowSizeChange = (current, pageSize) => {
   }
 
   send(){
-    if(!this.state.project.fid){
+    if(this.state.project.fid){
       this.setState({
         SendCouponShow:true,
         background:true
@@ -417,11 +419,10 @@ render(){
     filterReset: '重置',
     emptyText: '暂无数据',
   }
-  console.log('this.propsthis.props',this.state.project)
         return(
          <div>
               <LeftMenu param={this.props} />
-              <div className="fr uc-rbody my-coupon ">
+              <div className="fr uc-rbody my-coupon " style={{padding: 0}}>
               {
                 this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo}/> : null
               }
@@ -443,7 +444,7 @@ render(){
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
                     {
-                      !this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
+                      this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
                       <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
                     }
                    

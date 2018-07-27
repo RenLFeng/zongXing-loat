@@ -360,7 +360,7 @@ class Loaninfo extends React.Component {
                     {getFieldDecorator('projectName', {
                       initialValue: data.projectName ? data.projectName : '',
                       rules: []
-                    })(<Input placeholder="请输入" maxLength={15} />)}
+                    })(<Input placeholder="请输入" maxLength={15}  maxLength={40}/>)}
                   </Form.Item>
                 </Col>
                 {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}
@@ -445,6 +445,7 @@ class Loaninfo extends React.Component {
                                     dataList: arr
                                   })
                                 }}
+                                maxLength={20}
                               />
                             )}
                           </Form.Item>

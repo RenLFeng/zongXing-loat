@@ -52,3 +52,85 @@
         margin: 16px 0;
     }
 }
+
+.css_div {
+    .card_div {
+        margin-bottom: 20px;
+        margin-right: 10px;
+        display: inline-block;
+        .IDCard{
+            width:286px;
+            height: 158px;
+            border-radius: 10px;
+            background-color: #4CC261;
+            .card_info{
+                padding-top: 24px;
+               .card_img{
+                width:48px;
+                height:48px;
+                background: #fff;
+                border-radius: 50%;
+                margin: 0 20px 0 25px;
+                display: inline-block;          
+               }
+               .card_text{
+                 display: inline-block;
+                 position: absolute;
+                 p{
+                  font-size: 14px;
+                  color: #ffffff;
+                 }
+                 span{
+                  display: block;     
+                  font-size: 12px;      
+                  margin-top: 10px;
+                  color: rgba(255, 255, 255, 0.5);
+                 }
+               }
+              }
+            .id_num {
+                font-size: 21px;
+                color: #ffffff;
+                // margin: 30px 0 45px 28px;
+                position: relative;
+                top:18px;
+                left:24px;
+                
+            }
+        }
+        .unbind_card {
+            font-size: 13px;
+            display: inline-block;
+            margin-left: 220px;
+            color:#268eff !important;
+    
+        }
+        .unbind_block {
+            margin-top: 20px;
+            width: 279px;
+            height: 158px;
+            border: 1px solid #e6e6e6;
+            border-radius: 10px;
+            background-color: #F2F2F2;
+            .unbind_span {
+                display: block;
+                text-align: center;
+            }
+            .unbind_span:first-child{
+                margin-bottom: 15px;
+                margin-top: 10px;
+            }
+            .unbind_password {
+                margin-top: 5px;
+                margin-left: 30px;
+                width: 220px;
+                height: 30px;
+            }
+            .unbind-btn {
+                margin-top: 5px;
+                margin-left: 106px;
+                
+            }
+        }
+    }
+}

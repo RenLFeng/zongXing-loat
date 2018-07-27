@@ -13,7 +13,6 @@ export default class PieE extends React.Component{
                 color:["#18A9EC",'#E97234','#9C9C9C','#15A84C','#FEB825','#9C9C9C','#15A84C','#FEB825'],
                 series: [
                     {
-                        name:'访问来源',
                         type:'pie',
                         selectedMode: 'single',
                         radius: ['50%', '50%'],
@@ -69,12 +68,12 @@ export default class PieE extends React.Component{
             {value:this.props.statistics.investors, name:'投资'},
            ]
             let outs=[
-                {value:this.props.statistics.touristsStateNum.failuresNum, name:'已失效'},
-                {value:this.props.statistics.touristsStateNum.forReceiveNum, name:'待领取'},
-                {value:this.props.statistics.touristsStateNum.receivedNum, name:'已领取'},
-                {value:this.props.statistics.investorsStateNum.failuresNum, name:'已失效'},
-                {value:this.props.statistics.investorsStateNum.forReceiveNum, name:'待领取'},
-                {value:this.props.statistics.investorsStateNum.receivedNum, name:'已领取'},
+                {value:this.props.statistics.touristsStateNum?this.props.statistics.touristsStateNum.failuresNum:0, name:'已失效'},
+                {value:this.props.statistics.touristsStateNum?this.props.statistics.touristsStateNum.forReceiveNum:0, name:'待领取'},
+                {value:this.props.statistics.touristsStateNum?this.props.statistics.touristsStateNum.receivedNum:0, name:'已领取'},
+                {value:this.props.statistics.investorsStateNum?this.props.statistics.investorsStateNum.failuresNum:0, name:'已失效'},
+                {value:this.props.statistics.investorsStateNum?this.props.statistics.investorsStateNum.forReceiveNum:0, name:'待领取'},
+                {value:this.props.statistics.investorsStateNum?this.props.statistics.investorsStateNum.receivedNum:0, name:'已领取'},
 
             ]
        this.setState({
@@ -86,7 +85,6 @@ export default class PieE extends React.Component{
               
                series: [
                    {
-                       name:'访问来源',
                        type:'pie',
                        selectedMode: 'single',
                        radius: [0, '30%'],

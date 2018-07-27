@@ -168,7 +168,7 @@ class Loaninfo extends React.Component {
                                             initialValue: data.companyName ? data.companyName : '',
                                             rules: [{ validator: this.validateName }]
                                         })(
-                                            <Input placeholder="请输入" style={{ marginLeft: 14 }} />
+                                            <Input placeholder="请输入" style={{ marginLeft: 14 }} maxLength={50}/>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -179,7 +179,7 @@ class Loaninfo extends React.Component {
                                             initialValue: this.props.companyNo?this.props.companyNo: '',
                                             rules: [],
                                         })(
-                                            <Input placeholder="请输入" disabled />
+                                            <Input placeholder="请输入" disabled maxLength={50}/>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -197,7 +197,7 @@ class Loaninfo extends React.Component {
                                                 pattern: TEL_PHONE, message: '请输入正确的单位座机'
                                             }]
                                         })(
-                                            <Input placeholder="请输入" maxLength={14} />
+                                            <Input placeholder="请输入" maxLength={50}/>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -210,7 +210,7 @@ class Loaninfo extends React.Component {
                                             rules: [{
                                                 validator: this.validateName
                                             }]
-                                        })(<Input placeholder="请输入" />)}
+                                        })(<Input placeholder="请输入"  maxLength={20}/>)}
                                     </Form.Item>
                                 </Col>
 
@@ -223,7 +223,7 @@ class Loaninfo extends React.Component {
                                                 pattern: BANK_CARD, message: '请输入正确的银行卡账号'
                                             }]
                                         })(
-                                            <Input placeholder="请输入" />
+                                            <Input placeholder="请输入" maxLength={25}/>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -258,7 +258,7 @@ class Loaninfo extends React.Component {
                                                 pattern: ZHUZHI_REG, message: '请输入正确的经营地址（只能包含汉字，数字，字母，下划线）'
                                             }],
                                         })(
-                                            <Input placeholder="请输入" style={{ width: '100%' }} />
+                                            <Input placeholder="请输入" style={{ width: '100%' }}  maxLength={200}/>
                                         )}
                                     </Form.Item>
                                 </Col>
@@ -414,9 +414,6 @@ class Loaninfo extends React.Component {
                                     )}
                                 </Form.Item>
                             </Col>
-
-
-
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item >
                                     <div>
