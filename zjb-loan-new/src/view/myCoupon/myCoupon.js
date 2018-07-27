@@ -443,7 +443,7 @@ render(){
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
                     {
-                      !this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
+                      this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
                       <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
                     }
                    

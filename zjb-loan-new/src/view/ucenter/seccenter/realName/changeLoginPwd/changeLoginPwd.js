@@ -171,7 +171,7 @@ export default class ChangeLPwd extends React.Component {
             if (!this.state.num) {
               console.log(111111)
               clearInterval(this.countDowns);
-              this.props.history.push('/index/uCenter/realName');
+              this.props.history.push('/index/login');
             }
           });
       }, 1000);
@@ -270,7 +270,7 @@ export default class ChangeLPwd extends React.Component {
                      <img alt="ok" src={require('../../../../../assets/img/u3551.png')} />{baseData? baseData.nickName:''}，恭喜您修改登录密码成功
                   </h1>
                   <p className="goback">
-                    <a  onClick={()=>this.props.history.push('/index/uCenter/realName')}>{this.state.num}秒后自动跳转</a>
+                    <a  onClick={()=>this.props.history.push('/index/login')}>{this.state.num}秒后自动跳转</a>
                   </p>                
                 </div>
                 
