@@ -114,7 +114,7 @@ export default class Loaninfo extends React.Component {
                     this.props.types === '2' ? 
                     <div>
                      <img src={require('../../mineLoan/img/u904.png')} ></img>
-                    <Account param={this.state.activeObj} />
+                        <Account param={this.state.activeObj} />
                     </div>
                     : null
                 }

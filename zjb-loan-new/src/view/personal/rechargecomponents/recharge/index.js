@@ -14,7 +14,7 @@ export default class Loaninfo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      rechargeType: 2, //默认充值方式
+      rechargeType: 0, //默认充值方式
       amount: 0.0, //充值金额
       activeObj: {},
 
@@ -55,7 +55,7 @@ export default class Loaninfo extends React.Component {
     }
   }
   handleSubmit = () => {
-    if (this.state.amountError) {
+    if (this.state.amountError||this.state.loading) {
       return;
     }
     let param = {
@@ -108,13 +108,13 @@ export default class Loaninfo extends React.Component {
   submitMoney() {
     this.formId.submit();
 
-    // Modal.confirm({
-    //   title: '提示',
-    //   content: '请在新页面完成充值',
-    //   okText: '充值成功',
-    //   cancelText: '取消',
-    //   onOk: () => this.props.history.push(Path.PERSONAL_ACCOUNT)
-    // });
+    Modal.confirm({
+      title: '提示',
+      content: '请在新页面完成充值',
+      okText: '充值成功',
+      cancelText: '取消',
+      onOk: () => {}
+    });
   }
 
   render() {
@@ -133,17 +133,19 @@ export default class Loaninfo extends React.Component {
                 <span className="label_text">充值方式</span>
               </div>
               <div className="label_div">
-                <div className="input-view">
-                  <span className="money_tip">￥</span>
-                  <input type="text" className="input_money" onChange={this.handleMoneyChange} />
+                <div style={{height: 50}}>
+                  <div className="input-view">
+                    <span className="money_tip">￥</span>
+                    <input type="text" className="input_money" onChange={this.handleMoneyChange} />
+                  </div>
+                  {this.state.amountError ? <div><span style={{ color: 'red', fontSize: '10px' }}>只能输入数字</span></div> : null}
                 </div>
-                {this.state.amountError ? <div><span style={{ color: 'red', fontSize: '10px' }}>只能输入数字</span></div> : null}
                 <div className="select_div">
-                  <span className={`recharge_btn ${this.state.rechargeType ? 'recharge_btn_choose' : ''}`} style={{ marginRight: '20px' }} onClick={() => this.setState({ rechargeType: 2 })}>快捷支付</span>
+                  {/* <span className={`recharge_btn ${this.state.rechargeType ? 'recharge_btn_choose' : ''}`} style={{ marginRight: '20px' }} onClick={() => this.setState({ rechargeType: 2 })}>快捷支付</span> */}
                   <span className={`recharge_btn ${this.state.rechargeType ? '' : 'recharge_btn_choose'}`} onClick={() => this.setState({ rechargeType: 0 })}>网银充值</span>
                 </div>
               </div>
-              <Button type="primary" onClick={this.handleSubmit} style={{ width: 325, height: 38 }}>发起充值</Button>
+              <Button type="primary" onClick={this.handleSubmit} loading={this.state.loading} style={{ width: 325, height: 38 }}>发起充值</Button>
             </div>
           </div>
           <form ref={ref => this.formId = ref} id="form1" name="form1" action={recharge.submitURL} method="post" target="_blank">

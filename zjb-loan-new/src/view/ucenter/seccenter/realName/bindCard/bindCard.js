@@ -9,7 +9,7 @@ import moneyBank from '../../../../../common/moneyBank';
 import moneyCity from '../../../../../common/moneyCity';
 import Path from '../../../../../common/PagePath';
 /** 银行卡的正则表达式 */
-import {BANK_CARD} from '../../../../../common/SystemParam';
+import {BANK_CARD,pass_reg} from '../../../../../common/SystemParam';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -51,6 +51,7 @@ class BindCard extends React.Component {
       bankCardNo: '', // 银行卡号
       userBaseInfo: {}, // 当前登录用户的信息
       cardType:'借记卡',
+      meaasge:''
     };
   }
   componentDidMount() {
@@ -295,26 +296,44 @@ class BindCard extends React.Component {
     }
     this.setState({commmitLoading: true});
     let param = {
-      fbankCode: this.state.openName,
-      fcityCode: this.state.cityId,
-      fprovinceCode: this.state.provinceId,
-      fbankType: this.state.fbankType, // 银行类型id
-      faccountId: this.props.userData.accountId,
-      idcard: this.state.idcard,
-      realname: this.state.realname,
-      fbankcard: this.state.bankCard.trim(),
-      fcardType: this.state.cardType
+      
+      accountBankCard:{
+        fbankCode: this.state.openName,
+        fcityCode: this.state.cityId,
+        fprovinceCode: this.state.provinceId,
+        fbankType: this.state.fbankType, // 银行类型id
+        faccountId: this.props.userData.accountId,
+        idcard: this.state.idcard,
+        realname: this.state.realname,
+        fbankcard: this.state.bankCard.trim(),
+        fcardType: this.state.cardType
+      },
+      userPassword:this.state.userPassword 
     }
     console.log("submit param",param);
     const response = await securityCentreService.bindBankCard(param);
     console.log('绑定银行卡结果', response)
     this.setState({commmitLoading: false});
     if (response.code === 0) {
+      message.info('绑定银行卡成功')
       this.props.history.push('/index/uCenter/realName');
     } else {
+     
       response.msg && message.error(response.msg);
     }
   }
+
+
+  //校验登陆密码
+   checkPass(val){
+     console.log('mima',val) 
+      if(!pass_reg.test(val)){
+        this.setState({ message:'密码输入不正确'})
+      return
+      } else {
+        this.setState({message:''})
+      }
+   }
 
   /** 按名称给银行排序 */
   sort(){
@@ -365,32 +384,39 @@ class BindCard extends React.Component {
           <span className="bind_tip_msg">{this.state.showBankName?this.state.showBankName:''}</span>
           <div className="bind_item_view">
             <span>开户省市</span>
-            <Select size="large" placeholder="请选择省份" notFoundContent="暂无数据" value={this.state.provinceId} style={{width: 130,height: 42}} onChange={(val)=>this.chooseCity(val)}>
+           
+            <Select size="large" placeholder="请选择省份" notFoundContent="暂无数据" value={this.state.provinceId} style={{width: 130,height: 42}} onChange={(val)=>this.chooseCity(val)} showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {moneyCity.provincerList.map((data,index)=>{
-                return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+              
               })}
             </Select>
-            <Select size="large" placeholder="请选择城市" notFoundContent="暂无数据" value={this.state.cityId} style={{width: 130,height: 42}} onChange={(val)=>this.setState({cityId: val})}>
+           
+            <Select size="large" placeholder="请选择城市" notFoundContent="暂无数据" value={this.state.cityId} style={{width: 130,height: 42}} onChange={(val)=>this.setState({cityId: val})}showSearch optionFilterProp="children" filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
               {this.state.cityArr?this.state.cityArr.map((data,index)=>{
-                return <Select.Option value={data.fcode} key={data.fcode}>{data.fname}</Select.Option>
+              
+                return <Option value={data.fcode} key={data.fcode}>{data.fname}</Option>
               }): null}
             </Select>
           </div>
           <span className="bind_tip_msg">{this.state.tipCityName===' undefined' || this.state.tipCityName==='undefined ' ?'':this.state.tipCityName}</span>
-          <div className="bind_item_view">
-            <span>卡类型</span>
-            <Input size="large" value={this.state.cardType} readOnly/>
-          </div>
+         
           <span className="bind_error_msg">{this.state.cardType==='信用卡'?'不支持信用卡':null}</span>
           <div className="bind_item_view">
             <span/>
             <div className="bind_password" style={{paddingLeft: 10}}>
               <i className="zjb zjb-mima2" />
-              <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})}/>
+          
+              <input className="zjb-mima2-input" type={this.state.showPwd?'text':'password'} placeholder="请输入登录密码" onChange={(e)=>this.setState({userPassword: e.target.value.trim()})} onBlur={()=>this.checkPass(this.state.userPassword)}/>
               <i className={this.state.showPwd?'zjb zjb-mimakejian': ' zjb zjb-htmal5icon08'} onClick={()=>this.setState({showPwd: !this.state.showPwd })} style={{borderRightWidth: 0, fontSize: 22, cursor: 'pointer' }}/>
+              {
+                this.state.message ? 
+                <p style={{color:'red',marginTop:-10}}>{this.state.message}</p> : <p>&nbsp;</p>
+              }
+              
             </div>
           </div>
-          <div className="bind_item_view">
+         
+          <div className="bind_item_view" style={{marginTop:10}}>
             <span/>
             <div className="bind_desc">
               <input style={{width: '15px'}} type="checkbox" onChange={(e) => this.setState({checkboxStatus: !this.state.checkboxStatus})}/>
