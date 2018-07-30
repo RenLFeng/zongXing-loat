@@ -87,7 +87,9 @@ export default class Repayment extends React.Component {
                 <LeftMenu param={this.props} />
                 {
                          this.state.project_ ? 
-                         <p style={{textAlign:"center",color:'#999',margin:'80px 0px '}}>您当前没有还款记录，立即<span style={{color:'#ff9900',cursor:'pointer'}}>前往投资</span></p>
+                         <div className="fr uc-rbody F">
+                            <p style={{textAlign:"center",color:'#999'}}>您当前没有还款记录</p>
+                         </div>
                          :
 
                          <div className="fr uc-rbody F">

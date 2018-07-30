@@ -266,7 +266,7 @@ class Loaninfo extends React.Component {
                         </Form>
                     </div>
                     <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2' }}>
-                        <Row gutter={16}>
+                        <Row gutter={16} >
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item label={<RequireLabel>营业执照</RequireLabel>} className="lecines_"  >
                                     {/* <div>
@@ -299,7 +299,7 @@ class Loaninfo extends React.Component {
                         </Row>
                     </div>
                     <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2',paddingTop: 10 }} >
-                        <Row gutter={16}>
+                        <Row gutter={16} style={{height: 115}}>
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item >
                                     <div>
@@ -342,7 +342,7 @@ class Loaninfo extends React.Component {
                             </Col>
 
                         </Row>
-                        <Row gutter={16}>
+                        <Row gutter={16} style={{height: 115}}>
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item >
                                     <div>
@@ -383,7 +383,7 @@ class Loaninfo extends React.Component {
                             </Col>
 
                         </Row>
-                        <Row gutter={16}>
+                        <Row gutter={16} style={{height: 125}}>
                             <Col lg={8} md={12} sm={24}>
                                 <Form.Item >
                                     <div><Tooltip title={<p>填写说明：<br />
@@ -425,16 +425,14 @@ class Loaninfo extends React.Component {
                                           initialValue: data.fother_file1 ? JSON.parse(data.fother_file1) : [],
                                         rules: [],
                                     })(
-                                        <UploadMultipleFile
-                                            {...this.fileData}
-                                            prefix={dataPath}
-                                            maxNum={3}
-                                        >其他资质文件</UploadMultipleFile>
+                                        <UploadFile {...this.fileData} prefix={dataPath}>其他资质文件</UploadFile>
                                     )}
                                 </Form.Item>
                             </Col>
+                        </Row>
+                        <Row gutter={16} style={{height: 105}}>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                            <Form.Item >
                                     <div><Tooltip title={<p>填写说明：<br />1、银行代缴有关凭证需加盖银行签章。<br />
                                         2.如有多个文件可打包上传。</p>}><Icon type="question-circle-o" className='filler_uploads' style={{ left: 240, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('femployee_record', {
@@ -445,17 +443,11 @@ class Loaninfo extends React.Component {
                                     )}
                                 </Form.Item>
                             </Col>
-
-
-
-
-
                         </Row>
                     </div>
-
                 </div>
                 {this.props.hasUnfinishProject ? null: 
-                <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>
+                <div style={{width: '100%',textAlign: 'center',marginTop: 50}}>
                     <Button style={{width: 140, margin: '0 auto'}} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
                 </div>}
             </div>

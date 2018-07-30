@@ -62,5 +62,14 @@
     }
 }
 
-
- 
+.statement_table_title {
+    position: relative;
+    height: 40px;
+    clear: both;
+    .table_title_left {
+        float: left;
+    }
+    .table_title_right {
+        float: right;
+    }
+}

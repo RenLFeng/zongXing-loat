@@ -394,7 +394,6 @@ class SendCoupon extends React.Component{
                     },
                 })
             }
-            console.log(new Date(res.data[0].endTime).getMonth(),new Date(res.data[1].endTime).getMonth())
         }else{
             message.error(res.msg);
         }

@@ -93,7 +93,7 @@ class SureLoan extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money',
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    return <span>{returnFloat(record.fcredit_money)}元</span>
                 }  
             },
             { 

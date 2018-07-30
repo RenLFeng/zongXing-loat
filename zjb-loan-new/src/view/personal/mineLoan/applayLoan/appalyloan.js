@@ -121,6 +121,10 @@ export default class Appalyloan extends React.Component {
   handlerClcikLable(item) {
     let val = null; // 从子组件拿到的数据
     let code = this.state.activeCode;
+    if (this.state.dueError) {
+      this.setState({activeCode: item});
+      return;
+    }
     if (code == 1) {
       console.log(this.loanInfo);
       val = this.loanInfo.getChildData();
@@ -723,14 +727,14 @@ export default class Appalyloan extends React.Component {
           </ul>
         </div>
         <div className="appalyloan-info">
-          {!this.state.ispass ? this.state.message ?
+          {!this.state.dueError && !this.state.ispass ? this.state.message ?
             <Alert message={`该项目被驳回，驳回原因为: ${this.state.message}`} type="warning" showIcon  style={{marginBottom: 10}}/> : null : null
           }
-          {this.state.oldData.hasUnfinishProject?
+          {!this.state.dueError && this.state.oldData.hasUnfinishProject?
            <Alert message={`您有未完成的借款项目`} type="warning" showIcon  style={{marginBottom: 10}}/> : null}
           {
             this.state.dueError?
-            <Alert message={`您上一个项目被终止，${moment(new Date(this.state.dueDate)).format('YYYY年MM月DD日')}才可再次借款`} type="warning" showIcon  style={{marginBottom: 10}}/>:
+            <Alert message={`您上一个项目被终止，${moment(new Date(this.state.dueDate)).format('YYYY年MM月DD日 HH时mm分')}才可再次借款`} type="warning" showIcon  style={{marginBottom: 10}}/>:
             <React.Fragment>
               <div className={this.state.activeCode === 1 ? '' : 'hides'}>
                 <LoanInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.loanInfo = form} cityList={this.state.cityList} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo}/>

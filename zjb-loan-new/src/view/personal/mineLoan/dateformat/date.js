@@ -20,7 +20,11 @@ export function returnFloat(value){
 	// 	}
 	// 	return values;
     // }
-    return value
+    let val = ''
+    if (value) {
+        val = value.toString().fm();
+    }
+    return val;
 }
 
 //保留两位小数 方法 单位：元

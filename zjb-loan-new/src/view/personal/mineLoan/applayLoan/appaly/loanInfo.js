@@ -44,6 +44,7 @@ class Loaninfo extends React.Component {
             monthList:arr
         })
     }
+    
     componentDidMount() {
       this.getMonth()
     }
@@ -164,7 +165,6 @@ class Loaninfo extends React.Component {
                                         })}
                                     </Select>)}
                             </Form.Item>
-
                         </div>
                     </Row>
                     <Row style={{ display: 'inline-flex' }}>
@@ -174,10 +174,9 @@ class Loaninfo extends React.Component {
                                 {getFieldDecorator('fcredit_use', {
                                     initialValue: data.fcredit_use? data.fcredit_use :'',
                                 })(
-                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} maxLength={500}/>
+                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} maxLength={100}/>
                                 )}
                             </Form.Item>
-
                         </div>
                         <div style={{ width: '30%', display: 'contents' }}>
                             <Form.Item layout="inline" label={<div className={styles.textBox}> 借款利率 (%)
@@ -188,7 +187,6 @@ class Loaninfo extends React.Component {
                                     <InputNumber min={8} max={15} step={0.1} placeholder="请输入" style={{ width: '205px',marginLeft: 3 }} />
                                 )}
                             </Form.Item>
-
                         </div>
                         <div style={{ width: '30%', display: 'contents' }}>
                             <Form.Item layout="inline" label={<div className={styles.textBox}> 获客渠道

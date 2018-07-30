@@ -12,6 +12,7 @@ import {connect} from 'dva';
 import {parseTime, returnFloat, getTime} from '../../dateformat/date';
 import { Table } from 'antd';
 import '../../mineloan.scss';
+import { conversionTime, sumFundraisingProgress } from '../../../../../common/SystemParam'; 
 function getStatu(flag){
     switch(flag){
         case 0:
@@ -93,7 +94,10 @@ class ReadyData extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    if (text) {
+                        return <span>{(text/10000).toString().fm()}万元</span>
+                    }
+                    return <span> </span>
                 }  
             },
             { 
@@ -154,7 +158,10 @@ class ReadyData extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    if (text) {
+                        return <span>{(text/10000).toString().fm()}万元</span>
+                    }
+                    return <span> </span>
                 }  
             },
             { 
@@ -178,19 +185,22 @@ class ReadyData extends React.Component{
             { 
                 title: '上线时间', 
                 align: 'center',
-                dataIndex: 'fcreate_time', 
-                key: 'fcreate_time',
+                dataIndex: 'fpublish_time', 
+                key: 'fpublish_time',
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                    return <span>{parseTime(record.fpublish_time,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
             { 
                 title: '已筹金额',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month',
+                dataIndex: 'invMoney', 
+                key: 'invMoney',
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    if (text) {
+                        return <span>{(text/10000).toString().fm()}万元</span>
+                    }
+                    return <span> </span>
                 }  
             },
             { 
@@ -199,16 +209,16 @@ class ReadyData extends React.Component{
                 dataIndex: 'frate_predict', 
                 key: 'frate_predict',
                 render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
+                    return <span>{sumFundraisingProgress(record.fcredit_money, record.invMoney)}%</span>
                 } 
             }, 
             { 
                 title: '筹款时长',
                 align: 'center',
-                dataIndex: 'frate_predict', 
-                key: 'frate_predict',
+                dataIndex: 'loanTime', 
+                key: 'loanTime',
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fcreate_time,'{d} {h}:{i}:{s}')}</span>
+                    return <span>{conversionTime(text)}</span>
                 } 
             }, 
             { 
@@ -240,7 +250,10 @@ class ReadyData extends React.Component{
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}万元</span>
+                    if (text) {
+                        return <span>{(text/10000).toString().fm()}万元</span>
+                    }
+                    return <span> </span>
                 }  
             },
             { 

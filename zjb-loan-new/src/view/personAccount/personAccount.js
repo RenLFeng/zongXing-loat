@@ -407,54 +407,44 @@ export default class PersonAccount extends React.Component {
   render() {
     const lables = [
       {
-
         text: '借款申请',
-        fflag: 0
+        fflag: [0]
       },
       {
-
         text: '进入初审',
-        fflag: 1
+        fflag: [1]
       },
       {
-
         text: '大数据风控',
-        fflag: 3
+        fflag: [2,3]
       },
       {
-
         text: '进入终审',
-        fflag: 6
+        fflag: [6]
       },
       {
-
         text: '确认借款',
-        fflag: 7
+        fflag: [7,8]
       },
       {
-
-        text: '发放优惠',
-        fflag: 14
+        text: '发放优惠券',
+        fflag: [9,14]
       },
       {
-
         text: '上线筹款',
-        fflag: 10
+        fflag: [10]
       },
       {
-
         text: '满标放款',
-        fflag: 11
+        fflag: [11]
       },
       {
-
         text: '按月还款',
-        fflag: 12
+        fflag: [12]
       },
       {
-
         text: '还清借款',
-        fflag: 13
+        fflag: [13]
       },
     ];
 
@@ -546,7 +536,7 @@ export default class PersonAccount extends React.Component {
               <p className='loan-lable'>
                 {
                   lables.map(item => {
-                    if (item.fflag == this.state.activeFlag) {
+                    if (item.fflag.includes(this.state.activeFlag)) {
                       return <span className='active'>{item.text}</span>
                     } else {
                       return <span>{item.text}</span>

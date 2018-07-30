@@ -36,11 +36,11 @@ export default class AccountStatement extends React.Component {
 					code: '1301'
 				},
 				{
-					lable: '投资',
+					lable: '放款',
 					code: '1404'
 				},
 				{
-					lable: '回款',
+					lable: '还款',
 					code: '1405'
 				},
 			],
@@ -61,7 +61,7 @@ export default class AccountStatement extends React.Component {
 		//    return;
 		//  }
 		// this.jumpAuth()
-		    this.getCapitalDynamics();  //调用请求
+		this.getCapitalDynamics();  //调用请求
 	}
 	jumpAuth() {
 		var that = this;
@@ -262,8 +262,8 @@ export default class AccountStatement extends React.Component {
 				}
 			}
 		}];
-		//投资
-		const touzColumn = [{
+		//放款
+		const fangkColumn = [{
 			title: '序号',
 			align: 'center',
 			width: 50,
@@ -271,41 +271,28 @@ export default class AccountStatement extends React.Component {
 				return index + 1;
 			}
 		}, {
-			title: '投资日期',
+			title: '放款日期',
 			dataIndex: 'ftime',
 			align: 'center',
-			render: function(text, record, index) {
-				return text ? moment(text).format('YYYY/MM/DD HH:mm') : '----/--/--/ --:--';
-			}
 		}, {
-			title: '投资金额',
+			title: '项目借款金额',
 			dataIndex: 'resultObj.invAmount',
-			align: 'right',
-			render: function(text, record, index) {
-				return String(text).fm();
-			}
+			align: 'center',
+		}, {
+			title: '平台收取佣金',
+			align: 'center',
+		}, {
+			title: '最终放款金额',
+			align: 'center',
 		}, {
 			title: '项目编号',
 			align: 'center',
-			dataIndex: 'resultObj.projectNo',
 		}, {
 			title: '项目名称',
 			align: 'center',
-			dataIndex: 'resultObj.projectName',
-		}, {
-			title: '投资状态',
-			dataIndex: 'resultCode',
-			align: 'center',
-			render: function(text, record, index) {
-				if(text == '88') {
-					return '成功';
-				} else {
-					return record.resultMessage;
-				}
-			}
 		}];
-		//回款
-		const huikColumn = [{
+		//还款
+		const huankColumn = [{
 			title: '序号',
 			align: 'center',
 			width: 50,
@@ -313,7 +300,7 @@ export default class AccountStatement extends React.Component {
 				return index + 1;
 			}
 		}, {
-			title: '回款日期',
+			title: '还款日期',
 			dataIndex: 'ftime',
 			align: 'center',
 			render: function(text, record, index) {
@@ -322,46 +309,47 @@ export default class AccountStatement extends React.Component {
 		}, {
 			title: '本金',
 			dataIndex: 'resultObj.fprincipal',
-			align: 'right',
+			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
 			title: '利息',
 			dataIndex: 'resultObj.finterest',
-			align: 'right',
+			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
-			title: '佣金',
+			title: <span className='table_title_span' style={{color: 'red'}}>逾期费</span>,
 			dataIndex: 'resultObj.fkickBack',
-			align: 'right',
+			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
-			title: '当期回款总金额',
+			title: '当期还款总金额',
 			dataIndex: 'resultObj.sumAmount',
-			align: 'right',
+			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
-			title: '项目编号',
+			title: '还款期数',
 			dataIndex: 'resultObj.projectNo',
 			align: 'center',
 		}, {
-			title: '项目名称',
+			title: '还款状态',
 			dataIndex: 'resultObj.projectName',
 			align: 'center',
 		}, {
-			title: '还款期数',
+			title: '项目编号',
 			dataIndex: 'resultObj.periods',
 			align: 'center',
-			render: function(text, record, index) {
-				return text;
-			}
+		}, {
+			title: '项目名称',
+			dataIndex: 'resultObj.periods',
+			align: 'center',
 		}];
 
 		const locale = {
@@ -401,19 +389,32 @@ export default class AccountStatement extends React.Component {
             </div>
             {/* 充值 */}
             <div className={this.state.activeCode==='1201'?'':'hide'}>
+							<div className="statement_table_title">
+								<span style={{color: '#999'}}>累计充值金额: <span style={{color: '#ff9900'}}>￥152,000</span></span>
+							</div>
               <Table columns={chongzColumn} locale={locale} dataSource={this.state.chongzData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
             {/* 提现 */}
             <div className={this.state.activeCode==='1301'?'':'hide'}>
+							<div className="statement_table_title">
+								<span style={{color: '#999'}}>累计提现金额: <span style={{color: '#009900'}}>￥152,000</span></span>
+							</div>
               <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
-            {/* 投资 */}
+            {/* 放款 */}
             <div className={this.state.activeCode==='1404'?'':'hide'}>
-              <Table columns={touzColumn} locale={locale} dataSource={this.state.touziData} loading={this.state.loading} pagination={false} bordered size="small" /> 
+							<div className="statement_table_title">
+								<span style={{color: '#999'}}>累计放款金额: <span style={{color: '#ff9900'}}>￥152,000</span></span>
+							</div>
+              <Table columns={fangkColumn} locale={locale} dataSource={this.state.fangkData} loading={this.state.loading} pagination={false} bordered size="small" /> 
             </div>
-            {/* 回款 */}
+            {/* 还款 */}
             <div className={this.state.activeCode==='1405'?'':'hide'}>
-             <Table columns={huikColumn} locale={locale} dataSource={this.state.huiKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
+							<div className="statement_table_title">
+								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥152,000</span></span>
+								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥152,000</span></span>
+							</div>
+              <Table columns={huankColumn} locale={locale} dataSource={this.state.huankData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
             </div>
              {/* 分页 */}
              {

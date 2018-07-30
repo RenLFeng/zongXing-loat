@@ -189,6 +189,15 @@ export function conversionTime(initialTime) {
 
 }
 
+// 计算筹款进度  总金额  已筹金额
+export function sumFundraisingProgress(fcredit_money, invMoney) {
+  if ((invMoney*100/fcredit_money > 0 && invMoney*100/fcredit_money < 1)) {
+    return Math.ceil(invMoney*100/fcredit_money);
+  } else {
+    return Math.floor(invMoney*100/fcredit_money);
+  }
+}
+
 // 项目历程图片后缀
 export const COURSE_PROJECT_PIC = 'imageMogr2/thumbnail/200x/interlace/1';
 
