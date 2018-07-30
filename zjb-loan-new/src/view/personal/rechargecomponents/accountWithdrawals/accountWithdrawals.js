@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, Input, Button, Select, Modal, message, Icon } from 'antd';
 import './withdrawals.scss';
 import {accountService, baseService} from '../../../../services/api';
-import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE,  } from '../../../../common/SystemParam';
+import {MONEY_REG, MONEY1_REG_, BANK_CARD, PERSONAL_PAGE, NOTIFY_URL } from '../../../../common/SystemParam';
 import Path from "../../../../common/PagePath";
 
 import './recharge.scss';
@@ -118,7 +118,7 @@ export default class EnterprisePresentation extends React.Component {
 
   async getInformation(data) {
     try {
-      data.notifyPageUrl = PERSONAL_PAGE;
+      data.notifyPageUrl = `${NOTIFY_URL}/index/uCenter/personAccount`;
       this.setState({loading: true});
       const response = await accountService.putInformation(data);
       this.setState({loading: false});
@@ -164,7 +164,7 @@ export default class EnterprisePresentation extends React.Component {
           return 
         }
         let param = {
-          notifyPageUrl: `${window.location.host}/#/uCenter`,
+          notifyPageUrl: `${NOTIFY_URL}/index/uCenter/personAccount`,
           amount: this.state.amount,// 金额
           accountId: this.props.accountId,
           cardNo: this.state.carardActive.fbankcard,

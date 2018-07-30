@@ -15,7 +15,7 @@ import DelModal from './deleteModal/deleteModal';
 import UploadFile from '../applayLoan/appaly/UpLoad/UploadFile';
 import {mineloan} from '../../../../services/api';
 import {connect} from 'dva';
-import {IMG_BASE_URL} from '../../../../common/SystemParam';
+import {IMG_BASE_URL, NOTIFY_URL} from '../../../../common/SystemParam';
 import SendCoupon from './sendCoupon';
 import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
@@ -176,7 +176,7 @@ class NoLoan extends React.Component{
         })
         let data = {
             projectId: record.fid,
-            notifyPageUrl: window.location.href
+            notifyPageUrl: `${NOTIFY_URL}/index/uCenter/mineLoan`
         }
         let res = await mineloan.payLoan(data);
         if(res.code === 0){

@@ -3,7 +3,7 @@ import React from 'react';
 import './index.scss'
 import Path from '../../../../common/PagePath';
 import { Form, Input, Tooltip, Icon, Modal, message, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
-import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE } from '../../../../common/SystemParam';
+import { MONEY_REG, MONEY_REG_, PERSONAL_PAGE, NOTIFY_URL } from '../../../../common/SystemParam';
 import { accountService } from '../../../../services/api';
 
 
@@ -68,7 +68,7 @@ export default class Loaninfo extends React.Component {
 
   async setRechargeData(data) {
     try {
-      data.notifyPageUrl = PERSONAL_PAGE;
+      data.notifyPageUrl =  `${NOTIFY_URL}/index/uCenter/personAccount`;
       this.setState({ loading: true });
       const response = await accountService.getRecharge(data);
       console.log(response);

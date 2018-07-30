@@ -85,7 +85,7 @@ export default class OpenAccount extends React.Component {
       accountType: 1,
       notifyPageUrl: `${NOTIFY_URL}/index/uCenter/personAccount`,
     };
-
+    
     let msgIdcard = '';
     let msgRealName = '';
     let msgPhone = '';
@@ -184,8 +184,9 @@ export default class OpenAccount extends React.Component {
                       <span className="prompts">&nbsp;</span>
                     }
                   </div>
-      
-                  <Button onClick={this.handleSubmit} type="primary" loading={this.state.loading}  className="Button" style={{top:247,left:474}}>提交开户</Button>
+                  <div className="inp">
+                    <Button onClick={this.handleSubmit} type="primary" size="large" style={{width: 300}} loading={this.state.loading} >提交开户</Button>
+                  </div>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?

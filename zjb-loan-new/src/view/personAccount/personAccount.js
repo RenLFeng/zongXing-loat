@@ -6,11 +6,11 @@ import { connect } from 'dva';
 import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 
-import { accountService, baseService } from '../../services/api';
+import { accountService, baseService, personal } from '../../services/api';
 import { Modal, message, Tooltip } from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';
-import { formatFlagToText } from '../../common/SystemParam';
+import { formatFlagToText, NOTIFY_URL } from '../../common/SystemParam';
 
 @connect((state) => ({
   personal: state.personal.data,
@@ -121,9 +121,15 @@ export default class PersonAccount extends React.Component {
 
   componentDidMount() {
     this.fetchPersonalData();
+    this.getUserBaseData();
   }
 
-
+  async getUserBaseData() {
+    const response = await personal.getLoginData(); 
+    if (response.code === 0) {
+      this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
+    }
+  }
   componentWillReceiveProps(nextProps) {
     if (this.props.personal !== nextProps.personal) {
       const { companyTotalAssetsVo, myBorrowVo } = nextProps.personal;
@@ -343,7 +349,7 @@ export default class PersonAccount extends React.Component {
     if (this.state.loading)
       return;
     this.setState({ loading: true });
-    const response = await baseService.manualReimpayment({ repayBillIdsStr: projectIdArr.join(','), notifyPageUrl: encodeURIComponent(window.location.href) })
+    const response = await baseService.manualReimpayment({ repayBillIdsStr: projectIdArr.join(','), notifyPageUrl: encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`) })
     console.log(response);
     this.setState({ loading: false });
     if (response.code === 0) {
