@@ -90,7 +90,7 @@ export default class ChangeBindEmail extends React.Component {
     if (sendTime && new Date().getTime() - sendTime * 1 < AUTH_CODE_TIME * 1000) {
       alert(`${AUTH_CODE_TIME}秒内仅能获取一次验证码，请稍后重试`);
       this.setState({click:false})
-      // return;
+      return;
     } else {
      this.setState({click:true,showAuthCode: true})
     }
