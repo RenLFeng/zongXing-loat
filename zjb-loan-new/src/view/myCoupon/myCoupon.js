@@ -203,9 +203,11 @@ onShowSizeChange = (current, pageSize) => {
   async getproject(){
     const response = await personal.couponGetProject();
     if(response.code === 0){
-      this.setState({
-        dataInfo:response.data
-      })
+      if (response.data) {
+        this.setState({
+          dataInfo:response.data
+        });
+      }
     } else {
       response.msg && message.error(response.msg);
     }

@@ -331,7 +331,7 @@ export default class RealName extends React.Component {
                           <span className="line" >|</span>
                           <span style={{ color: 'black' }} >{safeData.fIdcardNo}</span>
                           <span className="line" >|</span>
-                          <span style={{ color: 'black' }} >钱多多账户：{safeData.fThirdAccountNo}</span>
+                          <span style={{ color: 'black' }} >乾多多账户：{safeData.fThirdAccountNo}</span>
                           <div className="findPass">
                             <span className="a" onClick={() => this.setState({ showMMMChangepayPassword: !this.state.showMMMChangepayPassword })}>找回乾多多支付密码 </span>
                             <span className="line" >|</span>
@@ -379,7 +379,7 @@ export default class RealName extends React.Component {
                 {this.state.cardList.map((data, index) => {
                   return (
                     <div className="card_div" key={index}>
-                      <div className="IDCard">
+                      <div className="IDCard" style={{width: 279, height: 158}}>
                         <div>
                           <div className="card_info">
                             <div className="card_img">

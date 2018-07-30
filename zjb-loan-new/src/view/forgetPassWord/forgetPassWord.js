@@ -280,6 +280,10 @@ infoCheck_(){
         code_prompt: ''
       })
     }
+    if (this.state.checking) {
+      return;
+    }
+    this.setState({checking: true});
     let params = {
       mobile: this.state.firstPhone,
       authCode: this.state.code,
@@ -288,6 +292,7 @@ infoCheck_(){
     }
     
     const response = await doLogin.fp_checkInfo(params);
+    this.setState({checking: false});
     if (response.code === 0) {
       this.setState({
         flagPage: 'third',
@@ -323,11 +328,15 @@ infoCheck_(){
         message1: ''
       });
     }
-    this.setState({ authLoading: true });
+    if (this.state.changeLoading) {
+      return;
+    }
+    this.setState({ changeLoading: true });
     const respondse = await doLogin.changePassword({
       loginName: this.state.firstPhone,
       password: this.state.password
     });
+    this.setState({changeLoading: false});
     if (respondse.code === 0) {
       this.setState({
         authLoading: false,
@@ -453,7 +462,7 @@ infoCheck_(){
 
                   </div>
 
-                  <Button style={{ width: 329, marginTop:20, height: 43, fontSize: 18, }} type="primary" onClick={() => this.fp_checkInfos()}>下一步</Button>
+                  <Button style={{ width: 329, marginTop:20, height: 43, fontSize: 18, }} loading={this.state.checking} type="primary" onClick={() => this.fp_checkInfos()}>下一步</Button>
                 </div> :
                 (this.state.flagPage === 'third') ?
                   <div className="forget_form" style={{marginTop:130}}>
@@ -475,7 +484,7 @@ infoCheck_(){
                      </div> 
                     }
 
-                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" onClick={() => this.changePassword()}>确认</Button>
+                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" loading={this.state.changeLoading} onClick={() => this.changePassword()}>确认</Button>
                   </div> :
                   (this.state.flagPage === 'four') ?
                     <div className="forget_form4">
