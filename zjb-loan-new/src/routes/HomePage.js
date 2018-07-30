@@ -73,8 +73,8 @@ export default class HomePage extends React.Component {
 					{/* login */}
           <Route path={`${match.path}/login`} exact component={Login}/>
           {/* forgetpwd */}
-           <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
-           {/* register */}
+          <Route path={`${match.path}/forgetPassWord`} component={ForgetPassWord} />
+          {/* register */}
           <Route path={`${match.path}/register`} component={Register} />
         </Switch>
         <Footer /> 

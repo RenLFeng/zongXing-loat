@@ -185,7 +185,7 @@ export default class OpenAccount extends React.Component {
                     }
                   </div>
       
-                  <Button onClick={this.handleSubmit} type="primary"  className="Button" style={{top:247,left:474}}>提交开户</Button>
+                  <Button onClick={this.handleSubmit} type="primary" loading={this.state.loading}  className="Button" style={{top:247,left:474}}>提交开户</Button>
                 </div>
             </div> :
           (this.state.showPage === 'ok') ?
