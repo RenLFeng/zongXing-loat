@@ -99,16 +99,16 @@ class MineTimel extends React.Component{
         })
         if(this.state.edit){
             data = this.state.editDate;
-            data.fProjectId = this.props.projectId;
+            data.fprojectId = this.props.projectId;
             data.fcontent = fContent;
-            data.fPicJson = fPicJson;
-            data.fId = data.fid
-            data.fTime = data.ftime
+            data.fpicjson = fPicJson;
+            data.fid = data.fid
+            data.ftime = data.ftime
         }else{
             data = {
-                fProjectId: this.props.projectId,
+                fprojectId: this.props.projectId,
                 fcontent: fContent,
-                fPicJson: fPicJson,
+                fpicjson: fPicJson,
                 ftype: '1',
             }
         }

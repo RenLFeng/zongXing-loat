@@ -8,7 +8,7 @@ import React, { PureComponent } from 'react';
 import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, Popover, InputNumber, Tooltip ,message} from 'antd';
 
 import styles from './loanInfo.scss';
-
+import './loanPublic.scss';
 import UploadFile from './UpLoad/UploadFile';
 import UploadSingle from './UpLoad/UpLoadSingle';
 import { getCityCode } from '../../../../../services/api';
@@ -120,10 +120,10 @@ class Loaninfo extends React.Component {
       <div className="seconds">
         <Title Title="借款人信息" />
 
-        <div style={{ padding: 2, marginTop: 24 }}>
+        <div style={{ padding: 2, marginTop: 24 }} className="lui_name">
           <Form layout="vertical" hideRequiredMark className={styles.cecondFrom} onSubmit={this.submit.bind(this)}>
-            <Row gutter={16}>
-              <Col lg={8} md={12} sm={24}>
+            <Row gutter={16} style={{ height: 88 }}>
+              <Col span={8}>
                 <Form.Item label={<RequireLabel ><span className="names">姓名</span></RequireLabel>}>
                   {getFieldDecorator('lenderName', {
                     initialValue: data.lenderName ? data.lenderName : ''
@@ -132,7 +132,7 @@ class Loaninfo extends React.Component {
                   )}
                 </Form.Item>
               </Col>
-              <Col lg={8} md={12} sm={24}>
+              <Col span={8}>
                 <Form.Item label={<RequireLabel>手机号码</RequireLabel>} style={{ paddingLeft: 6 }}>
                   {getFieldDecorator('fmobile', {
                     initialValue: data.fmobile ? data.fmobile : '',
@@ -143,7 +143,7 @@ class Loaninfo extends React.Component {
                 </Form.Item>
               </Col>
 
-              <Col lg={8} md={12} sm={24}>
+              <Col span={8}>
                 <Form.Item label={<RequireLabel><span className="namepx">QQ号</span></RequireLabel>}>
                   {getFieldDecorator('fqq', {
                     initialValue: data.fqq ? data.fqq : '',
@@ -157,13 +157,11 @@ class Loaninfo extends React.Component {
               </Col>
 
             </Row>
-            <Row gutter={16}>
-
-
-              <Col lg={8} md={12} sm={24}>
+            <Row gutter={16} style={{height: 88}}>
+              <Col span={8}>
                 <Form.Item label={<RequireLabel>身份证号</RequireLabel>}>
                   {getFieldDecorator('fidcard_no', {
-                     initialValue: data.fidcard_no ? data.fidcard_no : '',
+                    initialValue: data.fidcard_no ? data.fidcard_no : '',
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
@@ -172,7 +170,7 @@ class Loaninfo extends React.Component {
                   )}
                 </Form.Item>
               </Col>
-              <Col lg={8} md={12} sm={24}>
+              <Col span={8}>
                 <Form.Item label={'婚姻情况'} style={{ paddingLeft: 18 }}>
                   {getFieldDecorator('fmarriage', {
                     initialValue: data.fmarriage ? data.fmarriage.toString() : '0',
@@ -185,7 +183,7 @@ class Loaninfo extends React.Component {
                   )}
                 </Form.Item>
               </Col>
-              <Col lg={8} md={12} sm={24}>
+              <Col span={8}>
                 <Form.Item label={<RequireLabel><span className="namepx">微信号</span></RequireLabel>}>
                   {getFieldDecorator('fweichat', {
                     initialValue: data.fweichat ? data.fweichat : '',
@@ -198,7 +196,7 @@ class Loaninfo extends React.Component {
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={16} style={{ marginLeft: 4 }}>
+            <Row gutter={16} style={{ marginLeft: 4, height: 88 }}>
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'银行卡号'}>
                   {getFieldDecorator('fbank_no', {
@@ -238,11 +236,8 @@ class Loaninfo extends React.Component {
                   )}
                 </Form.Item>
               </Col>
-
-
-
             </Row>
-            <Row gutter={16} style={{ marginLeft: 4 }}>
+            <Row gutter={16}  style={{marginLeft: 4, height:88}}>
               <Col lg={8} md={12} sm={24}>
                 <Form.Item label={'开户银行'}>
                   {getFieldDecorator('fbank_name', {
@@ -340,7 +335,6 @@ class Loaninfo extends React.Component {
                   {getFieldDecorator('fName2', {
                     initialValue: data.tlo2Name ? data.tlo2Name : '',
                     rules: [
-                        { pattern: MONEY_REG, message: '请输入姓名' },
                     ]
                   })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" maxLength={20}/>)}
                 </Form.Item>
@@ -387,7 +381,6 @@ class Loaninfo extends React.Component {
                   {getFieldDecorator('fName3', {
                     initialValue: data.tlo3Name ? data.tlo3Name : '',
                     rules: [
-                        { pattern: MONEY_REG, message: '请输入姓名' },
                     ]
                   })(<Input style={{ width: '100%', marginLeft: 6 }} placeholder="姓名" maxLength={20}/>)}
                 </Form.Item>

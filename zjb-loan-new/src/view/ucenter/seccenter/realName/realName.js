@@ -512,7 +512,7 @@ export default class RealName extends React.Component {
           </div>
         </div>
         {distribution ?
-          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" target="_blank" style={{ display: 'none' }}>
+          <form ref={ref => this.formId = ref} action={url.submitUrl} method="post" style={{ display: 'none' }}>
             <input id="MoneymoremoreId" name="MoneymoremoreId" value={distribution.moneymoremoreId ? distribution.moneymoremoreId : ''} />
             <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={distribution.platformMoneymoremore ? distribution.platformMoneymoremore : ''} />
             <input id="AuthorizeTypeOpen" name="AuthorizeTypeOpen" value={distribution.authorizeTypeOpen ? distribution.authorizeTypeOpen : ''} />

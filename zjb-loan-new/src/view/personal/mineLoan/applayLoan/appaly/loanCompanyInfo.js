@@ -161,7 +161,7 @@ class Loaninfo extends React.Component {
 
                     <div style={{ marginBottom: 20 }} className="third_company_info  ">
                         <Form layout="vertical" hideRequiredMark style={{ marginTop: 29 }} onSubmit={this.submit.bind(this)}>
-                            <Row gutter={16}>
+                            <Row gutter={16} style={{height: 88}}>
                                 <Col lg={8} md={12} sm={24}>
                                     <Form.Item label={<RequireLabel>企业名称</RequireLabel>}>
                                         {getFieldDecorator('companyName', {
@@ -202,7 +202,7 @@ class Loaninfo extends React.Component {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Row gutter={16}>
+                            <Row gutter={16} style={{height: 88}}>
                                 <Col lg={8} md={12} sm={24}>
                                     <Form.Item label={<RequireLabel>企业开户行</RequireLabel>}>
                                         {getFieldDecorator('fcbank_name', {
@@ -243,7 +243,7 @@ class Loaninfo extends React.Component {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Row gutter={16}>
+                            <Row gutter={16} style={{height: 88}}>
                                 <Col lg={24} md={24} sm={24}>
                                     <Form.Item className="jingyingadresss" style={{ width: '100%' }} label={<div  >
                                         <RequireLabel>实际经营地址</RequireLabel>
