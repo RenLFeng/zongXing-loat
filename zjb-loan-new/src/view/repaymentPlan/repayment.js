@@ -1,7 +1,7 @@
 import React from 'react';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 import {Button,message,Checkbox } from 'antd';
-import {personal} from '../../services/api';
+import {personal,baseService} from '../../services/api';
 import './repayment.scss';
 import moment from 'moment';
 
@@ -22,7 +22,7 @@ export default class Repayment extends React.Component {
     }
 
     componentDidMount(){
-        // this.getBorrowPlan();
+    this.getBorrowPlan();
        this.getTime()
     }
 
@@ -35,7 +35,8 @@ export default class Repayment extends React.Component {
     }
 
     async getBorrowPlan (){
-        const response = await personal.borrowPlan();
+        const response = await baseService.getRepaymentPlan();
+        console.log('还款计划',response)
         if(response.code === 0){
            this.setState({
             paymentArr:response.data.bills,
@@ -45,7 +46,7 @@ export default class Repayment extends React.Component {
         }
         else if(response.code === 2){
            this.setState({
-              project:true
+              project_:true
            })
         }
         else {
@@ -169,7 +170,7 @@ export default class Repayment extends React.Component {
                 
 
                 {
-                    !this.state.project_ ? null :
+                    this.state.project_ ? null :
 
                     <div className="fr uc-rbody S" style={{marginTop:10}}>
                     <div className="project">
@@ -270,15 +271,9 @@ export default class Repayment extends React.Component {
                                 )
                             }) : <p style={{textAlign:'center',marginTop:30}}>暂无数据</p>
                         }
-                         
-                        
- 
                     </div>
                  </div>
                 }
-
-                
-
             </div>
         )
     }
