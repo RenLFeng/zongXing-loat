@@ -13,6 +13,7 @@ export default class PieE extends React.Component{
                 color:["#18A9EC",'#E97234','#9C9C9C','#15A84C','#FEB825','#9C9C9C','#15A84C','#FEB825'],
                 series: [
                     {
+                        name:'用户类型',
                         type:'pie',
                         selectedMode: 'single',
                         radius: ['50%', '50%'],
@@ -30,7 +31,7 @@ export default class PieE extends React.Component{
                         data:[{value:0},{value:0}] //li
                     },
                     {
-                        
+                        name:'优惠券类型',
                         type:'pie',
                         radius: ['50', '50%'],
                         label: {
@@ -85,6 +86,7 @@ export default class PieE extends React.Component{
               
                series: [
                    {
+                    name:'用户类型',
                        type:'pie',
                        selectedMode: 'single',
                        radius: [0, '30%'],
@@ -102,7 +104,7 @@ export default class PieE extends React.Component{
                        data:ins //li
                    },
                    {
-                       
+                    name:'优惠券类型',
                        type:'pie',
                        radius: ['40%', '55%'],
                        label: {

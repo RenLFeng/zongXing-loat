@@ -2,7 +2,7 @@
  * @Author: wfl
  * @Date: 2018-07-05 11:48:42
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-27 14:43:17
+ * @Last Modified time: 2018-07-27 15:52:36
  * 发放优惠券
  */
 import React from 'react';
@@ -11,7 +11,7 @@ import './sendcoupon.scss';
 import {mineloan} from '../../../../services/api';
 import {IMG_BASE_URL} from '../../../../common/SystemParam';
 import UploadImg from '../../../../components/imgupload/ImgUpload';
-import {getYears, getMonths, getDays} from '../yearMonthDay/ymday';
+import {getYears, getMonths, getDays, checkTime} from '../yearMonthDay/ymday';
 import { Input, InputNumber, Row, Col, Select, message,Button , Radio, Spin} from 'antd';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -24,18 +24,12 @@ const month = getMonths();
 class SendCoupon extends React.Component{
     constructor(props){
         super(props);
-        let y = Number.parseInt(new Date().getMonth() + 1) + 6 > 12 ? year[1] : year[0];
-        let m = Number.parseInt(new Date().getMonth() + 7) > 12 ? Number.parseInt(new Date().getMonth() + 7) - 12 : Number.parseInt(new Date().getMonth() + 7);
-        let day = Number.parseInt(new Date().getDate());
         this.state = {
             losedateErrin: false,//投资失效日期是否合法
             losedateErrver: false,//游客失效日期是否合法
             isSave: false, //是否以保存
             haveAddress: false,
             couponUsePlaces: [],//返回的地址
-            yerr: y,
-            merr: m,
-            dayerr: day,
             loading: false,
             ploading: false,
             saveAddress: [],
@@ -54,9 +48,9 @@ class SendCoupon extends React.Component{
                 value: 50,//面值
                 rule: 150,//满150减？
                 inrule: 500,//投资150发放一张
-                year: y,
-                month: m,
-                day: day,
+                year: '',
+                month: '',
+                day: '',
                 imgsrc: '',
             },
             tourist:{
@@ -64,9 +58,9 @@ class SendCoupon extends React.Component{
                 value: 30,//面值
                 rule: 100,//满150减？
                 num: 100,//多少张
-                year: y,
-                month: m,
-                day: day,
+                year: '',
+                month: '',
+                day: '',
                 imgsrc: '',
             },
             deiladdress: '',
@@ -167,26 +161,27 @@ class SendCoupon extends React.Component{
     }
 
     async validateYear(val,statu){
-        if(statu === 'invest'){
-           if((val.year+val.month+val.day) < (this.state.yerr+this.state.merr+this.state.dayerr)){
-              await this.setState({
-                   losedateErrin: true
-               })
-           }else{
-            await this.setState({
-                losedateErrin: false
-            })
-           }
-        }else{
-            if((val.year+val.month+val.day) < (this.state.yerr+this.state.merr+this.state.dayerr)){
-                await  this.setState({
-                    losedateErrver: true
+        let endtime = val.year+'-'+val.month+'-'+val.day
+        if(!checkTime(endtime)){
+            if(statu === 'invest'){
+                await this.setState({
+                    losedateErrin: true
                 })
             }else{
-                await  this.setState({
-                    losedateErrver: false
-                })
+                    await  this.setState({
+                        losedateErrver: true
+                    })
             }
+        }else{
+            if(statu === 'invest'){
+                await this.setState({
+                    losedateErrin: false
+                })
+            }else{
+                    await  this.setState({
+                        losedateErrver: false
+                    })
+            } 
         }
     }
 
@@ -384,7 +379,7 @@ class SendCoupon extends React.Component{
                         num: res.data[0].couponName ? res.data[0].couponName : 50,//多少张
                         year: new Date(res.data[0].endTime).getFullYear(),
                         month: new Date(res.data[0].endTime).getMonth() + 1,
-                        day: new Date(res.data[0].endTime).getDay(),
+                        day: new Date(res.data[0].endTime).getDate(),
                         imgsrc:  IMG_BASE_URL+res.data[0].logo,
                     },
                     invest:{
@@ -394,7 +389,7 @@ class SendCoupon extends React.Component{
                         inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
                         year: new Date(res.data[1].endTime).getFullYear(),
                         month: new Date(res.data[1].endTime).getMonth() + 1,
-                        day: new Date(res.data[1].endTime).getDay(),
+                        day: new Date(res.data[1].endTime).getDate(),
                         imgsrc: IMG_BASE_URL+res.data[1].logo,
                     },
                 })
@@ -481,6 +476,10 @@ class SendCoupon extends React.Component{
             })
         }
     }
+
+    getDate(val){
+
+    }
     render(){
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
         const radioStyle = {
@@ -542,21 +541,21 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div"  style={{ marginTop: 0}}>
                                     <span className="fir-span">失效日期:</span>
-                                    <Select defaultValue={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
+                                    <Select value={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
                                         {
                                             year.map((item,index) => {
                                                 return <Option value={item} key={index}>{item}年</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={invest.month} showSearch style={{ width: 80, margin: '0 3px' }} onChange={(e) => this.monthChange(e,'invest')}>
+                                    <Select value={invest.month} showSearch style={{ width: 80, margin: '0 3px' }} onChange={(e) => this.monthChange(e,'invest')}>
                                         {
                                             month.map((item,index) => {
                                                 return <Option value={item} key={index+ 'a'}>{item}月</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={invest.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'invest')}>
+                                    <Select value={invest.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'invest')}>
                                         {
                                             getDays(invest.year+'-'+invest.month).map((item,index) => {
                                                 return <Option value={item} key={index+ 'b'}>{item}日</Option>
@@ -622,21 +621,21 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">失效日期:</span>
-                                    <Select defaultValue={tourist.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'tourist')}>
+                                    <Select value={tourist.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'tourist')}>
                                         {
                                             year.map((item,index) => {
                                                 return <Option value={item} key={index+ 'c'}>{item}年</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={tourist.month} showSearch style={{ width: 80, margin: '0 8px' }} onChange={(e) => this.monthChange(e,'tourist')}>
+                                    <Select value={tourist.month} showSearch style={{ width: 80, margin: '0 8px' }} onChange={(e) => this.monthChange(e,'tourist')}>
                                         {
                                             month.map((item,index) => {
                                                 return <Option value={item} key={index + 'd'}>{item}月</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={tourist.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'tourist')}>
+                                    <Select value={tourist.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'tourist')}>
                                         {
                                             getDays(tourist.year+'-'+tourist.month).map((item,index) => {
                                                 return <Option value={item} key={index + 'e'}>{item}日</Option>

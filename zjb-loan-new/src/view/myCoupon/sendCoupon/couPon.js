@@ -81,7 +81,6 @@ class SendCoupon extends React.Component{
     }
     componentDidMount(){
         this.getProvince();
-        this.getSendCou();
     }
 
     async getProvince(){
@@ -318,8 +317,7 @@ class SendCoupon extends React.Component{
                 finvMoney: invest.inrule,
                 ffullSubCondition: invest.rule,
                 ffullSubMoney: invest.value,
-                // fprojectId: this.props.fid,
-                fprojectId: '50616b665fc440aeb1d6cbe659b7e428',
+                fprojectId: this.props.project.fid,
                 fendTime: new Date(`${invest.year}-${invest.month > 9 ? invest.month : '0' + invest.month}-${invest.day > 9 ? invest.day : '0'+invest.day}`),
                 flogoPic: invest.imgsrc,
                 fnumber: invest.num,//发放数量（类型为给游客时有）
@@ -333,8 +331,7 @@ class SendCoupon extends React.Component{
                 ftype: 2,//类型1.给投资者，2.给游客
                 ffullSubCondition: tourist.rule,
                 ffullSubMoney: tourist.value, //满减金额(面值)
-                // fprojectId: this.props.fid,//代金券发行项目
-                fprojectId: '50616b665fc440aeb1d6cbe659b7e428',
+                fprojectId: this.props.project.fid,//代金券发行项目
                 fendTime: new Date(`${tourist.year}-${tourist.month > 9 ? tourist.month : '0' + tourist.month}-${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
                 fuserPlace: citys.toString(),//使用地点
                 fnumber: tourist.num,//发放数量（类型为给游客时有）
@@ -350,29 +347,16 @@ class SendCoupon extends React.Component{
             loading: true
         })
         let res = await mineloan.saveCou(data);
-        console.log('youhiuiuiuiusd111111111111',res)
         if(res.code === 0){
             this.setState({
                 loading: false
             })
+            this.props.close();
         }else{
             message.error(res.msg);
             this.setState({
                 loading: false
             })
-        }
-    }
-    //获取
-    async getSendCou(){
-        let data = {
-            // projectId: this.props.coudata.fid
-            projectId:'50616b665fc440aeb1d6cbe659b7e428'
-        }
-        let res = await mineloan.getSendCou(data);
-        if(res.code === 0){
-
-        }else{
-            message.error(res.msg);
         }
     }
 
@@ -426,7 +410,7 @@ class SendCoupon extends React.Component{
         let couCard = [];
         let radiogroup = [];
                 couCard.push(<Col span={12} className="send-coupon1" key="invest">
-                  <span className="num">123456</span>
+                  <span className="num">{this.props.project.fprojectNo}</span>
                         <p className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>
@@ -434,7 +418,6 @@ class SendCoupon extends React.Component{
                         <Row className="info">
                             <Col className="coupon-info" >
                                 <p style={{color:'#ff3b35',textAlign:'left',marginTop:0}}>{invest.name}</p>
-                                <p className="coupon-name coupon-info-p">{invest.name}</p>
                                 <p className="coupon-rule coupon-info-p">投资满{invest.inrule}发一张</p>
                                 <div className="coupon-info-div">
                                     <p className="coupon-deno coupon-info-p">￥<span>{invest.value}</span>YUAN</p>
@@ -448,12 +431,10 @@ class SendCoupon extends React.Component{
                                     {/* <img  className="" src={require('../../../assets/img/logo-small.png')} /> */}
                                     <UploadImg {...this.data} prefix={'personal/'} tipText="" onChange={this.onChange.bind(this,'invest')} className="img"/>
                                   </div>
-                                  <span style={{display:'block',position:'relative',top:-30,right:9,fontSize:10,color:'#fff'}}>上传商家图片</span>
+                                  <span style={{display:'block',position:'relative',top:-45,right:9,fontSize:10,color:'#fff'}}>上传商家图片</span>
                                   
                                 </div>
                             </Col>
-                           
-
                             
                             <div className="send-form" >
                                 <div className="send-form-div">
@@ -478,7 +459,7 @@ class SendCoupon extends React.Component{
                                                     onChange={(e)=> this.setState({invest:{...invest,inrule: e}})} step={10}
                                                     />
                                     <span className="full-ff">元发放1张优惠券</span> */}
-                                    <Input style={{width:55}} value={this.props.project.invCount ? this.props.project.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} />
+                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} />
                                 <p style={{paddingLeft:0,marginLeft:-20}}>优惠券数量{invest.num}张</p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>
@@ -514,7 +495,7 @@ class SendCoupon extends React.Component{
 
                 couCard.push(<Col className="send-coupon2" key="tourist">
                   
-                    <span className="num">123456</span>
+                    <span className="num">{this.props.project.fprojectNo}</span>
                         <p  className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>
@@ -522,7 +503,6 @@ class SendCoupon extends React.Component{
                     <Row className="info">
                         <Col className="coupon-info">
                             <p style={{color:'#ff3b35',textAlign:'left',marginTop:0}}>{invest.name}</p>
-                            <p className="coupon-name coupon-info-p">{tourist.name}</p>
                             <p className="coupon-rule coupon-info-p">共{tourist.num}张</p>
                             <div className="coupon-info-div">
                                 <p className="coupon-deno coupon-info-p">￥<span>{tourist.value}</span>YUAN</p>

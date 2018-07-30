@@ -193,6 +193,9 @@ export const personal = {
     repayPlan: async () => req.get('/account/getRepayPlan'),
      //还款计划
 
+     //发优惠券获取项目信息
+     couponGetProject: async () => req.get('/project/getMyLoaningProject'),
+
 
 }
     

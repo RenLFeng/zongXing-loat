@@ -105,6 +105,8 @@ export const E_MAIL =  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{
 // 座机电话正则
 export const TEL_PHONE = /^[\d\-]*$/;;
 
+//社会代码
+export const CODE = /^[A-Za-z0-9]+$/
 
 
 // 银行卡号正则

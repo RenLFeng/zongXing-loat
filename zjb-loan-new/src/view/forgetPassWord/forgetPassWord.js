@@ -1,6 +1,6 @@
 import React from 'react';
 import '../login/login.scss';
-import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CARD_REG, pass_reg,china_REG, LICENSE} from '../../common/SystemParam';
+import { VER_PHONE, AUTH_CODE_TIME, AUTH_CODE_TIME_, CODE, pass_reg,china_REG, LICENSE} from '../../common/SystemParam';
 import { connect } from 'dva';
 import $ from 'jquery';
 import { Spin, message, Button, Icon, Steps, Modal, Form, Row, Col, Input } from 'antd';
@@ -107,8 +107,12 @@ export default class ForgetPassWord extends React.Component {
       });
       return;
     } 
+    let param ={
+    	mobile:phoneNum
+    }
+
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await regiserAccount.getPhoneExist(phoneNum);
+      const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
         this.setState({
           prompt: '',
@@ -193,7 +197,7 @@ infoCheck_(){
     })
     return
   }
-  if(!LICENSE.test(idCard)){
+  if(!CODE.test(idCard)){
     this.setState({
       message3:'统一社会信用代码格式不正确'
     })
@@ -256,9 +260,9 @@ infoCheck_(){
 
   //校验用户信息
   async fp_checkInfos() {
-    if (this.state.idCard && !CARD_REG.test(this.state.idCard)) {
+    if (this.state.idCard && !CODE.test(this.state.idCard)) {
       this.setState({
-        message3: '身份证格式不正确'
+        message3: '只包含数字字母'
       })
       return;
     } else {
@@ -425,7 +429,7 @@ infoCheck_(){
                             <p className="forget-prompts">  &nbsp;</p> 
                          }
                         <div className="forget_inp">
-                          <Input placeholder="请输入企业统一社会信用代码" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}} onBlur={()=>{this.infoCheck_()}}/>
+                          <Input placeholder="请输入企业统一社会信用代码" value={idCard} onChange={(e) => { this.setState({ idCard: e.target.value }) }}  style={{width:329,marginTop:-5}} onBlur={()=>{this.infoCheck_()}} maxLength={30}/>
                           <i className="zjb zjb-credentials forget_card" />
                           <span style={{position:'absolute',top:'1px',left:'40px',fontSize:20,color:'#f0f0f0'}}>|</span>
                         </div>
@@ -437,7 +441,7 @@ infoCheck_(){
                       </div> : null
                   } 
                   <div className="forget_inp" style={{ marginBottom: 15,marginTop:5 }}>
-                    <Input placeholder="输入短信验证码" className="input1" value={code} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
+                    <Input placeholder="输入短信验证码" className="input1" value={code.trim()} onChange={(e) => { this.setState({ code: e.target.value }) }} maxLength={6}/>
                     {// 根据倒计时时间显示是否可以点击获取验证码按钮
                       this.state.showAuthCode ?
                         <Button className="input2" onClick={() => this.fp_getCodes()} loading={this.state.loading}>点击获取验证码</Button> :

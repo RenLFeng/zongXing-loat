@@ -85,9 +85,32 @@ export default class Register extends React.Component {
       clearInterval(this.countDownErrorCode);
     }
   }
-
+  
+  /** 校验密码 */
+  checkPwd(e){
+    if(e === undefined){
+      return;
+    }
+    let regPwd = e.target.value;
+    let msg = '';
+    if (regPwd.trim().length !== regPwd.length) {
+      msg  = '密码中不能含空格';
+    } else if (regPwd.length === 0) {
+      msg  ='请输入密码';
+    }else if (regPwd.trim().length < 6) {
+      msg ='密码不小于6位';
+    } else if(!pass_reg.test(regPwd)){
+      msg  ='密码不能为纯数字，不包含空格，区分大小写，8-15位字符';
+    } 
+    msg !== '' ? this.setState({regPwdErrShow:false}) : this.setState({regPwdErrShow:true})
+    this.setState({
+      regPwdErr: msg
+    })
+    this.checkInfo();
+  }
   
   checkInfo(){
+    console.log("checkInfo running ....");
     const {regPhone, regPwd, regAuthCode, readStatus} = this.state;
     if(regPhone.length > 0 && regPwd.length > 0 && regAuthCode.length > 0 ){
       console.log(regPhone,regPwd,regAuthCode)
@@ -354,7 +377,7 @@ export default class Register extends React.Component {
                     </div>
                     <div className="row relative" style={{marginBottom:15}}>
                       <input className="put" value={regAuthCode} maxLength={6} name="regAuthCode" type="tel"
-                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} onBlur={()=>{this.checkInfo()}} onKeyDown={(e)=>this.pressKey(e)}/>
+                            placeholder="输入短信验证码" onChange={(e) => this.setState({regAuthCode: e.target.value})} style={{paddingLeft:'15px',marginBottom:2}} onBlur={()=>{this.checkPwd()}} onKeyDown={(e)=>this.pressKey(e)}/>
                             {
                               this.state.regAuthErr ?
                              <p className="prompts" style={{marginLeft:0}}>{this.state.regAuthErr}</p> :
@@ -376,7 +399,7 @@ export default class Register extends React.Component {
                              <div>
                                   <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}} onKeyDown={(e)=>this.pressKey(e)}/>
+                            placeholder="请设置登录密码" onBlur={(e)=>{this.checkPwd(e)}} onKeyDown={(e)=>this.pressKey(e)}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-mimakejian" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('show')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
@@ -385,7 +408,7 @@ export default class Register extends React.Component {
                              <div>
                                <input className="put "  value={regPwd} maxLength={15}
                             name="regPwd" type="password" onChange={(e) => this.setState({regPwd: e.target.value})}
-                            placeholder="请设置登录密码" onBlur={()=>{this.checkInfo()}} onKeyDown={(e)=>this.pressKey(e)}/>
+                            placeholder="请设置登录密码" onBlur={(e)=>{this.checkPwd(e)}} onKeyDown={(e)=>this.pressKey(e)}/>
                            <i className="zjb zjb-mima" style={{position:'absolute',top:'4px',left:'11px',fontSize:24,color:'#d5d5d5'}} ></i>
                            <i className="zjb zjb-htmal5icon08" style={{position:'absolute',top:'4px',right:'11px',fontSize:24,color:'#d5d5d5'}} onClick={()=>{this.pwdStatus('hide')}}></i>
                            <span style={{position:'absolute',top:'5px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>
