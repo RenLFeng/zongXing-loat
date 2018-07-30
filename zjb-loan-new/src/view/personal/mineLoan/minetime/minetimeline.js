@@ -114,6 +114,7 @@ class MineTimel extends React.Component{
         }
         let res = await mineloan.addTimeLine(data);
         if(res.code === 0){
+            message.success(res.msg)
             this.cancelAdd();
             this.getTimeLine();
             this.setState({
@@ -164,6 +165,7 @@ class MineTimel extends React.Component{
         })
         let res = await mineloan.delTimeLine(data);
         if(res.code === 0){
+            message.success(res.msg)
             this.getTimeLine();
             this.setState({
                 loadingdel: false,
