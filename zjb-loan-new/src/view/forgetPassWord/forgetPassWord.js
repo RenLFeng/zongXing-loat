@@ -107,8 +107,12 @@ export default class ForgetPassWord extends React.Component {
       });
       return;
     } 
+    let param ={
+    	mobile:phoneNum
+    }
+
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
-      const response = await regiserAccount.getPhoneExist(phoneNum);
+      const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
         this.setState({
           prompt: '',
