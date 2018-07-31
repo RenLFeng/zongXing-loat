@@ -742,6 +742,7 @@ class NoLoan extends React.Component{
         }
 
         doing.map((item,index)=>{
+            console.log('doing', item);
             table.push(
                 <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px 15px',marginTop: `${index === 0 ? 0 : '8px'}`}}>
                     <LoanTitle title="我的借款"></LoanTitle>
@@ -762,17 +763,17 @@ class NoLoan extends React.Component{
                         loading={this.props.loading}
                     />
                     </Spin>
-                    {item.fflag === 0 ? item.fis_pass && !item.fis_pass ? 
-                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
-                                        <span>初审驳回：{item.fremark}</span></p> : '' : ''}
+                    {item.fflag === 0 && !item.fis_pass ?   
+                                        <p className="loan-cs-bh">{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
+                                        <span>初审驳回：{item.fremark}</span></p> : '' }
                     { [4,5].includes(item.fflag) ? !item.fis_pass ? 
-                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
+                                        <p className="loan-cs-bh">{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
                                         <span>{item.fremark}</span></p> : '' : ''}
                     {item.fflag === 8 ? <SureLoan suredata={item}></SureLoan>: 
                     (item.fflag === 13 || item.fflag === 14) ? <InvestRecord indata={item}></InvestRecord> : 
                     item.fflag === 9 ? <SendCoupon coudata={item}></SendCoupon> : ''}
                     {item.fflag === 9 && !item.fis_pass ? 
-                                        <p className="loan-cs-bh">{parseTime(item.fcreate_time,'{y}-{m}-{d} {h}:{i}')}
+                                        <p className="loan-cs-bh">{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
                                         <span>优惠券审核不通过：{item.fremark}</span></p> : ''}
 
                     {item.fflag === 11 ? <Appalyloan projectId={item.fid} commitData={this.commitData.bind(this)}>

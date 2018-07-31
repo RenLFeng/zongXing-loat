@@ -7,7 +7,7 @@ import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 
 import { accountService, baseService, personal } from '../../services/api';
-import { Modal, message, Tooltip } from 'antd';
+import { Modal, message, Tooltip, DatePicker } from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';
 import { formatFlagToText, NOTIFY_URL } from '../../common/SystemParam';
@@ -447,7 +447,6 @@ export default class PersonAccount extends React.Component {
         fflag: [13]
       },
     ];
-
     // 当前借款金额  近期还款  我的借款  账户金额  资金动态
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     const { userSecurityCenter } = this.props.baseData;
@@ -455,7 +454,6 @@ export default class PersonAccount extends React.Component {
     const { data, dataSource, paymentParam } = this.state;
     return (
       <div>
-        
         <LeftMenu param={this.props} />
         <div className="per_account">
           <div className="ptit">
@@ -562,9 +560,9 @@ export default class PersonAccount extends React.Component {
                   <td>操作</td>
                 </tr>
                 <tr>
-                  <td>{myBorrowVo.fcreditMoney ? `${myBorrowVo.fcreditMoney / 10000}`.fm() + '万元' : ''}</td>
+                  <td>{myBorrowVo.fcreditMoney ? `${myBorrowVo.fcreditMoney}`.fm() + '元' : ''}</td>
                   <td>{myBorrowVo.fcreditMonth ? `${myBorrowVo.fcreditMonth}` + '个月' : ''}</td>
-                  <td>{myBorrowVo.frate ? `${myBorrowVo.frate}`.fm() + '%' : ''}</td>
+                  <td>{myBorrowVo.frate ? `${myBorrowVo.frate}` + '%' : ''}</td>
                   <td>{moment(myBorrowVo.fcreateTime).format('YYYY-MM-DD HH:mm')}</td>
                   <td>{formatFlagToText(myBorrowVo.fflag)}</td>
                   <td>

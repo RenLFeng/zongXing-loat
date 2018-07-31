@@ -13,6 +13,8 @@ import {parseTime, returnFloat, getTime} from '../../dateformat/date';
 import { Table } from 'antd';
 import '../../mineloan.scss';
 import { conversionTime, sumFundraisingProgress } from '../../../../../common/SystemParam'; 
+import moment from 'moment';
+
 function getStatu(flag){
     switch(flag){
         case 0:
@@ -79,6 +81,41 @@ class ReadyData extends React.Component{
             return  `url(${require('../../img/zz.png')})`
         }
     }
+    // 获取正确的金额钱数
+    getRealMoney(record) {
+        // 放款之后的金额是最终筹款金额 
+        if (record.fflag > 14 || record < -3) {
+            return <span>{record.fpractical_loan_money?record.fpractical_loan_money.toString().fm()+'元':''}</span>
+        }
+        if (record.fflag > 8 || record.fflag == -1) {
+            return <span>{record.fmoney_last?record.fmoney_last.toString().fm()+'元':''}</span>
+        }
+        // 如果项目终止 则判断哪个有值显示那个
+        if (record.fflag == -3) {
+            if (record.fmoney_last) {
+                return <span>{record.fmoney_last?record.fmoney_last.toString().fm()+'元':''}</span>  
+            } else {
+                return <span>{record.fcredit_money?record.fcredit_money.toString().fm()+'元':''}</span>  
+            }
+        }
+        return <span>{record.fcredit_money?record.fcredit_money.toString().fm()+'元':''}</span>
+    }
+    // 显示正确的利率
+    getRealRate(record) {
+        if (record.frate_last) {
+            return <span>{record.frate_last?record.frate_last+'%':''}</span>   
+        } else {
+            return <span>{record.frate_predict?record.frate_predict+'%':''}</span>  
+        }
+    }
+    // 显示正确的期数
+    getRealDay(record) {
+        if (record.fmonth_last) {
+            return <span>{record.fmonth_last?record.fmonth_last+'月':''}</span>   
+        } else {
+            return <span>{record.fcredit_month?record.fcredit_month+'月':''}</span>  
+        }
+    }
     render(){
         const locale = {
             filterTitle: '筛选',
@@ -93,30 +130,21 @@ class ReadyData extends React.Component{
                 align: 'center',
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
-                render: (text,record) =>{
-                    if (text) {
-                        return <span>{(text/10000).toString().fm()}万元</span>
-                    }
-                    return <span> </span>
-                }  
+                render: (text,record) => this.getRealMoney(record)
             },
             { 
                 title: '借款期数',
                 align: 'center',
                 dataIndex: 'fcredit_month', 
                 key: 'fcredit_month',
-                render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
-                }  
+                render: (text,record) => this.getRealDay(record)
             },
             { 
                 title: '借款利率',
                 align: 'center',
                 dataIndex: 'frate_predict', 
                 key: 'frate_predict',
-                render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
-                } 
+                render: (text,record) => this.getRealRate(record)
             },
             { 
                 title: '还清日期', 
@@ -157,30 +185,21 @@ class ReadyData extends React.Component{
                 align: 'center',
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
-                render: (text,record) =>{
-                    if (text) {
-                        return <span>{(text/10000).toString().fm()}万元</span>
-                    }
-                    return <span> </span>
-                }  
+                render: (text,record) => this.getRealMoney(record)
             },
             { 
                 title: '借款期数',
                 align: 'center',
                 dataIndex: 'fcredit_month', 
                 key: 'fcredit_month',
-                render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
-                }  
+                render: (text,record) => this.getRealDay(record)
             },
             { 
                 title: '借款利率',
                 align: 'center',
                 dataIndex: 'frate_predict', 
                 key: 'frate_predict',
-                render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
-                } 
+                render: (text,record) => this.getRealRate(record)
             },
             { 
                 title: '上线时间', 
@@ -249,21 +268,14 @@ class ReadyData extends React.Component{
                 align: 'center',
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
-                render: (text,record) =>{
-                    if (text) {
-                        return <span>{(text/10000).toString().fm()}万元</span>
-                    }
-                    return <span> </span>
-                }  
+                render: (text,record) => this.getRealMoney(record)
             },
             { 
                 title: '借款期数',
                 align: 'center',
                 dataIndex: 'fcredit_month', 
                 key: 'fcredit_month',
-                render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
-                }  
+                render: (text,record) => this.getRealDay(record)
             },
             { 
                 title: '创建时间', 
@@ -274,7 +286,7 @@ class ReadyData extends React.Component{
                     return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
-            { 
+            {   
                 title: '状态', 
                 align: 'center',
                 dataIndex: 'state', 
@@ -294,6 +306,7 @@ class ReadyData extends React.Component{
             }
         })
         alredy.map((item,index)=>{
+            console.log(item);
             alredytable.push(
                     <div style={{ margin:' 20px 0'}} key={index}>
                         <LoanStep stepdata={item} type={0}></LoanStep>
@@ -306,6 +319,12 @@ class ReadyData extends React.Component{
                             rowClassName="editable-row"
                             loading={this.props.loading}
                         />
+                        {item.fflag === -3 ? 
+                           <p className="loan-cs-bh">{moment(item.previousTime).format('YYYY-MM-DD HH:mm')}
+                           <span>项目终止: {item.fremark}</span></p> : null}
+                        {item.fflag === -1 ? 
+                           <p className="loan-cs-bh">{moment(item.previousTime).format('YYYY-MM-DD HH:mm')}
+                           <span>项目流标: {item.fremark}</span></p> : null}
                         <div className="zhang" style={{backgroundImage:`${this.getbgimg(item)}`}}></div>
                     </div>
             )
