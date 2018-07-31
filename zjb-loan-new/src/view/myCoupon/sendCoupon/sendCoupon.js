@@ -23,16 +23,19 @@ export default class SendCoupons extends React.Component {
       dataIndex: 'fcreditMoney',
       key: 'fcreditMoney',
       align:'center',
+      render:val=> val === null ? "" : `${val}元`
     }, {
       title: '借款期数',
       dataIndex: 'fcreditMonth',
       key: 'fcreditMonth',
       align:'center',
+      render:val=> val === null ? "" : `${val}月`
     }, {
       title: '借款利率',
       dataIndex: 'frateLast',
       key: 'frateLast',
       align:'center',
+      render:val=> val === null ? "" : `${val}%`
     }, {
       title: '创建时间',
       dataIndex: 'fcreateTime',
@@ -127,6 +130,7 @@ export default class SendCoupons extends React.Component {
             bordered
             pagination={false}
             size="small"
+            style={{marginTop:0}}
           />
            <SendCoupon project={this.props.dataInfo} projects={this.props.project} close={this.props.close}/>
         </div>

@@ -12,7 +12,7 @@ import './myCoupon.scss';
 import { Table,Pagination ,Tooltip,message } from 'antd';
 import {CouponService,personal} from '../../services/api';
 import moment from 'moment';
-
+import {Path} from '../../common/PagePath';
 
 export default class MyCoupon extends React.Component {
   constructor(props) {
@@ -64,8 +64,6 @@ export default class MyCoupon extends React.Component {
         useStatistics:response.data.tableStatistical?response.data.companyCouponChartsVo.useStatistical:null,
         statistics:response.data.tableStatistical?response.data.companyCouponChartsVo.grantStatistical:{},
         project:response.data.projectInfo?response.data.projectInfo:{}
-      },() => {
-        this.send();
       })
     }
   }
@@ -187,18 +185,7 @@ onShowSizeChange = (current, pageSize) => {
     })
   }
 
-  send(){
-    if(this.state.project.fid){
-      this.setState({
-        SendCouponShow:true,
-        background:true
-      })
-    } else {
-      this.setState({
-        background:false
-      })
-    }
-  }
+ 
 
   async getproject(){
     const response = await personal.couponGetProject();
@@ -458,14 +445,14 @@ render(){
                       <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    {/* {
-                      this.state.background ?  <p className="send fr" onClick={()=>{this.send()}} >发优惠券</p>: 
-                      <Tooltip title="您还没有正在进行的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
-                    } */}
                     {
-                      this.state.dataInfo.fflag > 0 && this.state.dataInfo.fflag < 15 ? 
+                      this.state.dataInfo.fflag === 15 ?
                       <p className="send fr" onClick={()=>{this.setState({ SendCouponShow:true})}} >发优惠券</p> :
                       <Tooltip title="您还没有可以发放优惠券的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
+                    }
+
+                    {
+                      this.state.dataInfo.fflag === 9 ?  <p className="send fr" onClick={()=>{this.props.history.push(Path.MY_COUPON)}} >发优惠券</p> : null
                     }
 
                     
