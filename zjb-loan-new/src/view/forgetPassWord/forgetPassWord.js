@@ -108,9 +108,9 @@ export default class ForgetPassWord extends React.Component {
       return;
     } 
     let param ={
-    	mobile:phoneNum
+      mobile:phoneNum,
+      type: 1
     }
-
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
@@ -146,11 +146,12 @@ export default class ForgetPassWord extends React.Component {
     //   return
     // }
     // if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
-      
     // }
-
     this.setState({nextLoading:true})
-    const response = await doLogin.fp_getCode(this.state.firstPhone);
+    const response = await doLogin.fp_getCode({
+      loginName: this.state.firstPhone,
+      type: 1,// 借款用户
+    });
     console.log('response',response)
     if(response.code === 0){
       this.setState({
