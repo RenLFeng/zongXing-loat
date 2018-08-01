@@ -45,6 +45,6 @@ export const stepDate = [
     },
     {
         name: '还清借款',
-        state: [14]
+        state: [16]
     }
-]
+];
