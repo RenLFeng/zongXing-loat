@@ -223,6 +223,7 @@ class MineTimel extends React.Component{
                     </Spin>
                 </div>
                 <Modal
+                    destroyOnClose={true}
                     mask={false}
                     closable={false}
                     visible={this.state.modal2Visible}

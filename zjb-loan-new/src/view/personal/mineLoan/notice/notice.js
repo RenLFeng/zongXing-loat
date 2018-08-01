@@ -233,6 +233,7 @@ export default class Notice extends React.Component{
                     <a onClick={() => this.addNotice()} className="add-notice"><Icon type="plus" />添加</a>
                 </LoanTitle>
                 <Modal
+                    destroyOnClose={true}
                     mask={false}
                     closable={false}
                     visible={this.state.modal2Visible}
