@@ -50,7 +50,10 @@ export default class AccountStatement extends React.Component {
 			chongzData: [],
 			tixianData: [],
 			touziData: [],
-			huiKuanData: [],
+      huiKuanData: [],
+      totalAmount: 0.00, //累计充值/提现/放款金额
+      interestAmount: 0.00, //  当期还款总利息
+      overdueAmount: 0.00, // 当期还款总逾期金额
 		}
 	}
 
@@ -93,23 +96,26 @@ export default class AccountStatement extends React.Component {
 				});
 				if(this.state.activeCode === '0000') {
 					this.setState({
-						infoList: res.data.infoList,
+						infoList: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1201') {
 					this.setState({
-						chongzData: res.data.infoList,
+            totalAmount: res.data.totalAmount,
+						chongzData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1301') {
 					this.setState({
-						tixianData: res.data.infoList,
+            totalAmount: res.data.totalAmount,
+						tixianData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1404') {
 					this.setState({
-						touziData: res.data.infoList,
+            totalAmount: res.data.totalAmount,
+						touziData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1405') {
 					this.setState({
-						huiKuanData: res.data.infoList,
+						huiKuanData: res.data.resPage.infoList,
 					});
 				}
 			} else {
@@ -390,29 +396,29 @@ export default class AccountStatement extends React.Component {
             {/* 充值 */}
             <div className={this.state.activeCode==='1201'?'':'hide'}>
 							<div className="statement_table_title">
-								<span style={{color: '#999'}}>累计充值金额: <span style={{color: '#ff9900'}}>￥152,000</span></span>
+								<span style={{color: '#999'}}>累计充值金额: <span style={{color: '#ff9900'}}>￥{this.state.totalAmount}</span></span>
 							</div>
               <Table columns={chongzColumn} locale={locale} dataSource={this.state.chongzData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
             {/* 提现 */}
             <div className={this.state.activeCode==='1301'?'':'hide'}>
 							<div className="statement_table_title">
-								<span style={{color: '#999'}}>累计提现金额: <span style={{color: '#009900'}}>￥152,000</span></span>
+								<span style={{color: '#999'}}>累计提现金额: <span style={{color: '#009900'}}>￥{this.state.totalAmount}</span></span>
 							</div>
               <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
             {/* 放款 */}
             <div className={this.state.activeCode==='1404'?'':'hide'}>
 							<div className="statement_table_title">
-								<span style={{color: '#999'}}>累计放款金额: <span style={{color: '#ff9900'}}>￥152,000</span></span>
+								<span style={{color: '#999'}}>累计放款金额: <span style={{color: '#ff9900'}}>￥{this.state.totalAmount}</span></span>
 							</div>
               <Table columns={fangkColumn} locale={locale} dataSource={this.state.fangkData} loading={this.state.loading} pagination={false} bordered size="small" /> 
             </div>
             {/* 还款 */}
             <div className={this.state.activeCode==='1405'?'':'hide'}>
 							<div className="statement_table_title">
-								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥152,000</span></span>
-								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥152,000</span></span>
+								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥{this.state.interestAmount}</span></span>
+								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥{this.state.overdueAmount}</span></span>
 							</div>
               <Table columns={huankColumn} locale={locale} dataSource={this.state.huankData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
             </div>
