@@ -188,7 +188,7 @@ export default class AccountStatement extends React.Component {
 		}, {
 			title: '充值金额',
 			dataIndex: 'resultObj.famount',
-			align: 'right',
+			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
@@ -221,7 +221,7 @@ export default class AccountStatement extends React.Component {
 			}
 		}, {
 			title: '手续费',
-			align: 'right',
+			align: 'center',
 			dataIndex: 'resultObj.fuserFeeWithdraw',
 			render: function(text, record, index) {
 				if(text) {
@@ -232,7 +232,7 @@ export default class AccountStatement extends React.Component {
 			}
 		}, {
 			title: '提现到账金额',
-			align: 'right',
+			align: 'center',
 			dataIndex: 'resultObj',
 			render: function(text, record, index) {
 				if(text.famount && text.fuserFeeWithdraw) {

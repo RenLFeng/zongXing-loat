@@ -143,7 +143,8 @@ export default class Register extends React.Component {
 
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       let param = {
-        mobile:phoneNum
+        mobile:phoneNum,
+        type: 1
       }
       const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
@@ -302,7 +303,7 @@ export default class Register extends React.Component {
       fmobile: regPhone.trim(),
       fpwd: regPwd.trim(),
       authcode:regAuthCode.trim(),
-      type: 1, //投资用户
+      type: 1, //借款用户
     };
     // 调用注册接口
     try {

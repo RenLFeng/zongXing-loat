@@ -62,7 +62,7 @@ class SendCoupon extends React.Component{
                 name: this.props.project.fname,
                 value: 30,//面值
                 rule: 100,//满150减？
-                num: 100,//多少张
+                num: 50,//多少张
                 year: y,
                 month: m,
                 day: day,
@@ -300,6 +300,10 @@ class SendCoupon extends React.Component{
             message.info('请选择地址并保存')
             return
         }
+        if(tourist.num < 50){
+            message.info('优惠券数量不能少于50张')
+            return
+        }
         saveAddress.map((item,index) =>{
             places.push({
                 fprovince: item.provnicena,
@@ -310,37 +314,35 @@ class SendCoupon extends React.Component{
             })
             citys.push(item.cityna)
         })
-        let data = {
-            cashCoupon:{
-                fname: invest.name,
-                ftype: 1,
-                finvMoney: invest.inrule,
-                ffullSubCondition: invest.rule,
-                ffullSubMoney: invest.value,
-                fprojectId: this.props.project.fid,
-                fendTime: new Date(`${invest.year}-${invest.month > 9 ? invest.month : '0' + invest.month}-${invest.day > 9 ? invest.day : '0'+invest.day}`),
-                flogoPic: invest.imgsrc,
-                fnumber: invest.num,//发放数量（类型为给游客时有）
-                fuserPlace: citys.toString(),
+        let param = {
+            investorCoupon:{
+                    fname: invest.name,
+                    // ftype: 1,
+                    finvMoney: invest.inrule,
+                    ffullSubCondition: invest.rule,
+                    ffullSubMoney: invest.value,
+                    fprojectId: this.props.project.fid,
+                    fendTime: new Date(`${invest.year}-${invest.month > 9 ? invest.month : '0' + invest.month}-${invest.day > 9 ? invest.day : '0'+invest.day}`),
+                    flogoPic: invest.imgsrc,
+                    fnumber: invest.num,//发放数量（类型为给游客时有）
+                    fuserPlace: citys.toString(),
             },
-            couponUsePlaces: places
+            touristCoupon:{
+                    fname: tourist.name,//优惠券名
+                    // ftype: 2,//类型1.给投资者，2.给游客
+                    // finvMoney: tourist.num,  //投资多少钱发一张
+                    ffullSubCondition: tourist.rule,
+                    ffullSubMoney: tourist.value, //满减金额(面值)
+                    fprojectId: this.props.project.fid,//代金券发行项目
+                    fendTime: new Date(`${tourist.year}-${tourist.month > 9 ? tourist.month : '0' + tourist.month}-${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
+                    fuserPlace: citys.toString(),//使用地点
+                    fnumber: tourist.num,//发放数量（类型为给游客时有）
+                    // fsurplusNum: tourist.num,//剩余数量（类型为给游客时有）   
+            }  ,
+            couponUsePlaces: places,
+            type:1    
         }
-        let datas = {
-            cashCoupon:{
-                fname: tourist.name,//优惠券名
-                ftype: 2,//类型1.给投资者，2.给游客
-                ffullSubCondition: tourist.rule,
-                ffullSubMoney: tourist.value, //满减金额(面值)
-                fprojectId: this.props.project.fid,//代金券发行项目
-                fendTime: new Date(`${tourist.year}-${tourist.month > 9 ? tourist.month : '0' + tourist.month}-${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
-                fuserPlace: citys.toString(),//使用地点
-                fnumber: tourist.num,//发放数量（类型为给游客时有）
-                fsurplusNum: tourist.num,//剩余数量（类型为给游客时有）
-            },
-            couponUsePlaces: places
-        }
-        this.toSaveCou(data);
-        this.toSaveCou(datas);
+        this.toSaveCou(param);
     }
     async toSaveCou(data){
         this.setState({
@@ -442,12 +444,12 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={invest.value}
                                             placeholder="请输入5的倍数"
                                         onChange={(e)=> this.setState({invest:{...invest,value: e.target.value}})}
-                                        style={{display: 'inline-block',width: '200px'}}/>
+                                        style={{display: 'inline-block',width: '200px'}} />
                                         <p className="error-imput">{invest.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
-                                    满 <InputNumber className="form-item" value={invest.rule} min={0} max={invest.value / 0.1}
+                                    满 <InputNumber className="form-item" value={invest.rule} min={1} max={invest.value / 0.1}
                                                     onChange={(e)=> this.setState({invest:{...invest,rule: e}})} step={10}
                                                     style={{ marginLeft:'14px'}}/>
                                     <span className="full-jie">满{invest.rule}减{invest.value}元</span>
@@ -455,11 +457,8 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">优惠券数量:</span>
-                                    {/* 投资 <InputNumber className="form-item" value={invest.inrule} min={0} max={1000}
-                                                    onChange={(e)=> this.setState({invest:{...invest,inrule: e}})} step={10}
-                                                    />
-                                    <span className="full-ff">元发放1张优惠券</span> */}
-                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} />
+                                   
+                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} min={1}/>
                                 <p style={{paddingLeft:0,marginLeft:-20}}>优惠券数量{invest.num}张</p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>
@@ -529,7 +528,7 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
-                                    满 <InputNumber className="form-item" value={tourist.rule}  min={0} max={1000}
+                                    满 <InputNumber className="form-item" value={tourist.rule}  min={1} max={1000}
                                                     onChange={(e)=> this.setState({tourist:{...tourist,rule: e}})} step={10}
                                                     style={{ marginLeft:'14px'}}/>
                                     <span className="full-jie">满{tourist.rule}减{tourist.value}元</span>

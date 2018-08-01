@@ -108,9 +108,9 @@ export default class ForgetPassWord extends React.Component {
       return;
     } 
     let param ={
-    	mobile:phoneNum
+      mobile:phoneNum,
+      type: 1
     }
-
     if (phoneNum && phoneNum.length > 0 && VER_PHONE.test(phoneNum)) {
       const response = await regiserAccount.getPhoneExist(param);
       if (response.code !== 0) {
@@ -146,11 +146,12 @@ export default class ForgetPassWord extends React.Component {
     //   return
     // }
     // if (this.spanText.innerHTML === '验证通过！' && VER_PHONE.test(this.state.firstPhone)) {
-      
     // }
-
     this.setState({nextLoading:true})
-    const response = await doLogin.fp_getCode(this.state.firstPhone);
+    const response = await doLogin.fp_getCode({
+      loginName: this.state.firstPhone,
+      type: 1,// 借款用户
+    });
     console.log('response',response)
     if(response.code === 0){
       this.setState({
@@ -218,6 +219,7 @@ infoCheck_(){
       mobile:firstPhone,
       realName:realName,
       idCard:idCard,
+      type:1
     }
     //发送验证码的时间存在本地
     const sendTime = localStorage.getItem(params);
@@ -288,7 +290,8 @@ infoCheck_(){
       mobile: this.state.firstPhone,
       authCode: this.state.code,
       realName: this.state.realName,
-      idCard: this.state.idCard
+      idCard: this.state.idCard,
+      type:1
     }
     
     const response = await doLogin.fp_checkInfo(params);
@@ -334,7 +337,8 @@ infoCheck_(){
     this.setState({ changeLoading: true });
     const respondse = await doLogin.changePassword({
       loginName: this.state.firstPhone,
-      password: this.state.password
+      password: this.state.password,
+      type:1
     });
     this.setState({changeLoading: false});
     if (respondse.code === 0) {

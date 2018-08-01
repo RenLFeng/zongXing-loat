@@ -78,8 +78,8 @@ export default class Login extends React.Component {
       this.setState({loginNameErr:'手机号不能为空'})
       return;
     }
-    if (loginPhone.length < 6 || loginPhone.length > 16) {
-      this.setState({loginNameErr:'手机号或用户名长度不正确',loginError: true})
+    if (loginPhone.length < 6 || loginPhone.length > 11) {
+      this.setState({loginNameErr:'手机号长度不正确',loginError: true})
       return;
     }
     if (this.state.checkPhoneLoading) {
@@ -87,7 +87,8 @@ export default class Login extends React.Component {
     }
     this.setState({checkPhoneLoading: true});
     let param ={
-    	mobile:loginPhone
+      mobile:loginPhone,
+      type: 1
     }
     const response = await regiserAccount.getPhoneExist(param);
     this.setState({checkPhoneLoading: false});
@@ -110,6 +111,7 @@ export default class Login extends React.Component {
     return (
       <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
       <Modal
+          destroyOnClose={true}
           visible={this.state.authPhone}
           title="解除账号锁定"
           okText="提交"
@@ -155,11 +157,11 @@ export default class Login extends React.Component {
                     <div className="row" style={{position:'relative'}}>
                       <input className="put" value={loginPhone.trim()} maxLength={20}
                             onChange={(e) => {this.setState({loginPhone: e.target.value.trim()})}} name="loginPhone" type="tel"
-                            placeholder="手机号或用户名" onBlur={(e)=>this.checkPhone(e)} onKeyDown={(e)=>this.pressKey(e)}/>
+                            placeholder="请输入手机号" onBlur={(e)=>this.checkPhone(e)} onKeyDown={(e)=>this.pressKey(e)}/>
                             <i className="zjb zjb-shouji-copy" style={{position:'absolute',top:'4px',left:'11px',fontSize:25,color:'#d5d5d5'}}></i>
                             <span style={{position:'absolute',top:'6px',left:'44px',fontSize:20,color:'#f0f0f0'}}>|</span>      
                       {
-                        this.state.loginError ? this.state.loginNameErr?
+                        this.state.loginError ? this.state.loginNameErr?  
                         <p className="registration-prompts_" >
                           {this.state.loginNameErr}
                         </p> : 

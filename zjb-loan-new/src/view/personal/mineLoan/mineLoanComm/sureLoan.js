@@ -21,7 +21,7 @@ class SureLoan extends React.Component{
         super(props);
         this.state = {
             suredata: [],
-            bzInfo: '同意借款',
+            bzInfo: '',
             loading: false
         }
     }
@@ -69,6 +69,9 @@ class SureLoan extends React.Component{
                 data.remark = '同意借款';
             }
         }
+        if (this.state.loading) {
+            return;
+        }
         this.setState({loading: true})
         let res = await mineloan.isAgreeBorrow(data);
         if(res.code === 0){
@@ -90,19 +93,19 @@ class SureLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money',
+                dataIndex: 'fmoney_last', 
+                key: 'fmoney_last',
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}元</span>
+                    return <span>{returnFloat(record.fmoney_last)}元</span>
                 }  
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month' ,
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last' ,
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last}个月</span>
                 }
             },
             { 

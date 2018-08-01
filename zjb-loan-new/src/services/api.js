@@ -136,10 +136,10 @@ export const wsbaseService={
 //登录 dbb
 export const doLogin={
 
-	 userLogin:async(param)=>req.post('/company/login',param),	 
-	 //忘记密码获取验证码及检验是否实名认证
-	  fp_getCode:async(param)=>req.get('/userInfo/forgetPwd?loginName='+param),
-	  //登录-忘记密码时获取验证码
+	userLogin:async(param)=>req.post('/company/login',param),	 
+    //忘记密码获取验证码及检验是否实名认证
+    fp_getCode:async(param)=>req.get('/userInfo/forgetPwd',param),
+    //登录-忘记密码时获取验证码
     f_getCode:async(param)=>req.post('/userInfo/sendAuthCode',param),
     //校验用户
     fp_checkInfo:async(param)=>req.post('/userInfo/checkAuthCode',param),
