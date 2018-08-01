@@ -116,6 +116,8 @@ export default class AccountStatement extends React.Component {
 				} else if(this.state.activeCode === '1405') {
 					this.setState({
 						huiKuanData: res.data.resPage.infoList,
+						interestAmount: res.data.interestAmount, //  当期还款总利息
+      			overdueAmount: res.data.overdueAmount, // 当期还款总逾期金额
 					});
 				}
 			} else {
