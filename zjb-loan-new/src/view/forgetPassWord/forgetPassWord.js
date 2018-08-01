@@ -219,6 +219,7 @@ infoCheck_(){
       mobile:firstPhone,
       realName:realName,
       idCard:idCard,
+      type:1
     }
     //发送验证码的时间存在本地
     const sendTime = localStorage.getItem(params);
@@ -289,7 +290,8 @@ infoCheck_(){
       mobile: this.state.firstPhone,
       authCode: this.state.code,
       realName: this.state.realName,
-      idCard: this.state.idCard
+      idCard: this.state.idCard,
+      type:1
     }
     
     const response = await doLogin.fp_checkInfo(params);
@@ -335,7 +337,8 @@ infoCheck_(){
     this.setState({ changeLoading: true });
     const respondse = await doLogin.changePassword({
       loginName: this.state.firstPhone,
-      password: this.state.password
+      password: this.state.password,
+      type:1
     });
     this.setState({changeLoading: false});
     if (respondse.code === 0) {
