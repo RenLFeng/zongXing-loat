@@ -10,7 +10,6 @@ import {mineloan} from '../../../../services/api';
 import {connect} from 'dva';
 const { TextArea } = Input;
 
-const imgurl = 'https://zjb-test-1255741041.picgz.myqcloud.com/'
 @connect((state)=>({
     
 }))
@@ -101,14 +100,14 @@ class MineTimel extends React.Component{
             data = this.state.editDate;
             data.fprojectId = this.props.projectId;
             data.fcontent = fContent;
-            data.fpicjson = fPicJson;
+            data.fpicJson = fPicJson;
             data.fid = data.fid
             data.ftime = data.ftime
         }else{
             data = {
                 fprojectId: this.props.projectId,
                 fcontent: fContent,
-                fpicjson: fPicJson,
+                fpicJson: fPicJson,
                 ftype: '1',
             }
         }
@@ -188,6 +187,7 @@ class MineTimel extends React.Component{
     render(){
         let timeline = [];
         this.state.timeDate.map((item,index)=>{
+            console.log(item);
             timeline.push(
                 <Timeline.Item key={index}>
                     <p style={{color: '#ddd'}}>{parseTime(item.ftime,'{y}-{m}-{d} {h}:{i}')}</p>
@@ -203,7 +203,7 @@ class MineTimel extends React.Component{
                             }
                         </div>
                         {
-                            item.fpic_json ? <img src={imgurl+item.fpic_json} className="line-img"/> : ''
+                            item.fpic_json ? <img src={IMG_BASE_URL+item.fpic_json} className="line-img"/> : ''
                         }
                     </div>
                 </Timeline.Item>
@@ -217,7 +217,7 @@ class MineTimel extends React.Component{
                 </LoanTitle>
                 <div style={{maxHeight: 800,overflowY: 'auto'}}>
                     <Spin spinning={this.state.loading}>
-                        <Timeline>
+                        <Timeline> 
                             {timeline}
                         </Timeline>
                     </Spin>

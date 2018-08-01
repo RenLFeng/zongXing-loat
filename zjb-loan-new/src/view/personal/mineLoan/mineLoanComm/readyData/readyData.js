@@ -301,12 +301,11 @@ class ReadyData extends React.Component{
         const alredy = [];
         const alredytable = [];
         this.props.data.map((item,index)=>{
-            if(item.fflag === 13 || item.fflag === -1 || item.fflag === -3){
+            if(item.fflag === 16 || item.fflag === -1 || item.fflag === -3){
                 alredy.push(item)
             }   
         })      
         alredy.map((item,index)=>{
-            console.log(item);
             alredytable.push(
                     <div style={{ margin:' 20px 0'}} key={index}>
                         <LoanStep stepdata={item} type={0}></LoanStep>
@@ -315,7 +314,7 @@ class ReadyData extends React.Component{
                             locale={locale}
                             pagination={false}
                             dataSource={[item]}
-                            columns={item.fflag === 13 ? columns13 : (item.fflag === -1 ? columnsi1 : (item.fflag === -3 ? columnsi3 : '') )}
+                            columns={item.fflag === 16 ? columns13 : (item.fflag === -1 ? columnsi1 : (item.fflag === -3 ? columnsi3 : '') )}
                             rowClassName="editable-row"
                             loading={this.props.loading}
                         />

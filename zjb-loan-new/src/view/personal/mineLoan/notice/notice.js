@@ -17,7 +17,6 @@ import './notice.scss';
 import { Input, Modal, Spin } from 'antd';
 const { TextArea } = Input;
 
-const imgurl = 'https://zjb-test-1255741041.picgz.myqcloud.com/'
 
 @connect((state)=>({
     // projectId: state.mineloan.projectId,
@@ -216,7 +215,7 @@ export default class Notice extends React.Component{
                             {item.fTitle}
                         </div>
                         <div className="notice-photo">
-                           <img src={imgurl+item.fCardPic}/> 
+                           <img src={IMG_BASE_URL+item.fCardPic}/> 
                         </div>
                         <div className="notice-info">
                             <div className="line-content">{parseTime(item.fTime,'{y}-{m}-{d} {h}:{i}')}</div>
