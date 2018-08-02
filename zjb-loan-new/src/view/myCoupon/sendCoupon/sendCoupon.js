@@ -119,7 +119,7 @@ export default class SendCoupons extends React.Component {
         <a className="close" onClick={()=>{this.props.close()}}>x</a>
         <p className="tit">发优惠券</p>
         <div className="content-info">
-          <div className="tit">
+          <div className="tit" style={{marginBottom:30}}>
             <p>项目编号:<span>{this.props.dataInfo.fprojectNo}</span></p>
             <p>项目名称<span>{this.props.dataInfo.fname}</span></p>
           </div>

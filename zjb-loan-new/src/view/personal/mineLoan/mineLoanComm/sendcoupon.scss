@@ -17,17 +17,25 @@ $bottom: #F0F0F0;
     background: -moz-linear-gradient(top,$top,$bottom); /* Firefox 3.6 - 15 */
     background: linear-gradient(top,$top,$bottom); /* 标准的语法（必须放在最后） */
   }
-  .coupon-info,
-  .business-img,
-    {
+  .coupon-info,.business-img{
     display: inline-block;
   }
 
   .business-img{
-
     .sj-logo{
       background-color: #FF3B35;
       border-left: 1px solid #FF3B35;
+    }
+    .img-BOX{
+      border:1px dashed #ccc;
+      width:116px;
+      height:146px;
+      padding:8px;
+      border-radius: 4px;
+    }
+    .img{
+      width:100px;
+      height:130px;
     }
   }
   .send-coupon1,

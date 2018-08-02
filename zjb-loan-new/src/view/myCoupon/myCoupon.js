@@ -12,7 +12,7 @@ import './myCoupon.scss';
 import { Table,Pagination ,Tooltip,message } from 'antd';
 import {CouponService,personal} from '../../services/api';
 import moment from 'moment';
-import {Path} from '../../common/PagePath';
+import Path from '../../common/PagePath';
 
 export default class MyCoupon extends React.Component {
   constructor(props) {
@@ -445,18 +445,11 @@ render(){
                       <span className={this.state.chart === 'bar' ? "act" : ''} onClick={()=>{this.changeChart('bar')}}>优惠券使用统计</span>
                       <span className={this.state.chart === 'pie' ? "act" : ''} onClick={()=>{this.changeChart('pie')}}>优惠券发放统计</span>
                     </p>
-                    {
-                      this.state.dataInfo.fflag === 15 ?
-                      <p className="send fr" onClick={()=>{this.setState({ SendCouponShow:true})}} >发优惠券</p> :
-                      <Tooltip title="您还没有可以发放优惠券的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
-                    }
 
                     {
-                      this.state.dataInfo.fflag === 9 ?  <p className="send fr" onClick={()=>{this.props.history.push(Path.MY_COUPON)}} >发优惠券</p> : null
+                      this.state.dataInfo.fflag === 9 ?  <p className="send fr" onClick={()=>{this.props.history.push(Path.MINE_LOAN)}} >发优惠券</p> : ( this.state.dataInfo.fflag === 15) ?  <p className="send fr" onClick={()=>{this.setState({ SendCouponShow:true})}} >发优惠券</p> : <Tooltip title="您还没有可以发放优惠券的项目" arrowPointAtCenter className="fr_" >发优惠券</Tooltip>
                     }
 
-                    
-                   
                   </div>
                   {
                     this.state.chart === 'bar'  ? 

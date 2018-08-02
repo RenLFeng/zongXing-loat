@@ -9,7 +9,7 @@ import React from 'react';
 import {connect} from 'dva';
 import './coupon.scss';
 import {mineloan} from '../../../services/api';
-import {IMG_BASE_URL} from '../../../common/SystemParam';
+import {IMG_BASE_URL,VER_PHONE} from '../../../common/SystemParam';
 import UploadImg from '../../../components/imgupload/ImgUpload';
 import {getYears, getMonths, getDays} from '../../personal/mineLoan/yearMonthDay/ymday';
 import { Input, InputNumber, Row, Col, Select, message,Button , Radio, Spin} from 'antd';
@@ -145,21 +145,31 @@ class SendCoupon extends React.Component{
     }
 
     async onChange(statu,val){
-        if(statu === 'invest'){
-           await this.setState({
-                invest: {
-                    ...this.state.invest,
-                    imgsrc: val
-                }               
-             })
-        }else{
-            await this.setState({
-                tourist: {
-                    ...this.state.tourist,
-                    imgsrc: val
-                }
-             })
-        }
+        // if(statu === 'invest'){
+        //    await this.setState({
+        //         invest: {
+        //             ...this.state.invest,
+        //             imgsrc: val
+        //         }               
+        //      })
+        // }else{
+        //     await this.setState({
+        //         tourist: {
+        //             ...this.state.tourist,
+        //             imgsrc: val
+        //         }
+        //      })
+        // }
+        await this.setState({
+                    invest: {
+                        ...this.state.invest,
+                        imgsrc: val
+                    } ,
+                    tourist: {
+                        ...this.state.tourist,
+                        imgsrc: val
+                    }              
+                 })
     }
 
     async validateYear(val,statu){
@@ -317,7 +327,6 @@ class SendCoupon extends React.Component{
         let param = {
             investorCoupon:{
                     fname: invest.name,
-                    // ftype: 1,
                     finvMoney: invest.inrule,
                     ffullSubCondition: invest.rule,
                     ffullSubMoney: invest.value,
@@ -329,8 +338,8 @@ class SendCoupon extends React.Component{
             },
             touristCoupon:{
                     fname: tourist.name,//优惠券名
-                    // ftype: 2,//类型1.给投资者，2.给游客
                     // finvMoney: tourist.num,  //投资多少钱发一张
+                    flogoPic: tourist.imgsrc,
                     ffullSubCondition: tourist.rule,
                     ffullSubMoney: tourist.value, //满减金额(面值)
                     fprojectId: this.props.project.fid,//代金券发行项目
@@ -373,10 +382,24 @@ class SendCoupon extends React.Component{
             deiladdress: this.state.deiladdress,
             phone: this.state.phone,
         }]
-        console.log('地址',arr)
+        if(arr[0].provnice === '' || arr[0].provnicena === '' || arr[0].city === '' || arr[0].cityna === '' || arr[0].area === '' || arr[0].areana === ''|| arr[0].deiladdress === '' || arr[0].phone === ''){
+            message.info('请完善地址信息！');
+            return
+        }
         let arrs = this.state.saveAddress.length === 0 ? arr : [...this.state.saveAddress,...arr]
-        await this.setState({
+        this.setState({
             saveAddress: arrs
+        },()=>{
+            this.setState({
+                provnice: '',
+                provnicena: '',
+                city: '',
+                cityna: '',
+                area: '',
+                areana: '',
+                deiladdress: [],
+                phone: '',
+            })  
         })
     }
 
@@ -512,7 +535,7 @@ class SendCoupon extends React.Component{
                             </div>
                             <div className="fr clearfix">
                                   <div className="">
-                                     <img  className="img" src={require('../../../assets/img/logo-small.png')} />
+                                     <img  className="img" src={tourist.imgsrc ? IMG_BASE_URL+tourist.imgsrc : require('../../../assets/img/logo-small.png')} />
                                   </div>
                                 </div>
                         </Col>
@@ -576,7 +599,7 @@ class SendCoupon extends React.Component{
                     <div className="send-form-address">
                         <Spin spinning={this.state.ploading} >
                             <span className="fir-span">使用地址:</span>
-                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)}>
+                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} notFoundContent='无匹配结果'>
                                         {
                                             provnices.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'f'}>{item.fareaName}</Option>
@@ -584,7 +607,7 @@ class SendCoupon extends React.Component{
                                         }
                                     </Select>
                                     <Select value={this.state.city} showSearch style={{ width: 100, margin: '0 3px' }}
-                                            onChange={(e) => this.cityChange(e)} notFoundContent=''>
+                                            onChange={(e) => this.cityChange(e)} notFoundContent='' optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} >
                                         {
                                             citys.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'g'}>{item.fareaName}</Option>
@@ -592,7 +615,7 @@ class SendCoupon extends React.Component{
                                         }
                                     </Select>
 
-                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)}>
+                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} >
                                         {
                                             areas.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'h'}>{item.fareaName}</Option>
@@ -608,7 +631,13 @@ class SendCoupon extends React.Component{
                                         onChange={(e)=> this.setState({phone: e.target.value })}
                                         style={{display: 'inline-block',width: '123px'}}/>
                                 <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a>
-                                <p className="error-imput" style={{paddingLeft: '82px'}}>{deiladdress.length < 6 ? '详细信息请具体到门牌号' : (!/^1\d{10}$/.test(phone) && !/0\d{2}-\d{7,8}/.test(phone)) ? '联系电话格式不正确' : '' }</p>
+                                {
+                                    deiladdress.length < 6  && deiladdress.length > 0? 
+                                     <p className="error-imput" style={{paddingLeft: '82px'}}> 详细信息请具体到门牌号</p> : 
+                                     (phone.length > 0 && !VER_PHONE.test(phone)) ? 
+                                     <p className="error-imput" style={{paddingLeft: '82px'}}>联系电话格式不正确</p> :
+                                     <p className="error-imput" style={{paddingLeft: '82px'}}></p>
+                                }
                         </Spin>
                     </div>
                 )
