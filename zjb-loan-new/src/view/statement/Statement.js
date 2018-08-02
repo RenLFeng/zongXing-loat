@@ -19,6 +19,8 @@ class Statement extends React.Component {
             typeName='投资';
         }else if(this.props.data.busType==='1405'){
             typeName='回款';
+        }else{
+          typeName = this.props.data.busName;
         }
         this.state={
             data : this.props.data,
@@ -41,16 +43,20 @@ class Statement extends React.Component {
                </div> 
                <div className='sm-right'> 
                     <p>{this.state.data.ftime?moment(this.state.data.ftime).format('YYYY/MM/DD HH:mm'):'----/--/--/ --:--'}</p>
-                    <p>{this.state.typeName}</p>
+                    <p>{this.state.data.finMoney > 0 ? '+' + this.state.typeName : '-' + this.state.typeName}</p>
                     <div className='text1'>
                         {
                             //充值 提现
-                            this.state.data.busType==='1201'|| this.state.data.busType==='1301'?  <span className='span1'>￥{String(this.state.data.resultObj.famount).fm()}</span>:null
+                            //this.state.data.busType==='1201'|| this.state.data.busType==='1301'?  <span className='span1'>￥{String(this.state.data.resultObj.famount).fm()}</span>:null
                         } 
                         {
                             //投资
-                            this.state.data.busType==='1404'&& this.state.data.resultObj ? <span  className='span1'>￥{String(this.state.data.resultObj.invAmount).fm()}</span>:null
+                            //this.state.data.busType==='1404'&& this.state.data.resultObj ? <span  className='span1'>￥{String(this.state.data.resultObj.invAmount).fm()}</span>:null
                         } 
+                        
+                        {
+                          <span  className='span1'>￥{this.state.data.finMoney > 0 ? String(this.state.data.finMoney).fm() : String(this.state.data.foutMoney).fm()}</span>
+                        }
                         
                         {
                             //提现
