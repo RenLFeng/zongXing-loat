@@ -2,7 +2,7 @@
  * @Author: wfl
  * @Date: 2018-07-05 11:48:42
  * @Last Modified by: wfl
- * @Last Modified time: 2018-07-27 15:52:36
+ * @Last Modified time: 2018-08-02 10:40:49
  * 发放优惠券
  */
 import React from 'react';
@@ -370,6 +370,19 @@ class SendCoupon extends React.Component{
         console.log('优惠券回显信息',res)
         if(res.code === 0){
             if(res.data.length > 0){
+                let arr = [];
+                for(let i of res.data[0].couponUsePlaces){
+                    arr.push({
+                        provnice: '',
+                        city: '',
+                        area: '',
+                        provnicena: i.fprovince,
+                        cityna: i.fcity,
+                        areana: i.fdistrict,
+                        deiladdress: i.fplace,
+                        phone: i.fmobile,
+                    })
+                }
                 this.setState({
                     isSave: true,
                     id: res.data[0].couponId,
@@ -381,7 +394,7 @@ class SendCoupon extends React.Component{
                     //     fplace: res.data[0].fplace,
                     //     fmobile: res.data[0].fmobile
                     // }],
-                    couponUsePlaces: res.data[0].couponUsePlaces,
+                    saveAddress: arr,
                     tourist:{
                         name: this.props.coudata.fname,
                         value: res.data[0].fullSubMoney,//面值
@@ -440,9 +453,9 @@ class SendCoupon extends React.Component{
         //     })
         // }
     }
-
     //保存地址
     async saveAddress(){
+        console.log(this.state.saveAddress,'000');
         if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.length < 6  || this.state.phone === ''){
             message.info('请完善地址信息！');
             return;
@@ -457,6 +470,9 @@ class SendCoupon extends React.Component{
             deiladdress: this.state.deiladdress,
             phone: this.state.phone,
         }]
+        this.setState({
+            couponUsePlaces: []
+        })
         let arrs = this.state.saveAddress.length === 0 ? arr : [...this.state.saveAddress,...arr]
         await this.setState({
             saveAddress: arrs
@@ -475,28 +491,23 @@ class SendCoupon extends React.Component{
     }
 
     editAddress(index){
-        console.log('编辑数据')
-        if(this.state.couponUsePlaces.length > 0){
-            this.setState({
-                couponUsePlaces: []
-            })
-        }else{
             let arr = this.state.saveAddress;
-            let obj = arr[index];
-            arr.splice(index,1)
-            this.getCity(obj.provnice);
-            this.getArea(obj.city);
-            this.setState({
-                provnice: obj.provnice,
-                city: obj.city,
-                area: obj.area,
-                deiladdress: obj.deiladdress,
-                phone: obj.phone,
-                saveAddress: arr
-            },()=>{
-
-            })
-        }
+            if(arr[index].provnice === ''){
+                arr.splice(index,1);
+                this.setState({
+                    saveAddress: arr
+                })
+                return;
+            }else{
+                let obj = arr[index];
+                arr.splice(index,1);
+                this.getCity(obj.provnice);
+                this.getArea(obj.city);
+                this.setState({
+                    ...obj,
+                    saveAddress: arr
+                })
+            }
     }
 
     getDate(val){
@@ -717,16 +728,16 @@ class SendCoupon extends React.Component{
                         </Spin>
                     </div>
                 )
-                    { this.state.couponUsePlaces.length > 0 ? 
-                        this.state.couponUsePlaces.map((item, index) =>{
-                            radiogroup.push(
-                                <Radio value={index} key={index} style={radioStyle}>
-                                    {`${item.address}   ${item.fmobile}`}
-                                    {radioChoose === index ? <a className="edit-address" onClick={this.editAddress.bind(this,index)}>编辑</a> : ''}
-                                </Radio>
-                            )
-                        })
-                        : 
+                    // { this.state.couponUsePlaces.length > 0 ? 
+                    //     this.state.couponUsePlaces.map((item, index) =>{
+                    //         radiogroup.push(
+                    //             <Radio value={index} key={index} style={radioStyle}>
+                    //                 {`${item.address}   ${item.fmobile}`}
+                    //                 {radioChoose === index ? <a className="edit-address" onClick={this.editAddress.bind(this,index)}>编辑</a> : ''}
+                    //             </Radio>
+                    //         )
+                    //     })
+                    //     : 
                         saveAddress.map((item, index) =>{
                             radiogroup.push(
                             <Radio value={index} key={index} style={radioStyle}>
@@ -735,7 +746,7 @@ class SendCoupon extends React.Component{
                             </Radio>
                             )
                         })
-                    }
+                    // }
         return(
             <Row className="send-coupon" type="flex" justify="center">
             <Spin spinning={this.state.loading}>
