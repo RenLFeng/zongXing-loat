@@ -71,6 +71,7 @@ class SendCoupon extends React.Component{
             deiladdress: [],
             phone: '',
             couponnum: 0,
+            edit:false
         };
         this.data = {
             className: "ant-upload",
@@ -145,21 +146,6 @@ class SendCoupon extends React.Component{
     }
 
     async onChange(statu,val){
-        // if(statu === 'invest'){
-        //    await this.setState({
-        //         invest: {
-        //             ...this.state.invest,
-        //             imgsrc: val
-        //         }               
-        //      })
-        // }else{
-        //     await this.setState({
-        //         tourist: {
-        //             ...this.state.tourist,
-        //             imgsrc: val
-        //         }
-        //      })
-        // }
         await this.setState({
                     invest: {
                         ...this.state.invest,
@@ -382,7 +368,7 @@ class SendCoupon extends React.Component{
             deiladdress: this.state.deiladdress,
             phone: this.state.phone,
         }]
-        if(arr[0].provnice === '' || arr[0].provnicena === '' || arr[0].city === '' || arr[0].cityna === '' || arr[0].area === '' || arr[0].areana === ''|| arr[0].deiladdress === '' || arr[0].phone === ''){
+        if(arr[0].provnicena === '' || arr[0].cityna === '' ||  arr[0].areana === ''|| arr[0].deiladdress.trim().length < 6 || (!/^1\d{10}$/.test(arr[0].phone) && !/0\d{2}-\d{7,8}/.test(arr[0].phone))){
             message.info('请完善地址信息！');
             return
         }
@@ -406,19 +392,30 @@ class SendCoupon extends React.Component{
     editAddress(index){
         let arr = this.state.saveAddress;
         let obj = arr[index];
+        console.log('obj',obj)
         arr.splice(index,1)
         this.getCity(obj.provnice);
         this.getArea(obj.city);
         this.setState({
-            provnice: obj.provnice,
-            city: obj.city,
-            area: obj.area,
+            provnice: obj.provnicena,
+            provnicena: obj.provnicena,
+            city: obj.cityna,
+            cityna: obj.cityna,
+            area: obj.areana,
+            areana:obj.areana,
             deiladdress: obj.deiladdress,
             phone: obj.phone,
-            saveAddress: arr
-        },()=>{
-
+            saveAddress: arr,
+            edit:true
         })
+    }
+
+    clearData(){
+        if(this.state.edit){
+            this.setState({
+                edit:false
+            })
+        }    
     }
 
     change(value){
@@ -433,6 +430,9 @@ class SendCoupon extends React.Component{
             lineHeight: '30px',
           };
         let couCard = [];
+        let provniceArr = [{fareaNo:this.state.provniceCode,fareaName:this.state.provnice}];  //回显的省份数组
+        let cityArr = [{fareaNo:this.state.cityCode,fareaName:this.state.city}];
+        let areaArr = [{fareaNo:this.state.areaCode,fareaName:this.state.area}];
         let radiogroup = [];
                 couCard.push(<Col span={12} className="send-coupon1" key="invest">
                   <span className="num">{this.props.project.fprojectNo}</span>
@@ -467,21 +467,21 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={invest.value}
                                             placeholder="请输入5的倍数"
                                         onChange={(e)=> this.setState({invest:{...invest,value: e.target.value}})}
-                                        style={{display: 'inline-block',width: '200px'}} />
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
                                         <p className="error-imput">{invest.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
                                     满 <InputNumber className="form-item" value={invest.rule} min={1} max={invest.value / 0.1}
                                                     onChange={(e)=> this.setState({invest:{...invest,rule: e}})} step={10}
-                                                    style={{ marginLeft:'14px'}}/>
+                                                    style={{ marginLeft:'14px'}} maxLength={6}/>
                                     <span className="full-jie">满{invest.rule}减{invest.value}元</span>
                                     <p className="error-imput">{invest.value / 0.1 >= invest.rule ? '' : `优惠券力度不得小于10%，当前可填写最大金额不能超过${Number.parseInt(invest.value / 0.1)}元`}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">优惠券数量:</span>
                                    
-                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} min={1}/>
+                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} min={1} max={9999} maxLength={4}/>
                                 <p style={{paddingLeft:0,marginLeft:-20}}>优惠券数量{invest.num}张</p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>
@@ -546,12 +546,12 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.value}
                                             placeholder="请输入5的倍数"
                                         onChange={(e)=> this.setState({tourist:{...tourist,value: e.target.value }})}
-                                        style={{display: 'inline-block',width: '200px'}}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
                                         <p className="error-imput">{tourist.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
-                                    满 <InputNumber className="form-item" value={tourist.rule}  min={1} max={1000}
+                                    满 <InputNumber className="form-item" value={tourist.rule}  min={1} maxLength={6}
                                                     onChange={(e)=> this.setState({tourist:{...tourist,rule: e}})} step={10}
                                                     style={{ marginLeft:'14px'}}/>
                                     <span className="full-jie">满{tourist.rule}减{tourist.value}元</span>
@@ -562,7 +562,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.num}
                                             placeholder= "请输入优惠券数量"
                                         onChange={(e)=> this.setState({tourist:{...tourist,num: e.target.value}})}
-                                        style={{display: 'inline-block',width: '123px'}}/>
+                                        style={{display: 'inline-block',width: '123px'}} maxLength={4}/>
                                         <span style={{paddingLeft: '10px'}}>张</span>
                                         <p className="error-imput" style={{paddingLeft:85}}>{tourist.num >= 50 ? '' : '优惠券发放数量不能低于50张'}</p>
                                 </div>
@@ -599,24 +599,35 @@ class SendCoupon extends React.Component{
                     <div className="send-form-address">
                         <Spin spinning={this.state.ploading} >
                             <span className="fir-span">使用地址:</span>
-                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} notFoundContent='无匹配结果'>
-                                        {
+                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} notFoundContent='无匹配结果' onFocus={()=>this.clearData()}>
+                                        {   this.state.edit ? 
+                                            provniceArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'f'}>{item.fareaName}</Option>
+                                            }) :
                                             provnices.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'f'}>{item.fareaName}</Option>
                                             })
                                         }
                                     </Select>
                                     <Select value={this.state.city} showSearch style={{ width: 100, margin: '0 3px' }}
-                                            onChange={(e) => this.cityChange(e)} notFoundContent='' optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} >
+                                            onChange={(e) => this.cityChange(e)} notFoundContent='' optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0}  onFocus={()=>this.clearData()}>
                                         {
+                                             this.state.edit ?
+                                             cityArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'g'}>{item.fareaName}</Option>
+                                            }) :
                                             citys.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'g'}>{item.fareaName}</Option>
                                             })
                                         }
                                     </Select>
 
-                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} >
+                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} onFocus={()=>this.clearData()}>
                                         {
+                                            this.state.edit ?
+                                            areaArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'h'}>{item.fareaName}</Option>
+                                            }) :
                                             areas.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'h'}>{item.fareaName}</Option>
                                             })
@@ -625,16 +636,19 @@ class SendCoupon extends React.Component{
                                 <Input className="form-item" value={deiladdress}
                                         placeholder= "详细地址"
                                         onChange={(e)=> this.setState({deiladdress: e.target.value })}
-                                        style={{display: 'inline-block',width: '180px',margin: '0 3px'}}/>
+                                        style={{display: 'inline-block',width: '180px',margin: '0 3px'}} onFocus={()=>this.clearData()}/>
                                 <Input className="form-item" value={phone}
                                         placeholder= "联系电话"
                                         onChange={(e)=> this.setState({phone: e.target.value })}
-                                        style={{display: 'inline-block',width: '123px'}}/>
-                                <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a>
+                                        style={{display: 'inline-block',width: '123px'}} onFocus={()=>this.clearData()} maxLength={12}/>
+                                        {
+                                            saveAddress.length < 3 ? <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a> : null
+                                        }
+                                
                                 {
                                     deiladdress.length < 6  && deiladdress.length > 0? 
                                      <p className="error-imput" style={{paddingLeft: '82px'}}> 详细信息请具体到门牌号</p> : 
-                                     (phone.length > 0 && !VER_PHONE.test(phone)) ? 
+                                     (phone.length > 0 && !VER_PHONE.test(phone)&& !/0\d{2}-\d{7,8}/.test(phone)) ? 
                                      <p className="error-imput" style={{paddingLeft: '82px'}}>联系电话格式不正确</p> :
                                      <p className="error-imput" style={{paddingLeft: '82px'}}></p>
                                 }
@@ -660,7 +674,7 @@ class SendCoupon extends React.Component{
                         {radiogroup}
                     </RadioGroup>
                     <div className="coupon-btn" style={{background:'#f0f0f0'}}>
-                        <Button onClick={() => this.saveCou()} >保存</Button>
+                        <Button onClick={() => this.saveCou()} >发放</Button>
                     </div>
                 </Spin>
               </Row>

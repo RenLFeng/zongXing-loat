@@ -424,10 +424,6 @@ class SendCoupon extends React.Component{
 
     //提交
     async commitCou(){
-        // if(!this.state.isSave){
-        //     this.saveCou();
-        //     return;
-        // }
         let data = {
             projectId: this.props.coudata.fid,
             remark: '',
@@ -456,17 +452,18 @@ class SendCoupon extends React.Component{
 
     //保存地址
     async saveAddress(){
-        if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.length < 6  || this.state.phone === ''){
+        console.log(this.state.provnice);
+        if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.trim().length < 6  || (!/^1\d{10}$/.test(this.state.phone) && !/0\d{2}-\d{7,8}/.test(this.state.phone))){
             message.info('请完善地址信息！');
             return;
         }
         let arr = [{
             provnice: this.state.provnice,
-            provnicena: this.state.provnicena,
+            provnicena: this.state.edit ? this.state.provnice : this.state.provnicena,
             city: this.state.city,
-            cityna: this.state.cityna,
+            cityna: this.state.edit ? this.state.city : this.state.cityna,
             area: this.state.area,
-            areana: this.state.areana,
+            areana: this.state.edit ? this.state.area : this.state.areana,
             deiladdress: this.state.deiladdress,
             phone: this.state.phone,
         }]
@@ -486,6 +483,7 @@ class SendCoupon extends React.Component{
                 areana: '',
                 deiladdress: [],
                 phone: '',
+                Phone:''
             })  
         })
     }
@@ -493,18 +491,12 @@ class SendCoupon extends React.Component{
     editAddress(index){
             let arr = this.state.saveAddress;
             this.setState({
-                Address:arr[index].deiladdress,
-                Phone:arr[index].phone,
-                Provnice:arr[index].provnicena,
-                Area:arr[index].areana,
-                City:arr[index].cityna,
+                deiladdress:arr[index].deiladdress,
+                phone:arr[index].phone,
+                provnice:arr[index].provnicena,
+                area:arr[index].areana,
+                city:arr[index].cityna,
                 edit:true
-            },()=>{
-                this.setState({ 
-                    provnice:this.state.Provnice,
-                    city:this.state.City,
-                    area:this.state.Area,
-                })
             })
             if(arr[index].provnice === ''){
                 arr.splice(index,1);
@@ -579,20 +571,20 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={invest.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({invest:{...invest,value: e.target.value}})}
-                                        style={{display: 'inline-block',width: '200px'}}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
                                         <p className="error-imput">{invest.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
                                     满 <InputNumber className="form-item" value={invest.rule} min={0} max={invest.value / 0.1}
                                                     onChange={(e)=> this.setState({invest:{...invest,rule: e}})} step={10}
-                                                    style={{ marginLeft:'14px'}}/>
+                                                    style={{ marginLeft:'14px'}} maxLength={6}/>
                                     <span className="full-jie">满{invest.rule}减{invest.value}元</span>
                                     <p className="error-imput">{invest.value / 0.1 >= invest.rule ? '' : `优惠券力度不得小于10%，当前可填写最大金额不能超过${Number.parseInt(invest.value / 0.1)}元`}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">优惠券数量:</span>
-                                    投资 <InputNumber className="form-item" value={invest.inrule} min={0} max={1000}
+                                    投资 <InputNumber className="form-item" value={invest.inrule} min={0} max={9999} maxLength={4}
                                                     onChange={(e)=> this.setState({invest:{...invest,inrule: e}})} step={10}
                                                     />
                                     <span className="full-ff">元发放1张优惠券</span>
@@ -659,12 +651,12 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({tourist:{...tourist,value: e.target.value }})}
-                                        style={{display: 'inline-block',width: '200px'}}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
                                         <p className="error-imput">{tourist.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">使用规则:</span>
-                                    满 <InputNumber className="form-item" value={tourist.rule}  min={0} max={1000}
+                                    满 <InputNumber className="form-item" value={tourist.rule}  min={0} maxLength={6}
                                                     onChange={(e)=> this.setState({tourist:{...tourist,rule: e}})} step={10}
                                                     style={{ marginLeft:'14px'}}/>
                                     <span className="full-jie">满{tourist.rule}减{tourist.value}元</span>
@@ -675,7 +667,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.num}
                                             placeholder= "请输入优惠券数量"
                                         onChange={(e)=> this.setState({tourist:{...tourist,num: e.target.value}})}
-                                        style={{display: 'inline-block',width: '123px'}}/>
+                                        style={{display: 'inline-block',width: '123px'}} maxLength={4}/>
                                         <span style={{paddingLeft: '10px'}}>张</span>
                                         <p className="error-imput">{tourist.num >= 50 ? '' : '优惠券发放数量不能低于50张'}</p>
                                 </div>
@@ -747,11 +739,11 @@ class SendCoupon extends React.Component{
                                             }) 
                                         }
                                     </Select>
-                                <Input className="form-item" value={deiladdress ? deiladdress : this.state.Address}
+                                <Input className="form-item" value={deiladdress }
                                         placeholder= "详细地址"
                                         onChange={(e)=> this.setState({deiladdress: e.target.value })}
                                         style={{display: 'inline-block',width: '310px',margin: '0 3px'}} onFocus={()=>this.clearData()}/>
-                                <Input className="form-item" value={phone ? phone:this.state.Phone}
+                                <Input className="form-item" value={phone }
                                         placeholder= "联系电话"
                                         onChange={(e)=> this.setState({phone: e.target.value })}
                                         style={{display: 'inline-block',width: '123px'}} onFocus={()=>this.clearData()}/>
