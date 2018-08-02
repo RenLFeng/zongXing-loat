@@ -37,17 +37,17 @@ class SendCoupon extends React.Component{
             provnices: [],//省
             citys: [],//市
             areas: [],//区
-            provnice: '',
-            city: '',
-            area: '',
+            provnice: null,
+            city: null,
+            area: null,
             provnicena: '',
             cityna: '',
             areana: '',
             invest:{
                 name: this.props.coudata.fname,
-                value: 50,//面值
-                rule: 150,//满150减？
-                inrule: 500,//投资150发放一张
+                value: '',//面值
+                rule: '',//满150减？
+                inrule: '',//投资150发放一张
                 year: '',
                 month: '',
                 day: '',
@@ -55,9 +55,9 @@ class SendCoupon extends React.Component{
             },
             tourist:{
                 name: this.props.coudata.fname,
-                value: 30,//面值
-                rule: 100,//满150减？
-                num: 100,//多少张
+                value: '',//面值
+                rule: '',//满150减？
+                num: '',//多少张
                 year: '',
                 month: '',
                 day: '',
@@ -68,6 +68,7 @@ class SendCoupon extends React.Component{
             couponnum: 0,
             id:null,  //保存修改id
             id_:null,
+            edit:false,
         };
         this.data = {
             className: "ant-upload",
@@ -275,7 +276,7 @@ class SendCoupon extends React.Component{
         })
     }
     //保存
-    saveCou(status){
+    saveCou(fn){
         let {invest, tourist, saveAddress, losedateErrin, losedateErrver} = this.state;
         let places = [];
         let citys = [];
@@ -338,7 +339,7 @@ class SendCoupon extends React.Component{
             couponUsePlaces: places,
             type:0 
         }
-        this.toSaveCou(param);
+        this.toSaveCou(param,fn);
     }
     //保存
     async toSaveCou(data,fn){
@@ -350,9 +351,6 @@ class SendCoupon extends React.Component{
             this.setState({
                 loading: false
             })
-            // if(status){
-            //     this.commitCou();
-            // }
             fn && fn();
         }else{
             message.error(res.msg);
@@ -367,7 +365,6 @@ class SendCoupon extends React.Component{
             projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
-        console.log('优惠券回显信息',res)
         if(res.code === 0){
             if(res.data.length > 0){
                 let arr = [];
@@ -394,22 +391,25 @@ class SendCoupon extends React.Component{
                     //     fplace: res.data[0].fplace,
                     //     fmobile: res.data[0].fmobile
                     // }],
+                    address:res.data[0].userPlace,
                     saveAddress: arr,
-                    tourist:{
+                    invest:{
                         name: this.props.coudata.fname,
                         value: res.data[0].fullSubMoney,//面值
+                        inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
                         rule: res.data[0].fullSubCondition,//满减？
-                        num: res.data[0].couponNum ? res.data[0].couponNum : 50,//多少张
+                        // num: res.data[0].couponNum ? res.data[0].couponNum : 50,//多少张
                         year: new Date(res.data[0].endTime).getFullYear(),
                         month: new Date(res.data[0].endTime).getMonth() + 1,
                         day: new Date(res.data[0].endTime).getDate(),
                         imgsrc:  res.data[0].logo,
                     },
-                    invest:{
+                    tourist:{
                         name: this.props.coudata.fname,
                         value: res.data[1].fullSubMoney,//面值
                         rule: res.data[1].fullSubCondition,//满减？
-                        inrule: res.data[1].invMoney ? res.data[1].invMoney : 0 ,//投资150发放一张
+                        // inrule: res.data[1].invMoney ? res.data[1].invMoney : 0 ,//投资150发放一张
+                        num: res.data[0].couponNum ? res.data[0].couponNum : 50,//多少张
                         year: new Date(res.data[1].endTime).getFullYear(),
                         month: new Date(res.data[1].endTime).getMonth() + 1,
                         day: new Date(res.data[1].endTime).getDate(),
@@ -437,25 +437,25 @@ class SendCoupon extends React.Component{
             loading: true
         })
         console.log('保存了')
-        // let res = await mineloan.commitCou(data);
-        // if(res.code === 0){
-        //     this.setState({
-        //         loading: false
-        //     })
-        //     this.props.dispatch({
-        //         type: 'mineloan/getMineLoan',
-        //         payload: ''
-        //     })
-        // }else{
-        //     message.error(res.msg);
-        //     this.setState({
-        //         loading: false
-        //     })
-        // }
+        let res = await mineloan.commitCou(data);
+        if(res.code === 0){
+            this.setState({
+                loading: false
+            })
+            this.props.dispatch({
+                type: 'mineloan/getMineLoan',
+                payload: ''
+            })
+        }else{
+            message.error(res.msg);
+            this.setState({
+                loading: false
+            })
+        }
     }
+
     //保存地址
     async saveAddress(){
-        console.log(this.state.saveAddress,'000');
         if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.length < 6  || this.state.phone === ''){
             message.info('请完善地址信息！');
             return;
@@ -492,6 +492,20 @@ class SendCoupon extends React.Component{
 
     editAddress(index){
             let arr = this.state.saveAddress;
+            this.setState({
+                Address:arr[index].deiladdress,
+                Phone:arr[index].phone,
+                Provnice:arr[index].provnicena,
+                Area:arr[index].areana,
+                City:arr[index].cityna,
+                edit:true
+            },()=>{
+                this.setState({ 
+                    provnice:this.state.Provnice,
+                    city:this.state.City,
+                    area:this.state.Area,
+                })
+            })
             if(arr[index].provnice === ''){
                 arr.splice(index,1);
                 this.setState({
@@ -510,11 +524,20 @@ class SendCoupon extends React.Component{
             }
     }
 
-    getDate(val){
-
+    clearData(){
+        if(this.state.edit){
+            this.setState({
+                provnice:'',
+                city:'',
+                area:'',
+                Address:'',
+                Phone:'',
+                edit:false
+            })
+        }    
     }
+
     render(){
-        console.log('this.props',this.props)
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
         const radioStyle = {
             display: 'block',
@@ -522,6 +545,9 @@ class SendCoupon extends React.Component{
             lineHeight: '30px',
           };
         let couCard = [];
+        let provniceArr = [{fareaNo:this.state.Provnice,fareaName:this.state.Provnice}];  //回显的省份数组
+        let cityArr = [{fareaNo:this.state.City,fareaName:this.state.City}];
+        let areaArr = [{fareaNo:this.state.Area,fareaName:this.state.Area}];
         let radiogroup = [];
                 couCard.push(<Col span={12} className="send-coupon1" key="invest">
                   <span className="num">{this.props.coudata.fproject_no}</span>
@@ -538,7 +564,7 @@ class SendCoupon extends React.Component{
                                     <ul>
                                         <li style={{fontSize:10}}>使用规则: 满{invest.rule}减{invest.value}</li>
                                         <li style={{fontSize:10}}>失效日期: {this.getLoseDate(invest)}</li>
-                                        <li style={{fontSize:10}}>使用地址: {address}</li>
+                                        <li style={{fontSize:10}}>使用地址: {this.state.saveAddress.length> 0 ? this.state.saveAddress.map(item => item.cityna).join('、') : '' }</li>
                                     </ul>
                                 </div>
                             </Col>
@@ -618,7 +644,7 @@ class SendCoupon extends React.Component{
                                 <ul>
                                     <li style={{fontSize:10}}>使用规则: 满{tourist.rule}减{tourist.value}元</li>
                                     <li style={{fontSize:10}}>失效日期: {this.getLoseDate(tourist)}</li>
-                                    <li style={{fontSize:10}}>使用地址: {address}</li>
+                                    <li style={{fontSize:10}}>使用地址:  {this.state.saveAddress.length> 0 ? this.state.saveAddress.map(item => item.cityna).join('、') : '' }</li>
                                 </ul>
                             </div>
                         </Col>
@@ -686,38 +712,53 @@ class SendCoupon extends React.Component{
                     <div className="send-form-address">
                         <Spin spinning={this.state.ploading} >
                             <span className="fir-span">使用地址:</span>
-                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} notFoundContent='无匹配结果'>
+                                    <Select value={this.state.provnice} showSearch style={{ width: 100,marginLeft:' 25px' }} onChange={(e) => this.provniceChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} notFoundContent='无匹配结果' onFocus={()=>this.clearData()}>
                                         {
+                                            this.state.edit ?
+                                            provniceArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'f'}>{item.fareaName}</Option>
+                                            }): 
                                             provnices.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'f'}>{item.fareaName}</Option>
                                             })
                                         }
                                     </Select>
                                     <Select value={this.state.city} showSearch style={{ width: 100, margin: '0 3px' }}
-                                            onChange={(e) => this.cityChange(e)} notFoundContent='' optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0}>
+                                            onChange={(e) => this.cityChange(e)} notFoundContent='' optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} onFocus={()=>this.clearData()}>
                                         {
+                                            this.state.edit ?
+                                            cityArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'g'}>{item.fareaName}</Option>
+                                            }):
                                             citys.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'g'}>{item.fareaName}</Option>
                                             })
                                         }
                                     </Select>
 
-                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0}>
+                                    <Select showSearch value={this.state.area}  notFoundContent='' style={{ width: 100 }} onChange={(e) => this.areaChange(e)} optionFilterProp="children" filterOption={(input, option) => option.props.children.indexOf(input) >= 0} onFocus={()=>this.clearData()}>
                                         {
+                                            this.state.edit ? 
+                                            areaArr.map((item,index) => {
+                                                return <Option value={item.fareaNo} key={index+ 'h'}>{item.fareaName}</Option>
+                                            }) :
                                             areas.map((item,index) => {
                                                 return <Option value={item.fareaNo} key={index+ 'h'}>{item.fareaName}</Option>
-                                            })
+                                            }) 
                                         }
                                     </Select>
-                                <Input className="form-item" value={deiladdress}
+                                <Input className="form-item" value={deiladdress ? deiladdress : this.state.Address}
                                         placeholder= "详细地址"
                                         onChange={(e)=> this.setState({deiladdress: e.target.value })}
-                                        style={{display: 'inline-block',width: '310px',margin: '0 3px'}}/>
-                                <Input className="form-item" value={phone}
+                                        style={{display: 'inline-block',width: '310px',margin: '0 3px'}} onFocus={()=>this.clearData()}/>
+                                <Input className="form-item" value={phone ? phone:this.state.Phone}
                                         placeholder= "联系电话"
                                         onChange={(e)=> this.setState({phone: e.target.value })}
-                                        style={{display: 'inline-block',width: '123px'}}/>
-                                <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a>
+                                        style={{display: 'inline-block',width: '123px'}} onFocus={()=>this.clearData()}/>
+                                        {
+                                            saveAddress.length < 3 ?  <a onClick={() => this.saveAddress()} className="save-address">+保存地址</a> : null
+                                        }
+                               
                                 {
                                     deiladdress.length < 6  && deiladdress.length > 0? 
                                      <p className="error-imput" style={{paddingLeft: '82px'}}> 详细信息请具体到门牌号</p> : 
@@ -728,16 +769,7 @@ class SendCoupon extends React.Component{
                         </Spin>
                     </div>
                 )
-                    // { this.state.couponUsePlaces.length > 0 ? 
-                    //     this.state.couponUsePlaces.map((item, index) =>{
-                    //         radiogroup.push(
-                    //             <Radio value={index} key={index} style={radioStyle}>
-                    //                 {`${item.address}   ${item.fmobile}`}
-                    //                 {radioChoose === index ? <a className="edit-address" onClick={this.editAddress.bind(this,index)}>编辑</a> : ''}
-                    //             </Radio>
-                    //         )
-                    //     })
-                    //     : 
+                  
                         saveAddress.map((item, index) =>{
                             radiogroup.push(
                             <Radio value={index} key={index} style={radioStyle}>
@@ -746,17 +778,17 @@ class SendCoupon extends React.Component{
                             </Radio>
                             )
                         })
-                    // }
+                 
         return(
             <Row className="send-coupon" type="flex" justify="center">
             <Spin spinning={this.state.loading}>
                 {couCard}
-                <RadioGroup className="radio-group-coupon" onChange={(e) => this.setState({radioChoose: e.target.value},console.log('this.state.radioChoose',this.state.radioChoose))}>
+                <RadioGroup className="radio-group-coupon" onChange={(e) => this.setState({radioChoose: e.target.value})}>
                     {radiogroup}
                 </RadioGroup>
                 <div className="coupon-btn">
                     <Button onClick={() => this.saveCou()} style={{margin: '0 8px'}}>保存</Button>
-                    <Button type="primary" onClick={() => () => this.saveCou(this.commitCou.bind(this))}>提交</Button>
+                    <Button type="primary" onClick={() => this.saveCou(this.commitCou.bind(this))}>提交</Button>
                 </div>
             </Spin>
             </Row>
