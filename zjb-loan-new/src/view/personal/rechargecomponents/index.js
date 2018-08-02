@@ -11,11 +11,10 @@ const Option = Select.Option;
 export default  class Loaninfo extends React.Component{
    
     render(){
-        const {commisson} = this.state;
         return(
             <div  className="recharge-info">  
-                <Title types={this.props.types}  commissionShow={this.state.commissionShow}/>
-                <Card  types={this.props.types}  commissionShow={this.state.commissionShow}/>    
+                <Title types={this.props.types} />
+                <Card  types={this.props.types} />    
             </div>
         )
     }
