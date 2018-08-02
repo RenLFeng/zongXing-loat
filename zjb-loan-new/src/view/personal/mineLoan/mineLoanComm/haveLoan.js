@@ -15,7 +15,7 @@ import DelModal from './deleteModal/deleteModal';
 import UploadFile from '../applayLoan/appaly/UpLoad/UploadFile';
 import {mineloan} from '../../../../services/api';
 import {connect} from 'dva';
-import {IMG_BASE_URL, NOTIFY_URL} from '../../../../common/SystemParam';
+import {IMG_BASE_URL, NOTIFY_URL, conversionTime} from '../../../../common/SystemParam';
 import SendCoupon from './sendCoupon';
 import Notice from '../notice/notice';
 import ConSult from '../consult/consult';
@@ -97,7 +97,8 @@ class NoLoan extends React.Component{
             doingData: [],
             timeLong: '',
             isGoing: false,
-        }
+        };
+        this.countDown = null;
     };
 
     submitLoan(text,record,index){
@@ -105,7 +106,7 @@ class NoLoan extends React.Component{
     }
 
     editLoan(text,record,index){
-        console.log(text,record,index)
+        // console.log(text,record,index)
     }
 
     deleteLoan(text,record,index){
@@ -149,6 +150,12 @@ class NoLoan extends React.Component{
 
     componentDidMount(){
        
+    }
+
+    componentWillUnmount() {
+        if (this.countDown) {
+            clearInterval(this.countDown);
+        }
     }
     //提交补充资料
     async commitData(fid) {
@@ -269,27 +276,18 @@ class NoLoan extends React.Component{
         
     }
 
-    async updatstate(val){
-        let time = val[0].loanTime;
-        await setInterval(()=>{
-            this.setState({
-                doingData: [{
-                    ...this.state.doingData,
-                    loanTime: time++
-                }]
-            },1000)
-        })
-    }
-
     goingTime(val){
         let time = val;
-        setInterval(()=>{
-           this.setState({
-                timeLong: getTime(time),
-                isGoing: true
-            })
-            time = time+1;
-        },1000)
+        if (!this.countDown) {
+            this.countDown = setInterval(()=>{
+                this.setState({
+                     timeLong: getTime(time),
+                     isGoing: true
+                 })
+                 time = time+1;
+             },1000)
+        }
+        
     }
 
     render(){
@@ -371,28 +369,28 @@ class NoLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money' ,
+                dataIndex: 'fmoney_last', 
+                key: 'fmoney_last' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}元</span>
+                    return <span>{returnFloat(record.fmoney_last)}元</span>
                 }  
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month',
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last',
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last}个月</span>
                 }  
             },
             { 
                 title: '借款利率',
                 align: 'center',
-                dataIndex: 'frate_predict', 
-                key: 'frate_predict',
+                dataIndex: 'frate_last', 
+                key: 'frate_last',
                 render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
+                    return <span>{record.frate_last}%</span>
                 } 
             },
             { 
@@ -437,19 +435,19 @@ class NoLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money' ,
+                dataIndex: 'fmoney_last', 
+                key: 'fmoney_last' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}元</span>
+                    return <span>{returnFloat(record.fmoney_last)}元</span>
                 } 
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month' ,
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last' ,
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last}个月</span>
                 } 
             },
             { 
@@ -524,19 +522,19 @@ class NoLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money' ,
+                dataIndex: 'fmoney_last', 
+                key: 'fmoney_last' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}元</span>
+                    return <span>{returnFloat(record.fmoney_last)}元</span>
                 } 
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month' ,
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last' ,
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last}个月</span>
                 } 
             },
             { 
@@ -563,7 +561,7 @@ class NoLoan extends React.Component{
                 dataIndex: ' ', 
                 key: ' ' ,
                 render: (text,record) =>{
-                    return <span>{getTime(record.fpublish_time,record.fcollet_over_time)}</span>
+                    return <span>{conversionTime(record.loanTime)}</span>
                 }
             },
             { 
@@ -601,19 +599,19 @@ class NoLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money' ,
+                dataIndex: 'invMoney', 
+                key: 'invMoney' ,
                 render: (text,record) =>{
-                    return <span>{returnFloat(record.fcredit_money)}元</span>
+                    return <span>{returnFloat(record.invMoney)}元</span>
                 } 
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month' ,
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last' ,
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last}个月</span>
                 } 
             },
             { 
@@ -628,10 +626,10 @@ class NoLoan extends React.Component{
             { 
                 title: '放款日期', 
                 align: 'center',
-                dataIndex: 'fpublish_time', 
-                key: 'fpublish_time' ,
+                dataIndex: 'previousTime', 
+                key: 'previousTime' ,
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fpublish_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                    return <span>{parseTime(record.previousTime,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
             { 
@@ -662,37 +660,49 @@ class NoLoan extends React.Component{
             { 
                 title: '借款金额', 
                 align: 'center',
-                dataIndex: 'fcredit_money', 
-                key: 'fcredit_money' ,
+                dataIndex: 'fmoney_last', 
+                key: 'fmoney_last' ,
                 render: (text,record) =>{
+                    // 项目终止 
+                    if (record.fflag == -3) {
+                        return <span>{returnFloat(record.fmoney_last||record.fcredit_money)}元</span>
+                    }
+                    // 项目坏账逾期等
+                    if (record.fflag <= -4 || [15,16].includes(record.fflag)) {
+                        return <span>{returnFloat(record.invMoney)}元</span>
+                    }
+                    // 确认借款之后
+                    if (record.fflag > 8 && record.fflag <= 14 || record.fflag == -1) {
+                        return <span>{returnFloat(record.fmoney_last)}元</span>
+                    }
                     return <span>{returnFloat(record.fcredit_money)}元</span>
                 }  
             },
             { 
                 title: '借款期数',
                 align: 'center',
-                dataIndex: 'fcredit_month', 
-                key: 'fcredit_month',
+                dataIndex: 'fmonth_last', 
+                key: 'fmonth_last',
                 render: (text,record) =>{
-                    return <span>{record.fcredit_month}个月</span>
+                    return <span>{record.fmonth_last||record.fcredit_month}个月</span>
                 }  
             },
             { 
                 title: '借款利率',
                 align: 'center',
-                dataIndex: 'frate_predict', 
-                key: 'frate_predict',
+                dataIndex: 'frate_last', 
+                key: 'frate_last',
                 render: (text,record) =>{
-                    return <span>{record.frate_predict}%</span>
+                    return <span>{record.frate_last||record.frate_predict}%</span>
                 } 
             },
             { 
                 title: '还清日期', 
                 align: 'center',
-                dataIndex: 'fcreate_time', 
-                key: 'fcreate_time',
+                dataIndex: 'previousTime', 
+                key: 'previousTime',
                 render: (text,record) =>{
-                    return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
+                    return <span>{parseTime(record.previousTime,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
             },
             { 
@@ -742,7 +752,6 @@ class NoLoan extends React.Component{
         }
 
         doing.map((item,index)=>{
-            console.log('doing', item);
             table.push(
                 <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px 15px',marginTop: `${index === 0 ? 0 : '8px'}`}}>
                     <LoanTitle title="我的借款"></LoanTitle>
@@ -763,7 +772,7 @@ class NoLoan extends React.Component{
                         loading={this.props.loading}
                     />
                     </Spin>
-                    {item.fflag === 0 && !item.fis_pass ?   
+                    {item.fflag === 0 && item.fis_pass != null && !item.fis_pass ?   
                                         <p className="loan-cs-bh">{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
                                         <span>初审驳回：{item.fremark}</span></p> : '' }
                     { [4,5].includes(item.fflag) ? !item.fis_pass ? 

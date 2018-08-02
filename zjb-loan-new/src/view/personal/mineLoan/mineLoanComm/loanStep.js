@@ -34,7 +34,7 @@ class LoanStep extends React.Component{
                 step.push(<div key={i.state[0]} className='ready-bag'>
                 <p className={[2,3].includes(fflag) ? 'ready-long' : 'ready'}>{i.name}</p> 
              </div>)
-            }else{
+            } else {
                 step.push(<div key={i.state[0]} className='unready-bag'>
                        <p className={num === 0 ? 'unready-fir' : 'unready'}>{i.name}
                        {num < stepDate.length-1 ? <Icon type="caret-right" style={{fontSize:' 12px'}} /> : ''}</p> 

@@ -111,6 +111,7 @@ export default class Login extends React.Component {
     return (
       <div className="logindiv1 "  style={{height: 495,borderRadius:10,marginTop: 80,marginBottom: 500}}>
       <Modal
+          destroyOnClose={true}
           visible={this.state.authPhone}
           title="解除账号锁定"
           okText="提交"

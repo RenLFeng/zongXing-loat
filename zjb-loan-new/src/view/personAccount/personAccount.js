@@ -420,37 +420,36 @@ export default class PersonAccount extends React.Component {
       },
       {
         text: '进入终审',
-        fflag: [6]
+        fflag: [4,5,6,7]
       },
       {
         text: '确认借款',
-        fflag: [7,8]
+        fflag: [8]
       },
       {
         text: '发放优惠券',
-        fflag: [9,14]
+        fflag: [9]
       },
       {
         text: '上线筹款',
-        fflag: [10]
+        fflag: [10,11,12,13]
       },
       {
         text: '满标放款',
-        fflag: [11]
+        fflag: [14]
       },
       {
         text: '按月还款',
-        fflag: [12]
+        fflag: [15]
       },
       {
         text: '还清借款',
-        fflag: [13]
+        fflag: [16]
       },
     ];
     // 当前借款金额  近期还款  我的借款  账户金额  资金动态
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     const { userSecurityCenter } = this.props.baseData;
-    console.log(recentForRepanymentVo, "reduxs")
     const { data, dataSource, paymentParam } = this.state;
     return (
       <div>

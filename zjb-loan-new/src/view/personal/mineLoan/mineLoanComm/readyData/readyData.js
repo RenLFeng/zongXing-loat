@@ -263,21 +263,21 @@ class ReadyData extends React.Component{
           ];
         //fflag = -3
         const columnsi3 = [
-            { 
+            {   
                 title: '借款金额', 
                 align: 'center',
                 dataIndex: 'fcredit_money', 
                 key: 'fcredit_money' ,
                 render: (text,record) => this.getRealMoney(record)
-            },
-            { 
+            },  
+            {   
                 title: '借款期数',
                 align: 'center',
                 dataIndex: 'fcredit_month', 
                 key: 'fcredit_month',
                 render: (text,record) => this.getRealDay(record)
-            },
-            { 
+            },  
+            {   
                 title: '创建时间', 
                 align: 'center',
                 dataIndex: 'fcreate_time', 
@@ -285,7 +285,7 @@ class ReadyData extends React.Component{
                 render: (text,record) =>{
                     return <span>{parseTime(record.fcreate_time,'{y}-{m}-{d} {h}:{i}')}</span>
                 }
-            },
+            },  
             {   
                 title: '状态', 
                 align: 'center',
@@ -296,17 +296,16 @@ class ReadyData extends React.Component{
                             •{getStatu(record.fflag)}
                         </span>
                 } 
-            },
-          ];
+            },  
+          ];    
         const alredy = [];
         const alredytable = [];
         this.props.data.map((item,index)=>{
-            if(item.fflag === 13 || item.fflag === -1 || item.fflag === -3){
+            if(item.fflag === 16 || item.fflag === -1 || item.fflag === -3){
                 alredy.push(item)
-            }
-        })
+            }   
+        })      
         alredy.map((item,index)=>{
-            console.log(item);
             alredytable.push(
                     <div style={{ margin:' 20px 0'}} key={index}>
                         <LoanStep stepdata={item} type={0}></LoanStep>
@@ -315,7 +314,7 @@ class ReadyData extends React.Component{
                             locale={locale}
                             pagination={false}
                             dataSource={[item]}
-                            columns={item.fflag === 13 ? columns13 : (item.fflag === -1 ? columnsi1 : (item.fflag === -3 ? columnsi3 : '') )}
+                            columns={item.fflag === 16 ? columns13 : (item.fflag === -1 ? columnsi1 : (item.fflag === -3 ? columnsi3 : '') )}
                             rowClassName="editable-row"
                             loading={this.props.loading}
                         />

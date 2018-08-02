@@ -74,7 +74,8 @@ class Consult extends React.Component{
     //回复
     replay(item, index){
         this.setState({
-            flag: index
+            flag: index,
+            hfdata: ''
         })
     }
     //举报
@@ -109,6 +110,7 @@ class Consult extends React.Component{
         }
         if(res.code === 0){
             this.getConsult();
+            this.setState({flag: -1});
         }else{
             message.error(res.msg); 
         }
@@ -119,7 +121,7 @@ class Consult extends React.Component{
         condata.map((item,index)=>{
             list.push(<div className="reply-card" key={index}>
                         <Row>
-                            <Col span={20} className="replay-col20">
+                            <Col span={20} className="replay-col20" style={{wordBreak: 'break-all'}}>
                                 <span className="type">{item.ftype === 0 ? '投前咨询' : '投后追踪'}:</span>
                                 {item.content}
                             </Col>
@@ -156,8 +158,7 @@ class Consult extends React.Component{
         return(
             <div>
                 {
-                    list.length > 0 
-                    ?
+                    
                         <div className="pe personal-rbody" style={{marginTop: '8px'}}>
                             <LoanTitle title="投资咨询"></LoanTitle>
                             <div className="reply-statu">
@@ -165,12 +166,13 @@ class Consult extends React.Component{
                                 <a className="statu-a" onClick={() =>this.getReply(1)}>已回复<span></span></a>
                                 <a className="statu-a" onClick={() =>this.getReply(-1)}>已举报<span></span></a>
                             </div>
+                            { list.length > 0 ?
                             <Spin spinning={this.state.loading}>
                                 {list}
-                            </Spin>
+                            </Spin>:
+                            '' }
                         </div>
-                    :
-                    ''    
+                        
                 }
             </div>
         )

@@ -17,7 +17,6 @@ import './notice.scss';
 import { Input, Modal, Spin } from 'antd';
 const { TextArea } = Input;
 
-const imgurl = 'https://zjb-test-1255741041.picgz.myqcloud.com/'
 
 @connect((state)=>({
     // projectId: state.mineloan.projectId,
@@ -216,7 +215,7 @@ export default class Notice extends React.Component{
                             {item.fTitle}
                         </div>
                         <div className="notice-photo">
-                           <img src={imgurl+item.fCardPic}/> 
+                           <img src={IMG_BASE_URL+item.fCardPic}/> 
                         </div>
                         <div className="notice-info">
                             <div className="line-content">{parseTime(item.fTime,'{y}-{m}-{d} {h}:{i}')}</div>
@@ -233,6 +232,7 @@ export default class Notice extends React.Component{
                     <a onClick={() => this.addNotice()} className="add-notice"><Icon type="plus" />添加</a>
                 </LoanTitle>
                 <Modal
+                    destroyOnClose={true}
                     mask={false}
                     closable={false}
                     visible={this.state.modal2Visible}
@@ -244,7 +244,7 @@ export default class Notice extends React.Component{
                     maskClosable={false}
                     >
                     <Spin spinning={this.state.loadingadd}>
-                        <Input placeholder="请输入标题" value={fTitle} onChange={(e)=> this.setState({fTitle: e.target.value})}/>
+                        <Input placeholder="请输入标题" value={fTitle} onChange={(e)=> this.setState({fTitle: e.target.value})} maxLength={10}/>
                         <TextArea placeholder="请输入内容" value={fContent} onChange={(e)=> this.setState({fContent: e.target.value})} rows={4}
                                 style={{margin: '8px 0'}}/>
                         <UploadImg ref="upload" {...this.data} value={this.state.fPicJson} prefix={'personal/'} tipText="上传照片" onChange={this.onChange.bind(this)}/>
