@@ -785,6 +785,9 @@ class NoLoan extends React.Component{
                                         <p className="loan-cs-bh">{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
                                         <span>优惠券审核不通过：{item.fremark}</span></p> : ''}
 
+                    {item.fflag === 11 && item.fis_pass != null && !item.fis_pass? 
+                                        <p className="loan-cs-bh" style={{marginBottom: 20}}>{parseTime(item.previousTime,'{y}-{m}-{d} {h}:{i}')}
+                                        <span>项目排版打回：{item.fremark}</span></p> : '' }
                     {item.fflag === 11 ? <Appalyloan projectId={item.fid} commitData={this.commitData.bind(this)}>
                                         </Appalyloan> : ''}
                 </div>

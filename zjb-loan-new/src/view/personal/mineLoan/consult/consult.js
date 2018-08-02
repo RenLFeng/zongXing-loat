@@ -13,8 +13,10 @@ import {mineloan} from '../../../../services/api';
 import {Row, Col, Input, message, Spin} from 'antd';
 import {parseTime} from '../dateformat/date';
 import LoanTitle from '../mineLoanComm/loanTitle';
-const { TextArea } = Input;
+import moment from 'moment';
 
+
+const { TextArea } = Input;
 
 @connect((state)=>({
     
@@ -66,7 +68,8 @@ class Consult extends React.Component{
     //待？已？举报？
     getReply(val){
         this.setState({
-            hfdata: ''
+            hfdata: '',
+            showType: val
         })
         this.getConsult(val);
     }
@@ -93,6 +96,10 @@ class Consult extends React.Component{
     async commitan(item){
         let data = {};
         let res;
+        if (this.state.commitLoading) {
+            return;
+        }
+        this.setState({commitLoading: true});
         if(item.ftype === 1){
             data =  {
                 fquestionId: item.fid, 
@@ -102,14 +109,15 @@ class Consult extends React.Component{
             res = await mineloan.saveConsult(data)
         }else{
             data =  {
-                ftopicId: item.fid, 
-                fcontent: this.state.hfdata.trim(),
-                fisAnonymity: 0
+                fTopicId: item.fid, 
+                fContent: this.state.hfdata.trim(),
+                fIsAnonymity: 0
             }
             res = await mineloan.saveConsultq(data)
         }
+        this.setState({commitLoading: false});
         if(res.code === 0){
-            this.getConsult();
+            this.getConsult(this.state.showType);
             this.setState({flag: -1});
         }else{
             message.error(res.msg); 
@@ -122,13 +130,13 @@ class Consult extends React.Component{
             list.push(<div className="reply-card" key={index}>
                         <Row>
                             <Col span={20} className="replay-col20" style={{wordBreak: 'break-all'}}>
-                                <span className="type">{item.ftype === 0 ? '投前咨询' : '投后追踪'}:</span>
+                                <span className="type" style={item.ftype === 0?{color: '#009900'}:null}>{item.ftype === 0 ? '投前咨询' : '投后追踪'}:</span>
                                 {item.content}
                             </Col>
                             <Col span={4}  className="replay-col4">
                                 <p>{parseTime(item.time,'{y}-{m}-{d} {h}:{i}')}</p>
                                 <p><a className="jb" onClick={ () => this.tipquestion.bind(this,item,index)}>举报问题</a></p>
-                                {flag === index ? '' : <a className="hf" onClick={this.replay.bind(this,item,index)}>回复</a>}
+                                {item.projectAnswers.length ? null : flag === index ? '' : <a className="hf" onClick={this.replay.bind(this,item,index)}>回复</a>}
                             </Col>
                         </Row>
                         {flag === index ?
@@ -143,14 +151,17 @@ class Consult extends React.Component{
                                 </div>          
                         : ''}
                         {
-                            item.ftype === 1 ? item.projectAnswers.map((item,index) =>{
-                               return <div className="hf-div">
-                                    <TextArea value={item.content} rows={4} readOnly key={index}
+                            item.projectAnswers.map((item,index) =>{
+                               return <div className="hf-div" style={{padding: '15px 10px', background: '#F2F2F2', wordBreak: 'break-all',marginBottom: 10}}>
+                                        <p style={{textAlign: 'left',color: '#99A4BE'}}>{moment(item.time).format('YYYY-MM-DD HH:mm')}</p>
+                                        <p style={{textAlign: 'left'}}>{item.content}</p>
+                                    {/* <TextArea value={item.content} rows={4} readOnly key={index}
                                             style={{backgroundColor: '#e9e9e9',padding: '10px 25px',boxShadow: '0 0 0 2px #e9e9e9',borderRadius: 0,
-                                            border:'none',marginTop:' 15px'}}/>
+                                            border:'none',marginTop:' 15px'}}/> */}
+                                            
                                     {/* <p style={{textAlign: 'right'}}>{parseTime(item.time,'{y}-{m}-{d} {h}:{i}')}</p>         */}
                                     </div>
-                            })   : ''
+                            })
                         }
 
                       </div>)
