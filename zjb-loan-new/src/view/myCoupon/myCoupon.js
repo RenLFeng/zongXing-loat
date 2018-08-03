@@ -224,7 +224,7 @@ render(){
           align:'center',
           render:(text,val)=>{
             return (
-              <span>{val === 1 ?'投资类' : '游客类'}</span>
+              <span>{val.couponType === 1 ? '投资类' : '游客类'}</span>
             )     
           }
         }, {
@@ -304,7 +304,7 @@ render(){
         align:'center',
         render:(text,val)=>{
           return (
-            <span>{val === 1 ?'投资类' : '游客类'}</span>
+            <span>{val.couponType === 1 ?'投资类' : '游客类'}</span>
           )     
         }
       }, {
@@ -372,7 +372,7 @@ render(){
       align:'center',
       render:(text,val)=>{
         return (
-          <span>{val === 1 ?'投资类' : '游客类'}</span>
+          <span>{val.couponType === 1 ?'投资类' : '游客类'}</span>
         )     
       }
     }, {

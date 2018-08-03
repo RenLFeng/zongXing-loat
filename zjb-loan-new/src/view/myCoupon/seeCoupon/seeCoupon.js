@@ -6,7 +6,7 @@ import moment from 'moment';
 export default class SeeCoupon extends React.Component {
   render(){
     const {couponInfo} = this.props;
-    console.log('优惠券详情',couponInfo)
+    console.log('优惠券详情（未使用）',couponInfo)
     let place = couponInfo.couponUsePlaces;
     console.log('palce',place)
     return(
