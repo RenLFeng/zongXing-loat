@@ -3,7 +3,7 @@
 import Title from './title'
 import React, { PureComponent } from 'react';
 
-import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, Popover, InputNumber, Tooltip ,message} from 'antd';
+import { Card, Button, Form, Icon, Col, Row, DatePicker, TimePicker, Input, Select, Popover, InputNumber, Tooltip, message } from 'antd';
 import UploadMultipleFile from './UpLoad/UploadMultipleFile';
 import { baseService } from '../../../../../services/api';
 
@@ -19,10 +19,11 @@ import UploadSingle from './UpLoad/UpLoadSingle';
 const { Option } = Select;
 
 
-const RequireLabel = ({ children }) => (
-    <div>
-        <span style={{ color: 'red', display: 'inline-block', verticalAlign: 'sub', marginRight: 5 }}>{`* `}</span>
-        <span style={{ display: 'inline-block', verticalAlign: 'middle' }}> {children}</span>
+const RequireLabel = ({ children, notRequire }) => (
+    <div className="span_require_div">
+        <span className="span_require_div_right" style={notRequire ? { color: '#333' } : null}>{children}</span>
+        {notRequire ? null :
+            <img src={require('../../../../../assets/img/apply/ic_star.png')} className="span_require_div_left" />}
     </div>
 );
 
@@ -96,7 +97,7 @@ class Loaninfo extends React.Component {
             }
         });
         return val;
-      }
+    }
     validateNumber = (rule, value, callback) => {
         const { getFieldValue } = this.props.form;
         if (MONEY_REG.test(value) && (value * 1 < 100000 || value * 1 > 1000000)) {
@@ -141,8 +142,8 @@ class Loaninfo extends React.Component {
             this.props.changeOldData(val, 'SAVE');
         }
     }
-    submitLoanInfo(obj){
-        console.log(obj,"su")
+    submitLoanInfo(obj) {
+        console.log(obj, "su")
     }
     render() {
         const { form, dispatch, submitting } = this.props;
@@ -151,132 +152,116 @@ class Loaninfo extends React.Component {
         const { cityList, } = this.state;
         const dataPath = this.props.companyNo + '/';
         const { visible, data } = this.props;
+        const formItemLayoutUser = {
+            labelCol: { span: 8 },
+            wrapperCol: { span: 15 },
+        };
         return (
-
-
-
-            <div className="applone-info">
+            <div>
                 <Title Title="借款企业信息" />
                 <div>
+                    <Form hideRequiredMark style={{ marginTop: 29 }} onSubmit={this.submit.bind(this)}>
+                        <Row >
+                            <Col span={12}>
+                                <Form.Item {...formItemLayoutUser} label={<RequireLabel>企业名称</RequireLabel>}>
+                                    {getFieldDecorator('companyName', {
+                                        initialValue: data.companyName ? data.companyName : '',
+                                        rules: [{ validator: this.validateName }]
+                                    })(
+                                        <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} disabled maxLength={50} />
+                                    )}
+                                </Form.Item>
+                            </Col>
 
-                    <div style={{ marginBottom: 20 }} className="third_company_info  ">
-                        <Form layout="vertical" hideRequiredMark style={{ marginTop: 29 }} onSubmit={this.submit.bind(this)}>
-                            <Row gutter={16} style={{height: 88}}>
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={<RequireLabel>企业名称</RequireLabel>}>
-                                        {getFieldDecorator('companyName', {
-                                            initialValue: data.companyName ? data.companyName : '',
-                                            rules: [{ validator: this.validateName }]
-                                        })(
-                                            <Input placeholder="请输入" style={{ marginLeft: 14 }} maxLength={50}/>
-                                        )}
-                                    </Form.Item>
-                                </Col>
-
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={<RequireLabel>统一社会信用代码</RequireLabel>} style={{ marginLeft: '-24px' }}>
-                                        {getFieldDecorator('fsocial_credit_code', {
-                                            initialValue: this.props.companyNo?this.props.companyNo: '',
-                                            rules: [],
-                                        })(
-                                            <Input placeholder="请输入" disabled maxLength={50}/>
-                                        )}
-                                    </Form.Item>
-                                </Col>
-
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={<div className={styles.textBox}>
-                                        公司座机
-                                        {/* <Tooltip title={<p>填写说明：<br />无固定电话可填写常用手机号码。</p>}>
-                                            <Icon type="question-circle-o" className={styles.toolTip} style={{ left: 85, top: 4 }} />
-                                        </Tooltip> */}
-                                    </div>}>
-                                        {getFieldDecorator('fctelephone', {
-                                             initialValue: data.fctelephone ? data.fctelephone : '',
-                                            rules: [{
-                                                pattern: TEL_PHONE, message: '请输入正确的单位座机'
-                                            }]
-                                        })(
-                                            <Input placeholder="请输入" maxLength={50}/>
-                                        )}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={16} style={{height: 88}}>
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={<RequireLabel>企业开户行</RequireLabel>}>
-                                        {getFieldDecorator('fcbank_name', {
-                                            initialValue: data.fcbank_name ? data.fcbank_name : '',
-                                            rules: [{
-                                                validator: this.validateName
-                                            }]
-                                        })(<Input placeholder="请输入"  maxLength={20}/>)}
-                                    </Form.Item>
-                                </Col>
+                            <Col span={12}>
+                                <Form.Item {...formItemLayoutUser} label={<RequireLabel>统一社会信用代码</RequireLabel>}>
+                                    {getFieldDecorator('fsocial_credit_code', {
+                                        initialValue: this.props.companyNo ? this.props.companyNo : '',
+                                        rules: [],
+                                    })(
+                                        <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} disabled maxLength={50} />
+                                    )}
+                                </Form.Item>
+                            </Col>
 
 
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={<RequireLabel>企业对公银行账户</RequireLabel>} style={{ marginLeft: '-22px' }}>
-                                        {getFieldDecorator('fcbank_no', {
-                                            initialValue: data.fcbank_no ? data.fcbank_no : '',
-                                            rules: [{
-                                                pattern: BANK_CARD, message: '请输入正确的银行卡账号'
-                                            }]
-                                        })(
-                                            <Input placeholder="请输入" maxLength={25}/>
-                                        )}
-                                    </Form.Item>
-                                </Col>
-                                <Col lg={8} md={12} sm={24}>
-                                    <Form.Item label={'经营行业'}>
-                                        {getFieldDecorator('fbus_trade', {
-                                            initialValue: data.fbus_trade? data.fbus_trade: this.state.industryType[0] ? this.state.industryType[0].fTypeCode : ''
-                                        })(<Select style={{ width: 200 }}>
-                                            {
-                                                this.state.industryType.map((data) => {
-                                                    return (
-                                                        <Select.Option key={data.fTypeCode} value={data.fTypeCode}>{data.fTypeName}</Select.Option>
-                                                    );
-                                                })
-                                            }
-                                        </Select>)}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={16} style={{height: 88}}>
-                                <Col lg={24} md={24} sm={24}>
-                                    <Form.Item className="jingyingadresss" style={{ width: '100%' }} label={<div  >
-                                        <RequireLabel>实际经营地址</RequireLabel>
-                                        {/* <Tooltip title={<p>填写说明：<br />1、请如实填写企业实际经营地址；
-                                        <br />2、后期若信息变更请在工商变更登记后登录我公司网站变更企业地址信息。</p>}>
-                                        <Icon type="question-circle-o" className={styles.toolTip} style={{ left: 115, top: 6 }} />
-                                        </Tooltip> */}
-                                    </div>}>
-                                        {getFieldDecorator('fbus_address', {
-                                            initialValue: data.fbus_address ? data.fbus_address : '',
-                                            rules: [{
-                                                pattern: ZHUZHI_REG, message: '请输入正确的经营地址（只能包含汉字，数字，字母，下划线）'
-                                            }],
-                                        })(
-                                            <Input placeholder="请输入" style={{ width: '100%' }}  maxLength={200}/>
-                                        )}
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </div>
-                    <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2' }}>
-                        <Row gutter={16} >
-                            <Col lg={8} md={12} sm={24}>
-                                <Form.Item label={<RequireLabel>营业执照</RequireLabel>} className="lecines_"  >
-                                    {/* <div>
-                                        <Tooltip title={<p>填写说明：<br />
-                                        1、新版本营业执照，正副本皆可，电子扫描件最佳；<br />
-                                        2、拍照必须清晰反应公司名称、执照号码、法人姓名，注册资本、地址、经营范围等信息；<br />
-                                        3、老版营业执照请额外上传组织机构代码证、税务登记证。</p>}>
-                                        <Icon type="question-circle-o" className={styles.toolTip} style={{ left: 80, top: -26 }} />
-                                        </Tooltip>
-                                        </div> */}
+                        </Row>
+                        <Row >
+                            <Col span={12}>
+                                <Form.Item  {...formItemLayoutUser} label={<RequireLabel>企业开户行</RequireLabel>}>
+                                    {getFieldDecorator('fcbank_name', {
+                                        initialValue: data.fcbank_name ? data.fcbank_name : '',
+                                        rules: [{
+                                            validator: this.validateName
+                                        }]
+                                    })(<Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={20} />)}
+                                </Form.Item>
+                            </Col>
+
+
+                            <Col span={12}>
+                                <Form.Item  {...formItemLayoutUser} label={<RequireLabel>企业对公银行账户</RequireLabel>}>
+                                    {getFieldDecorator('fcbank_no', {
+                                        initialValue: data.fcbank_no ? data.fcbank_no : '',
+                                        rules: [{
+                                            pattern: BANK_CARD, message: '请输入正确的银行卡账号'
+                                        }]
+                                    })(
+                                        <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={25} />
+                                    )}
+                                </Form.Item>
+                            </Col>
+
+                        </Row>
+                        <Row >
+                            <Col span={12}>
+                                <Form.Item {...formItemLayoutUser} label={<RequireLabel>公司座机 </RequireLabel>}>
+                                    {getFieldDecorator('fctelephone', {
+                                        initialValue: data.fctelephone ? data.fctelephone : '',
+                                        rules: [{
+                                            pattern: TEL_PHONE, message: '请输入正确的单位座机'
+                                        }]
+                                    })(
+                                        <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={50} />
+                                    )}
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item  {...formItemLayoutUser} label={'经营行业'}>
+                                    {getFieldDecorator('fbus_trade', {
+                                        initialValue: data.fbus_trade ? data.fbus_trade : this.state.industryType[0] ? this.state.industryType[0].fTypeCode : ''
+                                    })(<Select size='large' style={{ width: '302px', fontSize: '14px' }} >
+                                        {
+                                            this.state.industryType.map((data) => {
+                                                return (
+                                                    <Select.Option key={data.fTypeCode} value={data.fTypeCode}>{data.fTypeName}</Select.Option>
+                                                );
+                                            })
+                                        }
+                                    </Select>)}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={12}>
+                                <Form.Item  {...formItemLayoutUser} label={
+                                    <RequireLabel>实际经营地址</RequireLabel>}>
+                                    {getFieldDecorator('fbus_address', {
+                                        initialValue: data.fbus_address ? data.fbus_address : '',
+                                        rules: [{
+                                            pattern: ZHUZHI_REG, message: '请输入正确的经营地址（只能包含汉字，数字，字母，下划线）'
+                                        }],
+                                    })(
+                                        <Input size='large'  placeholder="请详细到门牌号" style={{ width: '780px', fontSize: '14px' }}  maxLength={200} />
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                    </Form>
+                    <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2',paddingTop: 20 }}>
+                        <Row  >
+                            <Col span={12} >
+                                <Form.Item style={{marginLeft: 50}} label={<RequireLabel>营业执照</RequireLabel>} className="lecines_"  >
                                     {getFieldDecorator('fbus_license', {
                                         initialValue: data.fbus_license ? data.fbus_license : '',
                                         rules: [],
@@ -285,9 +270,8 @@ class Loaninfo extends React.Component {
                                     )}
                                 </Form.Item>
                             </Col>
-                            <Col lg={8} md={12} sm={24}>
-                                <Form.Item label={<RequireLabel>银行开户许可证</RequireLabel>} >
-                                    {/* <div><Tooltip title={<p>填写说明：<br />公司名称、账号、开户行、法人信息必须清晰。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
+                            <Col span={12}>
+                                <Form.Item style={{marginLeft: 50}} label={<RequireLabel>银行开户许可证</RequireLabel>} >
                                     {getFieldDecorator('fbank_permit', {
                                         initialValue: data.fbank_permit ? data.fbank_permit : '',
                                         rules: [],
@@ -298,10 +282,12 @@ class Loaninfo extends React.Component {
                             </Col>
                         </Row>
                     </div>
-                    <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2',paddingTop: 10 }} >
-                        <Row gutter={16} style={{height: 115}}>
+                    <div style={{ marginBottom: 20, borderTop: '1px dashed #e6e2e2', paddingTop: 10 }} >
+                        <Row gutter={16} style={{ height: 115 }}>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+														<div style={{position: 'relative'}}>
+                							<img src={require('../../../../../assets/img/apply/ic_star.png')} style={{position: 'absolute',top: '10px',left: '10px'}}/>
+                                <Form.Item  style={{marginLeft: 25}}>
                                     <div>
                                         <Tooltip title={<p>填写说明：<br />
                                             1、要求包含转账交易中交易对方收款人名字、账号、金额等详细信息，并加盖银行签章；<br />
@@ -314,22 +300,28 @@ class Loaninfo extends React.Component {
                                         <UploadFile {...this.fileData} prefix={dataPath}>企业六个月银行流水</UploadFile>
                                     )}
                                 </Form.Item>
+																</div>
                             </Col>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+														<div style={{position: 'relative'}}>
+                							<img src={require('../../../../../assets/img/apply/ic_star.png')} style={{position: 'absolute',top: '10px',left: '10px'}}/>
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div><Tooltip title={<p>填写说明：<br />请提供企业经营场所有关证明，包括自有房屋产权证明、租赁合同
 。</p>}><Icon type="question-circle-o" className='filler_uploads' style={{ left: 120, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('fplace_lease', {
-                                         initialValue: data.fplace_lease ? JSON.parse(data.fplace_lease) : [],
+                                        initialValue: data.fplace_lease ? JSON.parse(data.fplace_lease) : [],
                                         rules: [],
                                     })(
                                         <UploadFile {...this.fileData} prefix={dataPath}>经营地址证明</UploadFile>
                                     )}
                                 </Form.Item>
+																</div>
                             </Col>
 
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+														<div style={{position: 'relative'}}>
+                							<img src={require('../../../../../assets/img/apply/ic_star.png')} style={{position: 'absolute',top: '10px',left: '10px'}}/>
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div><Tooltip title={<p>填写说明：<br />1.如有多个文件可打包上传。</p>}><Icon type="question-circle-o"
                                         className='filler_uploads' style={{ left: 170, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('fliving_payment', {
@@ -339,17 +331,18 @@ class Loaninfo extends React.Component {
                                         <UploadFile {...this.fileData} prefix={dataPath}>六个月水电气费缴费记录</UploadFile>
                                     )}
                                 </Form.Item>
+																</div>
                             </Col>
 
                         </Row>
-                        <Row gutter={16} style={{height: 115}}>
+                        <Row gutter={16} style={{ height: 115 }}>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div>
                                         <Tooltip title={<p>填写说明：<br />上传相关加盟证明文件，包括加盟合同、加盟费缴费记录等。</p>}>
                                             <Icon type="question-circle-o" className='filler_uploads' style={{ left: 150, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('fjoin_file', {
-                                         initialValue: data.fjoin_file ? JSON.parse(data.fjoin_file) : [],
+                                        initialValue: data.fjoin_file ? JSON.parse(data.fjoin_file) : [],
                                         rules: [],
                                     })(
                                         <UploadFile {...this.fileData} prefix={dataPath}>企业加盟合同-附件</UploadFile>
@@ -357,7 +350,7 @@ class Loaninfo extends React.Component {
                                 </Form.Item>
                             </Col>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div><Tooltip title={<p>填写说明：<br />1、包括公司章程、验资报告等。<br />2.如有多个文件可打包上传。</p>}>
                                         <Icon type="question-circle-o" className='filler_uploads' style={{ left: 130, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('fcompany_govern', {
@@ -370,11 +363,11 @@ class Loaninfo extends React.Component {
                             </Col>
 
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div><Tooltip title={<p>填写说明：<br />1、包括公司章程、验资报告等。<br />2.如有多个文件可打包上传。</p>}>
                                         <Icon type="question-circle-o" className='filler_uploads' style={{ left: 145, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('ftopsh_file', {
-                                          initialValue: data.ftopsh_file ? JSON.parse(data.ftopsh_file) : [],
+                                        initialValue: data.ftopsh_file ? JSON.parse(data.ftopsh_file) : [],
                                         rules: [],
                                     })(
                                         <UploadFile {...this.fileData} prefix={dataPath}>股东会议决议/授权书</UploadFile>
@@ -383,9 +376,9 @@ class Loaninfo extends React.Component {
                             </Col>
 
                         </Row>
-                        <Row gutter={16} style={{height: 125}}>
+                        <Row gutter={16} style={{ height: 125 }}>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div><Tooltip title={<p>填写说明：<br />
                                         1、纳税记录文件需有权部门公章，银行代缴有关凭证需加盖银行签章。
                                     <br />2.如有多个文件可打包上传。</p>}>
@@ -399,7 +392,7 @@ class Loaninfo extends React.Component {
                                 </Form.Item>
                             </Col>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div>
                                         <Tooltip title={<p>填写说明：<br />
                                             暂无。</p>}>
@@ -407,7 +400,7 @@ class Loaninfo extends React.Component {
                                                 style={{ left: 120, top: -18 }} /></Tooltip>
                                     </div>
                                     {getFieldDecorator('faudit_file', {
-                                          initialValue: data.faudit_file ? JSON.parse(data.faudit_file) : [],
+                                        initialValue: data.faudit_file ? JSON.parse(data.faudit_file) : [],
                                         rules: [],
                                     })(
                                         <UploadFile {...this.fileData} prefix={dataPath}>财务报表</UploadFile>
@@ -415,14 +408,14 @@ class Loaninfo extends React.Component {
                                 </Form.Item>
                             </Col>
                             <Col lg={8} md={12} sm={24}>
-                                <Form.Item >
+                                <Form.Item style={{marginLeft: 25}} >
                                     <div>
                                         <Tooltip title={<p>填写说明：<br />
                                             包括特许行业经营许可（如烟草、烟花爆竹经营许可等）、环保许可、餐饮行业卫生许可、公司名下资产等。</p>}>
                                             <Icon type="question-circle-o" className='filler_uploads' style={{ left: 120, top: -18 }} /></Tooltip>
                                     </div>
                                     {getFieldDecorator('fother_file1', {
-                                          initialValue: data.fother_file1 ? JSON.parse(data.fother_file1) : [],
+                                        initialValue: data.fother_file1 ? JSON.parse(data.fother_file1) : [],
                                         rules: [],
                                     })(
                                         <UploadFile {...this.fileData} prefix={dataPath}>其他资质文件</UploadFile>
@@ -430,9 +423,9 @@ class Loaninfo extends React.Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row gutter={16} style={{height: 105}}>
+                        <Row gutter={16} style={{ height: 105 }}>
                             <Col lg={8} md={12} sm={24}>
-                            <Form.Item >
+                                <Form.Item  style={{marginLeft: 25}}>
                                     <div><Tooltip title={<p>填写说明：<br />1、银行代缴有关凭证需加盖银行签章。<br />
                                         2.如有多个文件可打包上传。</p>}><Icon type="question-circle-o" className='filler_uploads' style={{ left: 240, top: -18 }} /></Tooltip></div>
                                     {getFieldDecorator('femployee_record', {
@@ -446,10 +439,10 @@ class Loaninfo extends React.Component {
                         </Row>
                     </div>
                 </div>
-                {this.props.hasUnfinishProject ? null: 
-                <div style={{width: '100%',textAlign: 'center',marginTop: 50}}>
-                    <Button style={{width: 140, margin: '0 auto'}} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
-                </div>}
+                {this.props.hasUnfinishProject ? null :
+                    <div style={{ width: '100%', textAlign: 'center', marginTop: 50 }}>
+                        <Button style={{ width: 140, margin: '0 auto' }} type={'primary'} onClick={this.submit.bind(this)} loading={this.props.loading}>保存</Button>
+                    </div>}
             </div>
         )
     }

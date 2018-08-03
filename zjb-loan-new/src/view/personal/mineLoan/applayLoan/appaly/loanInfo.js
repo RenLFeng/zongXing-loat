@@ -7,10 +7,11 @@ import City from '../../../rechargecomponents/card/bindcard/moneyCity';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const RequireLabel = ({ children }) => (
-    <div>
-        <span style={{ color: 'red', display: 'inline-block', verticalAlign: 'sub', marginRight: 5 }}>{`* `}</span>
-        <span style={{ display: 'inline-block', verticalAlign: 'middle' }}> {children}</span>
+const RequireLabel = ({ children, notRequire }) => (
+    <div className="span_require_div">
+       <span className="span_require_div_right" style={notRequire?{color: '#333'}:null}>{children}</span>
+       {notRequire ? null:
+       <img src={require('../../../../../assets/img/apply/ic_star.png')} className="span_require_div_left"/>}
     </div>
 );
 
@@ -67,8 +68,8 @@ class Loaninfo extends React.Component {
 
     validateNumber = (rule, value, callback) => {
         const { getFieldValue } = this.props.form;
-        if (!LIMIT_MOENY && MONEY_REG.test(value) && (value * 1 < 100000 || value * 1 > 1000000)) {
-            callback('金额应为10-100万之间');
+        if (!LIMIT_MOENY && MONEY_REG.test(value) && (value * 1 < 5 || value * 1 > 100)) {
+            callback('金额应为5-100万之间');
         } else if (!LIMIT_MOENY && value && value * 1 % 100 !== 0) {
             callback('金额需为100的整数倍');
         }
@@ -104,106 +105,94 @@ class Loaninfo extends React.Component {
         }
     }
 
-    submitLoanInfo(obj){
-      console.log(obj,"su")
-    }
-
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
         const { cityList, data } = this.props;
         const { visible } = this.props;
         const {  fcredit_money,fcredit_month,fcity_code,fcredit_use,frate_predict,fchannel } = this.state.data;
+        const formItemLayout = {
+            labelCol: { span: 7 },
+            wrapperCol: { span: 16 },
+        };
         return (
-            <div className="applone-info">
+            <div className="applone-info" >
                 <Title Title="借款信息" />
-                <div>
-                </div>
-                <Form layout="inline" onSubmit={this.submits.bind(this)} ref="froms">
-                    <Row style={{ display: 'inline-flex' }} >
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={
-                                <RequireLabel>要借多钱</RequireLabel>}>
-                                {getFieldDecorator('fcredit_money', {
-                                    initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
-                                    rules: [
-                                        { pattern: MONEY_REG, message: '请输入正确的金额格式' },
-                                        { validator: this.validateNumber }
-                                    ]
-                                })(<InputNumber min={0}    max={1000000} step={100} style={{ width: '200px', marginLeft: 6 }} placeholder="请输入" />)}
-                            </Form.Item>
-                        </div>
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={<div className={styles.textBox}><RequireLabel>要借多久
-                                </RequireLabel> </div>}>
+                <Form onSubmit={this.submits.bind(this)} ref="froms">
+                    <div style={{position: 'relative'}} style={{marginBottom: 30}}>
+                        <Form.Item {...formItemLayout} label={
+                            <RequireLabel>要借多钱</RequireLabel>}>
+                            {getFieldDecorator('fcredit_money', {
+                                initialValue: data.fcredit_money ? `${data.fcredit_money}` : '',
+                                rules: [
+                                    { pattern: MONEY_REG, message: '请输入正确的金额格式' },
+                                    { validator: this.validateNumber }
+                                ]
+                            })(<InputNumber size='large' min={0} max={100} step={100} style={{ width: '520px' }} placeholder="借款金额最低5万元" />)}
+                        </Form.Item>
+                        <span className="span_form_suffix">万元</span>
+                    </div>
 
-                                    {getFieldDecorator('fcredit_month', {
-                                    initialValue: data.fcredit_month ? data.fcredit_month + '': '',
-                                })(
-                                    <Select style={{ width: '200px', marginLeft: 6 }}>
-                                        {this.state.monthList.map((data) => {
-                                            return (
-                                                <Select.Option key={data.fcode} >{data.fname}</Select.Option>
-                                            );
-                                        })}
-                                    </Select>)}
+                    <Form.Item style={{marginBottom: 30}} {...formItemLayout} label={<RequireLabel>要借多久
+                        </RequireLabel>}>
+                            {getFieldDecorator('fcredit_month', {
+                            initialValue: data.fcredit_month ? data.fcredit_month + '': '3'
+                        })(
+                            <Select placeholder="请选择" size='large' style={{ width: '520px',fontSize: '14px' }}>
+                                {this.state.monthList.map((data) => {
+                                    return (
+                                        <Select.Option key={data.fcode} >{data.fname}</Select.Option>
+                                    );
+                                })}
+                            </Select>)}
+                    </Form.Item>
 
-
-                            </Form.Item>
-
-                        </div>
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={<div className={styles.textBox}><RequireLabel>所在城市</RequireLabel></div>}>
-                                {getFieldDecorator('fcity_code', {
-                                    initialValue: data.fcity_code ? data.fcity_code : cityList.length > 0 ? cityList[0].fCode : ''
-                                })(
-                                    <Select style={{ width: '200px', marginLeft: 6 }}   >
-                                        {cityList.map((data) => {
-                                            return (
-                                                <Select.Option key={data.fCode} >{data.fCityName}</Select.Option>
-                                            );
-                                        })}
-                                    </Select>)}
-                            </Form.Item>
-                        </div>
-                    </Row>
-                    <Row style={{ display: 'inline-flex' }}>
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={<div className={styles.textBox}>
-                                <RequireLabel>借款用途</RequireLabel></div>}>
-                                {getFieldDecorator('fcredit_use', {
-                                    initialValue: data.fcredit_use? data.fcredit_use :'',
-                                })(
-                                    <Input placeholder="请输入"  style={{ width: '200px', marginLeft: 6 }} maxLength={100}/>
-                                )}
-                            </Form.Item>
-                        </div>
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={<div className={styles.textBox}> 借款利率 (%)
-                            </div>} style={{ marginTop: 5 }}>
-                                {getFieldDecorator('frate_predict', {
-                                    initialValue: data.frate_predict ? data.frate_predict + '' : '',
-                                })(
-                                    <InputNumber min={8} max={15} step={0.1} placeholder="请输入" style={{ width: '205px',marginLeft: 3 }} />
-                                )}
-                            </Form.Item>
-                        </div>
-                        <div style={{ width: '30%', display: 'contents' }}>
-                            <Form.Item layout="inline" label={<div className={styles.textBox}> 获客渠道
-                            </div>} style={{ marginTop: 5 }}>
-                                {getFieldDecorator('fchannel', {
-                                    rules: [],
-                                    initialValue: data.fchannel ? data.fchannel : '0'
-                                })(
-                                    <Select style={{ width: '200px', marginLeft: 5 }} >
-                                        <Select.Option value="0">网络搜索</Select.Option>
-                                        <Select.Option value="1">熟人推荐分享</Select.Option>
-                                        <Select.Option value="2">线下宣传</Select.Option>
-                                    </Select>
-                                )}
-                            </Form.Item>
-                        </div>
-                    </Row>
+                    
+                    <Form.Item style={{marginBottom: 60}} {...formItemLayout}  label={<RequireLabel notRequire> 获客渠道</RequireLabel>}>
+                        {getFieldDecorator('fchannel', {
+                            rules: [],
+                            initialValue: data.fchannel ? data.fchannel : '0'
+                        })(
+                            <Select size='large' style={{ width: '520px',fontSize: '14px' }} >
+                                <Select.Option value="0">网络搜索</Select.Option>
+                                <Select.Option value="1">熟人推荐分享</Select.Option>
+                                <Select.Option value="2">线下宣传</Select.Option>
+                            </Select>
+                        )}
+                    </Form.Item>
+                    <Form.Item style={{marginBottom: 30}} {...formItemLayout} label={<RequireLabel>借款用途</RequireLabel>}>
+                        {getFieldDecorator('fcredit_use', {
+                            initialValue: data.fcredit_use? data.fcredit_use :'',
+                        })(
+                            <Input placeholder="请输入"  size='large' style={{ width: '520px',fontSize: '14px' }} maxLength={100}/>
+                        )}
+                    </Form.Item>
+                    
+                    <Form.Item style={{marginBottom: 30}} {...formItemLayout}   label={<RequireLabel notRequire>期望利率</RequireLabel>}>
+                        {getFieldDecorator('frate_predict', {
+                            initialValue: data.frate_predict ? data.frate_predict + '' : '10',
+                        })(
+                            <Select size='large' style={{ width: '520px',fontSize: '14px' }} >
+                                {
+                                    [8,9,10,11,12,13,15].map((data)=>{
+                                        return  <Select.Option value={data}>{data+'%'}</Select.Option>
+                                    })
+                                }
+                            </Select>
+                        )}
+                    </Form.Item>
+                    <Form.Item  style={{marginBottom: 60}} {...formItemLayout}  label={<RequireLabel>所在城市</RequireLabel>}>
+                        {getFieldDecorator('fcity_code', {
+                            initialValue: data.fcity_code ? data.fcity_code : cityList.length > 0 ? cityList[0].fCode : ''
+                        })(
+                            <Select placeholder="请选择" size='large' style={{ width: '520px',fontSize: '14px' }}>
+                                {cityList.map((data) => {
+                                    return (
+                                        <Select.Option key={data.fCode} >{data.fCityName}</Select.Option>
+                                    );
+                                })}
+                            </Select>)}
+                    </Form.Item>
                     {
                         this.props.hasUnfinishProject ? null:
                         <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>

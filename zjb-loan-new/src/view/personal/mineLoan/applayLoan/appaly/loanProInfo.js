@@ -31,12 +31,14 @@ const formItemLayout = {
   },
 };
 
-const RequireLabel = ({ children }) => (
-  <div>
-    <span style={{ color: 'red', display: 'inline-block', verticalAlign: 'sub', marginRight: 5 }}>{`* `}</span>
-    <span style={{ display: 'inline-block', verticalAlign: 'middle' }}> {children}</span>
+const RequireLabel = ({ children, notRequire }) => (
+  <div className="span_require_div">
+      <span className="span_require_div_right" style={notRequire?{color: '#333'}:null}>{children}</span>
+      {notRequire ? null:
+      <img src={require('../../../../../assets/img/apply/ic_star.png')} className="span_require_div_left"/>}
   </div>
 );
+
 class Loaninfo extends React.Component {
   state = {
     markerPosition: { longitude: 120, latitude: 30 },
@@ -343,48 +345,48 @@ class Loaninfo extends React.Component {
     const { cityList } = this.state;
     const dataPath = this.props.companyNo + '/';
     const { visible, data } = this.props;
-
+    const formItemLayoutUser = {
+      labelCol: { span: 7 },
+      wrapperCol: { span: 16 },
+    };
     return (
       <div className="applone-pro-info">
         <Title Title="借款项目信息" />
         <div>
-          <div style={{ borderTop: '1px dashed #e6e2e2' }}>
-            <Form layout="vertical" hideRequiredMark style={{ margin: '30px 0' }}>
-              <Row gutter={16}>
-                <Col lg={13} md={13} sm={24}>
-                  <Form.Item label={<RequireLabel>项目名称</RequireLabel>}>
-                    {/* <div>
-                    <Tooltip title={<p>填写说明：<br/>参考：<br/>XXX店或XXX店XXX分店<br/>
-                     字数不得超过16字。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{left:80,top:-26}}/></Tooltip>
-                    </div> */}
-                    {getFieldDecorator('projectName', {
-                      initialValue: data.projectName ? data.projectName : '',
-                      rules: []
-                    })(<Input placeholder="请输入" maxLength={15}  maxLength={40}/>)}
-                  </Form.Item>
-                </Col>
-                {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}
-                <Col lg={11} md={11} sm={24}>
-                  <Form.Item label={<RequireLabel></RequireLabel>} className="video_tip" >
-                    {getFieldDecorator('fvideo_path', {
-                      initialValue: data.fvideo_path ? JSON.parse(data.fvideo_path) : [],
-                      rules: [],
-                    })(
-                      
-                        <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo>
-                    )}
+          <Form layout="vertical" hideRequiredMark>
+            <Row>
+              <Col span={12}>
+                <Form.Item {...formItemLayoutUser} label={<RequireLabel>项目名称</RequireLabel>}>
+                  {/* <div>
+                  <Tooltip title={<p>填写说明：<br/>参考：<br/>XXX店或XXX店XXX分店<br/>
+                    字数不得超过16字。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{left:80,top:-26}}/></Tooltip>
+                  </div> */}
+                  {getFieldDecorator('projectName', {
+                    initialValue: data.projectName ? data.projectName : '',
+                    rules: []
+                  })(<Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={40}/>)}
+                </Form.Item>
+              </Col>
+              {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}
+              <Col span={12}>
+                <Form.Item {...formItemLayoutUser} label={<RequireLabel></RequireLabel>} className="video_tip" >
+                  {getFieldDecorator('fvideo_path', {
+                    initialValue: data.fvideo_path ? JSON.parse(data.fvideo_path) : [],
+                    rules: [],
+                  })(
+                    
+                      <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo>
+                  )}
 
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-          </div>
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>     
           <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20, paddingTop: 20 }} className="second-img-uploads">
-            <Form layout="vertical" hideRequiredMark>
-              <Row gutter={16}>
-                <Col lg={8} md={12} sm={24}>
-                  <Form.Item label={<RequireLabel>借款项目展示封面图</RequireLabel>}>
-                    {/* <div><Tooltip title={<p>填写说明：<br />1、可展示该项目最具代表性的图片<br />2、裁剪成适当的大小。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
+            <Form hideRequiredMark>
+              <Row >
+                <Col span={12}>
+                  <Form.Item style={{marginLeft: 55}} label={<RequireLabel>借款项目展示封面图</RequireLabel>}>
                     {getFieldDecorator('fcard_pic_path', {
                       initialValue: data.fcard_pic_path ? data.fcard_pic_path : '',
                       rules: [],
@@ -393,9 +395,8 @@ class Loaninfo extends React.Component {
                     )}
                   </Form.Item>
                 </Col>
-                <Col lg={8} md={12} sm={24}>
-                  <Form.Item label={<RequireLabel>经营场所实景图</RequireLabel>} >
-                    {/* <div><Tooltip title={<p>填写说明：<br />对于项目封面图和经营场所实景图，图片选择可参考首页部分展示项目。</p>}><Icon type="question-circle-o" className={styles.toolTip} style={{ left: 150, top: -26 }} /></Tooltip></div> */}
+                <Col span={12}>
+                  <Form.Item style={{marginLeft: 55}} label={<RequireLabel>经营场所实景图</RequireLabel>} >
                     {getFieldDecorator('fbanner_pic_path', {
                      initialValue: data.fbanner_pic_path ? data.fbanner_pic_path : '',
                       rules: [],
@@ -407,103 +408,114 @@ class Loaninfo extends React.Component {
               </Row>
             </Form>
           </div>
-          <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
-            <div style={{paddingTop: 20}}>
-              <RequireLabel>项目说明</RequireLabel>
-            </div>
-          </div>
-          <div style={{ borderTop: '1px dashed #e6e2e2', marginBottom: 20 }}>
+          <div style={{ marginBottom: 20,paddingBottom: 20 }}>
             {
               this.state.dataList.map((item, index) => {
                 return (
-                  <Row key={item.fid} >
-                    <Col xl={{ span: 12 }} lg={{ span: 12 }} md={{ span: 12 }} sm={24}>
-                      <Card type="inner" style={{ width: '200%', marginBottom: 10, position: 'relative' }}>
-                        {item.ftype == 1 ? null :
-                          <div style={{ position: 'absolute', right: 10, zIndex: 10 }}>
-                            {index !== 1 ?
-                              <Icon type="arrow-up" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.upIndex(index)} /> : null}
-                            {index !== this.state.dataList.length - 1 ?
-                              <Icon type="arrow-down" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.downIndex(index)} /> : null}
-                            <Icon type="close" style={{ fontSize: 16, paddingRight: 5, cursor: 'pointer' }} onClick={() => this.delIndex(item.fid)} />
-                          </div>
-                        }
-                        <Row>
-                          <Form.Item label={'项目详情标题'} {...formItemLayout}>
-                            {this.help.call(this, item.ftitle)}
-                            {getFieldDecorator(`title${item.fid}`, {
-                              rules: [],
-                              initialValue: item.ftitle ? item.ftitle: '',
-                            })(
-                              <Input
-                                placeholder='请输入'
-                                disabled={item.ftype == 1}
-                                onChange={(e) => {
-                                  let arr = this.state.dataList;
-                                  arr[index].ftitle = e.target.value;
-                                  this.setState({
-                                    dataList: arr
-                                  })
-                                }}
-                                maxLength={20}
+                  <Row key={item.fid} style={{paddingBottom: 20,marginBottom: 20, borderBottom: `${this.state.dataList.length === index+1?'0px solid #f0f0f0':'1px solid #f0f0f0'}`}} >
+                    <Col span={24}>
+                      {item.ftype == 1 ? 
+                          <Row>
+                            <Col span={4}>
+                              <RequireLabel>{item.ftitle}</RequireLabel>
+                            </Col>
+                            <Col span={20}>
+                            <Form.Item>
+                              <Editor
+                                ref={ref => this[`editor${index}`] = ref}
+                                value={item.fcontent ? item.fcontent : ''}
                               />
-                            )}
-                          </Form.Item>
-                        </Row>
+                            </Form.Item>
+                            </Col>
+                          </Row> : 
+                        <div>
+                          <Row>
+                            <Form.Item label={'项目详情标题'} {...formItemLayout}>
+                              {getFieldDecorator(`title${item.fid}`, {
+                                rules: [],
+                                initialValue: item.ftitle ? item.ftitle: '',
+                              })(
+                                <Input
+                                  placeholder='请输入'
+                                  disabled={item.ftype == 1}
+                                  onChange={(e) => {
+                                    let arr = this.state.dataList;
+                                    arr[index].ftitle = e.target.value;
+                                    this.setState({
+                                      dataList: arr
+                                    })
+                                  }}
+                                  maxLength={20}
+                                  size='large'
+                                  style={{width: '297px', fontSize: 14}}
+                                />
+                              )}
+                            </Form.Item>
+                          </Row>
+                          <Row>
+                            <Form.Item>
+                              <Editor
+                                ref={ref => this[`editor${index}`] = ref}
+                                value={item.fcontent ? item.fcontent : ''}
+                              />
+                            </Form.Item>
+                          </Row>
+                        </div>
+                      }
                         <Row>
-                          <Form.Item label={'项目详情正文'} {...formItemLayout}>
-                            <Editor
-                              ref={ref => this[`editor${index}`] = ref}
-                              value={item.fcontent ? item.fcontent : ''}
-                            />
-                          </Form.Item>
-                        </Row>
-                        <Row>
-                          <Form.Item label={'项目详情图片'} {...formItemLayout}>
-                            {
-                                  getFieldDecorator(`pictures${item.fid}`, {
-                                  rules: [],
-                                  initialValue: item.fpictures ? JSON.parse(item.fpictures): []
-                                }
-                              )
-                              (
-                              <UploadPicMultipleFile
-                                {...this.data}
-                                prefix={dataPath}
-                                onChange={(e)=> {
-                                  let arr = this.state.dataList;
-                                  let valArr = _.cloneDeep(e);
-                                  for (let i = 0; i<valArr.length; i++) {
-                                    if (valArr[i].status !== 'done') {
-                                      valArr.splice(i, 1);
+                          <Col span={4}/>
+                          <Col span={20}>
+                            <Form.Item>
+                              {
+                                getFieldDecorator(`pictures${item.fid}`, {
+                                rules: [],
+                                initialValue: item.fpictures ? JSON.parse(item.fpictures): []})
+                                (
+                                <UploadPicMultipleFile
+                                  {...this.data}
+                                  prefix={dataPath}
+                                  onChange={(e)=> {
+                                    let arr = this.state.dataList;
+                                    let valArr = _.cloneDeep(e);
+                                    for (let i = 0; i<valArr.length; i++) {
+                                      if (valArr[i].status !== 'done') {
+                                        valArr.splice(i, 1);
+                                      }
                                     }
-                                  }
-                                  arr[index].fpictures = JSON.stringify(valArr);
-                                  this.setState({
-                                    dataList: arr
-                                  }, () => {
-                                    console.log(this.state.dataList);
-                                  })
-                                }}
-                              >项目详情图片</UploadPicMultipleFile>
-                              )
-                            }
-                          </Form.Item>
+                                    arr[index].fpictures = JSON.stringify(valArr);
+                                    this.setState({
+                                      dataList: arr
+                                    }, () => {
+                                      console.log(this.state.dataList);
+                                    })
+                                  }}
+                                >项目详情图片</UploadPicMultipleFile>
+                                )
+                              }
+                            </Form.Item>
+                          </Col>
                         </Row>
-                      </Card>
                       {index === this.state.dataList.length - 1 ?
-                        <Button type="dashed" onClick={this.add} style={{ width: '200%' }}>
-                          <Icon type="plus" /> 增加项目详情模块
-                        </Button> : null
+                      <Row>
+                        <Col span={4}>
+                        </Col>
+                        <Col span={20} style={{paddingLeft: 16}}>
+                          <Button style={{width: '100%'}} type="dashed" onClick={this.add} >
+                            <Icon type="plus" /> 增加项目详情模块
+                          </Button> 
+                        </Col>
+                      </Row>: null
                       }
                     </Col>
                   </Row>
                 );
               })}
           </div>
-          <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
             <Row>
-              <Col style={{ height: 500 }}>
+              <Col span={4}>
+              </Col>
+              <Col span={20} style={{ height: 500 }}>
+              <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
                 <div id="container" style={{width: '100%', height: 500}}>
                   <Map amapkey={'58195b2aee5f18c85bf15134f7b56ce7'} events={this.amapEvents}>
                     <Marker position={this.state.markerPosition} events={this.markerEvents} />
@@ -529,9 +541,9 @@ class Loaninfo extends React.Component {
                     </tr>
                   </table>
                 </div>
+                </Card>
               </Col>
             </Row>
-          </Card>
         </div>
         {this.props.hasUnfinishProject ? null: 
         <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>

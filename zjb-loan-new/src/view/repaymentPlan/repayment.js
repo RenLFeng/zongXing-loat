@@ -181,7 +181,7 @@ export default class Repayment extends React.Component {
                       <div className="number">
                         <div className="money">
                           <p className="num">{project.fpracticalLoanMoney}</p>
-                          <p className="word">借款金额（万元）</p>
+                          <p className="word">借款金额（元）</p>
                         </div>
                         <div className="money">
                           <p className="num">{project.fcreditMonth}<span style={{fontSize:14,fontWeight:'normal'}}>个月</span></p>
@@ -193,7 +193,7 @@ export default class Repayment extends React.Component {
                         </div>
                       </div>
                       <div style={{textAlign:"center"}}>
-                         <Button className="button">提前还款</Button>
+                         <Button className="button" onClick={()=>{}}>提前还款</Button>
                          <p style={{paddingBottom:26,color:'#999999'}}>待还款总额：<span style={{color:'#f29827'}}>￥123456.12</span></p>
                       </div>
                     </div>
