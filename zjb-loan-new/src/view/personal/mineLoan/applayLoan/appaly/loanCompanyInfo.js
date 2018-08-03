@@ -165,7 +165,7 @@ class Loaninfo extends React.Component {
                             <Col span={12}>
                                 <Form.Item {...formItemLayoutUser} label={<RequireLabel>企业名称</RequireLabel>}>
                                     {getFieldDecorator('companyName', {
-                                        initialValue: data.companyName ? data.companyName : '',
+                                        initialValue: this.props.companyName ? this.props.companyName : '',
                                         rules: [{ validator: this.validateName }]
                                     })(
                                         <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} disabled maxLength={50} />
@@ -204,7 +204,7 @@ class Loaninfo extends React.Component {
                                     {getFieldDecorator('fcbank_no', {
                                         initialValue: data.fcbank_no ? data.fcbank_no : '',
                                         rules: [{
-                                            pattern: BANK_CARD, message: '请输入正确的银行卡账号'
+                                            pattern: BANK_CARD, message: '请输入正确的账号'
                                         }]
                                     })(
                                         <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={25} />

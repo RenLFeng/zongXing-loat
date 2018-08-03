@@ -21,14 +21,8 @@ import { MONEY_REG, MUN_INTEGER, ID_CORD, VER_PHONE, TEL_PHONE, BANK_CARD, E_MAI
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const formItemLayout = {
-  labelCol: {
-    xs: { span: 3 },
-    sm: { span: 3 },
-  },
-  wrapperCol: {
-    xs: { span: 21 },
-    sm: { span: 21 },
-  },
+  labelCol: {span: 4},
+  wrapperCol: { span: 20 },
 };
 
 const RequireLabel = ({ children, notRequire }) => (
@@ -430,7 +424,7 @@ class Loaninfo extends React.Component {
                           </Row> : 
                         <div>
                           <Row>
-                            <Form.Item label={'项目详情标题'} {...formItemLayout}>
+                            <Form.Item label={'栏目名称'} {...formItemLayout}>
                               {getFieldDecorator(`title${item.fid}`, {
                                 rules: [],
                                 initialValue: item.ftitle ? item.ftitle: '',
@@ -453,12 +447,15 @@ class Loaninfo extends React.Component {
                             </Form.Item>
                           </Row>
                           <Row>
-                            <Form.Item>
-                              <Editor
-                                ref={ref => this[`editor${index}`] = ref}
-                                value={item.fcontent ? item.fcontent : ''}
-                              />
-                            </Form.Item>
+                            <Col span={4}/>
+                            <Col span={20}>
+                              <Form.Item>
+                                <Editor
+                                  ref={ref => this[`editor${index}`] = ref}
+                                  value={item.fcontent ? item.fcontent : ''}
+                                />
+                              </Form.Item>
+                            </Col>
                           </Row>
                         </div>
                       }
@@ -500,7 +497,7 @@ class Loaninfo extends React.Component {
                         <Col span={4}>
                         </Col>
                         <Col span={20} style={{paddingLeft: 16}}>
-                          <Button style={{width: '100%'}} type="dashed" onClick={this.add} >
+                          <Button style={{width: '82%'}} type="dashed" onClick={this.add} >
                             <Icon type="plus" /> 增加项目详情模块
                           </Button> 
                         </Col>
@@ -511,11 +508,9 @@ class Loaninfo extends React.Component {
                 );
               })}
           </div>
+          <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
             <Row>
-              <Col span={4}>
-              </Col>
-              <Col span={20} style={{ height: 500 }}>
-              <Card type="inner" title="项目经营位置信息(平台获取经纬度)" style={{ marginBottom: 20 }}>
+              <Col style={{ height: 500 }}>
                 <div id="container" style={{width: '100%', height: 500}}>
                   <Map amapkey={'58195b2aee5f18c85bf15134f7b56ce7'} events={this.amapEvents}>
                     <Marker position={this.state.markerPosition} events={this.markerEvents} />
@@ -541,9 +536,10 @@ class Loaninfo extends React.Component {
                     </tr>
                   </table>
                 </div>
-                </Card>
               </Col>
             </Row>
+          </Card>
+
         </div>
         {this.props.hasUnfinishProject ? null: 
         <div style={{width: '100%',textAlign: 'center',marginTop: 20}}>

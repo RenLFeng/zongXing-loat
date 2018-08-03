@@ -170,6 +170,7 @@ export default class Appalyloan extends React.Component {
         this.setState({
           visible: true,
           companyNo: data.fsocial_credit_code,
+          companyName: data.companyName,
           oldData: {
             ...data,
             hasUnfinishProject: false
@@ -179,6 +180,7 @@ export default class Appalyloan extends React.Component {
       }
       this.setState({
         companyNo: data.fsocial_credit_code,
+        companyName: data.companyName,
         oldData: data,
         tableData: [{
           key: '1',
@@ -297,6 +299,7 @@ export default class Appalyloan extends React.Component {
       }
       this.setState({
         companyNo: data.fsocial_credit_code,
+        companyName: data.companyName,
         oldData: data,
         tableData: [{
           key: '1',
@@ -651,6 +654,26 @@ export default class Appalyloan extends React.Component {
       message.error('借款人资料中手机不能为空');
       return;
     }
+    if (!data.lender.fweichat || (data.lender.fweichat && data.lender.fweichat.trim().length === 0)) {
+      message.error('借款人资料中微信不能为空');
+      return;
+    }
+    if (!data.lender.fidcardPic1 || (data.lender.fidcardPic1 && data.lender.fidcardPic1.trim().length === 0)) {
+      message.error('借款人资料中身份证正面照不能为空');
+      return;
+    }
+    if (!data.lender.fidcardPic2 || (data.lender.fidcardPic2 && data.lender.fidcardPic2.trim().length === 0)) {
+      message.error('借款人资料中身份证反面照不能为空');
+      return;
+    }
+    if (!data.lender.fidcardPic3 || (data.lender.fidcardPic3 && data.lender.fidcardPic3.trim().length === 0)) {
+      message.error('借款人资料中手持身份证不能为空');
+      return;
+    }
+    if (!data.lender.fqq || (data.lender.fqq && data.lender.fqq.trim().length === 0)) {
+      message.error('借款人资料中QQ不能为空');
+      return;
+    }
     if (!data.project.fname || (data.project.fname && data.project.fname.trim().length === 0)) {
       message.error('借款项目资料中项目名称不能为空');
       return;
@@ -662,6 +685,7 @@ export default class Appalyloan extends React.Component {
       message.error('借款人资料中第一联系人内容不能为空');
       return;
     }
+    
     if (!data.companyInfo.fname || (data.companyInfo.fname && data.companyInfo.fname.trim().length === 0)) {
       message.error('借款企业中企业名称不能为空');
       return;
@@ -674,8 +698,32 @@ export default class Appalyloan extends React.Component {
       message.error('借款企业中企业银行账户不能为空');
       return;
     }
+    if (!data.companyInfo.ftelephone || (data.companyInfo.ftelephone && data.companyInfo.ftelephone.trim().length === 0)) {
+      message.error('借款企业中公司座机不能为空');
+      return;
+    }
     if (!data.companyInfo.fbusAddress || (data.companyInfo.fbusAddress && data.companyInfo.fbusAddress.trim().length === 0)) {
       message.error('借款企业中实际经营地址不能为空');
+      return;
+    }
+    if (!data.companyInfo.fbusLicense || (data.companyInfo.fbusLicense && data.companyInfo.fbusLicense.trim().length === 0)) {
+      message.error('借款企业中营业执照不能为空');
+      return;
+    }
+    if (!data.companyInfo.fbankPermit || (data.companyInfo.fbankPermit && data.companyInfo.fbankPermit.trim().length === 0)) {
+      message.error('借款企业中银行开户许可证不能为空');
+      return;
+    }
+    if (!data.companyInfo.fstatementFile || (data.companyInfo.fstatementFile && JSON.parse(data.companyInfo.fstatementFile).length === 0)) {
+      message.error('借款企业中企业六个月银行流水不能为空');
+      return;
+    }
+    if (!data.companyInfo.flivingPayment || (data.companyInfo.flivingPayment && JSON.parse(data.companyInfo.flivingPayment).length === 0)) {
+      message.error('借款企业中六个月水电气费缴费记录不能为空');
+      return;
+    }
+    if (!data.companyInfo.fplaceLease || (data.companyInfo.fplaceLease && JSON.parse(data.companyInfo.fplaceLease).length === 0)) {
+      message.error('借款企业中经营地址证明不能为空');
       return;
     }
     if (!data.lender.fqq || (data.lender.fqq && data.lender.fqq.trim().length === 0)){
@@ -737,13 +785,13 @@ export default class Appalyloan extends React.Component {
             <Alert message={`您上一个项目被终止，${moment(new Date(this.state.dueDate)).format('YYYY年MM月DD日 HH时mm分')}才可再次借款`} type="warning" showIcon  style={{marginBottom: 10}}/>:
             <React.Fragment>
               <div className={this.state.activeCode === 1 ? '' : 'hides'}>
-                <LoanInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.loanInfo = form} cityList={this.state.cityList} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo}/>
+                <LoanInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.loanInfo = form} cityList={this.state.cityList} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} />
               </div>
               <div className={this.state.activeCode === 2 ? '' : 'hides'}>
-                <LoanUserInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.userInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo}/>
+                <LoanUserInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.userInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} />
               </div>
               <div className={this.state.activeCode === 3 ? '' : 'hides'}>
-                <LoanCompanyInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.companyInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo}/>
+                <LoanCompanyInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.companyInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} companyName={this.state.companyName}/>
               </div>
               <div className={this.state.activeCode === 4 ? '' : 'hides'}>
                 <LoanProInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.proInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} dataList={this.state.dataList} companyNo={this.state.companyNo}/>

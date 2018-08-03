@@ -68,11 +68,13 @@ class Loaninfo extends React.Component {
 
     validateNumber = (rule, value, callback) => {
         const { getFieldValue } = this.props.form;
-        if (!LIMIT_MOENY && MONEY_REG.test(value) && (value * 1 < 5 || value * 1 > 100)) {
+        console.log(value);
+        if (!LIMIT_MOENY && MONEY_REG.test(value) && (value * 1 < 50000 || value * 1 > 1000000)) {
             callback('金额应为5-100万之间');
         } else if (!LIMIT_MOENY && value && value * 1 % 100 !== 0) {
             callback('金额需为100的整数倍');
         }
+
         // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
         callback()
     };
@@ -128,9 +130,9 @@ class Loaninfo extends React.Component {
                                     { pattern: MONEY_REG, message: '请输入正确的金额格式' },
                                     { validator: this.validateNumber }
                                 ]
-                            })(<InputNumber size='large' min={0} max={100} step={100} style={{ width: '520px' }} placeholder="借款金额最低5万元" />)}
+                            })(<InputNumber size='large' min={0} max={1000000} step={100} style={{ width: '520px' }} placeholder="借款金额最低5万元" />)}
                         </Form.Item>
-                        <span className="span_form_suffix">万元</span>
+                        <span className="span_form_suffix">元</span>
                     </div>
 
                     <Form.Item style={{marginBottom: 30}} {...formItemLayout} label={<RequireLabel>要借多久
@@ -175,7 +177,7 @@ class Loaninfo extends React.Component {
                             <Select size='large' style={{ width: '520px',fontSize: '14px' }} >
                                 {
                                     [8,9,10,11,12,13,15].map((data)=>{
-                                        return  <Select.Option value={data}>{data+'%'}</Select.Option>
+                                        return  <Select.Option value={data}>{`${data}%`}</Select.Option>
                                     })
                                 }
                             </Select>
