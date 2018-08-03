@@ -571,7 +571,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={invest.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({invest:{...invest,value: e.target.value}})}
-                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={4}/>
                                         <p className="error-imput">{invest.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
@@ -651,7 +651,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({tourist:{...tourist,value: e.target.value }})}
-                                        style={{display: 'inline-block',width: '200px'}} maxLength={6}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={4}/>
                                         <p className="error-imput">{tourist.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
