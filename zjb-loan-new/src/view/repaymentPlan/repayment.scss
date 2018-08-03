@@ -107,7 +107,7 @@
     .btns{
         width: 70px;
         height: 25px;
-        background-color: #46bb3a;
+        background-color:#46bb3a ;
         border-radius: 2px;
         display: inline-block;
         line-height: 26px;
@@ -141,7 +141,8 @@
     }
     .times{
         color:#999999;
-        margin-left: 130px;
+        // margin-left: 130px;
+        float: right;
     }
 }
 
