@@ -17,6 +17,7 @@ export default class Repayment extends React.Component {
         word:'',
         check:true,   //第一个选框的状态
         project_:false,
+
         check_:true,   //前一个可选的选框的状态
         payMoney:''
       }
@@ -90,6 +91,7 @@ export default class Repayment extends React.Component {
         return(
             <div>
                 <LeftMenu param={this.props} />
+              
                    {
                          this.state.project_ ? 
                          <div className="fr uc-rbody F">
@@ -102,10 +104,12 @@ export default class Repayment extends React.Component {
                          </div>
                          <span>近期应还</span>
                          {
+                 
                             this.state.recentRepay.length > 0  ? 
                                <Button className="btn1" onClick={()=>this.getRepay()}>手动还款</Button>
                                : null}
                          {
+                       
                             this.state.recentRepay.length > 0 ?  
                            
                               this.state.recentRepay.map((item,index)=>{
@@ -143,12 +147,14 @@ export default class Repayment extends React.Component {
                         }
                        
                         {
+                      
                           this.state.recentRepay.filter(item => item.overdueMoney).length > 0 ?
                             <p style={{float:'right',color:'#ff3b35',marginTop:15,cursor:'pointer'}}><i className="zjb zjb-jinggao1" style={{fontSize:16,verticalAlign: 'middle',fontWeight:'bold',marginRight:5}}></i>逾期处罚措施</p> : null
                         }  
                      </div>      
                 }
                
+             
                 {
                     this.state.project_ ? null :
 
@@ -159,9 +165,11 @@ export default class Repayment extends React.Component {
                       <div className="number">
                         <div className="money">
                           <p className="num">{project.fpracticalLoanMoney}</p>
-                          <p className="word">借款金额（万元）</p>
+
+                          <p className="word">借款金额（元）</p>
                         </div>
                         <div className="money">
+
                           <p className="num">{project.fmonthLast}<span style={{fontSize:14,fontWeight:'normal'}}>个月</span></p>
                           <p className="word">借款期数</p>
                         </div>
@@ -171,6 +179,7 @@ export default class Repayment extends React.Component {
                         </div>
                       </div>
                       <div style={{textAlign:"center"}}>
+
                          <Button className="button" onClick={this.earlyPayment}>提前还款</Button>
                          <p style={{paddingBottom:26,color:'#999999'}}>待还款总额：<span style={{color:'#f29827'}}>￥{this.state.payMoney}</span></p>
                       </div>
@@ -189,6 +198,7 @@ export default class Repayment extends React.Component {
                                                      data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
                                                  }  
                                                  <div className="data">
+                                               
                                                      {data.fsort}/{project.fmonthLast}期
                                                      <span style={{ margin: '0 5px 0 8px'}}>|</span>
                                                      <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    
@@ -217,6 +227,7 @@ export default class Repayment extends React.Component {
                                                      data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
                                                  }  
                                                  <div className="data">
+                                                 
                                                      {data.fsort}/{project.fmonthLast}期
                                                      <span style={{ margin: '0 5px 0 8px'}}>|</span>
                                                      <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    

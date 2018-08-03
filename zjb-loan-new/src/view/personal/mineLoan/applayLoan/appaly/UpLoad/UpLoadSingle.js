@@ -181,8 +181,8 @@ export default class ImgUpload extends React.Component {
 
 const styles = {
   div: {
-    width: '260px',
-    height: '170px',
+    width: '230px',
+    height: '160px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'

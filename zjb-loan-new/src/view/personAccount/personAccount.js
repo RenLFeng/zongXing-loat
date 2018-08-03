@@ -323,33 +323,15 @@ export default class PersonAccount extends React.Component {
   //手动还款
   repayment(val) {
     console.log(val)
-    this.getDetailPlaneAjax(val)
+    this.postManualRepayment(val)
   }
 
-
-
-
-  // 获取还款计划详情数据
-  async getDetailPlaneAjax(obj) {
-    // if (this.state.loading)
-    //   return;
-    // this.setState({ loading: true });
-    const response = await baseService.getDetailPlane({ projectId: obj.project, forPayTime: obj.forPayTime });
-    // this.setState({ loading: false });
-    console.log(response);
-    if (response.code === 0 && response.data.length > 0) {
-      // 小于200个订单 直接请求转账接口
-      this.postManualRepayment(response.data);
-    } else {
-      response.msg && message.error(response.msg);
-    }
-  }
   // 进行手动还款接口调用
-  async postManualRepayment(projectIdArr) {
+  async postManualRepayment(val) {
     if (this.state.loading)
       return;
     this.setState({ loading: true });
-    const response = await baseService.manualReimpayment({ repayBillIdsStr: projectIdArr.join(','), notifyPageUrl: encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`) })
+    const response = await baseService.manualReimpayment({ projectId: val.project,forPayTime: val.forPayTime,notifyPageUrl: encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`) })
     console.log(response);
     this.setState({ loading: false });
     if (response.code === 0) {

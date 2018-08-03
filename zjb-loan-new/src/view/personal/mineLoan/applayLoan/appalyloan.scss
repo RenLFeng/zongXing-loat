@@ -49,13 +49,39 @@
 
 // title
 .applone-title{
-    .applone-loan{
-        font-style: normal;
-        font-size: 20px;
-        font-weight: 400;
+    margin-bottom: 48px;
+    .apply_title_span {
+        color: #ccc;
+        font-size: 24px;
     }
-    img{
-        margin-top: -10px;
+    .apply_title_line {
+        border-bottom: 1px solid #ccc;
         width: 100%;
+        height: 20px;
     }
+}
+
+.span_require_div {
+    width: 100%;
+    text-align: right;
+    position: relative;
+    height: 38px;
+    line-height: 35px;
+    .span_require_div_right {
+        float: right;
+        font-size: 14px;
+        color: #ff6600;
+    }
+    .span_require_div_left {
+        float: right;
+        margin-top: 10px;
+        margin-right: 13px;
+    }
+}   
+
+.span_form_suffix {
+    position: absolute;
+    top: 8px;
+    right: 84px;
+    font-size: 14px;
 }
