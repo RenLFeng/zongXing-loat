@@ -276,7 +276,6 @@ export default class Appalyloan extends React.Component {
     }
   }
 
-
   // 获取上次完成数据
   async getBeforeData() {
     if (this.state.loadingBefore) {
@@ -651,7 +650,7 @@ export default class Appalyloan extends React.Component {
       return;
     }
     if (!data.lender.fmobile || (data.lender.fmobile && data.lender.fmobile.trim().length === 0)) {
-      message.error('借款人资料中手机不能为空');
+      message.error('借款人资料中手机号码不能为空');
       return;
     }
     if (!data.lender.fweichat || (data.lender.fweichat && data.lender.fweichat.trim().length === 0)) {
@@ -695,7 +694,7 @@ export default class Appalyloan extends React.Component {
       return;
     }
     if (!data.companyInfo.fbankNo || (data.companyInfo.fbankNo && data.companyInfo.fbankNo.trim().length === 0)) {
-      message.error('借款企业中企业银行账户不能为空');
+      message.error('借款企业中企业对公银行账户不能为空');
       return;
     }
     if (!data.companyInfo.ftelephone || (data.companyInfo.ftelephone && data.companyInfo.ftelephone.trim().length === 0)) {
@@ -746,11 +745,17 @@ export default class Appalyloan extends React.Component {
       message.error('借款项目信息中借款视频不能为空');
       return;
     }
+    for (let obj of data.projectModules) {
+      if (obj.ftype == 1 && (obj.fcontent && obj.fcontent.length <= 8)) {
+        message.error(`借款项目信息中${obj.ftitle}不能为空`);
+        return;
+      } 
+    }
     this.setState({loading: true});
     const response = await baseService.commitInfo(data);
     console.log(response);
     this.setState({loading: false});
-    if (response.code === 0) {
+    if (response.code === 0) {s
       message.info(response.msg);
       this.props.history.push('/index/uCenter/personAccount');
     } else {

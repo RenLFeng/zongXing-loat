@@ -115,11 +115,11 @@ export default class RealName extends React.Component {
           openFailMsg: ''
         }
       })
-    } else if (response.code === -1 && response.msg === '实名认证申请中') {
+    } else if (response.code === -1 && response.data === '实名认证申请中') {
       this.props.dispatch({
         type: 'personal/savePersonalStatus',
         payload: {
-          openStatus: 2, // 开户中 
+          openStatus: 1, // 等待实名认证 
           openFailMsg: response.data
         }
       })

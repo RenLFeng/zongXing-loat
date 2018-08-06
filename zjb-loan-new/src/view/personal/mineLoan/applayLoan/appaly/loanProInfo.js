@@ -362,16 +362,14 @@ class Loaninfo extends React.Component {
                 </Form.Item>
               </Col>
               {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}
-              <Col span={12}>
+              <Col span={11}>
                 <Form.Item {...formItemLayoutUser} label={<RequireLabel></RequireLabel>} className="video_tip" >
                   {getFieldDecorator('fvideo_path', {
                     initialValue: data.fvideo_path ? JSON.parse(data.fvideo_path) : [],
                     rules: [],
                   })(
-                    
                       <UploadVideo {...this.fileData} prefix={dataPath}  >借款视频</UploadVideo>
                   )}
-
                 </Form.Item>
               </Col>
             </Row>

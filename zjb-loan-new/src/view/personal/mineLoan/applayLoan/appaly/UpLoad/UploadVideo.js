@@ -52,12 +52,12 @@ export default class UploadVideo extends React.Component {
     const file = data.file;
     const fileName = data.file.name;
     const suffix = data.file.name.substring(fileName.lastIndexOf('.'), fileName.length);
-    
+    console.log(file);
     if (suffix!=='.mp4' ) {
-      message.warning('只支持mp4/rmvb/avi格式视频上传');
+      message.warning('只支持mp4格式视频上传');
       return;
     }
-    if (file.size > 40*1000*1000) {
+    if (file.size > 40*1024*1024) {
       message.warning('上传文件不能大于40MB');
       return;
     }
@@ -130,7 +130,7 @@ export default class UploadVideo extends React.Component {
     if (postf!=='.mp4') {
       return;
     }
-    if (info.file.size > 40*1000*1000) {
+    if (info.file.size > 40*1024*1024) {
       // message.warning('上传文件不能大于40MB');
       return;
     }
