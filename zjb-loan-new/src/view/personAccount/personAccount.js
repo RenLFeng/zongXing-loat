@@ -472,7 +472,7 @@ export default class PersonAccount extends React.Component {
               {
                 recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
                   recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
-                    return <div>
+                    return <div key={index}>
                       <p className='title'></p>
                       <div className='repany-content '>
                         <span className='txt1'>{this.format(item.forPayTime)}</span>
@@ -482,7 +482,10 @@ export default class PersonAccount extends React.Component {
                         <span className='txt5'>￥{item.borrowInterest}</span>
                         <span className='txt6'>本金：{item.principal}</span>
                         <span className='txt7'>利息：{item.interest}</span>
-                        <span className='txt8'>逾期：{item.overdueMoney <= 0 ? '' : item.overdueMoney}</span>
+                        {
+                          item.overdueMoney <= 0 ? '' : <span className='txt8'> 逾期：{item.overdueMoney}</span>
+                        }
+                        {/* <span className='txt8'>逾期：{item.overdueMoney <= 0 ? '' : item.overdueMoney}</span> */}
                         <a className='hand-repay' onClick={() => { this.repayment(item) }}>手动还款</a>
                       </div>
                       {

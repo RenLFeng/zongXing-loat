@@ -22,7 +22,7 @@ class SureLoan extends React.Component{
         this.state = {
             suredata: [],
             bzInfo: '',
-            loading: false
+            loading: false,
         }
     }
 
@@ -146,7 +146,7 @@ class SureLoan extends React.Component{
                         dataSource={[this.state.suredata]}
                         columns={columns}
                         rowClassName="editable-row"
-                        loading={this.state.loading}
+                        // loading={this.state.loading}
                     />
                 </div>
                 <Spin spinning={this.state.loading}>

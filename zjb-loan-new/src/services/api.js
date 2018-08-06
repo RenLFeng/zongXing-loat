@@ -106,7 +106,12 @@ export const baseService={
     payCommission: async()=>req.get('withdrawals/kickback/bill'),
     
     //提交佣金
-    putCommission: async(param)=>req.get('/kickback/mmm/param',param)
+    putCommission: async(param)=>req.get('/kickback/mmm/param',param),
+
+    //提前还款获取还款金额
+    earlyRepayment: async (param)=>req.get('/project/getAdcanceRepayMoney',param),
+    //提前还款
+    earlyPayment:async (param)=>req.post('repayment/beforehand',param),
 
 }
 

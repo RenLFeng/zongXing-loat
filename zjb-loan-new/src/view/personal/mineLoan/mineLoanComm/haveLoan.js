@@ -358,7 +358,7 @@ class NoLoan extends React.Component{
                                     </div>
                                     :
                                 record.fflag === 8 ?  
-                                    <a className="ac-commit" onClick={() => this.sureBorrow(text,record,index)}>确认借款</a>:
+                                    <a className="ac-commit" onClick={() => this.sureBorrow(text,record,index)} style={{textDecoration:'none'}}>确认借款</a>:
                                 ''    
                             }
                         </div>
@@ -723,7 +723,7 @@ class NoLoan extends React.Component{
                 key: 'x',   
                 render: (text,record,index) =>{
                     return <div className="action">
-                            <a className="ac-commit" onClick={() => this.payPlan(text,record,index)}>还款计划</a>
+                            <a className="ac-commit" onClick={() => this.payPlan(text,record,index)}></a>
                         </div>
                 } 
             },
@@ -762,7 +762,7 @@ class NoLoan extends React.Component{
                         locale={locale}
                         pagination={false}
                         dataSource={[item]}
-                        columns={item.fflag <= 7 ? columns :
+                        columns={item.fflag <= 8 ? columns :
                             [9,10,11,12].includes(item.fflag) ? columns8_9 : 
                             item.fflag === 13 ? columns10 :
                             item.fflag === 15 ? columns12:

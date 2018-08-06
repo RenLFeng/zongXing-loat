@@ -117,6 +117,7 @@ class Loaninfo extends React.Component {
             labelCol: { span: 7 },
             wrapperCol: { span: 16 },
         };
+        let rateArr=[{value:'8',num:'8%'},{value:'9',num:'9%'},{value:'10',num:'10%'},{value:'11',num:'11%'},{value:'12',num:'12%'},{value:'13',num:'13%'},{value:'15',num:'15%'}]
         return (
             <div className="applone-info" >
                 <Title Title="借款信息" />
@@ -172,12 +173,12 @@ class Loaninfo extends React.Component {
                     
                     <Form.Item style={{marginBottom: 30}} {...formItemLayout}   label={<RequireLabel notRequire>期望利率</RequireLabel>}>
                         {getFieldDecorator('frate_predict', {
-                            initialValue: data.frate_predict ? data.frate_predict + '' : '10',
+                            initialValue: data.frate_predict ?  data.frate_predict + '' : '10',
                         })(
                             <Select size='large' style={{ width: '520px',fontSize: '14px' }} >
                                 {
-                                    [8,9,10,11,12,13,15].map((data)=>{
-                                        return  <Select.Option value={data}>{`${data}%`}</Select.Option>
+                                   rateArr.map((data,index)=>{
+                                        return  <Select.Option value={data.value}>{data.num}</Select.Option>
                                     })
                                 }
                             </Select>
