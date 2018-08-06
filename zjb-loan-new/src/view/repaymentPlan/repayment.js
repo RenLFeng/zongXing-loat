@@ -1,9 +1,10 @@
 import React from 'react';
 import LeftMenu from '../../components/leftmenu/leftMenu';
-import {Button,message,Checkbox } from 'antd';
+import {Button,message,Checkbox,Modal,Spin } from 'antd';
 import {personal,baseService} from '../../services/api';
 import './repayment.scss';
 import moment from 'moment';
+import { NOTIFY_URL } from '../../common/SystemParam'
 
 
 export default class Repayment extends React.Component {
@@ -19,7 +20,15 @@ export default class Repayment extends React.Component {
         project_:false,
 
         check_:true,   //前一个可选的选框的状态
-        payMoney:''
+        payMoney:'',
+        repayInfo:{},//手动还款
+        loading:false,
+        visible:false,
+        money:'',
+        rate:'',
+        monthL:'',
+        Loading:false,
+        earlyPay:{},   //提前还款
       }
     }
 
@@ -36,6 +45,7 @@ export default class Repayment extends React.Component {
         })
     }
 
+    //获取还款计划列表
     async getBorrowPlan (){
         const response = await baseService.getRepaymentPlan();
         console.log('还款计划',response)
@@ -45,6 +55,8 @@ export default class Repayment extends React.Component {
             recentRepay:response.data.RecentlyBorrows,
             project:response.data.project,
             payMoney:response.data.earlyPay,
+           },()=>{
+               console.log(this.state.project.fid)
            })
         }
         else if(response.code === 2){
@@ -71,7 +83,8 @@ export default class Repayment extends React.Component {
             console.log(this.state.recentRepay)
         })
       }
-
+      
+     //批量手动还款
       getRepay(){
           let Arr=[];
           for(let i=0;i<this.state.recentRepay.length;i++){
@@ -82,14 +95,100 @@ export default class Repayment extends React.Component {
           console.log('Arr',Arr)
           return Arr;
       }
-      earlyPayment(){
-          message.warning("开发中！！！！！");
+
+      //提前还款-获取还款金额
+      async earlyPaymentGetInfo(){
+          console.log(111111111111111)
+          this.setState({visible:true})
+          let id = {
+            projectId:this.state.project.fid
+          }
+          const res  = await baseService.earlyRepayment(id);
+          console.log('tiqianhuankuanshuju', res);
+          if(res.code === 0){
+            this.setState({
+                money:res.data.principalAmount,
+                rate:res.data.interestAmount,
+                month:res.data.fsurplus_phase,
+              })
+          } else {
+              res.msg && message.error(res.msg)
+          }  
+      }
+   
+      //提前还款
+      async earlyRepayment(){
+          this.setState({Loading:true})
+          let param = {
+            projectId:this.state.project.fid,
+            notifyPageUrl:`${NOTIFY_URL}/index/uCenter/receivePlan`,
+          }
+          const res  = await baseService.earlyPayment(param);
+          console.log('提前还款',res)
+          if(res.code === 0){
+              this.setState({
+                earlyPay:res.data,
+                Loading:false,
+                visible:false
+              },()=>{
+                this.formIds.submit();
+                this.getBorrowPlan();
+              })
+          } else {
+              this.setState({Loading:false})
+              res.msg && message.error(res.msg)
+          }
+      }
+
+      //手动还款
+      async manualReimbursement(val){
+          this.setState({loading:true})
+          let data = {
+            projectId:this.state.project.fid,
+            forPayTime:val.forPayTime,
+            notifyPageUrl:encodeURIComponent(`${NOTIFY_URL}/index/uCenter/receivePlan`),
+          }
+          const res = await baseService.manualReimpayment(data);
+          if(res.code === 0){
+            this.setState({
+                repayInfo:res.data,
+                loading:false
+            },()=>{
+                this.formId.submit();
+                Modal.success({
+                    title: '提示',
+                    content: (
+                      <p>请在新页面中完成操作，之后刷新查看结果</p>
+                    ),
+                    onOk: () => {
+                      this.getBorrowPlan();
+                    },
+                    onText: '确定'
+                  });
+            })
+          } else if (res.code === 1) {
+              this.setState({loading:false})
+            Modal.success({
+              title: '提示',
+              content: (
+                <p>还款处理中，请稍后查看</p>
+              ),
+              onOk: () => {
+                this.getBorrowPlan();
+              },
+              onText: '确定'
+            });
+          } else {
+            this.setState({loading:false})
+            res.msg && message.error(res.msg);
+          }
       }
 
     render(){
-        const {paymentArr,recentRepay,project}  = this.state;
+        const {paymentArr,recentRepay,project,repayInfo,earlyPay}  = this.state;
         return(
             <div>
+                <Spin  spinning={this.state.loading}>
                 <LeftMenu param={this.props} />
               
                    {
@@ -133,7 +232,8 @@ export default class Repayment extends React.Component {
                                               item.overdueMoney === 0 ? null : <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:100,display:'inline-block'}}>{item.overdueMoney}</span></span>
                                           }
                                           {
-                                               item.overdueMoney === 0 ? null : 
+                                               item.overdueMoney === 0 ? 
+                                               <p className="info" >&nbsp;</p>: 
                                                <p className="info" >
                                                  <span className="date">{this.state.date}</span>
                                                  <span style={{marginLeft:40}}>{item.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
@@ -158,7 +258,7 @@ export default class Repayment extends React.Component {
                 {
                     this.state.project_ ? null :
 
-                    <div className="fr uc-rbody S" style={{marginTop:10}}>
+                    <div className="fr uc-rbody S" style={{marginTop:10}} >
                     <div className="project">
                       <p><span style={{color:'#666666'}}>项目编号：</span>{project.fprojectNo}</p>
                       <p style={{marginTop:8}}><span style={{color:'#666666'}}>项目名称：</span>{project.fname}</p>
@@ -180,7 +280,7 @@ export default class Repayment extends React.Component {
                       </div>
                       <div style={{textAlign:"center"}}>
 
-                         <Button className="button" onClick={this.earlyPayment}>提前还款</Button>
+                         <Button className="button" onClick={()=>{this.earlyPaymentGetInfo()}}>提前还款</Button>
                          <p style={{paddingBottom:26,color:'#999999'}}>待还款总额：<span style={{color:'#f29827'}}>￥{this.state.payMoney}</span></p>
                       </div>
                     </div>
@@ -215,11 +315,15 @@ export default class Repayment extends React.Component {
                                                      data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
                                                  }
                                                  </span>
-                                                 <span className="a">手动还款</span>
-                                                 <p className="info_" >
-                                                    <span className="date">{this.state.date}</span>
-                                                    <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
-                                                 </p>
+                                                <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span>  
+                                                 {
+                                                      data.overdueMoney > 0 ?
+                                                      <p className="info_" >
+                                                        <span className="date">{this.state.date}</span>
+                                                        <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                                    </p> : null
+                                                 }
+                                                 
                                              </div> :
                                              <div className="repay_" key={index}> 
                                                  <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
@@ -257,6 +361,55 @@ export default class Repayment extends React.Component {
                     </div>
                  </div>
                 }
+
+
+                <form ref={ref => this.formId = ref} id="form1" name="form1" action={repayInfo.submitURL} method="post" target="_blank">
+                    <input id="Action" name="Action" value={repayInfo.action} type="hidden" />
+                    <input id="ArrivalTime" name="ArrivalTime" value={repayInfo.arrivalTime} type="hidden" />
+                    <input id="LoanJsonList" name="LoanJsonList" value={repayInfo.loanJsonList} type="hidden" />
+                    <input id="NeedAudit" name="NeedAudit" value={repayInfo.needAudit} type="hidden" />
+                    <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={repayInfo.platformMoneymoremore} type="hidden" />
+                    <input id="RandomTimeStamp" name="RandomTimeStamp" value={repayInfo.randomTimeStamp} type="hidden" />
+                    <input id="TransferAction" name="TransferAction" value={repayInfo.transferAction} type="hidden" />
+                    <input id="TransferType" name="TransferType" value={repayInfo.transferType} type="hidden" />
+                    <input id="RandomTimeStamp" name="RandomTimeStamp" value={repayInfo.randomTimeStamp} type="hidden" />
+                    <input id="Remark1" name="Remark1" value={repayInfo.remark1} type="hidden" />
+                    <input id="Remark2" name="Remark2" value={repayInfo.remark2} type="hidden" />
+                    <input id="Remark3" name="Remark3" value={repayInfo.remark3} type="hidden" />
+                    <input id="ReturnURL" name="ReturnURL" value={repayInfo.returnURL} type="hidden" />
+                    <input id="NotifyURL" name="NotifyURL" value={repayInfo.notifyURL} type="hidden" />
+                    <input id="SignInfo" name="SignInfo" value={repayInfo.signInfo} type="hidden" />
+                </form>
+
+                <Modal
+                    title="提示"
+                    confirmLoading={this.state.Loading}
+                    visible={this.state.visible}
+                    onOk={() => this.earlyRepayment()}
+                    onCancel={() => this.setState({ visible: false })}
+                    okText="确认"
+                    cancelText="取消"
+                    >
+                    <p>您确认进行提前还款吗?<br/>总计还款{`${this.state.money + this.state.rate}`.fm()}元,其中本金{`${this.state.money}`.fm()}元,利息{`${this.state.rate}`.fm()}元</p>
+                </Modal>
+                <form ref={ref => this.formIds = ref} id="form1" name="form1" action={earlyPay.submitURL} method="post" target="_blank">
+                    <input id="Action" name="Action" value={earlyPay.action} type="hidden" />
+                    <input id="ArrivalTime" name="ArrivalTime" value={earlyPay.arrivalTime} type="hidden" />
+                    <input id="LoanJsonList" name="LoanJsonList" value={earlyPay.loanJsonList} type="hidden" />
+                    <input id="NeedAudit" name="NeedAudit" value={earlyPay.needAudit} type="hidden" />
+                    <input id="PlatformMoneymoremore" name="PlatformMoneymoremore" value={earlyPay.platformMoneymoremore} type="hidden" />
+                    <input id="RandomTimeStamp" name="RandomTimeStamp" value={earlyPay.randomTimeStamp} type="hidden" />
+                    <input id="TransferAction" name="TransferAction" value={earlyPay.transferAction} type="hidden" />
+                    <input id="TransferType" name="TransferType" value={earlyPay.transferType} type="hidden" />
+                    <input id="RandomTimeStamp" name="RandomTimeStamp" value={earlyPay.randomTimeStamp} type="hidden" />
+                    <input id="Remark1" name="Remark1" value={earlyPay.remark1} type="hidden" />
+                    <input id="Remark2" name="Remark2" value={earlyPay.remark2} type="hidden" />
+                    <input id="Remark3" name="Remark3" value={earlyPay.remark3} type="hidden" />
+                    <input id="ReturnURL" name="ReturnURL" value={earlyPay.returnURL} type="hidden" />
+                    <input id="NotifyURL" name="NotifyURL" value={earlyPay.notifyURL} type="hidden" />
+                    <input id="SignInfo" name="SignInfo" value={earlyPay.signInfo} type="hidden" />
+                </form>
+              </Spin>
             </div>
         )
     }

@@ -319,7 +319,7 @@ class Loaninfo extends React.Component {
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
-                  })(<Input style={{ width: '100%', marginLeft: 6 }} size='large'  placeholder="手机号" maxLength={20} />)}
+                  })(<Input style={{ width: '100%' }} size='large'  placeholder="手机号" maxLength={20} />)}
                 </Form.Item>
               </div>
               <div style={{ width: '25%', }}>
@@ -327,7 +327,7 @@ class Loaninfo extends React.Component {
                   {getFieldDecorator('fRelation1', {
                     initialValue: data.tlo1relation ? data.tlo1relation : '',
                   })(
-                    <Select size='large'  style={{ width: '200px', marginLeft: 11 }}>
+                    <Select size='large'  style={{ width: '200px'}}>
                       <Select.Option value="配偶">配偶</Select.Option>
                       <Select.Option value="父亲">父亲</Select.Option>
                       <Select.Option value="母亲">母亲</Select.Option>

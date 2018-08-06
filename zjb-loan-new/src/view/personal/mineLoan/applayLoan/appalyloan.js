@@ -406,6 +406,7 @@ export default class Appalyloan extends React.Component {
       }
     },() => {
         if (type === 'SAVE') {
+
           this.saveData();
         } else if (type === 'COMMIT') {
           this.commitData();
@@ -466,6 +467,7 @@ export default class Appalyloan extends React.Component {
       "合伙人":10,
     };
     console.log('oldData', oldData);
+    console.log('oldData.frate_predict', oldData.frate_predict);
     const newData = {
       companyInfo: {
         fname: oldData.companyName,
@@ -558,7 +560,7 @@ export default class Appalyloan extends React.Component {
         fbusType: oldData.fbus_trade,
         fcreditUse: oldData.fcredit_use,
         fcreditMonth: oldData.fcredit_month,
-        fratePredict: oldData.frate_predict,
+        fratePredict: oldData.frate_predict.replace(/%/g,''),
         fchannel: oldData.fchannel,
         fcityCode: oldData.fcity_code
       },
@@ -613,7 +615,7 @@ export default class Appalyloan extends React.Component {
           projectModules: response.data.projectModules
         },
         dataList:  response.data.projectModules
-      }, ()=>console.log(this.state.oldData));
+      });
       message.info(response.msg);
     } else {
       response.msg && message.error(response.msg);
