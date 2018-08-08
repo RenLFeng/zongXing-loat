@@ -156,6 +156,7 @@ class Loaninfo extends React.Component {
             labelCol: { span: 8 },
             wrapperCol: { span: 15 },
         };
+        
         return (
             <div>
                 <Title Title="借款企业信息" />
