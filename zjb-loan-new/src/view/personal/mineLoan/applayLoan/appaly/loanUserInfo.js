@@ -298,7 +298,7 @@ class Loaninfo extends React.Component {
                     initialValue: data.tlo1Name ? data.tlo1Name : '',
                     rules: [
                     ]
-                  })(<Input style={{ width: '100%'}}  size='large'  placeholder="姓名" maxLength={20} />)}
+                  })(<Input style={{ width: '100%',fontSize: '14px',marginTop:3}}  size='large'  placeholder="姓名" maxLength={20} />)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
@@ -308,7 +308,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300}} size='large'  placeholder="身份证号" maxLength={20} />)}
+                  })(<Input style={{ width: 300,fontSize: '14px'}} size='large'  placeholder="身份证号" maxLength={20} />)}
                 </Form.Item>
 
               </div>
@@ -319,7 +319,7 @@ class Loaninfo extends React.Component {
                     rules: [
                       { pattern: VER_PHONE, message: '请输入手机号' },
                     ]
-                  })(<Input style={{ width: '100%' }} size='large'  placeholder="手机号" maxLength={20} />)}
+                  })(<Input style={{ width: '100%' ,fontSize: '14px'}} size='large'  placeholder="手机号" maxLength={20} />)}
                 </Form.Item>
               </div>
               <div style={{ width: '25%', }}>
@@ -347,7 +347,7 @@ class Loaninfo extends React.Component {
                     initialValue: data.tlo2Name ? data.tlo2Name : '',
                     rules: [
                     ]
-                  })(<Input style={{ width: '100%',fontSize: '14px' }} size='large'  placeholder="姓名" maxLength={20} />)}
+                  })(<Input style={{ width: '100%',fontSize: '14px',marginTop:3 }} size='large'  placeholder="姓名" maxLength={20} />)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
@@ -393,7 +393,7 @@ class Loaninfo extends React.Component {
                     initialValue: data.tlo3Name ? data.tlo3Name : '',
                     rules: [
                     ]
-                  })(<Input style={{ width: '100%',fontSize: '14px' }} size='large'  placeholder="姓名" maxLength={20} />)}
+                  })(<Input style={{ width: '100%',fontSize: '14px' ,marginTop:3}} size='large'  placeholder="姓名" maxLength={20} />)}
                 </Form.Item>
               </div>
               <div style={{ width: '35%', }}>
