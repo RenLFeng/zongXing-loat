@@ -162,6 +162,7 @@ export default class Appalyloan extends React.Component {
       const data = response.data;
       if (data.projectId) {
         const res = await baseService.getConfirmResult(data.projectId);
+        console.log('huoquqiyexinxi',res)
         if (res.data && res.code === 0) {
           this.setState({ message: res.data.fremark, ispass: res.data.ispass})
         }
@@ -175,7 +176,7 @@ export default class Appalyloan extends React.Component {
             ...data,
             hasUnfinishProject: false
           }
-        });
+        },console.log('companyName',this.state.companyName));
         return;
       }
       this.setState({

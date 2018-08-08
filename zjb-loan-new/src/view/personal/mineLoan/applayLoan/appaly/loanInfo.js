@@ -131,7 +131,7 @@ class Loaninfo extends React.Component {
                                     { pattern: MONEY_REG, message: '请输入正确的金额格式' },
                                     { validator: this.validateNumber }
                                 ]
-                            })(<InputNumber size='large' min={0} max={1000000} step={100} style={{ width: '520px' }} placeholder="借款金额最低5万元" />)}
+                            })(<InputNumber size='large' min={50000} max={1000000} step={100} style={{ width: '520px' }} placeholder="借款金额最低5万元" />)}
                         </Form.Item>
                         <span className="span_form_suffix">元</span>
                     </div>

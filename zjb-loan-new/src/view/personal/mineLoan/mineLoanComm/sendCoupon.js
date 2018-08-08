@@ -409,7 +409,7 @@ class SendCoupon extends React.Component{
                         value: res.data[1].fullSubMoney,//面值
                         rule: res.data[1].fullSubCondition,//满减？
                         // inrule: res.data[1].invMoney ? res.data[1].invMoney : 0 ,//投资150发放一张
-                        num: res.data[0].couponNum ? res.data[0].couponNum : 50,//多少张
+                        num: res.data[1].couponNum ? res.data[1].couponNum : 50,//多少张
                         year: new Date(res.data[1].endTime).getFullYear(),
                         month: new Date(res.data[1].endTime).getMonth() + 1,
                         day: new Date(res.data[1].endTime).getDate(),
@@ -522,8 +522,8 @@ class SendCoupon extends React.Component{
                 provnice:'',
                 city:'',
                 area:'',
-                Address:'',
-                Phone:'',
+                deiladdress:'',
+                phone:'',
                 edit:false
             })
         }    

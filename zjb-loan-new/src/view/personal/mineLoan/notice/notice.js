@@ -246,7 +246,7 @@ export default class Notice extends React.Component{
                     <Spin spinning={this.state.loadingadd}>
                         <Input placeholder="请输入标题" value={fTitle} onChange={(e)=> this.setState({fTitle: e.target.value})} maxLength={10}/>
                         <TextArea placeholder="请输入内容" value={fContent} onChange={(e)=> this.setState({fContent: e.target.value})} rows={4}
-                                style={{margin: '8px 0'}}/>
+                                style={{margin: '8px 0'}} maxLength={500}/>
                         <UploadImg ref="upload" {...this.data} value={this.state.fPicJson} prefix={'personal/'} tipText="上传照片" onChange={this.onChange.bind(this)}/>
                     </Spin>
                 </Modal>
