@@ -358,7 +358,7 @@ class Loaninfo extends React.Component {
                   {getFieldDecorator('projectName', {
                     initialValue: data.projectName ? data.projectName : '',
                     rules: []
-                  })(<Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={40}/>)}
+                  })(<Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={14}/>)}
                 </Form.Item>
               </Col>
               {/* <span className="video-tip-grays">只支持mp4 /  rmvb /  avi 格式视频上传</span> */}

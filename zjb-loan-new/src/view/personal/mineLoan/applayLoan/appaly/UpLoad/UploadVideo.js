@@ -57,8 +57,8 @@ export default class UploadVideo extends React.Component {
       message.warning('只支持mp4格式视频上传');
       return;
     }
-    if (file.size > 40*1024*1024) {
-      message.warning('上传文件不能大于40MB');
+    if (file.size > 100*1024*1024) {
+      message.warning('上传文件不能大于100MB');
       return;
     }
     const fileNames = this.uuid();
@@ -130,7 +130,7 @@ export default class UploadVideo extends React.Component {
     if (postf!=='.mp4') {
       return;
     }
-    if (info.file.size > 40*1024*1024) {
+    if (info.file.size > 100*1024*1024) {
       // message.warning('上传文件不能大于40MB');
       return;
     }
