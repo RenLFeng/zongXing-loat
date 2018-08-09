@@ -143,12 +143,9 @@ export default class Repayment extends React.Component {
       //手动还款
       async manualReimbursement(val){
           this.setState({loading:true})
-          let data = {
-            projectId:this.state.project.fid,
-            forPayTime:val.forPayTime,
-            notifyPageUrl:encodeURIComponent(`${NOTIFY_URL}/index/uCenter/receivePlan`),
-          }
-          const res = await baseService.manualReimpayment(data);
+          let data = [this.state.project.fid,val.forPayTime];
+            // notifyPageUrl:encodeURIComponent(`${NOTIFY_URL}/index/uCenter/receivePlan`),
+          const res = await baseService.manualReimpayment(encodeURIComponent(`${NOTIFY_URL}/index/uCenter/receivePlan`),data);
           if(res.code === 0){
             this.setState({
                 repayInfo:res.data,

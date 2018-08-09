@@ -324,7 +324,6 @@ class SendCoupon extends React.Component{
             },
             touristCoupon:{
                     fname: tourist.name,//优惠券名
-                    // finvMoney: tourist.num,  //投资多少钱发一张
                     flogoPic: tourist.imgsrc,
                     ffullSubCondition: tourist.rule,
                     ffullSubMoney: tourist.value, //满减金额(面值)

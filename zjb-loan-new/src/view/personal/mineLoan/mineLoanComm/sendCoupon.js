@@ -365,6 +365,7 @@ class SendCoupon extends React.Component{
             projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
+        console.log('huoqu优惠券返回信息',res)
         if(res.code === 0){
             if(res.data.length > 0){
                 let arr = [];
@@ -380,42 +381,81 @@ class SendCoupon extends React.Component{
                         phone: i.fmobile,
                     })
                 }
-                this.setState({
-                    isSave: true,
-                    id: res.data[0].couponId,
-                    id_:res.data[1].couponId,
-                    // couponUsePlaces:[{
-                    //     fprovince: res.data[0].fprovince,
-                    //     fcity: res.data[0].fcity,
-                    //     fdistrict: res.data[0].fdistrict,
-                    //     fplace: res.data[0].fplace,
-                    //     fmobile: res.data[0].fmobile
-                    // }],
-                    address:res.data[0].userPlace,
-                    saveAddress: arr,
-                    invest:{
-                        name: this.props.coudata.fname,
-                        value: res.data[0].fullSubMoney,//面值
-                        inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
-                        rule: res.data[0].fullSubCondition,//满减？
-                        // num: res.data[0].couponNum ? res.data[0].couponNum : 50,//多少张
-                        year: new Date(res.data[0].endTime).getFullYear(),
-                        month: new Date(res.data[0].endTime).getMonth() + 1,
-                        day: new Date(res.data[0].endTime).getDate(),
-                        imgsrc:  res.data[0].logo,
-                    },
-                    tourist:{
-                        name: this.props.coudata.fname,
-                        value: res.data[1].fullSubMoney,//面值
-                        rule: res.data[1].fullSubCondition,//满减？
-                        // inrule: res.data[1].invMoney ? res.data[1].invMoney : 0 ,//投资150发放一张
-                        num: res.data[1].couponNum ? res.data[1].couponNum : 50,//多少张
-                        year: new Date(res.data[1].endTime).getFullYear(),
-                        month: new Date(res.data[1].endTime).getMonth() + 1,
-                        day: new Date(res.data[1].endTime).getDate(),
-                        imgsrc: res.data[1].logo,
-                    },
-                })
+                res.data.map(item => item.couponType)
+                for(let obj of res.data){
+                    if(obj.couponType === 1){
+                        console.log('obj1',obj)
+                        this.setState({
+                            isSave: true,
+                            id:obj.couponId,
+                            saveAddress: arr,
+                            address:obj.userPlace,
+                            invest:{
+                                name: this.props.coudata.fname,
+                                value: obj.fullSubMoney,//面值
+                                inrule: obj.invMoney ? obj.invMoney : 0 ,//投资150发放一张
+                                rule: obj.fullSubCondition,//满减？
+                                year: new Date(obj.endTime).getFullYear(),
+                                month: new Date(obj.endTime).getMonth() + 1,
+                                day: new Date(obj.endTime).getDate(),
+                                imgsrc:  obj.logo,
+                            },
+                        })
+                    }
+                    if(obj.couponType === 2){
+                        console.log('obj2',obj)
+                      this.setState({
+                        isSave: true,
+                        id_:obj.couponId,
+                        saveAddress: arr,
+                        address:obj.userPlace,
+                        tourist:{
+                            name: this.props.coudata.fname,
+                            value: obj.fullSubMoney,//面值
+                            rule: obj.fullSubCondition,//满减？
+                            num: obj.couponNum ? obj.couponNum : 50,//多少张
+                            year: new Date(obj.endTime).getFullYear(),
+                            month: new Date(obj.endTime).getMonth() + 1,
+                            day: new Date(obj.endTime).getDate(),
+                            imgsrc: obj.logo,
+                        },
+                      })
+                    }
+                }
+                // this.setState({
+                //     isSave: true,
+                //     id: res.data[0].couponId,
+                //     id_:res.data[1].couponId,
+                //     // couponUsePlaces:[{
+                //     //     fprovince: res.data[0].fprovince,
+                //     //     fcity: res.data[0].fcity,
+                //     //     fdistrict: res.data[0].fdistrict,
+                //     //     fplace: res.data[0].fplace,
+                //     //     fmobile: res.data[0].fmobile
+                //     // }],
+                //     address:res.data[0].userPlace,
+                //     saveAddress: arr,
+                //     invest:{
+                //         name: this.props.coudata.fname,
+                //         value: res.data[0].fullSubMoney,//面值
+                //         inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
+                //         rule: res.data[0].fullSubCondition,//满减？
+                //         year: new Date(res.data[0].endTime).getFullYear(),
+                //         month: new Date(res.data[0].endTime).getMonth() + 1,
+                //         day: new Date(res.data[0].endTime).getDate(),
+                //         imgsrc:  res.data[0].logo,
+                //     },
+                //     tourist:{
+                //         name: this.props.coudata.fname,
+                //         value: res.data[1].fullSubMoney,//面值
+                //         rule: res.data[1].fullSubCondition,//满减？
+                //         num: res.data[1].couponNum ? res.data[1].couponNum : 50,//多少张
+                //         year: new Date(res.data[1].endTime).getFullYear(),
+                //         month: new Date(res.data[1].endTime).getMonth() + 1,
+                //         day: new Date(res.data[1].endTime).getDate(),
+                //         imgsrc: res.data[1].logo,
+                //     },
+                // })
             }
         }else{
             message.error(res.msg);

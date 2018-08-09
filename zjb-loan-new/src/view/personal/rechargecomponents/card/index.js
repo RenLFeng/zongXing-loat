@@ -212,32 +212,6 @@ export default class Loaninfo extends React.Component {
                             })}
                             </div>
 
-                            <div className="css_div">
-                            {this.state.card.map((item, index) => {
-                                return  (
-                                    <div className="card_div" key={index} onClick={()=>this.setState({activeObj: item})}>
-                                        <div className="IDCard">
-                                            <div>
-                                                <div className="card_info">
-                                                <div className="card_img">
-                                                    {/* <img src={`${data.flogo}`}/> */}
-                                                </div>
-                                                <div className="card_text">
-                                                    <p>{item.fbank}</p>
-                                                    {/* <span>{data.fcardType}</span> */}
-                                                    <span>借记卡</span>
-                                                </div>
-                                                </div>
-                                                <span className="id_num">
-                                                {item.fbankcard.substring(0, 4)} **** **** {item.fbankcard.substring(item.fbankcard.length - 4, item.fbankcard.length)}
-                                                </span>
-                                            </div>  
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                            </div>
-
                             <div className="card-logo-recharge">
                                 <span className="card-logo-recharge-add"><Link to="/index/uCenter/bindCard" > +使用新卡提现</Link> </span>
                                 <span className="card-logo-recharge-tip">（只支持储蓄卡）</span>

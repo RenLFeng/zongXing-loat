@@ -758,7 +758,7 @@ export default class Appalyloan extends React.Component {
     const response = await baseService.commitInfo(data);
     console.log(response);
     this.setState({loading: false});
-    if (response.code === 0) {s
+    if (response.code === 0) {
       message.info(response.msg);
       this.props.history.push('/index/uCenter/personAccount');
     } else {
