@@ -50,7 +50,7 @@ export default class AccountStatement extends React.Component {
 			chongzData: [],
 			tixianData: [],
 			touziData: [],
-      huiKuanData: [],
+      huanKuanData: [],
       totalAmount: 0.00, //累计充值/提现/放款金额
       interestAmount: 0.00, //  当期还款总利息
       overdueAmount: 0.00, // 当期还款总逾期金额
@@ -115,7 +115,7 @@ export default class AccountStatement extends React.Component {
 					});
 				} else if(this.state.activeCode === '1405') {
 					this.setState({
-						huiKuanData: res.data.resPage.infoList,
+						huanKuanData: res.data.resPage.infoList,
 						interestAmount: res.data.interestAmount, //  当期还款总利息
       			overdueAmount: res.data.overdueAmount, // 当期还款总逾期金额
 					});
@@ -127,7 +127,7 @@ export default class AccountStatement extends React.Component {
 					chongzData: [],
 					tixianData: [],
 					touziData: [],
-					huiKuanData: []
+					huanKuanData: []
 				});
 				if (res.msg === '账户信息不存在') {
 					return;
@@ -316,28 +316,28 @@ export default class AccountStatement extends React.Component {
 			}
 		}, {
 			title: '本金',
-			dataIndex: 'resultObj.fprincipal',
+			dataIndex: 'resultObj.sumPrincipal',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
 			title: '利息',
-			dataIndex: 'resultObj.finterest',
+			dataIndex: 'resultObj.sumInterest',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
 			title: <span className='table_title_span' style={{color: 'red'}}>逾期费</span>,
-			dataIndex: 'resultObj.fkickBack',
+			dataIndex: 'resultObj.sumOverdueAmount',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
 			}
 		}, {
 			title: '当期还款总金额',
-			dataIndex: 'resultObj.sumAmount',
+			dataIndex: 'resultObj.sumRepayAmount',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
@@ -422,7 +422,7 @@ export default class AccountStatement extends React.Component {
 								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥{this.state.interestAmount}</span></span>
 								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥{this.state.overdueAmount}</span></span>
 							</div>
-              <Table columns={huankColumn} locale={locale} dataSource={this.state.huankData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
+              <Table columns={huankColumn} locale={locale} dataSource={this.state.huanKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
             </div>
              {/* 分页 */}
              {
