@@ -65,14 +65,15 @@ class Statement extends React.Component {
 
                         {/* 结果 */}
                         {
-                            this.state.data.resultCode==='88'&&this.state.data.busType !='1405'? <span className='msg success'>成功</span>:null
+                            this.state.data.resultCode && this.state.data.resultCode==='88'? <span className='msg success'>成功</span>:null
                         }
                         {
-                            this.state.data.resultCode==='90'&&this.state.data.busType !='1405'? <span className='msg todo'>正在处理中…… </span>:null
+                            this.state.data.resultCode && this.state.data.resultCode==='90'&&this.state.data.busType !='1405'? <span className='msg todo'>正在处理中…… </span>:null
                         }
                         {
-                            this.state.data.resultCode !='88' && this.state.data.resultCode !='90'&&this.state.data.busType !='1405'? <span className='msg error'>失败（{this.state.data.resultMessage}）</span>:null
+                            this.state.data.resultCode && this.state.data.resultCode !='88' && this.state.data.resultCode !='90' ? <span className='msg error'>失败（{this.state.data.resultMessage}）</span>:null
                         } 
+                  
                     </div>
                     {
                         this.state.data.busType==='1301' && this.state.data.famount && this.state.data.fuserFeeWithdraw?
@@ -93,7 +94,7 @@ class Statement extends React.Component {
                     {
                         this.state.data.busType==='1405'?
                         <div className='sm-tz'>
-                            <p>{this.state.data.resultObj.periods}/{this.state.data.resultObj.totalPeriods}期回款</p> 
+                            <p>{this.state.data.resultObj.periods}/{this.state.data.resultObj.totalPeriods}期还款</p> 
                         </div>:null
                     }  
                    {
