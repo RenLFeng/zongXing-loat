@@ -18,7 +18,7 @@ class Statement extends React.Component {
         }else if(this.props.data.busType==='1404'){
             typeName='投资';
         }else if(this.props.data.busType==='1405'){
-            typeName='回款';
+            typeName='还款';
         }else{
           typeName = this.props.data.busName;
         }
