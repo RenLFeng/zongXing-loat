@@ -394,9 +394,9 @@ export default class RealName extends React.Component {
                               {/* <img src={`${data.flogo}`}/> */}
                             </div>
                             <div className="card_text">
-                              <p>{data.fbank}</p>
+                              <p title={data.fbank}>{data.fbank}</p>
                               {/* <span>{data.fcardType}</span> */}
-                              <span>借记卡</span>
+                              <span>储蓄卡</span>
                             </div>
                           </div>
                           <span className="id_num">

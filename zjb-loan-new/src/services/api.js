@@ -89,7 +89,7 @@ export const baseService={
     // 还款计划详情
     getDetailPlane:async(param)=>req.get('/project/borrowPlanInfo?projectId='+param.projectId+"&forPayTime="+param.forPayTime),
     // 手动还款接口
-    manualReimpayment:async(param,params)=>req.get('/repayment/manually?notifyPageUrl='+param,[params]),
+    manualReimpayment:async(param,params)=>req.post('/repayment/manually?notifyPageUrl='+param,params),
     // 获取还款计划
     getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
     // 保存 借款信息接口
