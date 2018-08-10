@@ -422,40 +422,7 @@ class SendCoupon extends React.Component{
                       })
                     }
                 }
-                // this.setState({
-                //     isSave: true,
-                //     id: res.data[0].couponId,
-                //     id_:res.data[1].couponId,
-                //     // couponUsePlaces:[{
-                //     //     fprovince: res.data[0].fprovince,
-                //     //     fcity: res.data[0].fcity,
-                //     //     fdistrict: res.data[0].fdistrict,
-                //     //     fplace: res.data[0].fplace,
-                //     //     fmobile: res.data[0].fmobile
-                //     // }],
-                //     address:res.data[0].userPlace,
-                //     saveAddress: arr,
-                //     invest:{
-                //         name: this.props.coudata.fname,
-                //         value: res.data[0].fullSubMoney,//面值
-                //         inrule: res.data[0].invMoney ? res.data[0].invMoney : 0 ,//投资150发放一张
-                //         rule: res.data[0].fullSubCondition,//满减？
-                //         year: new Date(res.data[0].endTime).getFullYear(),
-                //         month: new Date(res.data[0].endTime).getMonth() + 1,
-                //         day: new Date(res.data[0].endTime).getDate(),
-                //         imgsrc:  res.data[0].logo,
-                //     },
-                //     tourist:{
-                //         name: this.props.coudata.fname,
-                //         value: res.data[1].fullSubMoney,//面值
-                //         rule: res.data[1].fullSubCondition,//满减？
-                //         num: res.data[1].couponNum ? res.data[1].couponNum : 50,//多少张
-                //         year: new Date(res.data[1].endTime).getFullYear(),
-                //         month: new Date(res.data[1].endTime).getMonth() + 1,
-                //         day: new Date(res.data[1].endTime).getDate(),
-                //         imgsrc: res.data[1].logo,
-                //     },
-                // })
+              
             }
         }else{
             message.error(res.msg);
@@ -570,6 +537,7 @@ class SendCoupon extends React.Component{
     }
 
     render(){
+        console.log('444444',this.state.id,this.state.id_)
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
         const radioStyle = {
             display: 'block',

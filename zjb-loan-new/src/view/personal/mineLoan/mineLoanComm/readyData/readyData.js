@@ -49,6 +49,8 @@ function getStatu(flag){
             return '待配置优惠券';
         case 15:
             return '待审核优惠券';
+        case 16:
+            return '完成';
         case -1:
             return '流标';
         case -2:
@@ -73,7 +75,7 @@ function getStatu(flag){
 class ReadyData extends React.Component{
     
     getbgimg(item){
-        if(item.fflag === 13){
+        if(item.fflag === 16){
             return  `url(${require('../../img/re.png')})`
         }else if(item.fflag === -1){
             return  `url(${require('../../img/lb.png')})`
@@ -292,6 +294,7 @@ class ReadyData extends React.Component{
                 dataIndex: 'state', 
                 key: 'state',
                 render: (text,record, index) =>{
+                    console.log(text,record, index)
                     return <span className="wait-commit">
                             •{getStatu(record.fflag)}
                         </span>
@@ -334,7 +337,7 @@ class ReadyData extends React.Component{
                alredytable.length > 0 
                ?  
                     <div className="pe personal-rbody" style={{backgroundColor: '#fff',padding:' 30px',marginTop: '8px'}}>
-                            <LoanTitle title="历史借款"></LoanTitle>
+                            <LoanTitle title="历史借款" ></LoanTitle>
                             {/* 历史借款 */}
                             {alredytable}
                     </div>

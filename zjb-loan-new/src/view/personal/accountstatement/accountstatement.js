@@ -89,7 +89,7 @@ export default class AccountStatement extends React.Component {
 			};
 			//调用后台
 			const res = await accountService.getAccountStatement(param);
-			//console.log("res",res);
+			
 			if(res.code === 0) {
 				this.setState({
 					totalNum: res.data.totalNumber,
@@ -114,10 +114,11 @@ export default class AccountStatement extends React.Component {
 						touziData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1405') {
+					console.log("res",res.data);
 					this.setState({
 						huanKuanData: res.data.resPage.infoList,
 						interestAmount: res.data.interestAmount, //  当期还款总利息
-      			overdueAmount: res.data.overdueAmount, // 当期还款总逾期金额
+      			        overdueAmount: res.data.overdueAmount, // 当期还款总逾期金额
 					});
 				}
 			} else {
@@ -346,6 +347,7 @@ export default class AccountStatement extends React.Component {
 			title: '还款期数',
 			dataIndex: 'resultObj.projectNo',
 			align: 'center',
+			
 		}, {
 			title: '还款状态',
 			dataIndex: 'resultObj.projectName',

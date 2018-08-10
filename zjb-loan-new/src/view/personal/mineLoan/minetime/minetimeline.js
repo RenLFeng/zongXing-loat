@@ -187,7 +187,6 @@ class MineTimel extends React.Component{
     render(){
         let timeline = [];
         this.state.timeDate.map((item,index)=>{
-            console.log(item);
             timeline.push(
                 <Timeline.Item key={index}>
                     <p style={{color: '#ddd'}}>{parseTime(item.ftime,'{y}-{m}-{d} {h}:{i}')}</p>

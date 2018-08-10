@@ -80,6 +80,10 @@
                  p{
                   font-size: 14px;
                   color: #ffffff;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;
+                  width:150px;
                  }
                  span{
                   display: block;     

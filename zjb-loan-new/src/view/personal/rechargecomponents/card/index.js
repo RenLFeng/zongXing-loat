@@ -92,7 +92,7 @@ export default class Loaninfo extends React.Component {
            this.setState({
              commissionShow:true,
              data:res.data
-           })
+           },()=>{this.props.getcommision(this.state.commissionShow)})
        }
     } else {
         res.msg && message.error(res.msg)
@@ -150,11 +150,11 @@ export default class Loaninfo extends React.Component {
                             <Recharge param={this.state.activeObj} />
                         </div>
                         : 
-                        (this.props.commissionShow) ? 
+                        (this.state.commissionShow) ? 
                          <div>
                              <div className="commission">
                             <div className="commission_content">
-                                <p style={{marginBottom:25}}><span>佣金金额：</span><span style={{fontSize:30,color:'#0063FF',fontWeight:'bold',marginLeft:20,display:'inline-block',paddingBottom:8,borderBottom:'1px solid #f0f0f0'}}>￥{this.state.data.kickbackAmount}</span></p>
+                                <p style={{marginBottom:25}}><span style={{color:'#999'}}>佣金金额：</span><span style={{fontSize:30,color:'#0063FF',fontWeight:'bold',marginLeft:20,display:'inline-block',paddingBottom:8,borderBottom:'1px solid #f0f0f0'}}>￥{this.state.data.kickbackAmount}</span></p>
                                 <p style={{color:'#999'}}><span >项目编号：</span><span style={{marginLeft:20}}>{this.state.data.projectNo}</span></p>
                                 <p style={{color:'#999'}}><span >项目名称：</span><span style={{marginLeft:20}}>{this.state.data.projectName}</span></p>
                                 <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{marginLeft:20}}>{this.state.data.loanAmount}</span></p>
@@ -197,9 +197,9 @@ export default class Loaninfo extends React.Component {
                                                     {/* <img src={`${data.flogo}`}/> */}
                                                 </div>
                                                 <div className="card_text">
-                                                    <p>{item.fbank}</p>
+                                                    <p title={item.fbank} >{item.fbank}</p>
                                                     {/* <span>{data.fcardType}</span> */}
-                                                    <span>借记卡</span>
+                                                    <span>储蓄卡</span>
                                                 </div>
                                                 </div>
                                                 <span className="id_num">

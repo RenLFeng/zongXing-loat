@@ -19,7 +19,7 @@ class LoanTitle extends React.Component{
                 <p className="mine-loan">{this.props.title}
                     {this.props.children}
                 </p>
-                <img src={require('../img/u904.png')}/>
+                {/* <img src={require('../img/u904.png')}/> */}
             </div>
         )
     }

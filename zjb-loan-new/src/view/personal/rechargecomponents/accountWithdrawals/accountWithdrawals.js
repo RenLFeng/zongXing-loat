@@ -271,7 +271,6 @@ export default class EnterprisePresentation extends React.Component {
   render() {
     const {withdrawals} = this.state;
     const {baseData, safeData} = this.props;
-    console.log('safeData',baseData.accountId)
     const Option = Select.Option;
     return (
         <div className="uc-rbody" style={{width: '100%'}}>
