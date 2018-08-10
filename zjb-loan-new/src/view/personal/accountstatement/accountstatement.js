@@ -345,20 +345,23 @@ export default class AccountStatement extends React.Component {
 			}
 		}, {
 			title: '还款期数',
-			dataIndex: 'resultObj.projectNo',
+			dataIndex: 'resultObj.periods',
 			align: 'center',
 			
 		}, {
 			title: '还款状态',
-			dataIndex: 'resultObj.projectName',
-			align: 'center',
+			dataIndex: 'resultCode',
+      align: 'center',
+      render: function(text, record, index) {
+				return text === '88' ? record.resultMessage : '失败（'+record.resultMessage+')';
+			}
 		}, {
 			title: '项目编号',
-			dataIndex: 'resultObj.periods',
+			dataIndex: 'resultObj.projectNo',
 			align: 'center',
 		}, {
 			title: '项目名称',
-			dataIndex: 'resultObj.periods',
+			dataIndex: 'resultObj.projectName',
 			align: 'center',
 		}];
 
