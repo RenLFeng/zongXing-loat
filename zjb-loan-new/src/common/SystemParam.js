@@ -2,7 +2,7 @@
 
 
 // 部署替换
-let build = 'local';  // production 是远端 test 是测试端 local 是本地端 ys 演示端
+let build = 'production';  // production 是远端 test 是测试端 local 是本地端 ys 演示端
 
 let PIC_BUCKET = 'zjb-test-1255741041'; //zjb 测试服务器用
 let REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
@@ -19,9 +19,10 @@ if (build === 'production') {
   REGION = 'ap-guangzhou'; // 图片上传服务器区域配置 测试服务器用
   IMG_BASE_URL = 'https://zjb-test-1255741041.picgz.myqcloud.com/'; //图片上传回显地址 测试服务器用
   TURN_BACK = 'http://test.5izjb.com/zjbindex.html'; // 从大众网页跳到企业后台管理页 面的地址 测试服务器配置
-  LIMIT_MOENY = true;
+  LIMIT_MOENY = false;
   AUTH_ADDRESS = 'https://my.moneymoremore.com/';
   SOCKET_URL = 'http://192.168.1.36:8899';
+  NOTIFY_URL = `http://${window.location.host}/manage/#`;
 } else if (build === 'test') {
   //  测试
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
