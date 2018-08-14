@@ -275,7 +275,7 @@ class Loaninfo extends React.Component {
           </Row>
           <Row>
             <Col sapn={12}>
-              <Form.Item  labelCol={{ span: 3 }} wrapperCol={{ span: 19 }} label={'家庭住址'} style={{ marginBottom: 20,marginLeft: '-23px' }}>
+              <Form.Item  labelCol={{ span: 3 }} wrapperCol={{ span: 19 }} label={<RequireLabel>家庭住址</RequireLabel>} style={{ marginBottom: 20,marginLeft: '-23px' }}>
                 {getFieldDecorator('faddress', {
                   initialValue: data.faddress ? data.faddress : '',
                   rules: [

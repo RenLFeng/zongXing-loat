@@ -294,7 +294,6 @@ class ReadyData extends React.Component{
                 dataIndex: 'state', 
                 key: 'state',
                 render: (text,record, index) =>{
-                    console.log(text,record, index)
                     return <span className="wait-commit">
                             •{getStatu(record.fflag)}
                         </span>

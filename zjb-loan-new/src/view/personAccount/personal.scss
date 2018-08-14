@@ -136,21 +136,21 @@
         }
         &.txt5{
           color: #f90;
-          margin-right: 55px; 
+          margin-right: 40px; 
         }
-        &.txt6{
-          margin-right: 55px;
+        &.txt6,&.txt7{
+          margin-right: 40px;
         }
-        &.txt7{
-          margin-right: 55px;
-        }
+        // &.txt7{
+        //   margin-right: 55px;
+        // }
         &.txt8{
           color: #ff3b35;
         }
 
       }
       &>.hand-repay{ 
-        margin-left: 90px;
+        margin-left: 65px;
         color: #3366ff;
         text-decoration: underline;
       } 

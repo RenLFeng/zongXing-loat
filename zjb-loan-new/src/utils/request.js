@@ -16,6 +16,7 @@ if (build === 'production') {
 } else if (build === 'local') {
   /*开发配置*/
   BASE_URL = 'http://192.168.1.59:8001'; 
+  // BASE_URL = 'http://192.168.1.35:8001'; 
   document.title ="众借帮（借款）--本地测试环境"; 
 } else if (build === 'ys') {
   BASE_URL = 'http://193.112.97.50:8001';

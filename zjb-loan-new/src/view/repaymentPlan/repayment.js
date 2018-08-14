@@ -55,8 +55,6 @@ export default class Repayment extends React.Component {
             recentRepay:response.data.RecentlyBorrows,
             project:response.data.project,
             payMoney:response.data.earlyPay,
-           },()=>{
-               console.log(this.state.project.fid)
            })
         }
         else if(response.code === 2){
@@ -79,21 +77,22 @@ export default class Repayment extends React.Component {
         this.state.recentRepay[index].check = e.target.checked;
         this.setState({
             recentRepay: this.state.recentRepay
-        }, ()=>{
-            console.log(this.state.recentRepay)
         })
       }
       
      //批量手动还款
-      getRepay(){
+      async getRepay(){
           let Arr=[];
           for(let i=0;i<this.state.recentRepay.length;i++){
              if(this.state.recentRepay[i].check === true){
-                Arr.push(this.state.recentRepay[i]);
+                Arr.push({projectId:this.state.project.fid,forPayTime:this.state.recentRepay[i].forPayTime});
              }
           }
-          console.log('Arr',Arr)
-          return Arr;
+          if(Arr.length === 0){
+              message.info('至少请选择一条数据');
+              return;
+          }
+          this.manualReimbursement(Arr) 
       }
 
       //提前还款-获取还款金额
@@ -104,7 +103,6 @@ export default class Repayment extends React.Component {
             projectId:this.state.project.fid
           }
           const res  = await baseService.earlyRepayment(id);
-          console.log('tiqianhuankuanshuju', res);
           if(res.code === 0){
             this.setState({
                 money:res.data.principalAmount,
@@ -142,8 +140,13 @@ export default class Repayment extends React.Component {
 
       //手动还款
       async manualReimbursement(val){
+          let data = null;
+          if(Array.isArray(val)){ 
+             data = val;
+          } else {
+             data = [{projectId:this.state.project.fid,forPayTime:val.forPayTime}];
+          }
           this.setState({loading:true})
-          let data = [{projectId:this.state.project.fid,forPayTime:val.forPayTime}];
           const res = await baseService.manualReimpayment(encodeURIComponent(`${NOTIFY_URL}/index/uCenter/receivePlan`),data);
           if(res.code === 0){
             this.setState({
