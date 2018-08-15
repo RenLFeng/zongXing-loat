@@ -22,7 +22,7 @@ export default class AccountStatement extends React.Component {
 			pageCurrent: 1,
 			pageSize: 5,
 			totalNum: 0,
-			//业务类型码:1201:充值，1301：提现，1405：项目还款，1404：项目投资，若为null,则全查
+			//业务类型码:1201:充值，1301：提现，1405：项目还款，1403：项目放款，若为null,则全查
 			lables: [{
 					lable: '总账',
 					code: '0000'
@@ -37,7 +37,7 @@ export default class AccountStatement extends React.Component {
 				},
 				{
 					lable: '放款',
-					code: '1404'
+					code: '1403'
 				},
 				{
 					lable: '还款',
@@ -49,7 +49,7 @@ export default class AccountStatement extends React.Component {
 			infoList: [],
 			chongzData: [],
 			tixianData: [],
-			touziData: [],
+			fangkuanData: [],
       huanKuanData: [],
       totalAmount: 0.00, //累计充值/提现/放款金额
       interestAmount: 0.00, //  当期还款总利息
@@ -108,10 +108,10 @@ export default class AccountStatement extends React.Component {
             totalAmount: res.data.totalAmount,
 						tixianData: res.data.resPage.infoList,
 					});
-				} else if(this.state.activeCode === '1404') {
+				} else if(this.state.activeCode === '1403') {
 					this.setState({
             totalAmount: res.data.totalAmount,
-						touziData: res.data.resPage.infoList,
+						fangkuanData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1405') {
 					console.log("res",res.data);
@@ -127,7 +127,7 @@ export default class AccountStatement extends React.Component {
 					infoList: [],
 					chongzData: [],
 					tixianData: [],
-					touziData: [],
+					fangkuanData: [],
 					huanKuanData: []
 				});
 				if (res.msg === '账户信息不存在') {
@@ -282,22 +282,31 @@ export default class AccountStatement extends React.Component {
 		}, {
 			title: '放款日期',
 			dataIndex: 'ftime',
-			align: 'center',
+      align: 'center',
+      render: function(text, record, index) {
+				return text ? moment(text).format('YYYY/MM/DD HH:mm') : '----/--/--/ --:--';
+			}
+      
 		}, {
 			title: '项目借款金额',
-			dataIndex: 'resultObj.invAmount',
+			dataIndex: 'resultObj.creditMoney',
+			align: 'center',
+    }, 
+    // {
+		// 	title: '平台收取佣金',
+		// 	align: 'center',
+    // }, 
+    {
+      title: '最终放款金额',
+      dataIndex: 'finMoney',
 			align: 'center',
 		}, {
-			title: '平台收取佣金',
+      title: '项目编号',
+      dataIndex: 'resultObj.projectNo',
 			align: 'center',
 		}, {
-			title: '最终放款金额',
-			align: 'center',
-		}, {
-			title: '项目编号',
-			align: 'center',
-		}, {
-			title: '项目名称',
+      title: '项目名称',
+      dataIndex: 'resultObj.projectName',
 			align: 'center',
 		}];
 		//还款
@@ -415,11 +424,11 @@ export default class AccountStatement extends React.Component {
               <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
             </div>
             {/* 放款 */}
-            <div className={this.state.activeCode==='1404'?'':'hide'}>
+            <div className={this.state.activeCode==='1403'?'':'hide'}>
 							<div className="statement_table_title">
 								<span style={{color: '#999'}}>累计放款金额: <span style={{color: '#ff9900'}}>￥{this.state.totalAmount}</span></span>
 							</div>
-              <Table columns={fangkColumn} locale={locale} dataSource={this.state.fangkData} loading={this.state.loading} pagination={false} bordered size="small" /> 
+              <Table columns={fangkColumn} locale={locale} dataSource={this.state.fangkuanData} loading={this.state.loading} pagination={false} bordered size="small" /> 
             </div>
             {/* 还款 */}
             <div className={this.state.activeCode==='1405'?'':'hide'}>
