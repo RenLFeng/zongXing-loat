@@ -167,16 +167,16 @@ export default class Repayment extends React.Component {
             })
           } else if (res.code === 1) {
               this.setState({loading:false})
-            Modal.success({
-              title: '提示',
-              content: (
-                <p>还款处理中，请稍后查看</p>
-              ),
-              onOk: () => {
-                this.getBorrowPlan();
-              },
-              onText: '确定'
-            });
+              Modal.success({
+                title: '提示',
+                content: (
+                    <p>还款处理中，请稍后查看</p>
+                ),
+                onOk: () => {
+                    this.getBorrowPlan();
+                },
+                onText: '确定'
+             });
           } else {
             this.setState({loading:false})
             res.msg && message.error(res.msg);
@@ -235,7 +235,7 @@ export default class Repayment extends React.Component {
                                                <p className="info" >&nbsp;</p>: 
                                                <p className="info" >
                                                  <span className="date">{this.state.date}</span>
-                                                 <span style={{marginLeft:40}}>{item.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{recentRepay.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                                 <span style={{marginLeft:40}}>{item.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{item.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
                                               </p>
                                           }
                                      
