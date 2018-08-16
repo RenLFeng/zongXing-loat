@@ -331,7 +331,8 @@ export default class PersonAccount extends React.Component {
     if (this.state.loading)
       return;
     this.setState({ loading: true });
-    const response = await baseService.manualReimpayment({ projectId: val.project,forPayTime: val.forPayTime,notifyPageUrl: encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`) })
+    let data = [{projectId: val.project,forPayTime: val.forPayTime}]
+    const response = await baseService.manualReimpayment(encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`),data)
     console.log(response);
     this.setState({ loading: false });
     if (response.code === 0) {
@@ -461,7 +462,9 @@ export default class PersonAccount extends React.Component {
           </div>
         </div>
         {recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
-          <div className="per_account">
+          
+          <Spin spinning={this.state.loading}>
+             <div className="per_account">
             <div className="ptit">
 
               <i>近期还款</i>
@@ -507,7 +510,9 @@ export default class PersonAccount extends React.Component {
               }
 
             </div>
-          </div> : null}
+          </div> 
+          </Spin>
+         : null}
 
         {myBorrowVo ?
           <div className="per_account">

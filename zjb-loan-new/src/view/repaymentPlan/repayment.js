@@ -184,6 +184,7 @@ export default class Repayment extends React.Component {
       }
 
     render(){
+        
         const {paymentArr,recentRepay,project,repayInfo,earlyPay}  = this.state;
         return(
             <div>

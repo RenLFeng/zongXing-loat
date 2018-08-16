@@ -307,7 +307,7 @@ infoCheck_(){
   }
 
   //修改密码
-  async changePassword() {
+  async changePasswords() {
     const { password, firstPhone } = this.state;
     if (password.trim().length === 0) {
       this.setState({
@@ -488,7 +488,7 @@ infoCheck_(){
                      </div> 
                     }
 
-                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" loading={this.state.changeLoading} onClick={() => this.changePassword()}>确认</Button>
+                    <Button style={{ width: 329, marginTop: 84, height: 43, fontSize: 18 }} type="primary" loading={this.state.changeLoading} onClick={() => this.changePasswords()}>确认</Button>
                   </div> :
                   (this.state.flagPage === 'four') ?
                     <div className="forget_form4">

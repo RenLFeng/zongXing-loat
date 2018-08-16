@@ -579,7 +579,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={invest.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({invest:{...invest,value: e.target.value}})}
-                                        style={{display: 'inline-block',width: '200px'}} maxLength={4}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={5}/>
                                         <p className="error-imput">{invest.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
@@ -592,7 +592,7 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">优惠券数量:</span>
-                                    投资 <InputNumber className="form-item" value={invest.inrule} min={0} max={9999} maxLength={4}
+                                    投资 <InputNumber className="form-item" value={invest.inrule} min={0} max={9999} maxLength={7}
                                                     onChange={(e)=> this.setState({invest:{...invest,inrule: e}})} step={10}
                                                     />
                                     <span className="full-ff">元发放1张优惠券</span>
@@ -659,7 +659,7 @@ class SendCoupon extends React.Component{
                                     <Input className="form-item" value={tourist.value}
                                             placeholder= "请输入5的倍数"
                                         onChange={(e)=> this.setState({tourist:{...tourist,value: e.target.value }})}
-                                        style={{display: 'inline-block',width: '200px'}} maxLength={4}/>
+                                        style={{display: 'inline-block',width: '200px'}} maxLength={5}/>
                                         <p className="error-imput">{tourist.value % 5 === 0 ? '' : '请输入5的倍数！'}</p>
                                 </div>
                                 <div className="send-form-div">
