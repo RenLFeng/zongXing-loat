@@ -153,16 +153,23 @@ export default class Loaninfo extends React.Component {
                         (this.state.commissionShow) ? 
                          <div>
                              <div className="commission">
-                                <div className="commission_content">
-                                    <p ><span style={{color:'#999'}}>佣金金额：</span><span style={{fontSize:25,color:'#0063FF',marginLeft:10,display:'inline-block',paddingBottom:8}}>￥{this.state.data.kickbackAmount}</span></p>
-                                    <p style={{color:'#999'}}><span >项目编号：</span><span style={{marginLeft:10,color:'#333'}}>{this.state.data.projectNo}</span></p>
-                                    <p style={{color:'#999'}}><span >项目名称：</span><span style={{marginLeft:10,color:'#333'}}>{this.state.data.projectName}</span></p>
-                                    <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{marginLeft:10,color:'#333'}}>{this.state.data.loanAmount}</span></p>
-                                    <p style={{color:'#999'}}><span >项目评级：</span><span style={{marginLeft:10,color:'#333'}}>{this.state.data.projectLevel}</span></p>
-                                    <p style={{color:'#999'}}><span >佣金费率：</span><span style={{marginLeft:10,color:'#333'}}>{this.state.data.kickbackRate}</span></p>
-                                    
-                                    <Button type="primary" onClick={()=>{this.commission()}} loading={this.state.loading}>提交</Button>
-                                </div>
+                             {
+                                 this.state.data.length > 0 ? 
+                                 this.state.data.map((item,index)=>{
+                                    return (
+                                       <div className="commission_content">
+                                            <p ><span style={{color:'#999'}}>佣金金额：</span><span style={{color:'#0063FF',marginLeft:10,display:'inline-block'}}>￥{item.kickbackAmount}</span></p>
+                                            <p style={{color:'#999'}}><span >项目编号：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectNo}</span></p>
+                                            <p style={{color:'#999'}}><span >项目名称：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectName}</span></p>
+                                            <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{marginLeft:10,color:'#333'}}>{item.loanAmount}</span></p>
+                                            <p style={{color:'#999'}}><span >项目评级：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectLevel}</span></p>
+                                            <p style={{color:'#999'}}><span >佣金费率：</span><span style={{marginLeft:10,color:'#333'}}>{item.kickbackRate}</span></p>
+                                            
+                                            <Button type="primary" onClick={()=>{this.commission()}} loading={this.state.loading}>提交</Button>
+                                        </div>
+                                    )
+                                 }) : null
+                             }    
                             </div>
             
                         <form ref={ref => this.formId = ref} id="form1" name="form1" action={commisson.submitURL} method="post" target="_blank">
