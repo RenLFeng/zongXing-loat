@@ -236,9 +236,6 @@ export const mineloan = {
     //投前
     saveConsultq: async (param) => req.post('/projectTopicReply/save', param),
 
-    //
-    getSureDate: async (param) => req.get('/project/getRateAndLevel', param),
-
     //缴费
     payLoan: async (param) => req.get('/risk/payment', param),
     //获取项目级别

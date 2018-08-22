@@ -437,7 +437,7 @@ export default class RealName extends React.Component {
                     <span className="bind_new_bank" >绑定新银行卡</span>
                     <span
                       className="bind_new_bank"
-                      style={{ color: '#e6e6e6', fontSize: 14, color: '#e6e6e6' }}
+                      style={{ color: '#e6e6e6', fontSize: 14 }}
                     >(只支持储蓄卡)</span>
                   </div> :null: <div><span>只有先开通乾多多账户才能绑定银行卡！</span></div>}
               </div>

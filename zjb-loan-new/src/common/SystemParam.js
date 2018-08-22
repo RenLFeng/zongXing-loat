@@ -22,7 +22,7 @@ if (build === 'production') {
   LIMIT_MOENY = false;
   AUTH_ADDRESS = 'https://my.moneymoremore.com/';
   SOCKET_URL = 'http://192.168.1.36:8899';
-  NOTIFY_URL = `http://${window.location.host}/manage/#`;
+  NOTIFY_URL = `http://${window.location.host}/zjbmanage/#`;
 } else if (build === 'test') {
   //  测试
   IMG_BASE_URL = 'http://zjb01-1255741041.picsh.myqcloud.com/'; //图片上传回显地址 开发服务器用
