@@ -47,7 +47,6 @@ export default class Loaninfo extends React.Component {
   }
   async getUserINfo() {
     const response = await accountService.getPersonalData();
-
     if (response.code === 0) {
       this.setState({
         accountId: response.data.companyTotalAssetsVo.accountId
