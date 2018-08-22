@@ -9,7 +9,7 @@ import React from 'react';
 import './sureloan.scss';
 import {connect} from 'dva';
 import {parseTime, returnFloat} from '../dateformat/date';
-import { Table, message,Input, Spin } from 'antd';
+import { Table, message,Input, Spin,Modal } from 'antd';
 import {mineloan} from '../../../../services/api';
 const { TextArea } = Input;
 
@@ -23,6 +23,9 @@ class SureLoan extends React.Component{
             suredata: [],
             bzInfo: '',
             loading: false,
+            visible:false,
+            code:'',
+            Loading:false
         }
     }
 
@@ -50,14 +53,36 @@ class SureLoan extends React.Component{
             payload: ''
         })
     }
+    onchange(val){
+        this.setState({code:val})
+      }
+    hideModal(){
+        this.setState({visible:false})
+    }
+
+    async getSignMessage(){
+         this.setState({visible:true,Loading:true})
+         const res = await mineloan.getSign(this.props.suredata.fid);
+         this.setState({Loading:false})
+         if(res.code === 0 ){
+           
+         } else {
+           res.msg && message.error(res.msg)
+         }
+       }
 
     async agreeOrUnagree(statu){
         const {suredata, bzInfo} = this.state;
         console.log(suredata,bzInfo,'suredata')
+        if(this.state.code.trim().length < 4){
+          message.info('请输入合法的验证码')
+          return;
+        }
         let data = {
             remark: bzInfo,
             isPass: statu,
-            projectId: this.props.suredata.fid
+            projectId: this.props.suredata.fid,
+            chickCode:this.state.code
         }
         if([0,-1].includes(statu)){
             if(data.remark === ''){
@@ -76,7 +101,7 @@ class SureLoan extends React.Component{
         let res = await mineloan.isAgreeBorrow(data);
         if(res.code === 0){
             this.getNewInfo();
-            this.setState({loading: false})
+            this.setState({loading: false,visible:false})
         }else{
             this.setState({loading: false})
         }
@@ -153,11 +178,27 @@ class SureLoan extends React.Component{
                     <span>备注:</span>
                     <TextArea placeholder="备注" value={this.state.bzInfo} onChange={(e) =>{ this.setState({bzInfo: e.target.value})} } autosize={{ minRows: 2, maxRows: 4 }} />
                     <div className="ac-button">
-                        <a className="agree" onClick={()=>this.agreeOrUnagree(1)}>同意</a>
+                        <a className="agree" onClick={()=>this.getSignMessage()}>同意</a>
                         <a className="unagree" onClick={()=>this.agreeOrUnagree(0)}>不同意</a>
                         <a className="stop" onClick={()=>this.agreeOrUnagree(-1)}>终止项目</a>
                     </div>
                 </Spin>
+
+                <Modal
+                    title="验证"
+                    visible={this.state.visible}
+                    confirmLoading={this.state.loading}
+                    onOk={this.agreeOrUnagree.bind(this,1)}
+                    onCancel={this.hideModal.bind(this)}
+                    okText="确认"
+                    cancelText="取消"
+                    maskClosable={false}
+                >
+                    <div>
+                        <span>验证码：</span>
+                        <Input style={{width:'30%'}} placeholder="请输入验证码" onChange={(e)=>this.onchange(e.target.value)} value={this.state.code} maxLength={6}/>
+                    </div> 
+                </Modal>
             </div>
         )
     }

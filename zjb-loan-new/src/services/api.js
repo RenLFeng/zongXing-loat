@@ -267,6 +267,8 @@ export const mineloan = {
     commitCou: (param) => req.post('/projectApproval/subCoupon', param),
     //提交完善信息
     commitwsInfo: (param) => req.post('/projectApproval/subPendRelease', param),
+    getSign : (param)  => req.get(`/cfca/loan/sendMessage?projectId=${param}`),
+      
 
 }
 //实名认证 - momei
@@ -308,4 +310,3 @@ export const securityCentreService = {
   
 
 }
-   

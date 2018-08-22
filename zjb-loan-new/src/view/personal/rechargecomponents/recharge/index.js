@@ -106,7 +106,6 @@ export default class Loaninfo extends React.Component {
 
   submitMoney() {
     this.formId.submit();
-
     Modal.confirm({
       title: '提示',
       content: '请在新页面完成充值',
