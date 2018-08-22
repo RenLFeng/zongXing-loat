@@ -434,6 +434,8 @@ export default class PersonAccount extends React.Component {
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     const { userSecurityCenter } = this.props.baseData;
     const { data, dataSource, paymentParam } = this.state;
+
+    console.log('this.props.personal',this.props.personal)
     return (
       <div>
         <LeftMenu param={this.props} />
@@ -523,6 +525,7 @@ export default class PersonAccount extends React.Component {
               <p className='loan-lable'>
                 {
                   lables.map(item => {
+                    
                     if (item.fflag.includes(this.state.activeFlag)) {
                       return <span className='active'>{item.text}</span>
                     } else {

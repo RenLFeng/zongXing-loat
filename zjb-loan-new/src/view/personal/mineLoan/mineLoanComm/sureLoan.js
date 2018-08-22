@@ -57,7 +57,7 @@ class SureLoan extends React.Component{
         this.setState({code:val})
       }
     hideModal(){
-        this.setState({visible:false})
+        this.setState({visible:false,code:''})
     }
 
     async getSignMessage(){
@@ -108,6 +108,7 @@ class SureLoan extends React.Component{
     }
     
     render(){
+        console.log('11111111',[this.state.suredata])
         const locale = {
             filterTitle: '筛选',
             filterConfirm: '确定',
