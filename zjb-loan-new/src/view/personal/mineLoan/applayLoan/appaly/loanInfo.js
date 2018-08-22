@@ -122,7 +122,7 @@ class Loaninfo extends React.Component {
             <div className="applone-info" >
                 <Title Title="借款信息" />
                 <Form onSubmit={this.submits.bind(this)} ref="froms">
-                    <div style={{position: 'relative'}} style={{marginBottom: 30}}>
+                    <div style={{position: 'relative', marginBottom: 30}}>
                         <Form.Item {...formItemLayout} label={
                             <RequireLabel>要借多钱</RequireLabel>}>
                             {getFieldDecorator('fcredit_money', {
