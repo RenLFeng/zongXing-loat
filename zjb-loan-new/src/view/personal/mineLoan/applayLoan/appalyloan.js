@@ -634,10 +634,24 @@ export default class Appalyloan extends React.Component {
       message.error('借款人资料中QQ不能为空');
       return;
     }
+    if (!data.lender.faddress || (data.lender.faddress && data.lender.faddress.trim().length === 0)) {
+      message.error('借款人资料中家庭住址不能为空');
+      return;
+    }
+    
+    if (!data.lender.fcreditReport || (data.lender.fcreditReport && JSON.parse(data.lender.fcreditReport).length === 0)) {
+      message.error('借款人资料中个人征信报告不能为空');
+      return;
+    }
+    if (!data.lender.fdealLog || (data.lender.fdealLog && JSON.parse(data.lender.fdealLog).length === 0)) {
+      message.error('借款人资料中个人交易流水不能为空');
+      return;
+    }
     if (!data.project.fname || (data.project.fname && data.project.fname.trim().length === 0)) {
       message.error('借款项目资料中项目名称不能为空');
       return;
     }
+    
     if (!data.lenderOtherContactList[0].fname || (data.lenderOtherContactList[0].fname && data.lenderOtherContactList[0].fname.trim().length === 0)
       || !data.lenderOtherContactList[0].fidcardNo || (data.lenderOtherContactList[0].fidcardNo && data.lenderOtherContactList[0].fidcardNo.trim().length === 0)
       || !data.lenderOtherContactList[0].fphone || (data.lenderOtherContactList[0].fphone && data.lenderOtherContactList[0].fphone.trim().length === 0)
@@ -686,14 +700,6 @@ export default class Appalyloan extends React.Component {
       message.error('借款企业中经营地址证明不能为空');
       return;
     }
-    if (!data.lender.fqq || (data.lender.fqq && data.lender.fqq.trim().length === 0)){
-      message.error('借款人信息中QQ号不能为空');
-      return;
-    }
-    if (!data.lender.fweichat || (data.lender.fweichat && data.lender.fweichat.trim().length === 0)){
-      message.error('借款人信息中微信号不能为空');
-      return;
-    }
     if (!data.projectInfo.fcardPicPath || data.projectInfo.fcardPicPath.length === 0) {
       message.error('借款项目信息中借款项目展示封面图不能为空');
       return;
@@ -717,8 +723,8 @@ export default class Appalyloan extends React.Component {
     console.log(response);
     this.setState({loading: false});
     if (response.code === 0) {
-      message.info(response.msg);
-      this.props.history.push('/index/uCenter/personAccount');
+      // message.info(response.msg);
+      this.props.history.push('/index/uCenter/mineLoan');
     } else {
       response.msg && message.error(response.msg);
     }

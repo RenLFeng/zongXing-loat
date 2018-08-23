@@ -13,7 +13,7 @@ import MineTimel from '../minetime/minetimeline';
 import InvestRecord from '../investRecord/investRecord';
 import DelModal from './deleteModal/deleteModal';
 import UploadFile from '../applayLoan/appaly/UpLoad/UploadFile';
-import {mineloan} from '../../../../services/api';
+import {mineloan,baseService} from '../../../../services/api';
 import {connect} from 'dva';
 import {IMG_BASE_URL, NOTIFY_URL, conversionTime} from '../../../../common/SystemParam';
 import SendCoupon from './sendCoupon';
@@ -290,6 +290,15 @@ class NoLoan extends React.Component{
         
     }
 
+
+    async submit_(){
+      const res = await baseService.commit();
+      if(res.code === 0){
+        message.info('提交成功')
+      } else {
+          res.msg && message.error(res.msg)
+      }
+    }
     render(){
         const doing = [];
         // fflag = 其它
@@ -341,7 +350,7 @@ class NoLoan extends React.Component{
                     return <div className="action">
                             { record.fflag == 0 ?
                                 <div>
-                                    <a className="ac-commit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>提交</a>
+                                    <a className="ac-commit" onClick={() => this.submit_()}>提交</a>
                                     <span>|</span>
                                     <a className="ac-edit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>编辑</a>
                                     <span>|</span>

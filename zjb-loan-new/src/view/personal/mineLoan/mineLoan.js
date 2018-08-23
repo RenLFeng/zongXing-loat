@@ -28,10 +28,11 @@ class MineLoan extends React.Component{
             payload: ''
         })
     }
+    
     render(){
         const haveData = [];
         this.props.data.map((item,index) =>{
-            if(item.fflag !== 16 && item.fflag !== -3 && item.fflag !== -1){
+            if(item.fflag !== 16 && item.fflag !== -3 && item.fflag !== -1 && item.fflag !== 88){
                 haveData.push(item)
             }
         });

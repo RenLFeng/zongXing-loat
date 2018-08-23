@@ -95,7 +95,10 @@ export const baseService={
     // 保存 借款信息接口
     saveLoanInfo: async (param) => req.post('/apply/save', param),
     // 提交借款信息接口
-    commitInfo: async (param) => req.post('/apply/submit', param),
+    commit: async () => req.get('/apply/submit'),
+    commitInfo: async (param) => req.post('/apply/submitToZero', param),
+    
+
     // 项目可选城市获取
     getProCityList: async () => req.get('/apply/getCity'),
     getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),

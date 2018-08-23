@@ -54,6 +54,7 @@ class Loaninfo extends React.Component {
     this.props.form.validateFieldsAndScroll((error, values) => {
       if (!error) {
         // submit the values
+        console.log('values111111111',values)
         values.fother_pic_json = typeof values.fother_pic_json !== 'string' ? JSON.stringify(values.fother_pic_json) : values.fother_pic_json;
         values.fdeal_log = typeof values.fdeal_log !== 'string' ? JSON.stringify(values.fdeal_log) : values.fdeal_log;
         values.fcredit_report = typeof values.fcredit_report !== 'string' ? JSON.stringify(values.fcredit_report) : values.fcredit_report;

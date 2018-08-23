@@ -7,7 +7,7 @@ import moment from 'moment';
 import LeftMenu from '../../components/leftmenu/leftMenu';
 
 import { accountService, baseService, personal } from '../../services/api';
-import { Modal, message, Tooltip, DatePicker } from 'antd';
+import { Modal, message, Tooltip, DatePicker,Spin } from 'antd';
 import './personal.scss';
 import Statement from '../statement/Statement';
 import { formatFlagToText, NOTIFY_URL } from '../../common/SystemParam';
@@ -435,7 +435,7 @@ export default class PersonAccount extends React.Component {
     const { userSecurityCenter } = this.props.baseData;
     const { data, dataSource, paymentParam } = this.state;
 
-    console.log('this.props.personal',this.props.personal)
+    console.log('this.props.personal',this.props.personal.myBorrowVo)
     return (
       <div>
         <LeftMenu param={this.props} />
@@ -516,7 +516,7 @@ export default class PersonAccount extends React.Component {
           </Spin>
          : null}
 
-        {myBorrowVo ?
+        {myBorrowVo.fflag === 0?
           <div className="per_account">
             <div className="ptit">
               <i>我的借款</i>
