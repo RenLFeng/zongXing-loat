@@ -97,6 +97,7 @@ class NoLoan extends React.Component{
             doingData: [],
             timeLong: '',
             isGoing: false,
+            Loading:false
         };
         this.countDown = null;
     };
@@ -292,9 +293,18 @@ class NoLoan extends React.Component{
 
 
     async submit_(){
+      if(this.state.Loading ){
+          return;
+      }
+      this.setState({Loading:true})
       const res = await baseService.commit();
+      this.setState({Loading:false})
       if(res.code === 0){
-        message.info('提交成功')
+        message.info('提交成功');
+        this.props.dispatch({
+            type: 'mineloan/getMineLoan',
+            payload: ''
+        })
       } else {
           res.msg && message.error(res.msg)
       }
@@ -350,11 +360,13 @@ class NoLoan extends React.Component{
                     return <div className="action">
                             { record.fflag == 0 ?
                                 <div>
-                                    <a className="ac-commit" onClick={() => this.submit_()}>提交</a>
-                                    <span>|</span>
-                                    <a className="ac-edit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>编辑</a>
-                                    <span>|</span>
-                                    <a className="ac-del" onClick={() => this.deleteLoan(text,record,index)}>删除</a>
+                                    <Spin spinning={this.state.Loading}>
+                                        <a className="ac-commit" onClick={() => this.submit_()}>提交</a>
+                                        <span>|</span>
+                                        <a className="ac-edit" onClick={() => this.props.history.push('/index/uCenter/appalyloan')}>编辑</a>
+                                        <span>|</span>
+                                        <a className="ac-del" onClick={() => this.deleteLoan(text,record,index)}>删除</a>
+                                    </Spin>
                                 </div>:
                                 record.fflag === 2 ? 
                                     <a className="ac-commit" onClick={() => this.pay(text,record,index)}>缴费</a>:
