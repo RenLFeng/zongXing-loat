@@ -140,6 +140,9 @@ export default class Repayment extends React.Component {
 
       //手动还款
       async manualReimbursement(val){
+          if(this.state.loading){
+             return
+          }
           let data = null;
           if(Array.isArray(val)){ 
              data = val;
@@ -187,10 +190,9 @@ export default class Repayment extends React.Component {
         
         const {paymentArr,recentRepay,project,repayInfo,earlyPay}  = this.state;
         return(
-            <div>
-                <Spin  spinning={this.state.loading}>
+            <div>    
                 <LeftMenu param={this.props} />
-              
+                
                    {
                          this.state.project_ ? 
                          <div className="fr uc-rbody F">
@@ -253,8 +255,6 @@ export default class Repayment extends React.Component {
                         }  
                      </div>      
                 }
-               
-             
                 {
                     this.state.project_ ? null :
 
@@ -284,81 +284,92 @@ export default class Repayment extends React.Component {
                          <p style={{paddingBottom:26,color:'#999999'}}>待还款总额：<span style={{color:'#f29827'}}>￥{this.state.payMoney}</span></p>
                       </div>
                     </div>
-                    <div>
-                        <p style={{color:"#999999",marginTop:18}}><span>计划还款时间</span><span style={{float:"right"}}>实际还款时间</span></p>
-                        {
-                            paymentArr.length > 0 ?
-                            paymentArr.map((data,index)=>{
-                                return(
-                                    <div key={index}>
-                                        { data.canPay ? 
-                                             <div className="repays" > 
-                                                 <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
-                                                 {
-                                                     data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
-                                                 }  
-                                                 <div className="data">
-                                               
-                                                     {data.fsort}/{project.fmonthLast}期
-                                                     <span style={{ margin: '0 5px 0 8px'}}>|</span>
-                                                     <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    
-                                                 </div>
-                                                 <span style={{marginLeft:55}}>本金：<span style={{width:80,display:'inline-block'}}>{data.principal}</span></span>
-                                                 <span >利息：<span style={{width:80,display:'inline-block'}}>{data.interest}</span></span>
-                                                 {
-                                                     data.overdueMoney > 0 ? 
-                                                     <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:80,display:'inline-block'}}>{data.overdueMoney}</span></span>:
-                                                     null
-                                                 }
-                                                 <span className="times">
-                                                 {
-                                                     data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
-                                                 }
-                                                 </span>
-                                                <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span>  
-                                                 {
-                                                      data.overdueMoney > 0 ?
-                                                      <p className="info_" >
-                                                        <span className="date">{this.state.date}</span>
-                                                        <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
-                                                    </p> : null
-                                                 }
-                                                 
-                                             </div> :
-                                             <div className="repay_" key={index}> 
-                                                 <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
-                                                 {
-                                                     data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
-                                                 }  
-                                                 <div className="data">
-                                                 
-                                                     {data.fsort}/{project.fmonthLast}期
-                                                     <span style={{ margin: '0 5px 0 8px'}}>|</span>
-                                                     <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    
-                                                 </div>
-                                                 <span style={{marginLeft:55}}>本金：<span style={{width:80,display:'inline-block'}}>{data.principal}</span></span>
-                                                 <span >利息：<span style={{width:80,display:'inline-block'}}>{data.interest}</span></span>
-                                                 {
-                                                     data.overdueMoney > 0 ? 
-                                                     <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:80,display:'inline-block'}}>{data.overdueMoney}</span></span>:
-                                                     null
-                                                 }
-                                                 
-                                                 <span className="times">
-                                                 {
-                                                     data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
-                                                 }
-                                                 </span>
+                   
+                        <div>
+                        
+                            <p style={{color:"#999999",marginTop:18}}><span>计划还款时间</span><span style={{float:"right"}}>实际还款时间</span></p>
+                            {
+                                paymentArr.length > 0 ?
+                               
+                                paymentArr.map((data,index)=>{
+                                    console.log('paymentArr',data,index,data[index])
+                                    return(
+                                        <div key={index}>
+                                            { data.canPay ? 
+                                                <div className="repays" > 
+                                                    <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
+                                                    {
+                                                        data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
+                                                    }  
+                                                    <div className="data">
                                                 
-                                             </div> 
- 
-                                 }
-                                    </div>
-                                
-                                )
-                            }) : <p style={{textAlign:'center',marginTop:30}}>暂无数据</p>
-                        }
-                    </div>
+                                                        {data.fsort}/{project.fmonthLast}期
+                                                        <span style={{ margin: '0 5px 0 8px'}}>|</span>
+                                                        <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    
+                                                    </div>
+                                                    <span style={{marginLeft:55}}>本金：<span style={{width:80,display:'inline-block'}}>{data.principal}</span></span>
+                                                    <span >利息：<span style={{width:80,display:'inline-block'}}>{data.interest}</span></span>
+                                                    {
+                                                        data.overdueMoney > 0 ? 
+                                                        <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:80,display:'inline-block'}}>{data.overdueMoney}</span></span>:
+                                                        null
+                                                    }
+                                                    <span className="times">
+                                                    {
+                                                        data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
+                                                    }
+                                                    </span>
+                                                    {/* {
+                                                        index>0 && data[index-1].canPay ? 
+                                                        null :  */}
+                                                         <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span> 
+                                                    {/* } */}
+                                                      
+                                                    {
+                                                        data.overdueMoney > 0 ?
+                                                        <p className="info_" >
+                                                            <span className="date">{this.state.date}</span>
+                                                            <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                                        </p> : null
+                                                    }
+                                                    
+                                                </div> :
+                                                <div className="repay_" key={index}> 
+                                                    <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
+                                                    {
+                                                        data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
+                                                    }  
+                                                    <div className="data">
+                                                    
+                                                        {data.fsort}/{project.fmonthLast}期
+                                                        <span style={{ margin: '0 5px 0 8px'}}>|</span>
+                                                        <span style={{color:'#f29827'}}> ￥{data.borrowInterest}</span>    
+                                                    </div>
+                                                    <span style={{marginLeft:55}}>本金：<span style={{width:80,display:'inline-block'}}>{data.principal}</span></span>
+                                                    <span >利息：<span style={{width:80,display:'inline-block'}}>{data.interest}</span></span>
+                                                    {
+                                                        data.overdueMoney > 0 ? 
+                                                        <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:80,display:'inline-block'}}>{data.overdueMoney}</span></span>:
+                                                        null
+                                                    }
+                                                    
+                                                    <span className="times">
+                                                    {
+                                                        data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
+                                                    }
+                                                    </span>
+                                                    
+                                                </div> 
+    
+                                    }
+                                        </div>
+                                    
+                                    )
+                                }) : <p style={{textAlign:'center',marginTop:30}}>暂无数据</p>
+                            }
+                           
+                        </div>
+                    
                  </div>
                 }
 
@@ -409,7 +420,7 @@ export default class Repayment extends React.Component {
                     <input id="NotifyURL" name="NotifyURL" value={earlyPay.notifyURL} type="hidden" />
                     <input id="SignInfo" name="SignInfo" value={earlyPay.signInfo} type="hidden" />
                 </form>
-              </Spin>
+              
             </div>
         )
     }

@@ -4,7 +4,7 @@ import COS from 'cos-js-sdk-v5';
 import {Link, Route,Switch, Redirect } from 'dva/router';
 
 import { connect } from 'dva';
-import { CommonService, personal } from '../services/api';
+import { CommonService, personal,socketUrl } from '../services/api';
  
 import Path from '../common/PagePath';
 import HowLoan from '../view/howLoan/HowLoan';  
@@ -15,6 +15,8 @@ import UCenter from './UCenter';
 import Login from '../view/login/login';
 import ForgetPassWord from '../view/forgetPassWord/forgetPassWord';
 import Register from '../view/regiser/register';
+import io from 'socket.io-client';
+import {message,notification,Icon} from 'antd';
  
 import '../assets/common/index';
  
@@ -29,6 +31,7 @@ export default class HomePage extends React.Component {
   }
 
   componentDidMount() {
+    // this.getuserUuid();
     // 判断有没有token请求获取用户基础数据
     if (localStorage.getItem('accessTokenCompany')) {
       this.getUserBaseData();
@@ -57,6 +60,36 @@ export default class HomePage extends React.Component {
     if (response.code === 0) {
       this.props.dispatch({type: 'login/saveLoadingDataAfter', response: response.data})
     }
+  }
+
+  async getuserUuid() {
+    const response = await personal.getuserID();
+    if (response.code === 0) {
+     localStorage.setItem('userid',response.data)
+     this.socketConn();    //socket  mast userid
+    } else {
+      message.error(response.msg);
+    }
+  }
+
+  socketConn(){
+    let that=this;
+    const socket = io(socketUrl+localStorage.getItem('userid'));  //指定后台的url地址  在service  api 中统一修改  打包记得替换
+    socket.on('connect', function () {
+      console.log('socket connect')
+     });
+     socket.on('disconnect', function () {
+       console.log('socket again  connect')
+       that.socketConn();
+     });
+     socket.on('chat', function (data) {
+       
+      notification.open({
+        icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+        message: data.data.busType,
+        description: data.data.message,
+      });
+     });
   }
 
   render() {

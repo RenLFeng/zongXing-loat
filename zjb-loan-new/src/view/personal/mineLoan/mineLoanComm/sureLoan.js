@@ -9,7 +9,7 @@ import React from 'react';
 import './sureloan.scss';
 import {connect} from 'dva';
 import {parseTime, returnFloat} from '../dateformat/date';
-import { Table, message,Input, Spin,Modal } from 'antd';
+import { Table, message,Input, Spin,Modal,Button } from 'antd';
 import {mineloan} from '../../../../services/api';
 const { TextArea } = Input;
 
@@ -25,7 +25,10 @@ class SureLoan extends React.Component{
             loading: false,
             visible:false,
             code:'',
-            Loading:false
+            Loading:false,
+            reason:'',
+            show:true,
+            showModal:true
         }
     }
 
@@ -61,28 +64,46 @@ class SureLoan extends React.Component{
     }
 
     async getSignMessage(){
-         this.setState({visible:true,Loading:true})
          const res = await mineloan.getSign(this.props.suredata.fid);
          this.setState({Loading:false})
          if(res.code === 0 ){
-           
-         } else {
+            this.setState({visible:true})
+         } else if(res.code === 2){
+             this.setState({showModal:false},()=>{
+                this.agreeOrUnagree(1)
+             })
+            
+         }else {
            res.msg && message.error(res.msg)
          }
        }
 
     async agreeOrUnagree(statu){
-        const {suredata, bzInfo} = this.state;
-        console.log(suredata,bzInfo,'suredata')
-        if(this.state.code.trim().length < 4){
-          message.info('请输入合法的验证码')
-          return;
+        const {suredata, bzInfo,reason} = this.state;
+        if(this.state.showModal){
+            if(statu === 1){
+                if(this.state.code.trim().length < 6){
+                    message.info('请输入合法的验证码')
+                    return;
+                  }
+            }
         }
-        let data = {
+        
+        let data = {};
+        if(statu === 0){
+           data = {
+            remark: reason,
+            isPass: statu,
+            projectId: this.props.suredata.fid,
+            chickCode:this.state.code
+           }
+        } else {
+           data = {
             remark: bzInfo,
             isPass: statu,
             projectId: this.props.suredata.fid,
             chickCode:this.state.code
+            }
         }
         if([0,-1].includes(statu)){
             if(data.remark === ''){
@@ -101,7 +122,7 @@ class SureLoan extends React.Component{
         let res = await mineloan.isAgreeBorrow(data);
         if(res.code === 0){
             this.getNewInfo();
-            this.setState({loading: false,visible:false})
+            this.setState({loading: false,visible:false,show:true})
         }else{
             this.setState({loading: false})
         }
@@ -161,46 +182,59 @@ class SureLoan extends React.Component{
           ];
         const {fname,fproject_no,fflag} = this.props.suredata;
         return(
-            <div className="sure-loan">
-                <p>项目编号:<span>{fproject_no}</span></p>
-                <p>项目名称:<span>{fname}</span></p>
-                <div className="table-bg">
-                    <Table
-                        bordered size="small"
-                        locale={locale}
-                        pagination={false}
-                        dataSource={[this.state.suredata]}
-                        columns={columns}
-                        rowClassName="editable-row"
-                        // loading={this.state.loading}
-                    />
-                </div>
-                <Spin spinning={this.state.loading}>
-                    <span>备注:</span>
-                    <TextArea placeholder="备注" value={this.state.bzInfo} onChange={(e) =>{ this.setState({bzInfo: e.target.value})} } autosize={{ minRows: 2, maxRows: 4 }} />
-                    <div className="ac-button">
-                        <a className="agree" onClick={()=>this.getSignMessage()}>同意</a>
-                        <a className="unagree" onClick={()=>this.agreeOrUnagree(0)}>不同意</a>
-                        <a className="stop" onClick={()=>this.agreeOrUnagree(-1)}>终止项目</a>
+            <div>
+                {
+                    this.state.show ? 
+                    <div className="sure-loan">
+                    <p>项目编号:<span>{fproject_no}</span></p>
+                    <p>项目名称:<span>{fname}</span></p>
+                    <div className="table-bg">
+                        <Table
+                            bordered size="small"
+                            locale={locale}
+                            pagination={false}
+                            dataSource={[this.state.suredata]}
+                            columns={columns}
+                            rowClassName="editable-row"
+                        />
                     </div>
-                </Spin>
+                    <Spin spinning={this.state.loading}>
+                        <span>备注:</span>
+                        <TextArea placeholder="备注" value={this.state.bzInfo} onChange={(e) =>{ this.setState({bzInfo: e.target.value})} } autosize={{ minRows: 2, maxRows: 4 }} />
+                        <div className="ac-button">
+                            <a className="agree" onClick={()=>this.getSignMessage()}>同意</a>
+                            <a className="unagree" onClick={()=>this.setState({show:false})}>不同意</a>
+                            <a className="stop" onClick={()=>this.agreeOrUnagree(-1)}>终止项目</a>
+                        </div>
+                    </Spin>
 
-                <Modal
-                    title="验证"
-                    visible={this.state.visible}
-                    confirmLoading={this.state.loading}
-                    onOk={this.agreeOrUnagree.bind(this,1)}
-                    onCancel={this.hideModal.bind(this)}
-                    okText="确认"
-                    cancelText="取消"
-                    maskClosable={false}
-                >
-                    <div>
-                        <span>验证码：</span>
-                        <Input style={{width:'30%'}} placeholder="请输入验证码" onChange={(e)=>this.onchange(e.target.value)} value={this.state.code} maxLength={6}/>
-                    </div> 
-                </Modal>
+                    <Modal
+                        title="验证"
+                        visible={this.state.visible}
+                        confirmLoading={this.state.loading}
+                        onOk={this.agreeOrUnagree.bind(this,1)}
+                        onCancel={this.hideModal.bind(this)}
+                        okText="确认"
+                        cancelText="取消"
+                        maskClosable={false}
+                    >
+                        <div>
+                            <span>验证码：</span>
+                            <Input style={{width:'30%'}} placeholder="请输入验证码" onChange={(e)=>this.onchange(e.target.value)} value={this.state.code} maxLength={6}/>
+                        </div> 
+                    </Modal>
+
+                </div>  :
+                <div className="disagreen">
+                <TextArea placeholder="请输入不同意原因 （不同意超过3次，将自动终止项目）"  onChange={(e) =>{ this.setState({reason: e.target.value})} } autosize={{ minRows: 4, maxRows: 6 }} rows={4}/>
+                    <p className="btnBox">
+                        <Button onClick={()=>this.setState({show:true,reason:''})}>取消</Button>
+                        <Button type="primary"  onClick={()=>this.agreeOrUnagree(0)} loading={this.state.loading}>提交</Button>
+                    </p>
+                </div>
+                }    
             </div>
+            
         )
     }
 }

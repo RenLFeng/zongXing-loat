@@ -21,7 +21,7 @@ export default class Loaninfo extends React.Component {
             modalWidth: 500,
 
             commissionShow:false,
-            data:{},
+            data:[],
             commisson:{},   //表单提交返回的数据
             loading:false
         }
@@ -88,22 +88,27 @@ export default class Loaninfo extends React.Component {
         this.setState({
          commissionShow:false,
         })
-       } else {
+       } else if (res.data.length > 0) {
            this.setState({
              commissionShow:true,
              data:res.data
            },()=>{this.props.getcommision(this.state.commissionShow)})
+       } else {
+        this.setState({
+            commissionShow:false,
+           })
        }
     } else {
         res.msg && message.error(res.msg)
     }
 }
 
-    async commission(){
+    async commission(id){
         let param = {
-            billId:this.state.data.billId,
+            billId:id,
             notifyUrl:PERSONAL_PAGE
         }
+        console.log(param);
         this.setState({loading:true})
         const res = await baseService.putCommission(param);
         console.log('缴费佣金',res);
@@ -158,14 +163,20 @@ export default class Loaninfo extends React.Component {
                                  this.state.data.map((item,index)=>{
                                     return (
                                        <div className="commission_content">
-                                            <p ><span style={{color:'#999'}}>佣金金额：</span><span style={{color:'#0063FF',marginLeft:10,display:'inline-block'}}>￥{item.kickbackAmount}</span></p>
-                                            <p style={{color:'#999'}}><span >项目编号：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectNo}</span></p>
-                                            <p style={{color:'#999'}}><span >项目名称：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectName}</span></p>
-                                            <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{marginLeft:10,color:'#333'}}>{item.loanAmount}</span></p>
-                                            <p style={{color:'#999'}}><span >项目评级：</span><span style={{marginLeft:10,color:'#333'}}>{item.projectLevel}</span></p>
-                                            <p style={{color:'#999'}}><span >佣金费率：</span><span style={{marginLeft:10,color:'#333'}}>{item.kickbackRate}</span></p>
+                                           <div style={{marginBottom:20}}>
+                                                <p style={{color:'#999'}}><span >项目编号：</span><span style={{color:'#333'}}>{item.projectNo}</span></p>
+                                                <p style={{color:'#999'}}><span >项目名称：</span><span style={{color:'#333'}}>{item.projectName}</span></p>
+                                           </div>
                                             
-                                            <Button type="primary" onClick={()=>{this.commission()}} loading={this.state.loading}>提交</Button>
+                                            <div>
+                                                <p><span style={{color:'#999'}}>佣金金额：</span><span style={{color:'#0063FF',display:'inline-block',marginLeft:10}}>￥{item.kickbackAmount}</span></p>
+                                                <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{color:'#333',marginLeft:10}}>{item.loanAmount}</span></p>
+                                                <p style={{color:'#999'}}><span >项目评级：</span><span style={{color:'#333',marginLeft:10}}>{item.projectLevel}</span></p>
+                                                <p style={{color:'#999'}}><span >佣金费率：</span><span style={{color:'#333',marginLeft:10}}>{item.kickbackRate}</span></p>
+                                            </div>
+                                            
+                                            
+                                            <Button type="primary" onClick={()=>{this.commission(item.billId)}} loading={this.state.loading}>提交</Button>
                                         </div>
                                     )
                                  }) : null

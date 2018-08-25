@@ -67,7 +67,7 @@ export default class LeftMenu extends React.Component {
     const {param} = this.props;
     const path = param.location.pathname;
     return (
-        <div className="personal-left-menu" >
+        <div className="personal-left-menu" style={{zIndex:999}} >
           <ul>
              <li>
                 <span>

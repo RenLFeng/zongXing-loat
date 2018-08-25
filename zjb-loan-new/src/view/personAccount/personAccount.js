@@ -434,8 +434,7 @@ export default class PersonAccount extends React.Component {
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
     const { userSecurityCenter } = this.props.baseData;
     const { data, dataSource, paymentParam } = this.state;
-
-    console.log('this.props.personal',this.props.personal.myBorrowVo)
+    console.log('11111111',myBorrowVo)
     return (
       <div>
         <LeftMenu param={this.props} />
@@ -450,73 +449,73 @@ export default class PersonAccount extends React.Component {
             <span >{`${currentBorrowAmount.sumInterestOut}`.fm()} </span>
             <i>累计借款金额</i>
             <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
-              {userSecurityCenter.faccountBind && userSecurityCenter.fidcardBind?
-                  <div className="to-loan" style={{ cursor: 'pointer' }} onClick={() => { this.props.history.push(Path.APPALY_LOAN) }}>
-                    <span></span> 申请借款
-                    </div>
-                : 
-                <Tooltip title="您还未实名认证">
-                  <div className={'to-loan-un'} >
-                    <span></span> 申请借款
-                  </div>
-                </Tooltip>
+
+              {
+                !myBorrowVo || (myBorrowVo&&myBorrowVo.fflag === 88) || (myBorrowVo&&myBorrowVo.fflag === 16) || (myBorrowVo&&myBorrowVo.fflag === -3) || (myBorrowVo&&myBorrowVo.fflag === -1) ?
+              ((userSecurityCenter.faccountBind && userSecurityCenter.fidcardBind) ?
+                <div className="to-loan" style={{ cursor: 'pointer' }} onClick={() => { this.props.history.push(Path.APPALY_LOAN) }}>
+                  <span></span> 申请借款
+                </div>
+              : 
+              <Tooltip title="您还未实名认证">
+                <div className={'to-loan-un'} >
+                  <span></span> 申请借款
+                </div>
+              </Tooltip>):
+                null 
               }
           </div>
         </div>
         {recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
           
-          <Spin spinning={this.state.loading}>
              <div className="per_account">
-            <div className="ptit">
+              <div className="ptit">
 
-              <i>近期还款</i>
-            </div>
-            <div className="recent-repany" >
+                <i>近期还款</i>
+              </div>
+              <div className="recent-repany" >
 
-              <p className='title'>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
-              {
-                recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
-                  recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
-                    return <div key={index}>
-                      <p className='title'></p>
-                      <div className='repany-content '>
-                        <span className='txt1'>{this.format(item.forPayTime)}</span>
-                        <span className='txt2'>待还款</span>
-                        <span className='txt3'>{item.fsort}/{myBorrowVo.fcreditMonth}期</span>
-                        <span className='txt4'>|</span>
-                        <span className='txt5'>￥{item.borrowInterest}</span>
-                        <span className='txt6'>本金：{item.principal}</span>
-                        <span className='txt7'>利息：{item.interest}</span>
+                <p className='title'>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
+                {
+                  recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
+                    recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
+                      return <div key={index}>
+                        <p className='title'></p>
+                        <div className='repany-content '>
+                          <span className='txt1'>{this.format(item.forPayTime)}</span>
+                          <span className='txt2'>待还款</span>
+                          <span className='txt3'>{item.fsort}/{myBorrowVo.fcreditMonth}期</span>
+                          <span className='txt4'>|</span>
+                          <span className='txt5'>￥{item.borrowInterest}</span>
+                          <span className='txt6'>本金：{item.principal}</span>
+                          <span className='txt7'>利息：{item.interest}</span>
+                          {
+                            item.overdueMoney <= 0 ? '' : <span className='txt8'> 逾期：{item.overdueMoney}</span>
+                          }
+                          {/* <span className='txt8'>逾期：{item.overdueMoney <= 0 ? '' : item.overdueMoney}</span> */}
+                          <a className='hand-repay' onClick={() => { this.repayment(item) }}>手动还款</a>
+                        </div>
                         {
-                          item.overdueMoney <= 0 ? '' : <span className='txt8'> 逾期：{item.overdueMoney}</span>
+                          item.overdueMoney > 0 ? <div>
+                            <div className='sub-content'>
+                              <span className='txt1'>{this.formatNewDate(item.forPayTime)}</span>
+                              <span className='txt2'>本笔还款已逾期</span>
+                              <span className='txt3'>{'{' + item.overdue + '}'}</span>
+                              <span className='txt2'>天，逾期费用</span>
+                              <span className='txt3'>{'{' + item.overdueMoney + '元}'}</span>
+                              <span className='txt2'>，为了不影响您的征信，请及时还款</span>
+                            </div>
+                            <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
+                          </div> : ''
                         }
-                        {/* <span className='txt8'>逾期：{item.overdueMoney <= 0 ? '' : item.overdueMoney}</span> */}
-                        <a className='hand-repay' onClick={() => { this.repayment(item) }}>手动还款</a>
                       </div>
-                      {
-                        item.overdueMoney > 0 ? <div>
-                          <div className='sub-content'>
-                            <span className='txt1'>{this.formatNewDate(item.forPayTime)}</span>
-                            <span className='txt2'>本笔还款已逾期</span>
-                            <span className='txt3'>{'{' + item.overdue + '}'}</span>
-                            <span className='txt2'>天，逾期费用</span>
-                            <span className='txt3'>{'{' + item.overdueMoney + '元}'}</span>
-                            <span className='txt2'>，为了不影响您的征信，请及时还款</span>
-                          </div>
-                          <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
-                        </div> : ''
-                      }
-                    </div>
-
-                  }) : ''
-              }
-
-            </div>
-          </div> 
-          </Spin>
+                    }) : ''
+                }
+              </div>
+            </div> 
          : null}
 
-        {myBorrowVo.fflag === 0?
+        { myBorrowVo && myBorrowVo.fflag !== 88?
           <div className="per_account">
             <div className="ptit">
               <i>我的借款</i>

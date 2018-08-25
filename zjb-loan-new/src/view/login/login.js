@@ -54,11 +54,11 @@ export default class Login extends React.Component {
     loginPhone = loginPhone.trim();
     loginPwd = loginPwd.trim();
     if (loginPhone.length === 0) {
-      loginPhone.warning('登录手机号不能为空');
+      message.warning('登录手机号不能为空');
       return;
     }
     if (loginPwd.length === 0) {
-      loginPwd.warning('登录密码不能为空');
+      message.warning('登录密码不能为空');
       return;
     }
     const login = {

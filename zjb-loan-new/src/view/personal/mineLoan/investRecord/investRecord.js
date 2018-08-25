@@ -51,7 +51,7 @@ class InvestRecord extends React.Component{
             investData.map((item,index) => {
                 console.log(item);
                 list.push(<Row className="record-row-tc re-content" key={index}>
-                <Col span={8}>{item.userName}</Col>
+                <Col span={8}>{item.userName.substr(0,3)+'****'+item.userName.substr(7)}</Col>
                 <Col span={8}>￥{returnff(item.money)}</Col>
                 <Col span={8}>{parseTime(item.ftime,'{y}-{m}-{d} {h}:{i}')}</Col></Row>)
             })

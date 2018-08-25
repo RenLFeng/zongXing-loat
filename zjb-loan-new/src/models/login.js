@@ -98,6 +98,7 @@ export default {
         },
       });
       localStorage.removeItem('accessTokenCompany');
+      localStorage.removeItem('userid');
       yield put({
         type: 'account/clearData',
       });
@@ -121,6 +122,7 @@ export default {
         },
       });
       localStorage.removeItem('accessTokenCompany');
+      localStorage.removeItem('userid');
     },
     *changeNickName({payload}, { put }) {
       yield put({

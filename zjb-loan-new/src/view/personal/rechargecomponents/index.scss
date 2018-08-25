@@ -22,12 +22,15 @@
           padding: 25px;
           background-color: #fffdf8;
           box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        //   position: relative;
           P{
               display: inline-block;
               margin-right: 30px;
           }
           Button{
-              float:right;
+            margin-left: 1065px;
+            float: right;
+            top: -35px;
           }
         }
     }

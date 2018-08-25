@@ -1,12 +1,17 @@
 import {req} from '../utils/request'; 
   
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
+export const socketUrl='http://192.168.1.30:8899?clientId='  //socket url  打包记得替换
 
 
 //通用service
 export const CommonService = {
     getPicAuth: async (param) => req.get('/common/sign', param)
 };
+
+
+
+  
 //优惠券service
 export const CouponService = {
     getCouponCount: async ()=> req.get('/coupon/inv/MyCoupon/count'),
@@ -204,6 +209,9 @@ export const personal = {
      //发优惠券获取项目信息
      couponGetProject: async () => req.get('/project/getMyLoaningProject'),
 
+     //获取用户id
+     getuserID :async () => req.get('/account/userid'),
+
 
 }
     
@@ -268,6 +276,10 @@ export const mineloan = {
     //提交完善信息
     commitwsInfo: (param) => req.post('/projectApproval/subPendRelease', param),
     getSign : (param)  => req.get(`/cfca/loan/sendMessage?projectId=${param}`),
+
+
+    //借款人姓名身份证号校验
+    checkUserInfo : async(param) => req.post(`jh/authIdCard`,param)
       
 
 }
