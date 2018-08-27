@@ -432,6 +432,7 @@ export default class PersonAccount extends React.Component {
     ];
     // 当前借款金额  近期还款  我的借款  账户金额  资金动态
     const { currentBorrowAmount, recentForRepanymentVo, myBorrowVo, companyTotalAssetsVo, accountDynamicVos } = this.props.personal;
+    let accountDynamicVos_ = accountDynamicVos.slice(0,2)
     const { userSecurityCenter } = this.props.baseData;
     const { data, dataSource, paymentParam } = this.state;
     console.log('11111111',myBorrowVo)
@@ -493,7 +494,10 @@ export default class PersonAccount extends React.Component {
                             item.overdueMoney <= 0 ? '' : <span className='txt8'> 逾期：{item.overdueMoney}</span>
                           }
                           {/* <span className='txt8'>逾期：{item.overdueMoney <= 0 ? '' : item.overdueMoney}</span> */}
-                          <a className='hand-repay' onClick={() => { this.repayment(item) }}>手动还款</a>
+                          {
+                            item.canPay ? <a className='hand-repay' onClick={() => { this.repayment(item) }}>手动还款</a> : null
+                          }
+                          
                         </div>
                         {
                           item.overdueMoney > 0 ? <div>
@@ -581,11 +585,12 @@ export default class PersonAccount extends React.Component {
         <div className="per_account">
           <div className="ptit">
             <i>资金动态</i>
+            <div style={{display:'inline-block',float:'right',color:'#ccc',cursor:'pointer'}} onClick={()=>this.props.history.push('/index/uCenter/accountstatement')}>更多>></div>
           </div>
           <div className="my-statement" style={{ paddingTop: 20 }}>
             {
-              accountDynamicVos.length > 0 ?
-                accountDynamicVos.map((item, index) => {
+              accountDynamicVos_.length > 0 ?
+                accountDynamicVos_.map((item, index) => {
                   return <Statement data={item} key={index}></Statement>
                 }) :
                 <span className="no-statement">暂无资金动态</span>

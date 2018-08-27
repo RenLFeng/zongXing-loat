@@ -319,12 +319,8 @@ export default class Repayment extends React.Component {
                                                         data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
                                                     }
                                                     </span>
-                                                    {/* {
-                                                        index>0 && data[index-1].canPay ? 
-                                                        null :  */}
-                                                         <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span> 
-                                                    {/* } */}
-                                                      
+                                                    <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span> 
+                                                    
                                                     {
                                                         data.overdueMoney > 0 ?
                                                         <p className="info_" >
