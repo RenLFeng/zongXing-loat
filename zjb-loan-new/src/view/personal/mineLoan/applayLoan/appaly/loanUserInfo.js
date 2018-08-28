@@ -25,8 +25,11 @@ const RequireLabel = ({ children, notRequire }) => (
 class Loaninfo extends React.Component {
   state = {
     width: '100%',
-    cityList: []
+    cityList: [],
+    idArr:[],
+    judgeArr: ['','','','']
   };
+
   data = {
     className: "ant-upload",
     type: "images/",
@@ -42,19 +45,19 @@ class Loaninfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.num !== nextProps.num) {
-      if (this.props.visible) {
-        
-      }
-    }
+     if(nextProps.data){
+      this.state.judgeArr[0] = nextProps.data.fidcard_no;
+      this.state.judgeArr[1] = nextProps.data.tlo1Idcard;
+      this.state.judgeArr[2] = nextProps.data.tlo2Idcard;
+      this.state.judgeArr[3] = nextProps.data.tlo3Idcard;
+     }
   }
+
   // 处理组件内的数据 传递给上层组建
   getChildData = () => {
     let val = null;
     this.props.form.validateFieldsAndScroll((error, values) => {
       if (!error) {
-        // submit the values
-        console.log('values111111111',values)
         values.fother_pic_json = typeof values.fother_pic_json !== 'string' ? JSON.stringify(values.fother_pic_json) : values.fother_pic_json;
         values.fdeal_log = typeof values.fdeal_log !== 'string' ? JSON.stringify(values.fdeal_log) : values.fdeal_log;
         values.fcredit_report = typeof values.fcredit_report !== 'string' ? JSON.stringify(values.fcredit_report) : values.fcredit_report;
@@ -112,6 +115,22 @@ class Loaninfo extends React.Component {
         this.props.changeOldData(val, 'SAVE');
     }
   }
+
+  checkId(val, index){
+      let flag = false;
+      this.state.judgeArr[index] = val;
+      for (let i = 0 ; i < this.state.judgeArr.length; i++) {
+          if (i == index) {
+             continue;
+          }
+          if (this.state.judgeArr[i] && val == this.state.judgeArr[i]) {
+            message.warning('身份证号重复');
+            this.props.idRepeat()
+          }
+      }
+      this.props.idnoRepeat()
+  }
+
   render() {
     const { form, dispatch, submitting, data } = this.props;
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;
@@ -145,7 +164,7 @@ class Loaninfo extends React.Component {
                     pattern: ID_CORD, message: '请填写正确的身份证号码'
                   }],
                 })(
-                  <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={22} />
+                  <Input placeholder="请输入" size='large' style={{ width: '302px', fontSize: '14px' }} maxLength={22} onBlur={(e)=>this.checkId(e.target.value, 0)}/>
                 )}
               </Form.Item>
             </Col>
@@ -181,8 +200,9 @@ class Loaninfo extends React.Component {
               <Form.Item {...formItemLayoutUser} label={<RequireLabel>婚姻情况</RequireLabel>}>
                 {getFieldDecorator('fmarriage', {
                   initialValue: data.fmarriage ? data.fmarriage.toString() : '0',
+                 
                 })(
-                  <Select size='large' style={{ width: '302px', fontSize: '14px' }}>
+                  <Select size='large' style={{ width: '302px', fontSize: '14px' }} >
                     <Select.Option value="0">未婚</Select.Option>
                     <Select.Option value="1">已婚</Select.Option>
                     <Select.Option value="2">离异</Select.Option>
@@ -309,7 +329,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300,fontSize: '14px'}} size='large'  placeholder="身份证号" maxLength={20} />)}
+                  })(<Input style={{ width: 300,fontSize: '14px'}} size='large'  placeholder="身份证号" maxLength={20} onBlur={(e)=>this.checkId(e.target.value, 1)}/>)}
                 </Form.Item>
 
               </div>
@@ -326,9 +346,9 @@ class Loaninfo extends React.Component {
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
                   {getFieldDecorator('fRelation1', {
-                    initialValue: data.tlo1relation ? data.tlo1relation : '',
+                    initialValue: data.tlo1relation ? data.tlo1relation : undefined,
                   })(
-                    <Select size='large'  style={{ width: '200px'}}>
+                    <Select size='large'  style={{ width: '200px'}} placeholder="请选择">
                       <Select.Option value="配偶">配偶</Select.Option>
                       <Select.Option value="父亲">父亲</Select.Option>
                       <Select.Option value="母亲">母亲</Select.Option>
@@ -358,7 +378,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300,fontSize: '14px' }} size='large'  placeholder="身份证号" maxLength={20} />)}
+                  })(<Input style={{ width: 300,fontSize: '14px' }} size='large'  placeholder="身份证号" maxLength={20} onBlur={(e)=>this.checkId(e.target.value, 2)}/>)}
                 </Form.Item>
 
               </div>
@@ -375,9 +395,9 @@ class Loaninfo extends React.Component {
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
                   {getFieldDecorator('fRelation2', {
-                    initialValue: data.tlo2relation ? data.tlo2relation : '',
+                    initialValue: data.tlo2relation ? data.tlo2relation : undefined,
                   })(
-                    <Select style={{ width: '200px',fontSize: '14px' }} size='large' placeholder="请选择社会关系" >
+                    <Select style={{ width: '200px',fontSize: '14px' }} size='large' placeholder="请选择" >
                       <Select.Option value="同事">同事</Select.Option>
                       <Select.Option value="上下游供应商">上下游供应商</Select.Option>
                       <Select.Option value="合伙人">合伙人</Select.Option>
@@ -404,7 +424,7 @@ class Loaninfo extends React.Component {
                     rules: [{
                       pattern: ID_CORD, message: '请填写正确的身份证号码'
                     }],
-                  })(<Input style={{ width: 300,fontSize: '14px' }} size='large'  placeholder="身份证号" maxLength={20} />)}
+                  })(<Input style={{ width: 300,fontSize: '14px' }} size='large'  placeholder="身份证号" maxLength={20} onBlur={(e)=>this.checkId(e.target.value, 3)}/>)}
                 </Form.Item>
 
               </div>
@@ -421,9 +441,9 @@ class Loaninfo extends React.Component {
               <div style={{ width: '25%', }}>
                 <Form.Item layout="inline" style={{ marginTop: 41 }} >
                   {getFieldDecorator('fRelation3', {
-                    initialValue: data.tlo3relation ? data.tlo3relation : '',
+                    initialValue: data.tlo3relation ? data.tlo3relation : undefined,
                   })(
-                    <Select style={{ width: '200px',fontSize: '14px' }} size='large' placeholder="请选择社会关系" >
+                    <Select style={{ width: '200px',fontSize: '14px' }} size='large' placeholder="请选择" >
                       <Select.Option value="朋友">朋友</Select.Option>
                       <Select.Option value="其他">其他</Select.Option>
                     </Select>

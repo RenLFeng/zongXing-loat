@@ -307,7 +307,7 @@ export function getTime(time){
 
 //筹款进度
 export function loanDelay(money1, money2){
-   let jindu = Math.floor((money2 / money1) * 100 / 100) * 100;
+   let jindu = Math.floor((money2 / money1) * 100);
    if(jindu === 0){
        if(money2 !== 0){
            jindu = 1;

@@ -1,7 +1,7 @@
 import {req} from '../utils/request'; 
   
 export const POSITION_KEY = 'd5bf6909751ae65e4406e1bf656ecb59'; // 高德地图key
-export const socketUrl='http://192.168.1.30:8899?clientId='  //socket url  打包记得替换
+export const socketUrl='http://192.168.1.4:8899?clientId='  //socket url  打包记得替换
 
 
 //通用service

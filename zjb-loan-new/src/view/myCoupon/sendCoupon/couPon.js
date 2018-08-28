@@ -647,7 +647,7 @@ class SendCoupon extends React.Component{
                                 {
                                     deiladdress.length < 6  && deiladdress.length > 0? 
                                      <p className="error-imput" style={{paddingLeft: '82px'}}> 详细信息请具体到门牌号</p> : 
-                                     (phone.length > 0 && !VER_PHONE.test(phone)&& !/0\d{2}-\d{7,8}/.test(phone)) ? 
+                                     (phone.length > 0 && !VER_PHONE.test(phone)&& !/0\d{2,3}-\d{7,8}/.test(phone)) ? 
                                      <p className="error-imput" style={{paddingLeft: '82px'}}>联系电话格式不正确</p> :
                                      <p className="error-imput" style={{paddingLeft: '82px'}}></p>
                                 }

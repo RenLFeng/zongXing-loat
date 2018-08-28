@@ -71,6 +71,7 @@ export default class Login extends React.Component {
       payload: login
     })
   }
+  
 // 判断  手机号是否已被注册过
   async checkPhone(e) {
     let loginPhone = e.target.value.trim();

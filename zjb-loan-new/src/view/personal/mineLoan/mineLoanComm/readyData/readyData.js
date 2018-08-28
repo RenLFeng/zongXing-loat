@@ -230,7 +230,7 @@ class ReadyData extends React.Component{
                 dataIndex: 'frate_predict', 
                 key: 'frate_predict',
                 render: (text,record) =>{
-                    return <span>{sumFundraisingProgress(record.fcredit_money, record.invMoney)}%</span>
+                    return <span>{sumFundraisingProgress(record.fmoney_last, record.invMoney)}%</span>
                 } 
             }, 
             { 
