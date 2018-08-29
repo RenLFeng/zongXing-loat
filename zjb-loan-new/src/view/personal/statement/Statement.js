@@ -33,6 +33,7 @@ class Statement extends React.Component {
     //1405：还款
     //1404：投资 
     render() { 
+        console.log('this.state.data',this.state.data)
         return (  
             <div className='cp-sm'>
                <div className='sm-left'> 

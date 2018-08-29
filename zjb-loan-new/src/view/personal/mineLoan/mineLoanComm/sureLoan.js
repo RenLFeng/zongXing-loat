@@ -67,12 +67,12 @@ class SureLoan extends React.Component{
          const res = await mineloan.getSign(this.props.suredata.fid);
          this.setState({Loading:false})
          if(res.code === 0 ){
+            message.info('验证码已发送')
             this.setState({visible:true})
          } else if(res.code === 2){
              this.setState({showModal:false},()=>{
                 this.agreeOrUnagree(1)
-             })
-            
+           }) 
          }else {
            res.msg && message.error(res.msg)
          }
@@ -88,7 +88,6 @@ class SureLoan extends React.Component{
                   }
             }
         }
-        
         let data = {};
         if(statu === 0){
            data = {

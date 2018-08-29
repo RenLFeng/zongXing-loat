@@ -310,6 +310,7 @@ class NoLoan extends React.Component{
       }
     }
     render(){
+        console.log('datadatadatadatadata', this.props.data);
         const doing = [];
         // fflag = 其它
         const columns = [
@@ -504,7 +505,7 @@ class NoLoan extends React.Component{
                 dataIndex: ' ', 
                 key: ' ' ,
                 render: (text,record) =>{
-                    return <span>{loanDelay(record.fcredit_money,record.invMoney)}%</span>
+                    return <span>{loanDelay(record.fmoney_last,record.invMoney)}%</span>
                 } 
             },
             { 

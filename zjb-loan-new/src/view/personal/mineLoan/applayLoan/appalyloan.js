@@ -65,7 +65,9 @@ export default class Appalyloan extends React.Component {
       oldData: {
         hasUnfinishProject: true
       },
-      cityList: []
+      cityList: [],
+      checkFlag:false,
+      show:false
     };
   }
 
@@ -73,6 +75,18 @@ export default class Appalyloan extends React.Component {
     this.getBefore();
     this.getCityList();
     this.getOpenStatus()
+  }
+
+  //判断身份证号是否重复
+  idRepeat(){
+    this.setState({
+      checkFlag:true
+    })
+  }
+  idnoRepeat(){
+    this.setState({
+      checkFlag:false
+    })
   }
 
   async getOpenStatus() {
@@ -567,7 +581,23 @@ export default class Appalyloan extends React.Component {
     }
   }
 
+  commitCheck(){
+    let flag = false
+    let arr = [];
+    this.state.oldData.fidcard_no && arr.push(this.state.oldData.fidcard_no);
+    this.state.oldData.fIdcardNo1 && arr.push(this.state.oldData.fIdcardNo1);
+    this.state.oldData.fIdcardNo2 && arr.push(this.state.oldData.fIdcardNo2);
+    this.state.oldData.fIdcardNo3 && arr.push(this.state.oldData.fIdcardNo3);
+    let newArr = Array.from(new Set(arr));
+    if (arr.length > newArr.length) {
+      flag = true;
+      return flag;
+    }
+  }
+   
+
   async commitData() {
+    
     if (this.state.loading) {
       return;
     }
@@ -704,6 +734,11 @@ export default class Appalyloan extends React.Component {
         return;
       } 
     }
+    let flag = this.commitCheck();
+    if(this.state.checkFlag || flag){
+      message.error('借款人信息中所填身份证号不能相同');
+      return;
+    }
     this.setState({loading: true});
     const response = await baseService.commitInfo(data);
     this.setState({loading: false});
@@ -745,13 +780,13 @@ export default class Appalyloan extends React.Component {
                 <LoanInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.loanInfo = form} cityList={this.state.cityList} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} />
               </div>
               <div className={this.state.activeCode === 2 ? '' : 'hides'}>
-                <LoanUserInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.userInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} />
+                <LoanUserInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.userInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} idRepeat={this.idRepeat.bind(this)}  idnoRepeat={this.idnoRepeat.bind(this)}/>
               </div>
               <div className={this.state.activeCode === 3 ? '' : 'hides'}>
                 <LoanCompanyInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.companyInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} companyNo={this.state.companyNo} companyName={this.state.companyName}/>
               </div>
               <div className={this.state.activeCode === 4 ? '' : 'hides'}>
-                <LoanProInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.proInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} dataList={this.state.dataList} companyNo={this.state.companyNo}/>
+                <LoanProInfo loading={this.state.loading} hasUnfinishProject={this.state.oldData.hasUnfinishProject} wrappedComponentRef={form => this.proInfo = form} data={this.state.oldData} changeOldData={this.changeOldData} dataList={this.state.dataList} companyNo={this.state.companyNo} />
               </div>
             </React.Fragment>}
           <Modal

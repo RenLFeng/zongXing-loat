@@ -11,12 +11,12 @@ if (build === 'production') {
   document.title ="众借帮--客户测试环境";
 } else if (build === 'test') { 
   // 测试
-  BASE_URL = 'http://192.168.1.59:8001';
+  BASE_URL = 'http://192.168.1.4:8001';
   document.title ="众借帮--本地测试环境";
 } else if (build === 'local') {
   /*开发配置*/
-  BASE_URL = 'http://192.168.1.59:8001'; 
-  // BASE_URL = 'http://192.168.1.35:8001'; 
+  // BASE_URL = 'http://192.168.1.59:8001';
+  BASE_URL = 'http://192.168.1.30:8001'; 
   document.title ="众借帮（借款）--本地测试环境"; 
 } else if (build === 'ys') {
   BASE_URL = 'http://193.112.97.50:8001';

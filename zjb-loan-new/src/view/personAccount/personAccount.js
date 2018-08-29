@@ -331,7 +331,7 @@ export default class PersonAccount extends React.Component {
     if (this.state.loading)
       return;
     this.setState({ loading: true });
-    let data = [{projectId: val.project,forPayTime: val.forPayTime}]
+    let data = [{projectId: val.projectId,forPayTime: val.forPayTime}]
     const response = await baseService.manualReimpayment(encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`),data)
     console.log(response);
     this.setState({ loading: false });
