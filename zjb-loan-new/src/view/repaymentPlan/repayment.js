@@ -234,12 +234,13 @@ export default class Repayment extends React.Component {
                                               item.overdueMoney === 0 ? null : <span style={{color:'#ff3b35'}}>逾期费：<span style={{width:100,display:'inline-block'}}>{item.overdueMoney}</span></span>
                                           }
                                           {
-                                               item.overdueMoney === 0 ? 
-                                               <p className="info" >&nbsp;</p>: 
+                                               item.overdueMoney > 0 ?
                                                <p className="info" >
-                                                 <span className="date">{this.state.date}</span>
-                                                 <span style={{marginLeft:40}}>{item.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{item.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
-                                              </p>
+                                                    <span className="date">{this.state.date}</span>
+                                                    <span style={{marginLeft:40}}>{item.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{item.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{item.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                                </p> :
+                                               <p className="info" >&nbsp;</p> 
+                                               
                                           }
                                      
                                     </div>
@@ -354,6 +355,13 @@ export default class Repayment extends React.Component {
                                                         data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
                                                     }
                                                     </span>
+                                                    {
+                                                        data.overdueMoney > 0 ?
+                                                        <p className="info_" >
+                                                            <span className="date">{this.state.date}</span>
+                                                            <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
+                                                        </p> : null
+                                                    }
                                                     
                                                 </div> 
     

@@ -172,7 +172,7 @@ export default class Loaninfo extends React.Component {
                                                 <p><span style={{color:'#999'}}>佣金金额：</span><span style={{color:'#0063FF',display:'inline-block',marginLeft:10}}>￥{item.kickbackAmount}</span></p>
                                                 <p style={{color:'#999'}}><span >项目放款金额：</span><span style={{color:'#333',marginLeft:10}}>{item.loanAmount}</span></p>
                                                 <p style={{color:'#999'}}><span >项目评级：</span><span style={{color:'#333',marginLeft:10}}>{item.projectLevel}</span></p>
-                                                <p style={{color:'#999'}}><span >佣金费率：</span><span style={{color:'#333',marginLeft:10}}>{item.kickbackRate}</span></p>
+                                                <p style={{color:'#999'}}><span >佣金费率：</span><span style={{color:'#333',marginLeft:10}}>{item.kickbackRate}%</span></p>
                                             </div>
                                             
                                             
