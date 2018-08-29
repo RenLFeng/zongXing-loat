@@ -70,53 +70,55 @@ export default class Appalyloan extends React.Component {
   }
 
   componentDidMount() {
+    this.getBefore();
+    this.getCityList();
     this.getOpenStatus()
   }
 
   async getOpenStatus() {
     // 借款用户 账户总览信息 数据获取 存入redux
-   const response = await accountService.getPersonalData();
-   if (response.code === 0) {
-     this.props.dispatch({
-       type: 'personal/getPersonalAccount',
-       payload: response.data
-     })
-     this.props.dispatch({
-       type: 'personal/savePersonalStatus',
-       payload: {
-         openStatus: 1, // 开户成功 
-         openFailMsg: ''
-       }
-     })
-   } else if (response.code === -1 && response.msg === '该账户未开户') {
-     this.props.dispatch({
-       type: 'personal/savePersonalStatus',
-       payload: {
-         openStatus: -1, // 未开户 
-         openFailMsg: ''
-       }
-     })
-     this.props.history.push('/index/uCenter/openAccount');
-   } else if (response.code === -1 && response.msg === '该账户正在开户中') {
-     this.props.dispatch({
-       type: 'personal/savePersonalStatus',
-       payload: {
-         openStatus: 2, // 开户中 
-         openFailMsg: ''
-       }
-     })
-   } else if (response.code === -1 && response.msg === '该账户开户失败') {
-     this.props.dispatch({
-       type: 'personal/savePersonalStatus',
-       payload: {
-         openStatus: 0, // 开户失败 
-         openFailMsg: response.data
-       }
-     })
-   } else {
-     response.msg && message.error(response.msg);
-   }
- }
+    const response = await accountService.getPersonalData();
+    if (response.code === 0) {
+      this.props.dispatch({
+        type: 'personal/getPersonalAccount',
+        payload: response.data
+      })
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 1, // 开户成功 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户未开户') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: -1, // 未开户 
+          openFailMsg: ''
+        }
+      })
+      this.props.history.push('/index/uCenter/openAccount');
+    } else if (response.code === -1 && response.msg === '该账户正在开户中') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 2, // 开户中 
+          openFailMsg: ''
+        }
+      })
+    } else if (response.code === -1 && response.msg === '该账户开户失败') {
+      this.props.dispatch({
+        type: 'personal/savePersonalStatus',
+        payload: {
+          openStatus: 0, // 开户失败 
+          openFailMsg: response.data
+        }
+      })
+    } else {
+      response.msg && message.error(response.msg);
+    }
+  }
   
   handlerClcikLable(item) {
     let val = null; // 从子组件拿到的数据
@@ -126,7 +128,6 @@ export default class Appalyloan extends React.Component {
       return;
     }
     if (code == 1) {
-      console.log(this.loanInfo);
       val = this.loanInfo.getChildData();
     } else if (code == 2) {
       val = this.userInfo.getChildData();
@@ -135,12 +136,10 @@ export default class Appalyloan extends React.Component {
     } else if (code == 4) {
       val = this.proInfo.getChildData();
     }
-    console.log(val);
     if (val==null) {
       message.error('请检查填写内容')
       return;
     }
-    console.log('下层组件传来的值', val);
     this.setState({
       activeCode: item,
       oldData: {
@@ -150,19 +149,14 @@ export default class Appalyloan extends React.Component {
     });
   }
 
-  componentDidMount() {
-    this.getBefore();
-    this.getCityList();
-  }
+  
   // 获取数据
   async getBefore() {
     const response = await baseService.getLoanInfo();
-    console.log('获取上一次数据',response);
     if (response.code === 0) {
       const data = response.data;
       if (data.projectId) {
         const res = await baseService.getConfirmResult(data.projectId);
-        console.log('huoquqiyexinxi',res)
         if (res.data && res.code === 0) {
           this.setState({ message: res.data.fremark, ispass: res.data.ispass})
         }
@@ -176,7 +170,7 @@ export default class Appalyloan extends React.Component {
             ...data,
             hasUnfinishProject: false
           }
-        },console.log('companyName',this.state.companyName));
+        });
         return;
       }
       this.setState({
@@ -285,14 +279,11 @@ export default class Appalyloan extends React.Component {
     this.setState({loadingBefore: true});
     const response = await baseService.getBeforeProjectData();
     this.setState({loadingBefore: false, visible: false});
-    console.log(response);
     const data = response.data;
     if (response.code === 0) {
-      console.log('-------------', data.projectId);
       // 如果是回显之前项目的信息，需要获取驳回信息判断是否显示
       if (data.projectId) {
         const res = await baseService.getConfirmResult(data.projectId);
-        console.log(res);
         if (res.code === 0) {
           this.setState({ message: res.data.fremark})
         }
@@ -407,7 +398,6 @@ export default class Appalyloan extends React.Component {
       }
     },() => {
         if (type === 'SAVE') {
-
           this.saveData();
         } else if (type === 'COMMIT') {
           this.commitData();
@@ -417,7 +407,6 @@ export default class Appalyloan extends React.Component {
 
   packageData() {
     const oldData = this.state.oldData;
-    console.log(oldData);
     let arr = [
       {
         fid: null,
@@ -467,8 +456,6 @@ export default class Appalyloan extends React.Component {
       "上下游供应商":9,
       "合伙人":10,
     };
-    console.log('oldData', oldData);
-    console.log('oldData.frate_predict', oldData.frate_predict);
     const newData = {
       companyInfo: {
         fname: oldData.companyName,
@@ -564,7 +551,6 @@ export default class Appalyloan extends React.Component {
     this.setState({loading: true});
     const data = this.packageData();
     const response = await baseService.saveLoanInfo(data);
-    console.log(response);
     this.setState({loading: false});
     if (response.code === 0) {
       this.setState({
@@ -720,7 +706,6 @@ export default class Appalyloan extends React.Component {
     }
     this.setState({loading: true});
     const response = await baseService.commitInfo(data);
-    console.log(response);
     this.setState({loading: false});
     if (response.code === 0) {
       // message.info(response.msg);
