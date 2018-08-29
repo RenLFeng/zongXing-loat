@@ -9,6 +9,36 @@ import { baseService, accountService } from '../../../../services/api';
 import {message, Alert, Modal } from 'antd';
 import moment from 'moment';
 
+const modules = [
+  {
+    fid: 1,
+    ftitle: '我的自述',
+    fcontent: '',
+    fpictures: '',
+    ftype: 1
+  },
+  {
+    fid: 2,
+    ftitle: '我的项目',
+    fcontent: '',
+    fpictures: '',
+    ftype: 1
+  },
+  {
+    fid: 3,
+    ftitle: '为何众借',
+    fcontent: '',
+    fpictures: '',
+    ftype: 1
+  },
+  {
+    fid: 4,
+    ftitle: '还款计划',
+    fcontent: '',
+    fpictures: '',
+    ftype: 1
+  }
+];
 @connect(()=>({}))
 export default class Appalyloan extends React.Component {
   constructor(props) {
@@ -214,66 +244,8 @@ export default class Appalyloan extends React.Component {
           fRelation: data.tlo3relation ? data.tlo3relation : '',
         }],
         dataList: data.projectModules ? data.projectModules.length > 0 ? data.projectModules
-          : [
-            {
-              fid: 1,
-              ftitle: '我的自述',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 2,
-              ftitle: '我的项目',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 3,
-              ftitle: '为何众借',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 4,
-              ftitle: '还款计划',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            }
-          ]
-          : [
-            {
-              fid: 1,
-              ftitle: '我的自述',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 2,
-              ftitle: '我的项目',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 3,
-              ftitle: '为何众借',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 4,
-              ftitle: '还款计划',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            }
-          ]
+          : modules
+          : modules
       })
     } else if (response.code === -2) {
       this.setState({
@@ -302,6 +274,7 @@ export default class Appalyloan extends React.Component {
           this.setState({ message: res.data.fremark})
         }
       }
+      
       this.setState({
         companyNo: data.fsocial_credit_code,
         companyName: data.companyName,
@@ -329,66 +302,8 @@ export default class Appalyloan extends React.Component {
           fRelation: data.tlo3relation ? data.tlo3relation : '',
         }],
         dataList: data.projectModules ? data.projectModules.length > 0 ? data.projectModules
-          : [
-            {
-              fid: 1,
-              ftitle: '我的自述',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 2,
-              ftitle: '我的项目',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 3,
-              ftitle: '为何众借',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 4,
-              ftitle: '还款计划',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            }
-          ]
-          : [
-            {
-              fid: 1,
-              ftitle: '我的自述',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 2,
-              ftitle: '我的项目',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 3,
-              ftitle: '为何众借',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            },
-            {
-              fid: 4,
-              ftitle: '还款计划',
-              fcontent: '',
-              fpictures: '',
-              ftype: 1
-            }
-          ]
+          : modules
+          : modules
       });
     } else {
       response.msg && message.error(response.msg);
@@ -591,8 +506,8 @@ export default class Appalyloan extends React.Component {
     let newArr = Array.from(new Set(arr));
     if (arr.length > newArr.length) {
       flag = true;
-      return flag;
     }
+    return flag;
   }
    
 

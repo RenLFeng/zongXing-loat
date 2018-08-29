@@ -291,7 +291,6 @@ export default class Repayment extends React.Component {
                             <p style={{color:"#999999",marginTop:18}}><span>计划还款时间</span><span style={{float:"right"}}>实际还款时间</span></p>
                             {
                                 paymentArr.length > 0 ?
-                               
                                 paymentArr.map((data,index)=>{
                                     console.log('paymentArr',data,index,data[index])
                                     return(
@@ -330,7 +329,8 @@ export default class Repayment extends React.Component {
                                                         </p> : null
                                                     }
                                                     
-                                                </div> :
+                                                </div> 
+                                                :
                                                 <div className="repay_" key={index}> 
                                                     <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
                                                     {
@@ -376,7 +376,6 @@ export default class Repayment extends React.Component {
                     
                  </div>
                 }
-
 
                 <form ref={ref => this.formId = ref} id="form1" name="form1" action={repayInfo.submitURL} method="post" target="_blank">
                     <input id="Action" name="Action" value={repayInfo.action} type="hidden" />
