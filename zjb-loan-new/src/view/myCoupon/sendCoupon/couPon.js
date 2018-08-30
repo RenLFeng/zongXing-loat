@@ -310,6 +310,7 @@ class SendCoupon extends React.Component{
             })
             citys.push(item.cityna)
         })
+        console.log(invest)
         let param = {
             investorCoupon:{
                     fname: invest.name,
@@ -339,21 +340,26 @@ class SendCoupon extends React.Component{
         this.toSaveCou(param);
     }
     async toSaveCou(data){
-        this.setState({
-            loading: true
-        })
-        let res = await mineloan.saveCou(data);
-        if(res.code === 0){
-            this.setState({
-                loading: false
-            })
-            this.props.close();
-        }else{
-            message.error(res.msg);
-            this.setState({
-                loading: false
-            })
+        if(this.state.loading){
+           return
         }
+        // this.setState({
+        //     loading: true
+        // })
+        console.log('优惠券',data)
+        // let res = await mineloan.saveCou(data);
+        // if(res.code === 0){
+        //     this.setState({
+        //         loading: false
+        //     })
+        //     this.props.close();
+        // }else{
+        //     message.error(res.msg);
+        //     this.setState({
+        //         loading: false
+        //     })
+        // }
+        console.log('提交')
     }
 
     async saveAddress(){
@@ -434,7 +440,7 @@ class SendCoupon extends React.Component{
         let areaArr = [{fareaNo:this.state.areaCode,fareaName:this.state.area}];
         let radiogroup = [];
                 couCard.push(<Col span={12} className="send-coupon1" key="invest">
-                  <span className="num">{this.props.project.fprojectNo}</span>
+                  <span className="num" style={{left:0}}>{this.props.project.fprojectNo}</span>
                         <p className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>
@@ -516,7 +522,7 @@ class SendCoupon extends React.Component{
 
                 couCard.push(<Col className="send-coupon2" key="tourist">
                   
-                    <span className="num">{this.props.project.fprojectNo}</span>
+                    <span className="num" style={{left:0}}>{this.props.project.fprojectNo}</span>
                         <p  className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>

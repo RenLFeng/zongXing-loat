@@ -452,7 +452,7 @@ export default class PersonAccount extends React.Component {
             <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
 
               {
-                !myBorrowVo || (myBorrowVo&&myBorrowVo.fflag === 88) || (myBorrowVo&&myBorrowVo.fflag === 16) || (myBorrowVo&&myBorrowVo.fflag === -3) || (myBorrowVo&&myBorrowVo.fflag === -1) ?
+                !myBorrowVo || (myBorrowVo&&myBorrowVo.fflag === 88) || (myBorrowVo&&myBorrowVo.fflag === 16) || (myBorrowVo&&myBorrowVo.fflag === -3) || (myBorrowVo&&myBorrowVo.fflag === -1) || (myBorrowVo&&myBorrowVo.fflag === 0)?
               ((userSecurityCenter.faccountBind && userSecurityCenter.fidcardBind) ?
                 <div className="to-loan" style={{ cursor: 'pointer' }} onClick={() => { this.props.history.push(Path.APPALY_LOAN) }}>
                   <span></span> 申请借款
