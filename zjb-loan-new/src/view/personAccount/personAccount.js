@@ -115,7 +115,8 @@ export default class PersonAccount extends React.Component {
           }
         ]
       },
-      statements: []
+      statements: [],
+      loading:false
     };
   }
 
@@ -481,6 +482,7 @@ export default class PersonAccount extends React.Component {
                   recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
                     recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
                       return <div key={index}>
+                      <Spin spinning={this.state.loading}>
                         <p className='title'></p>
                         <div className='repany-content '>
                           <span className='txt1'>{this.format(item.forPayTime)}</span>
@@ -509,11 +511,16 @@ export default class PersonAccount extends React.Component {
                               <span className='txt3'>{'{' + item.overdueMoney + '元}'}</span>
                               <span className='txt2'>，为了不影响您的征信，请及时还款</span>
                             </div>
-                            <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
-                          </div> : ''
+                            
+                          </div> : null
                         }
+                        </Spin>
                       </div>
-                    }) : ''
+                    }) : null
+                }
+                 {
+                    recentForRepanymentVo.filter(item => item.overdueMoney).length > 0 ?
+                    <p className='chufa' style={{marginTop:15}}><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p> : null
                 }
               </div>
             </div> 

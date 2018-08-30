@@ -305,6 +305,7 @@ export default class Repayment extends React.Component {
                                     return(
                                         <div key={index}>
                                             { data.canPay ? 
+                                            <Spin spinning={this.state.loading}>
                                                 <div className="repays" > 
                                                     <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
                                                     {
@@ -328,7 +329,13 @@ export default class Repayment extends React.Component {
                                                         data.payTime === null ? '': moment( data.payTime).format('YYYY/MM/DD HH:mm:ss')
                                                     }
                                                     </span>
-                                                    <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span> 
+                                                    {/* <div style={{border:'1px solid red'}}> */}
+                                                       
+                                                        <span className="a" onClick={()=>this.manualReimbursement(data)}>手动还款</span>
+                                                       
+                                                    {/* </div> */}
+                                                    
+                                                    
                                                     
                                                     {
                                                         data.overdueMoney > 0 ?
@@ -339,8 +346,9 @@ export default class Repayment extends React.Component {
                                                     }
                                                     
                                                 </div> 
+                                                </Spin>
                                                 :
-                                                <div className="repay_" key={index}> 
+                                                <div className="repay_" key={index} style={{background:'#fffdf8'}}> 
                                                     <span className="time">{moment(data.forPayTime).format('YYYY/MM/DD')}</span> 
                                                     {
                                                         data.ispay ?  <span className="btns_">已还款</span> :<span className="btns">待还款</span>
@@ -366,7 +374,7 @@ export default class Repayment extends React.Component {
                                                     </span>
                                                     {
                                                         data.overdueMoney > 0 ?
-                                                        <p className="info_" >
+                                                        <p className="info_" style={{background:'#fff'}}>
                                                             <span className="date">{this.state.date}</span>
                                                             <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>
                                                         </p> : null

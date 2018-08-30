@@ -310,7 +310,6 @@ class SendCoupon extends React.Component{
             })
             citys.push(item.cityna)
         })
-        console.log(invest)
         let param = {
             investorCoupon:{
                     fname: invest.name,
@@ -318,7 +317,7 @@ class SendCoupon extends React.Component{
                     ffullSubCondition: invest.rule,
                     ffullSubMoney: invest.value,
                     fprojectId: this.props.project.fid,
-                    fendTime: new Date(`${invest.year}-${invest.month > 9 ? invest.month : '0' + invest.month}-${invest.day > 9 ? invest.day : '0'+invest.day}`),
+                    fendTime: new Date(`${invest.year}/${invest.month > 9 ? invest.month : '0' + invest.month}/${invest.day > 9 ? invest.day : '0'+invest.day}`),
                     flogoPic: invest.imgsrc,
                     fnumber: invest.num,//发放数量（类型为给游客时有）
                     fuserPlace: citys.toString(),
@@ -329,7 +328,7 @@ class SendCoupon extends React.Component{
                     ffullSubCondition: tourist.rule,
                     ffullSubMoney: tourist.value, //满减金额(面值)
                     fprojectId: this.props.project.fid,//代金券发行项目
-                    fendTime: new Date(`${tourist.year}-${tourist.month > 9 ? tourist.month : '0' + tourist.month}-${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
+                    fendTime: new Date(`${tourist.year}/${tourist.month > 9 ? tourist.month : '0' + tourist.month}/${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
                     fuserPlace: citys.toString(),//使用地点
                     fnumber: tourist.num,//发放数量（类型为给游客时有）
                     // fsurplusNum: tourist.num,//剩余数量（类型为给游客时有）   
@@ -343,23 +342,19 @@ class SendCoupon extends React.Component{
         if(this.state.loading){
            return
         }
-        // this.setState({
-        //     loading: true
-        // })
-        console.log('优惠券',data)
-        // let res = await mineloan.saveCou(data);
-        // if(res.code === 0){
-        //     this.setState({
-        //         loading: false
-        //     })
-        //     this.props.close();
-        // }else{
-        //     message.error(res.msg);
-        //     this.setState({
-        //         loading: false
-        //     })
-        // }
-        console.log('提交')
+        this.setState({loading: true})
+        let res = await mineloan.saveCou(data);
+        if(res.code === 0){
+            this.setState({
+                loading: false
+            })
+            this.props.close();
+        }else{
+            message.error(res.msg);
+            this.setState({
+                loading: false
+            })
+        }
     }
 
     async saveAddress(){

@@ -7,9 +7,8 @@ import {IMG_BASE_URL} from '../../../common/SystemParam'
 export default class SeeCoupon extends React.Component {
   render(){
     const {couponInfo} = this.props;
-    console.log('优惠券详情（未使用）',couponInfo)
     let place = couponInfo.couponUsePlaces;
-    console.log('palce',place)
+    console.log('this.props.type',this.props.type)
     return(
       <div className="see-box send-coupon-info">
         <p className="top-bg"><span>投资人</span></p>
@@ -56,9 +55,16 @@ export default class SeeCoupon extends React.Component {
           </ul>
         </div>
         {
-          this.props.type === 'effective'  ?
-          <a className="btn">待生效</a>:
-          <a className="btn">未使用</a>
+          this.props.type === 'effective'  ? <a className="btn">待生效</a>: null
+        }
+        {
+          this.props.type === 'wait'  ? <a className="btn">待领取</a>: null
+        }
+         {
+          this.props.type === 'unUse'  ? <a className="btn">未使用</a>: null
+        }
+         {
+          this.props.type === 'duihuanquan'  ? <a className="btn">兑换券(未使用)</a>: null
         }
       </div>
     )

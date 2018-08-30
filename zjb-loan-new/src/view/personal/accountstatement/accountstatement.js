@@ -356,7 +356,7 @@ export default class AccountStatement extends React.Component {
 			render: function(text, record, index) {
 				return String(text).fm();
 			},
-			width:'100px'
+			width:'150px'
 		}, {
 			title: '还款期数',
 			dataIndex: 'resultObj.periods',
@@ -445,7 +445,7 @@ export default class AccountStatement extends React.Component {
 								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥{this.state.interestAmount}</span></span>
 								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥{this.state.overdueAmount}</span></span>
 							</div>
-              <Table columns={huankColumn} locale={locale} dataSource={this.state.huanKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" scroll={{x:1300}}/> 
+              <Table columns={huankColumn} locale={{emptyText: '暂无数据'}} dataSource={this.state.huanKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" scroll={{x:1300}}/> 
             </div>
              {/* 分页 */}
              {
