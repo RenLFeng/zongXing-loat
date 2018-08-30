@@ -343,11 +343,15 @@ class SendCoupon extends React.Component{
     }
     //保存
     async toSaveCou(data,fn){
+        if(this.state.loading){
+           return
+        }
         this.setState({
             loading: true
         })
         let res = await mineloan.saveCou(data);
         if(res.code === 0){
+            message.info('操作成功')
             this.setState({
                 loading: false
             })
@@ -365,7 +369,6 @@ class SendCoupon extends React.Component{
             projectId: this.props.coudata.fid
         }
         let res = await mineloan.getSendCou(data);
-        console.log('huoqu优惠券返回信息',res)
         if(res.code === 0){
             if(res.data.length > 0){
                 let arr = [];
@@ -384,7 +387,6 @@ class SendCoupon extends React.Component{
                 res.data.map(item => item.couponType)
                 for(let obj of res.data){
                     if(obj.couponType === 1){
-                        console.log('obj1',obj)
                         this.setState({
                             isSave: true,
                             id:obj.couponId,
@@ -439,7 +441,6 @@ class SendCoupon extends React.Component{
         this.setState({
             loading: true
         })
-        console.log('保存了')
         let res = await mineloan.commitCou(data);
         if(res.code === 0){
             this.setState({
@@ -460,7 +461,7 @@ class SendCoupon extends React.Component{
     //保存地址
     async saveAddress(){
         console.log(this.state.provnice);
-        if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.trim().length < 6  || (!/^1\d{10}$/.test(this.state.phone) && !/0\d{2}-\d{7,8}/.test(this.state.phone))){
+        if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.trim().length < 6  || (!/^1\d{10}$/.test(this.state.phone) && !/0\d{2,3}-\d{7,8}/.test(this.state.phone))){
             message.info('请完善地址信息！');
             return;
         }

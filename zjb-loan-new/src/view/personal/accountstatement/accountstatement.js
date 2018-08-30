@@ -313,65 +313,74 @@ export default class AccountStatement extends React.Component {
 		const huankColumn = [{
 			title: '序号',
 			align: 'center',
-			width: 50,
 			render: function(text, record, index) {
 				return index + 1;
-			}
+			},
+			// fixed:'left',
 		}, {
 			title: '还款日期',
 			dataIndex: 'ftime',
 			align: 'center',
 			render: function(text, record, index) {
 				return text ? moment(text).format('YYYY/MM/DD HH:mm') : '----/--/--/ --:--';
-			}
+			},
+			width:'140px'
 		}, {
 			title: '本金',
 			dataIndex: 'resultObj.sumPrincipal',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
-			}
+			},
+			width:'100px'
 		}, {
 			title: '利息',
 			dataIndex: 'resultObj.sumInterest',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
-			}
+			},
+			width:'100px'
 		}, {
 			title: <span className='table_title_span' style={{color: 'red'}}>逾期费</span>,
 			dataIndex: 'resultObj.sumOverdueAmount',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
-			}
+			},
+			width:'100px'
 		}, {
 			title: '当期还款总金额',
 			dataIndex: 'resultObj.sumRepayAmount',
 			align: 'center',
 			render: function(text, record, index) {
 				return String(text).fm();
-			}
+			},
+			width:'100px'
 		}, {
 			title: '还款期数',
 			dataIndex: 'resultObj.periods',
 			align: 'center',
-			
+			width:'100px'
 		}, {
 			title: '还款状态',
 			dataIndex: 'resultCode',
-      align: 'center',
-      render: function(text, record, index) {
-				return text === '88' ? record.resultMessage : '失败（'+record.resultMessage+')';
-			}
+			align: 'center',
+			render: function(text, record, index) {
+						return text === '88' ? record.resultMessage : '失败（'+record.resultMessage+')';
+		   },
+		   width:'220px'
 		}, {
 			title: '项目编号',
 			dataIndex: 'resultObj.projectNo',
 			align: 'center',
+			width:'100px'
 		}, {
 			title: '项目名称',
 			dataIndex: 'resultObj.projectName',
 			align: 'center',
+			fixed:'right',
+			width:'220px'
 		}];
 
 		const locale = {
@@ -436,7 +445,7 @@ export default class AccountStatement extends React.Component {
 								<span className="table_title_left" style={{color: '#999'}}>累积利息支出: <span style={{color: '#ff9900'}}>￥{this.state.interestAmount}</span></span>
 								<span className="table_title_right" style={{color: 'red'}}>累积逾期费: <span style={{color: 'red'}}>￥{this.state.overdueAmount}</span></span>
 							</div>
-              <Table columns={huankColumn} locale={locale} dataSource={this.state.huanKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" /> 
+              <Table columns={huankColumn} locale={locale} dataSource={this.state.huanKuanData} loading={this.state.loading}  pagination={false}  bordered size="small" scroll={{x:1300}}/> 
             </div>
              {/* 分页 */}
              {

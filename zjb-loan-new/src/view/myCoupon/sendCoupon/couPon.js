@@ -367,7 +367,7 @@ class SendCoupon extends React.Component{
             deiladdress: this.state.deiladdress,
             phone: this.state.phone,
         }]
-        if(arr[0].provnicena === '' || arr[0].cityna === '' ||  arr[0].areana === ''|| arr[0].deiladdress.trim().length < 6 || (!/^1\d{10}$/.test(arr[0].phone) && !/0\d{2}-\d{7,8}/.test(arr[0].phone))){
+        if(arr[0].provnicena === '' || arr[0].cityna === '' ||  arr[0].areana === ''|| arr[0].deiladdress.trim().length < 6 || (!/^1\d{10}$/.test(arr[0].phone) && !/0\d{2,3}-\d{7,8}/.test(arr[0].phone))){
             message.info('请完善地址信息！');
             return
         }

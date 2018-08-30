@@ -3,6 +3,7 @@ import React from 'react';
 import $ from 'jquery';
 import './usedCoupon.scss';
 import moment from 'moment';
+import {IMG_BASE_URL} from '../../../common/SystemParam'
 
 export default class UsedCoupon extends React.Component {
   render(){
@@ -32,7 +33,7 @@ export default class UsedCoupon extends React.Component {
                 </div>
                 <div className="fr clearfix">
                     <div className="">
-                    <img  className="" src={require('../../../assets/img/logo-small.png')} />
+                    <img  className="" src={IMG_BASE_URL+couponInfo.logo} style={{width:'70px',height:'70px'}}/>
                     </div>
                 </div>
                 </div>

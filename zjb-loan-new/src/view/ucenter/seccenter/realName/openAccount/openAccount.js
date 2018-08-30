@@ -200,7 +200,7 @@ export default class OpenAccount extends React.Component {
               </div> : null
         }
 
-        <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }}>
+        <form ref={ref => { this.formId = ref}} action={submitParam.submitUrl} method="post" style={{ display: 'none' }} target="_blank">
           <input id="AccountType" name="AccountType" value={submitParam.reqParam.AccountType} />
           <input id="Email" name="Email" value={submitParam.reqParam.Email} />
           <input id="IdentificationNo" name="IdentificationNo" value={submitParam.reqParam.IdentificationNo} />

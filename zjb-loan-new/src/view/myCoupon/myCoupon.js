@@ -138,7 +138,7 @@ onShowSizeChange = (current, pageSize) => {
 
   //获取优惠券数据
   see(data,type){
-    if(type === 'unUse'){
+    if(type === 'unUse' || type === 'effective'){
       this.setState({
         showSeeCoupon:true,
        })
@@ -161,7 +161,7 @@ onShowSizeChange = (current, pageSize) => {
 
   //查看优惠券关闭
   close(type){
-    if(type === 'unUse'){
+    if(type === 'unUse'|| type === 'effective'){
       this.setState({
         showSeeCoupon:false,
        })
@@ -426,10 +426,10 @@ render(){
               <LeftMenu param={this.props} />
               <div className="fr uc-rbody my-coupon " style={{padding: 0}}>
               {
-                this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo}/> : null
+                this.state.showSeeCoupon ? <SeeCoupon close={this.close} couponInfo={this.state.couponInfo} type={this.state.type}/> : null
               }
               {
-                 this.state.showAlreadyCoupon ?   <AlreadyCoupon couponInfo={this.state.couponInfo} close={this.close}/> :null
+                 this.state.showAlreadyCoupon ?   <Already-Coupon couponInfo={this.state.couponInfo} close={this.close}/> :null
               }
               {
                 this.state.showFailedCoupon ? <UsedCoupon couponInfo={this.state.couponInfo} close={this.close}/> : null
