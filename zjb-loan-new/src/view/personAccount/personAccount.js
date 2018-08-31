@@ -115,7 +115,8 @@ export default class PersonAccount extends React.Component {
           }
         ]
       },
-      statements: []
+      statements: [],
+      loading:false
     };
   }
 
@@ -452,7 +453,7 @@ export default class PersonAccount extends React.Component {
             <span >{`${currentBorrowAmount.sumBorrowAmount}`.fm()} </span>
 
               {
-                !myBorrowVo || (myBorrowVo&&myBorrowVo.fflag === 88) || (myBorrowVo&&myBorrowVo.fflag === 16) || (myBorrowVo&&myBorrowVo.fflag === -3) || (myBorrowVo&&myBorrowVo.fflag === -1) ?
+                !myBorrowVo || (myBorrowVo&&myBorrowVo.fflag === 88) || (myBorrowVo&&myBorrowVo.fflag === 16) || (myBorrowVo&&myBorrowVo.fflag === -3) || (myBorrowVo&&myBorrowVo.fflag === -1) || (myBorrowVo&&myBorrowVo.fflag === 0)?
               ((userSecurityCenter.faccountBind && userSecurityCenter.fidcardBind) ?
                 <div className="to-loan" style={{ cursor: 'pointer' }} onClick={() => { this.props.history.push(Path.APPALY_LOAN) }}>
                   <span></span> 申请借款
@@ -476,11 +477,12 @@ export default class PersonAccount extends React.Component {
               </div>
               <div className="recent-repany" >
 
-                <p className='title'>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
+                <p className='title' style={{marginBottom:0}}>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
                 {
                   recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
                     recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
                       return <div key={index}>
+                      <Spin spinning={this.state.loading}>
                         <p className='title'></p>
                         <div className='repany-content '>
                           <span className='txt1'>{this.format(item.forPayTime)}</span>
@@ -509,11 +511,16 @@ export default class PersonAccount extends React.Component {
                               <span className='txt3'>{'{' + item.overdueMoney + '元}'}</span>
                               <span className='txt2'>，为了不影响您的征信，请及时还款</span>
                             </div>
-                            <p className='chufa'><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p>
-                          </div> : ''
+                            
+                          </div> : null
                         }
+                        </Spin>
                       </div>
-                    }) : ''
+                    }) : null
+                }
+                 {
+                    recentForRepanymentVo.filter(item => item.overdueMoney).length > 0 ?
+                    <p className='chufa' style={{marginTop:15}}><i className='zjb zjb-jinggao1'></i> 逾期处罚措施</p> : null
                 }
               </div>
             </div> 

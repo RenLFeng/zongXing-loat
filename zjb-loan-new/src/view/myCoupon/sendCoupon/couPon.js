@@ -317,7 +317,7 @@ class SendCoupon extends React.Component{
                     ffullSubCondition: invest.rule,
                     ffullSubMoney: invest.value,
                     fprojectId: this.props.project.fid,
-                    fendTime: new Date(`${invest.year}-${invest.month > 9 ? invest.month : '0' + invest.month}-${invest.day > 9 ? invest.day : '0'+invest.day}`),
+                    fendTime: new Date(`${invest.year}/${invest.month > 9 ? invest.month : '0' + invest.month}/${invest.day > 9 ? invest.day : '0'+invest.day}`),
                     flogoPic: invest.imgsrc,
                     fnumber: invest.num,//发放数量（类型为给游客时有）
                     fuserPlace: citys.toString(),
@@ -328,7 +328,7 @@ class SendCoupon extends React.Component{
                     ffullSubCondition: tourist.rule,
                     ffullSubMoney: tourist.value, //满减金额(面值)
                     fprojectId: this.props.project.fid,//代金券发行项目
-                    fendTime: new Date(`${tourist.year}-${tourist.month > 9 ? tourist.month : '0' + tourist.month}-${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
+                    fendTime: new Date(`${tourist.year}/${tourist.month > 9 ? tourist.month : '0' + tourist.month}/${tourist.day > 9 ? tourist.day : '0'+tourist.day}`),
                     fuserPlace: citys.toString(),//使用地点
                     fnumber: tourist.num,//发放数量（类型为给游客时有）
                     // fsurplusNum: tourist.num,//剩余数量（类型为给游客时有）   
@@ -339,9 +339,10 @@ class SendCoupon extends React.Component{
         this.toSaveCou(param);
     }
     async toSaveCou(data){
-        this.setState({
-            loading: true
-        })
+        if(this.state.loading){
+           return
+        }
+        this.setState({loading: true})
         let res = await mineloan.saveCou(data);
         if(res.code === 0){
             this.setState({
@@ -434,7 +435,7 @@ class SendCoupon extends React.Component{
         let areaArr = [{fareaNo:this.state.areaCode,fareaName:this.state.area}];
         let radiogroup = [];
                 couCard.push(<Col span={12} className="send-coupon1" key="invest">
-                  <span className="num">{this.props.project.fprojectNo}</span>
+                  <span className="num" style={{left:0}}>{this.props.project.fprojectNo}</span>
                         <p className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>
@@ -516,7 +517,7 @@ class SendCoupon extends React.Component{
 
                 couCard.push(<Col className="send-coupon2" key="tourist">
                   
-                    <span className="num">{this.props.project.fprojectNo}</span>
+                    <span className="num" style={{left:0}}>{this.props.project.fprojectNo}</span>
                         <p  className="t-img">
                             <img className="t-imgs" src={require('../../personal/mineLoan/img/u1162.png')}/>
                         </p>

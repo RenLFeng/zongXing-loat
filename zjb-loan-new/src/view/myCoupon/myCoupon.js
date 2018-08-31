@@ -138,7 +138,7 @@ onShowSizeChange = (current, pageSize) => {
 
   //获取优惠券数据
   see(data,type){
-    if(type === 'unUse' || type === 'effective'){
+    if(type === 'unUse' || type === 'effective' || type === 'wait'|| type === 'duihuanquan'){
       this.setState({
         showSeeCoupon:true,
        })
@@ -153,6 +153,9 @@ onShowSizeChange = (current, pageSize) => {
         showFailedCoupon:true,
        })
     }
+    this.setState({
+      type
+    })
      let param = {
       couponUserId:data.couponUserId
      }
@@ -161,7 +164,7 @@ onShowSizeChange = (current, pageSize) => {
 
   //查看优惠券关闭
   close(type){
-    if(type === 'unUse'|| type === 'effective'){
+    if(type === 'unUse'|| type === 'effective' || type === 'wait'|| type === 'duihuanquan'){
       this.setState({
         showSeeCoupon:false,
        })
@@ -245,7 +248,6 @@ render(){
             }
         }, {
           title: '状态',
-
           dataIndex: 'couponState',
           key: 'couponState',
           align:'center',
@@ -272,9 +274,24 @@ render(){
           dataIndex: 'do',
           align:'center',
           render: (text,record) => {
-            return(
-              <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>
-            )  
+            switch(record.couponState){
+             case 0 :
+             return <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'effective')}}>查看</a>
+             case 1 :
+             return <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'wait')}}>查看</a>
+             case 2 :
+             return <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>
+             case 3 :
+             return <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'duihuanquan')}}>查看</a>
+            }
+              // return(
+              //   <div>
+              //    {record.couponState === 0 ? 
+              //    <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'effective')}}>查看</a>
+              //    : <a style={{color:'#669bff'}} onClick={()=>{this.see(record,'unUse')}}>查看</a>}
+              //   </div>
+               
+              //  )  
           },
         },
   ];
