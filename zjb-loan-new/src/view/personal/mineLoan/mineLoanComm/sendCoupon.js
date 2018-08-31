@@ -405,7 +405,6 @@ class SendCoupon extends React.Component{
                         })
                     }
                     if(obj.couponType === 2){
-                        console.log('obj2',obj)
                       this.setState({
                         isSave: true,
                         id_:obj.couponId,
@@ -460,7 +459,6 @@ class SendCoupon extends React.Component{
 
     //保存地址
     async saveAddress(){
-        console.log(this.state.provnice);
         if(this.state.provnice === '' || this.state.city === '' || this.state.area === '' || this.state.deiladdress.trim().length < 6  || (!/^1\d{10}$/.test(this.state.phone) && !/0\d{2,3}-\d{7,8}/.test(this.state.phone))){
             message.info('请完善地址信息！');
             return;
@@ -504,7 +502,10 @@ class SendCoupon extends React.Component{
                 provnice:arr[index].provnicena,
                 area:arr[index].areana,
                 city:arr[index].cityna,
-                edit:true
+                edit:true,
+                Provnice: arr[index].provnicena,
+                City: arr[index].areana,
+                Area: arr[index].cityna
             })
             if(arr[index].provnice === ''){
                 arr.splice(index,1);
@@ -519,6 +520,9 @@ class SendCoupon extends React.Component{
                 this.getArea(obj.city);
                 this.setState({
                     ...obj,
+                    provnice: obj.provnicena,
+                    city: obj.cityna,
+                    area: obj.areana,
                     saveAddress: arr
                 })
             }
@@ -538,7 +542,6 @@ class SendCoupon extends React.Component{
     }
 
     render(){
-        console.log('444444',this.state.id,this.state.id_)
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
         const radioStyle = {
             display: 'block',
@@ -565,7 +568,7 @@ class SendCoupon extends React.Component{
                                     <ul>
                                         <li style={{fontSize:10}}>使用规则: 满{invest.rule}减{invest.value}</li>
                                         <li style={{fontSize:10}}>失效日期: {this.getLoseDate(invest)}</li>
-                                        <li style={{fontSize:10}}>使用地址: {this.state.saveAddress.length> 0 ? this.state.saveAddress.map(item => item.cityna).join('、') : '' }</li>
+                                        <li style={{fontSize:10}}>使用地址: {this.state.saveAddress.length> 0 ? this.state.saveAddress.map(item => item.cityna).join('、') :"" }</li>
                                     </ul>
                                 </div>
                             </Col>

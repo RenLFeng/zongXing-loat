@@ -310,7 +310,6 @@ class NoLoan extends React.Component{
       }
     }
     render(){
-        console.log('datadatadatadatadata', this.props.data);
         const doing = [];
         // fflag = 其它
         const columns = [

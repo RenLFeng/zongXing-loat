@@ -141,8 +141,10 @@ export default class Repayment extends React.Component {
                 this.formIds.submit();
                 this.getBorrowPlan();
               })
-          } else {
-              this.setState({Loading:false})
+          } else if(res.code === 1){
+            res.msg && message.info(res.msg)
+          }else {
+              this.setState({Loading:false,visible:false})
               res.msg && message.error(res.msg)
           }
       }
@@ -209,7 +211,7 @@ export default class Repayment extends React.Component {
                    {
                          this.state.project_ ? 
                          <div className="fr uc-rbody F">
-                            <p style={{textAlign:"center",color:'#999'}}>您还未有任何投资记录，立即前往投资</p>
+                            <p style={{textAlign:"center",color:'#999'}}>您目前没有处于还款中的项目</p>
                          </div>
                          :
                          <div className="fr uc-rbody F">
@@ -220,7 +222,7 @@ export default class Repayment extends React.Component {
                             {
                     
                                 this.state.recentRepay.length > 0  ? 
-                                <Button className="btn1" onClick={()=>this.getRepay()}>手动还款</Button>
+                                <Button className="btn1" onClick={()=>this.getRepay()} loading={this.state.loading}>手动还款</Button>
                                 : null}
                             {
                         
@@ -301,7 +303,6 @@ export default class Repayment extends React.Component {
                             {
                                 paymentArr.length > 0 ?
                                 paymentArr.map((data,index)=>{
-                                    console.log('paymentArr',data)
                                     return(
                                         <div key={index}>
                                             { data.canPay ? 
@@ -373,7 +374,7 @@ export default class Repayment extends React.Component {
                                                     }
                                                     </span>
                                                     {
-                                                        data.overdueMoney > 0 ?
+                                                        data.overdueMoney > 0 && data.payTime === null?
                                                         <p className="info_" style={{background:'#fff'}}>
                                                             <span className="date">{this.state.date}</span>
                                                             <span style={{marginLeft:20}}>{data.fsort}/{project.fmonthLast}期还款已逾期<span style={{color:'#ff3b35'}}>{data.overdue}天</span>，逾期费用<span style={{color:'#ff3b35'}}>{data.overdueMoney}元</span>，为了不影响您的征信，请及时还款</span>

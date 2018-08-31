@@ -479,8 +479,6 @@ render(){
                    }
                 </div> 
 
-                
-
                 <div className="table-box">
                   <div className="tit">
                     <p className="t1">

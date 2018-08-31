@@ -99,7 +99,7 @@ export default class DetailEdit extends React.Component{
           }
       }
 
-      async saveDetail(){
+      async saveDetail(fn){
         let arr = this.state.projectArr;
         for (let i = 0; i < arr.length; i++) {
           arr[i].fsort = i;
@@ -119,7 +119,8 @@ export default class DetailEdit extends React.Component{
           }
           const response = await wsbaseService.saveEditDetail(param);
           if(response.code === 0){
-              message.info('保存成功')
+              message.info('保存成功'),
+              fn && fn()
           } else {
               response.msg && message.error(response.msg)
           }
@@ -233,7 +234,7 @@ export default class DetailEdit extends React.Component{
 
                 <div className="btnGroup">
                   <Button style={{background:'#2088FC'}} loading={loading} onClick={()=>this.saveDetail()}>保存</Button>
-                  <Button style={{background:'#19C61E'}} loading={loading} onClick={()=>this.props.commitData(this.props.projectId)}>提交</Button>
+                  <Button style={{background:'#19C61E'}} loading={loading} onClick={()=>this.saveDetail(this.props.commitData.bind(this,this.props.projectId))}>提交</Button>
                 </div>    
             </div>
         )

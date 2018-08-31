@@ -487,21 +487,21 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div">
                                     <span className="fir-span">失效日期:</span>
-                                    <Select defaultValue={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
+                                    <Select value={invest.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'invest')}>
                                         {
                                             year.map((item,index) => {
                                                 return <Option value={item} key={index}>{item}年</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={invest.month} showSearch style={{ width: 80, margin: '0 3px' }} onChange={(e) => this.monthChange(e,'invest')}>
+                                    <Select value={invest.month} showSearch style={{ width: 80, margin: '0 3px' }} onChange={(e) => this.monthChange(e,'invest')}>
                                         {
                                             month.map((item,index) => {
                                                 return <Option value={item} key={index+ 'a'}>{item}月</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={invest.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'invest')}>
+                                    <Select value={invest.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'invest')}>
                                         {
                                             getDays(invest.year+'-'+invest.month).map((item,index) => {
                                                 return <Option value={item} key={index+ 'b'}>{item}日</Option>
@@ -568,21 +568,21 @@ class SendCoupon extends React.Component{
                                 </div>
                                 <div className="send-form-div" style={{marginTop:' 31px'}}>
                                     <span className="fir-span">失效日期:</span>
-                                    <Select defaultValue={tourist.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'tourist')}>
+                                    <Select value={tourist.year} showSearch style={{ width: 90 }} onChange={(e) => this.yearChange(e,'tourist')}>
                                         {
                                             year.map((item,index) => {
                                                 return <Option value={item} key={index+ 'c'}>{item}年</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={tourist.month} showSearch style={{ width: 80, margin: '0 8px' }} onChange={(e) => this.monthChange(e,'tourist')}>
+                                    <Select value={tourist.month} showSearch style={{ width: 80, margin: '0 8px' }} onChange={(e) => this.monthChange(e,'tourist')}>
                                         {
                                             month.map((item,index) => {
                                                 return <Option value={item} key={index + 'd'}>{item}月</Option>
                                             })
                                         }
                                     </Select>
-                                    <Select defaultValue={tourist.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'tourist')}>
+                                    <Select value={tourist.day} showSearch style={{ width: 80 }} onChange={(e) => this.dayChange(e,'tourist')}>
                                         {
                                             getDays(tourist.year+'-'+tourist.month).map((item,index) => {
                                                 return <Option value={item} key={index + 'e'}>{item}日</Option>
