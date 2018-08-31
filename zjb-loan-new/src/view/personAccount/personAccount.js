@@ -477,7 +477,7 @@ export default class PersonAccount extends React.Component {
               </div>
               <div className="recent-repany" >
 
-                <p className='title'>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
+                <p className='title' style={{marginBottom:0}}>{recentForRepanymentVo && recentForRepanymentVo.length > 0 ? '近期应还' : ' '} </p>
                 {
                   recentForRepanymentVo && recentForRepanymentVo.length > 0 ?
                     recentForRepanymentVo && recentForRepanymentVo.map((item, index) => {
