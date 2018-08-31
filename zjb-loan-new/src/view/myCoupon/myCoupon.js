@@ -25,7 +25,7 @@ export default class MyCoupon extends React.Component {
       showFailedCoupon:false,
       SendCouponShow:false,
       pageCurrent:1,
-      pageSize:3,
+      pageSize:10,
       dataSource:[],    //未使用的优惠券数据
       dataSource_:[],    //已使用的优惠券数据
       dataSources:[],    //已失效的优惠券数据

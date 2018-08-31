@@ -430,7 +430,7 @@ export default class AccountStatement extends React.Component {
 							<div className="statement_table_title">
 								<span style={{color: '#999'}}>累计提现金额: <span style={{color: '#009900'}}>￥{this.state.totalAmount}</span></span>
 							</div>
-              <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small" />
+              <Table columns={tixianColumn} locale={locale}  dataSource={this.state.tixianData} loading={this.state.loading} pagination={false} bordered size="small"/>
             </div>
             {/* 放款 */}
             <div className={this.state.activeCode==='1403'?'':'hide'}>
