@@ -527,12 +527,12 @@ export default class PersonAccount extends React.Component {
             <div className="my-loan" >
               <p className='loan-lable'>
                 {
-                  lables.map(item => {
+                  lables.map((item, index) => {
                     
                     if (item.fflag.includes(this.state.activeFlag)) {
-                      return <span className='active'>{item.text}</span>
+                      return <span key={index} className='active'>{item.text}</span>
                     } else {
-                      return <span>{item.text}</span>
+                      return <span key={index}>{item.text}</span>
                     }
                   })
                 }
