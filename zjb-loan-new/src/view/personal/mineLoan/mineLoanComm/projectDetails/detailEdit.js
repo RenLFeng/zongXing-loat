@@ -182,7 +182,7 @@ export default class DetailEdit extends React.Component{
                             <div key={index} className={index === 0 ? 'info-div-box textBox' : 'textBox'}> 
                                 <p className="title" style={{position:"relative"}}>
                                     <i className="zjb zjb-bixutian icon"/>{data.ftitle}<Icon type="question-circle-o" className="icon p_icon"/>
-                                    {index === 0 ?
+                                    {/* {index === 0 ?
                                         null  :
                                         ( (index === 1)?
                                             <div style={{position: 'absolute', right: 10, zIndex: 10, top:0}}>
@@ -197,7 +197,7 @@ export default class DetailEdit extends React.Component{
                                             <Icon type="arrow-down" style={{fontSize: 16, paddingRight: 5,cursor:'pointer'}} onClick={()=>this.downIndex(index)}/>
                                         </div>
                                         )
-                                    }
+                                    } */}
                                 </p>
                                 <div className="text_">
                                     <Editor 
