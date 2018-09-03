@@ -72,7 +72,7 @@ class Statement extends React.Component {
                             this.state.data.resultCode && this.state.data.resultCode==='90'&&this.state.data.busType !='1405'? <span className='msg todo'>正在处理中…… </span>:null
                         }
                         {
-                            this.state.data.resultCode && this.state.data.resultCode !='88' && this.state.data.resultCode !='90' ? <span className='msg error'>失败（{this.state.data.resultMessage}）</span>:null
+                            this.state.data.resultCode && this.state.data.resultCode !='88' && this.state.data.resultCode !='90' ? <span className='msg error'>失败{this.state.data.resultMessage ? `(${this.state.data.resultMessage})` :''}</span>:null
                         } 
                   
                     </div>

@@ -367,7 +367,8 @@ export default class AccountStatement extends React.Component {
 			dataIndex: 'resultCode',
 			align: 'center',
 			render: function(text, record, index) {
-						return text === '88' ? record.resultMessage : '失败（'+record.resultMessage+')';
+						// return text === '88' ? record.resultMessage : '失败 （'+record.resultMessage+')';
+						return text === '88' ? record.resultMessage : '失败'+ record.resultMessage ? `(${record.resultMessage})` :'';
 		   },
 		   width:'220px'
 		}, {
