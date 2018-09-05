@@ -29,9 +29,7 @@ export default class Loaninfo extends React.Component {
     handlerClcikLable(item) {
         this.setState({
             activeObj: item,
-
         })
-        console.log(item, this.state.activeObj)
     }
     componentDidMount() {
         this.getinit();
@@ -44,7 +42,6 @@ export default class Loaninfo extends React.Component {
   async  getinit() {
         //获取银行卡
         const response = await accountService.getBankCardList();
-        console.log('提现银行卡接口', response);
         if (response.code === 0) {
             if(response.data.length>0){
                 this.setState({
@@ -57,14 +54,12 @@ export default class Loaninfo extends React.Component {
         }
     }
     handleOk = (e) => {
-        console.log(e);
         this.setState({
             allModelVisible: false,
         });
     }
 
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
             allModelVisible: false,
         });
@@ -82,7 +77,6 @@ export default class Loaninfo extends React.Component {
     //是否缴纳佣金
    async payCommission(){
     const res = await baseService.payCommission();
-    console.log('555555555',res)
     if(res.code === 0){
        if(res.data === null){
         this.setState({
@@ -104,18 +98,20 @@ export default class Loaninfo extends React.Component {
 }
 
     async commission(id){
+        if(this.state[`loading${id}`]){
+            return
+        }
         let param = {
             billId:id,
             notifyUrl:PERSONAL_PAGE
         }
-        console.log(param);
-        this.setState({loading:true})
+        this.setState({[`loading${id}`]:true})
+        return;
         const res = await baseService.putCommission(param);
-        console.log('缴费佣金',res);
+        this.setState({[`loading${id}`]:false})
         if(res.code === 0){
         this.setState({
-            commisson:res.data,
-            loading:false
+            commisson:res.data
         }, ()=> {
             Modal.confirm({
                 title: '提示',
@@ -126,15 +122,13 @@ export default class Loaninfo extends React.Component {
                 onOk: () => this.submitMoney()
             });
         })
-        
         } else {
-            this.setState({loading:false})
             res.msg && message.error(res.msg);
         }
     }
 
     submitMoney() {
-    this.formId.submit();
+        this.formId.submit();
     }
 
     render() {
@@ -160,9 +154,9 @@ export default class Loaninfo extends React.Component {
                              <div className="commission">
                              {
                                  this.state.data.length > 0 ? 
-                                 this.state.data.map((item,index)=>{
+                                 this.state.data.map((item)=>{
                                     return (
-                                       <div className="commission_content">
+                                       <div className="commission_content" key={item.billId}>
                                            <div style={{marginBottom:20}}>
                                                 <p style={{color:'#999'}}><span >项目编号：</span><span style={{color:'#333'}}>{item.projectNo}</span></p>
                                                 <p style={{color:'#999'}}><span >项目名称：</span><span style={{color:'#333'}}>{item.projectName}</span></p>
@@ -174,9 +168,7 @@ export default class Loaninfo extends React.Component {
                                                 <p style={{color:'#999'}}><span >项目评级：</span><span style={{color:'#333',marginLeft:10}}>{item.projectLevel}</span></p>
                                                 <p style={{color:'#999'}}><span >佣金费率：</span><span style={{color:'#333',marginLeft:10}}>{item.kickbackRate}%</span></p>
                                             </div>
-                                            
-                                            
-                                            <Button type="primary" onClick={()=>{this.commission(item.billId)}} loading={this.state.loading}>提交</Button>
+                                            <Button type="primary" onClick={()=>{this.commission(item.billId)}} loading={this.state[`loading${item.billId}`]}>提交</Button>
                                         </div>
                                     )
                                  }) : null

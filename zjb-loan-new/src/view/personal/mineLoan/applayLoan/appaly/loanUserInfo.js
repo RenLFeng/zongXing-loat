@@ -67,7 +67,6 @@ class Loaninfo extends React.Component {
           values[`tlo${i}phone`] = values[`fPhone${i}`] ||'';
           values[`tlo${i}relation`] = values[`fRelation${i}`] ||'';
         }
-        console.log('values', values);
         val = values;
       } else {
         val = null;

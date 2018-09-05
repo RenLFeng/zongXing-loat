@@ -16,7 +16,6 @@ export default {
       });
       try {
         const response = yield call(securityCentreService.getSafeData);
-        console.log("safeData",response);
         if (response.code === 0) {
           yield put({
             type: 'endSafeData',
@@ -40,7 +39,6 @@ export default {
         if (typeof e === 'object' && e.name === 288) {
           throw e;
         }
-        console.log('服务器繁忙，请稍后重试');
       }
     },
     *clearData(_, {call, put}) {

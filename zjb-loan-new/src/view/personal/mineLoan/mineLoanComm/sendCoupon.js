@@ -350,17 +350,13 @@ class SendCoupon extends React.Component{
             loading: true
         })
         let res = await mineloan.saveCou(data);
+        this.setState({loading: false})
         if(res.code === 0){
-            message.info('操作成功')
-            this.setState({
-                loading: false
-            })
-            fn && fn();
+            message.info('操作成功');
+            this.getSendCou();
+            fn && fn();  
         }else{
-            message.error(res.msg);
-            this.setState({
-                loading: false
-            })
+            res.msg && message.error(res.msg); 
         }
     }
     //获取

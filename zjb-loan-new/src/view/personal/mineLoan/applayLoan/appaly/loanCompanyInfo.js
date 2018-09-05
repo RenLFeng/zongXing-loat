@@ -142,9 +142,6 @@ class Loaninfo extends React.Component {
             this.props.changeOldData(val, 'SAVE');
         }
     }
-    submitLoanInfo(obj) {
-        console.log(obj, "su")
-    }
     render() {
         const { form, dispatch, submitting } = this.props;
         const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form;

@@ -70,7 +70,6 @@ export default class Loaninfo extends React.Component {
       data.notifyPageUrl =  `${NOTIFY_URL}/index/uCenter/personAccount`;
       this.setState({ loading: true });
       const response = await accountService.getRecharge(data);
-      console.log(response);
       this.setState({ loading: false });
       if (response.code === 0) {
         Modal.confirm({
@@ -89,12 +88,10 @@ export default class Loaninfo extends React.Component {
       }
     } catch (e) {
       this.setState({ loading: false });
-      console.log(e);
       message.error('请求失败,请稍后重试');
     }
   }
   handleMoneyChange = (event) => {
-    console.log("amount:", event.target.value);
     if (isNaN(Number(event.target.value))) {
       this.setState({ amountError: true })
     } else {

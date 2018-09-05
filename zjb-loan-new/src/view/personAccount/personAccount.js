@@ -134,7 +134,6 @@ export default class PersonAccount extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.personal !== nextProps.personal) {
       const { companyTotalAssetsVo, myBorrowVo } = nextProps.personal;
-      console.log(nextProps.personal)
       this.setState({
         activeFlag: myBorrowVo ? myBorrowVo.fflag : 0,
         pieOption: {
@@ -318,12 +317,10 @@ export default class PersonAccount extends React.Component {
     if (mm < 10) {
       mm = '0' + mm
     }
-    console.log(date.getMinutes())
     return date.getFullYear() + "/" + m + "/" + d + " " + h + ':' + mm;
   }
   //手动还款
   repayment(val) {
-    console.log(val)
     this.postManualRepayment(val)
   }
 
@@ -334,13 +331,11 @@ export default class PersonAccount extends React.Component {
     this.setState({ loading: true });
     let data = [{projectId: val.projectId,forPayTime: val.forPayTime}]
     const response = await baseService.manualReimpayment(encodeURIComponent(`${NOTIFY_URL}/index/uCenter/personAccount`),data)
-    console.log(response);
     this.setState({ loading: false });
     if (response.code === 0) {
       this.setState({
         paymentParam: response.data,
       }, () => {
-        console.log(this.formId);
         this.formId.submit();
         Modal.success({
           title: '提示',
@@ -371,7 +366,6 @@ export default class PersonAccount extends React.Component {
   // 进入页面获取还款计划列表
   async getPlanData() {
     const response = await baseService.getRepaymentPlan();
-    console.log(response);
     if (response.code === 0) {
       this.setState({
         error: false,
@@ -436,7 +430,6 @@ export default class PersonAccount extends React.Component {
     let accountDynamicVos_ = accountDynamicVos.slice(0,2)
     const { userSecurityCenter } = this.props.baseData;
     const { data, dataSource, paymentParam } = this.state;
-    console.log('11111111',myBorrowVo)
     return (
       <div>
         <LeftMenu param={this.props} />

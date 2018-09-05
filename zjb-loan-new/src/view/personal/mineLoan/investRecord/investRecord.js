@@ -49,7 +49,6 @@ class InvestRecord extends React.Component{
             list.push(<Row className="record-row-tc re-content" key="key"><Col span={24}>暂无数据</Col></Row>)
         }else{
             investData.map((item,index) => {
-                console.log(item);
                 list.push(<Row className="record-row-tc re-content" key={index}>
                 <Col span={8}>{item.userName.substr(0,3)+'****'+item.userName.substr(7)}</Col>
                 <Col span={8}>￥{returnff(item.money)}</Col>

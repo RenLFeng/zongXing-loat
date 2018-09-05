@@ -101,15 +101,6 @@ class NoLoan extends React.Component{
         };
         this.countDown = null;
     };
-
-    submitLoan(text,record,index){
-        console.log(text,record,index)
-    }
-
-    editLoan(text,record,index){
-        // console.log(text,record,index)
-    }
-
     deleteLoan(text,record,index){
         this.setState({
             delId: record.fid,
@@ -178,7 +169,6 @@ class NoLoan extends React.Component{
       }
     //缴费
     async pay(text,record,index){
-        console.log('缴费',text,record,index)
         this.setState({
             loadingpay: true
         })
@@ -188,7 +178,6 @@ class NoLoan extends React.Component{
         }
         let res = await mineloan.payLoan(data);
         if(res.code === 0){
-            console.log(res,'----')
             this.setState({
                 loadingpay: false,
                 upfile:res.data
@@ -229,7 +218,6 @@ class NoLoan extends React.Component{
     }
     //确认借款
     sureBorrow(text,record,index){
-        console.log(text,record,index)
     }
 
     //上传补充资料
@@ -244,7 +232,6 @@ class NoLoan extends React.Component{
 
     //上传资料
     async onChange(val,item){
-        console.log(val,item,'-----')
         if(val.length === 0){
             message.info('请上传补充资料！');
             return;

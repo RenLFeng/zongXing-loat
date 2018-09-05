@@ -392,7 +392,6 @@ class SendCoupon extends React.Component{
     editAddress(index){
         let arr = this.state.saveAddress;
         let obj = arr[index];
-        console.log('obj',obj)
         arr.splice(index,1)
         this.getCity(obj.provnice);
         this.getArea(obj.city);
@@ -418,11 +417,7 @@ class SendCoupon extends React.Component{
         }    
     }
 
-    change(value){
-      console.log('value',value)
-    }
     render(){
-        console.log('props',this.props)
         const {invest, tourist, address, deiladdress, phone, provnices, citys, areas, saveAddress, radioChoose} = this.state;
         const radioStyle = {
             display: 'block',
@@ -481,7 +476,7 @@ class SendCoupon extends React.Component{
                                 <div className="send-form-div">
                                     <span className="fir-span">优惠券数量:</span>
                                    
-                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}},()=>{console.log(this.state.invest.num)})} min={1} max={9999} maxLength={7}/>
+                                    <Input style={{width:55}} value={this.props.projects.invCount ? this.props.projects.invCount : 0} disabled/> * <InputNumber  value={invest.num} onChange={(e)=> this.setState({invest:{...invest,num: e}})} min={1} max={9999} maxLength={7}/>
                                 <p style={{paddingLeft:0,marginLeft:-20}}>优惠券数量{invest.num}张</p>
                                 {/* <p className="error-imput">不能超过1000元</p> */}
                                 </div>

@@ -203,14 +203,12 @@ class BindCard extends React.Component {
     //     idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
     //     realname: response.data.verifyBankcard3Dto.realname
     //   }
-    //   console.log(result.tipCityName);
-    //   console.log('result.provinceId', result.provinceId);
     //   this.chooseCity(result.provinceId);
     //   this.setState({
     //     ...result
     //   });
     //   global[bankCard.trim()] = { ...result};
-      
+ 
     // } else {
     //   let result = {
     //     bankCardImg: 'error',
@@ -274,7 +272,6 @@ class BindCard extends React.Component {
   }
   // 选择省市
   chooseCity(val) {
-    console.log('val', val);
     let cityArr = [];
     for (let data of moneyCity.cityList) {
       if (data.fparentCode == val) {
@@ -308,9 +305,7 @@ class BindCard extends React.Component {
       },
       userPassword: this.state.userPassword.trim()
     }
-    console.log("submit param",param);
     const response = await securityCentreService.bindBankCard(param);
-    console.log('绑定银行卡结果', response)
     this.setState({commmitLoading: false});
     if (response.code === 0) {
       this.props.history.push('/index/uCenter/realName');

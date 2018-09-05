@@ -31,12 +31,10 @@ export default {
       try {
         //向后台请求登录接口
         const response = yield call(doLogin.userLogin, payload);
-        console.log(response);
         //请求结束，请求状态修改为未请求状态
         //登录成功做的操作
         if (response.code === 0) {
           const access = {webToken:response.data.webToken,nickName: response.data.companyName};
-          console.log(localStorage.setItem('accessTokenCompany', JSON.stringify(access)));
           localStorage.setItem('accessTokenCompany', JSON.stringify(access));
           yield put(routerRedux.push('/'));
           yield put({
@@ -72,7 +70,6 @@ export default {
           message.error(response.msg);
         }
       } catch (e) {
-        console.log('服务器繁忙，请稍后重试');
         yield put({
           type: 'changeLoginStatus',
           payload: {
@@ -176,7 +173,6 @@ export default {
       }
     },
     saveSocket(state, {socketData}) {
-      console.log(socketData);
       return {
         ...state,
         socketData

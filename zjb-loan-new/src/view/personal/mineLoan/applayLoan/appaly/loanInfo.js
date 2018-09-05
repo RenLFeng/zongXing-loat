@@ -68,7 +68,6 @@ class Loaninfo extends React.Component {
 
     validateNumber = (rule, value, callback) => {
         const { getFieldValue } = this.props.form;
-        console.log(value);
         if (!LIMIT_MOENY && MONEY_REG.test(value) && (value * 1 < 50000 || value * 1 > 1000000)) {
             callback('金额应为5-100万之间');
         } else if (!LIMIT_MOENY && value && value * 1 % 100 !== 0) {

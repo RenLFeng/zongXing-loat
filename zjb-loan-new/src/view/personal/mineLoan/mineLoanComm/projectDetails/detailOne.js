@@ -33,7 +33,6 @@ export default class DetailOne extends React.Component{
 
     componentDidMount(){
         this.getDetail();
-        console.log('this.props',this.props)
     }
 
     async getDetail(){

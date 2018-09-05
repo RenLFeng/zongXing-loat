@@ -90,7 +90,6 @@ export const req = {
     return fetch(url, Options)
       .then(checkStatus)
       .then((response) => {
-        console.log(response);
         if (response.code === 999) {
           return response;
         }
@@ -128,7 +127,6 @@ export const req = {
     return fetch(url, newOptions)
       .then(checkStatus)
       .then((response) => {
-        console.log(response);
         if (response.code === 999) {
           return response;
         }

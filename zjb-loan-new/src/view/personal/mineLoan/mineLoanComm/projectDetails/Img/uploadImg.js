@@ -52,7 +52,6 @@ export default class ImgUpload extends React.Component {
   };
 
   uploadRequest = (data) => {
-    console.log('上传文件数据',data)
     const file = data.file;
     const fileName = data.file.name;
     const suffix = data.file.name.substring(fileName.lastIndexOf('.'), fileName.length);
@@ -63,7 +62,6 @@ export default class ImgUpload extends React.Component {
       return;
     }
     this.setState({ loading: true });
-    console.log('........',global)
     global.cos.putObject({
       Bucket: Bucket,
       Region: Region,
@@ -72,19 +70,15 @@ export default class ImgUpload extends React.Component {
       onProgress: function (info) {
         const percent = parseInt(info.percent * 10000) / 100;
         const speed = parseInt(info.speed / 1024 / 1024 * 100) / 100;
-        console.log('进度：' + percent + '%; 速度：' + speed + 'Mb/s;');
       },
       onFileFinish: function (err, data, options) {
-        console.log(options.Key + ' 上传' + (err ? '失败' : '完成'));
       },
     },  (err, data) => {
       this.setState({ loading: false });
       if (err) {
-        console.log(err);
         message.error("图片上传失败");
       } else {
         this.setState({imageUrl: this.props.prefix +realName});
-        console.log(this.props.prefix + realName);
         this.props.onChange(this.props.prefix + realName);
       }
     });

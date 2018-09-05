@@ -74,7 +74,6 @@ export default class OpenAccount extends React.Component {
    * 提交开户请求
    */
   handleSubmit = async () => {
-    console.log("handleSubmit running ...")
     if (this.state.loading) {
       return;
     }
@@ -108,7 +107,6 @@ export default class OpenAccount extends React.Component {
     if(msgIdcard || msgRealName || msgPhone){
       return;
     }
-    console.log("verify true");
     this.setState({loading: true});
     try {
       const response = await securityCentreService.createAccount(param);
@@ -131,14 +129,12 @@ export default class OpenAccount extends React.Component {
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
-      console.log(e);
       message.error('服务器繁忙，请稍后重试');
     }
   };
 
   render() {
     const {submitParam,msgIdcard,msgRealName,msgPhone } = this.state;
-    console.log(this.props.baseData);
     const mobile = this.props.baseData.mobile || '';
     return (
       <div className="pages" style={{width: '1248px'}}>

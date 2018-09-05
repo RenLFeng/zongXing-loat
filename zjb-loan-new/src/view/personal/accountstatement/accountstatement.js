@@ -4,7 +4,7 @@ import { message } from "antd/lib/index";
 import moment from 'moment';
 import LeftMenu from '../../../components/leftmenu/leftMenu';
 import { pageShows } from "../../../common/SystemParam";
-import { accountService } from '../../../services/api2.js';
+import { accountService } from '../../../services/api.js';
 import Statement from '../statement/Statement';
 import { connect } from 'dva';
 import './accountstatement.scss';
@@ -114,7 +114,6 @@ export default class AccountStatement extends React.Component {
 						fangkuanData: res.data.resPage.infoList,
 					});
 				} else if(this.state.activeCode === '1405') {
-					console.log("res",res.data);
 					this.setState({
 						huanKuanData: res.data.resPage.infoList,
 						interestAmount: res.data.interestAmount, //  当期还款总利息
@@ -146,7 +145,6 @@ export default class AccountStatement extends React.Component {
 				localStorage.removeItem('accessTokenCompany');
 				this.props.history.push('/index/login');
 			}
-			//console.log(e);
 		}
 	}
 	//方法区域

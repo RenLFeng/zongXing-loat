@@ -34,7 +34,6 @@ export default class UploadVideo extends React.Component {
   getKey = (callback) => {
     baseService.createKey()
       .then((data)=>{
-        console.log(data);
         if (data.code === 0) {
           callback(data.data);
         } else {
@@ -42,7 +41,6 @@ export default class UploadVideo extends React.Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         message.error('获取签名失败');
       })
   };
@@ -66,7 +64,6 @@ export default class UploadVideo extends React.Component {
       getSignature: this.getKey,
       allowAudio: 1,
       success:(result) => {
-        console.log('success', result);
       },
       error:(result) => {
         this.setState({

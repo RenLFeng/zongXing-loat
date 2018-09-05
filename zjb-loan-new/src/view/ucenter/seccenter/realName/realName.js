@@ -146,7 +146,6 @@ export default class RealName extends React.Component {
    /** 获取用户绑定银行卡 */ 
    getBankCardListAjax = async (param) => {
     const response = await securityCentreService.getBankCardList(param?param:this.props.accountId);
-    console.log('银行卡列表',response)
     if (response.code === 0) {
       if (response.data) {
         this.setState({
@@ -255,7 +254,6 @@ export default class RealName extends React.Component {
   }
 
   show(key){
-    console.log('key',key)
     if (!this.state.urlObj) {
       this.authorize(key);
       return;
@@ -270,7 +268,6 @@ export default class RealName extends React.Component {
   async authorize(key){
     this.setState({grantLoading:true})
     const response = await securityCentreService.getAccredit();
-    console.log('response111111',response)
     if(response.code === 0){
       this.setState({
         urlObj: response.data,

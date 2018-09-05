@@ -76,14 +76,11 @@ export default class HomePage extends React.Component {
     let that=this;
     const socket = io(socketUrl+localStorage.getItem('userid'));  //指定后台的url地址  在service  api 中统一修改  打包记得替换
     socket.on('connect', function () {
-      console.log('socket connect')
      });
      socket.on('disconnect', function () {
-       console.log('socket again  connect')
        that.socketConn();
      });
      socket.on('chat', function (data) {
-       
       notification.open({
         icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
         message: data.data.busType,

@@ -67,9 +67,7 @@ export default class EnterprisePresentation extends React.Component {
       moneyError: false, //提现金额是否错误
       moneyErrorMsg:'', //金额错误提示语
       carardActive:{}
-      
     }
-    console.log(props,"45465456465")
   }
 
   componentDidMount() {
@@ -86,7 +84,6 @@ export default class EnterprisePresentation extends React.Component {
      this.setState({
         carardActive:nextProps.param
       })
-      console.log('nextProps.param', nextProps.param)
     }
   }
 
@@ -138,12 +135,10 @@ export default class EnterprisePresentation extends React.Component {
         message.error(response.msg);
       }
     } catch (e) {
-      console.log(e);
       this.setState({loading: false});
       if (typeof e === 'object' && e.name === 288) {
         throw e;
       }
-      console.log('服务器繁忙，请稍后重试');
     }
   }
 
@@ -172,17 +167,13 @@ export default class EnterprisePresentation extends React.Component {
           province:this.state.carardActive.fprovinceCode,
           city: this.state.carardActive.fcityCode
         }
-        console.log('表单提交的数据', param);
         this.getInformation(param);
-      
   };
 
 
   changeBank(val) {
-    console.log(val);
     for (let data of this.state.bankcardInfos) {
       if (data.userBankId === val) {
-        console.log('data.province', data.province);
         this.props.form.resetFields();
         this.setState({
           cardNo: data.cardNo,
@@ -225,19 +216,7 @@ export default class EnterprisePresentation extends React.Component {
     callback()
   };
 
-  handleChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  handleBlur() {
-    console.log('blur');
-  }
-  handleFocus() {
-    console.log('focus');
-  }
-
   changeMoney = (event) => {
-    console.log("money:",event.target.value);
     if(isNaN(Number(event.target.value))){
       this.setState({ 
         moneyError: true, moneyErrorMsg: '只能输入数字',

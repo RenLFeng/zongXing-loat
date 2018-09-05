@@ -41,10 +41,8 @@ export const CouponService = {
 // 账户服务
 export const accountService={
     // 获取账户总览首页数据
-
-    getPersonalData: async () => req.get('/account/company/totality/info'),
-    
-    
+    getPersonalData: async () => req.get('/account/company/totality/info'), 
+    //获取用户登录信息
     getLoginData:async(param)=>req.get('/login/getData',param),
     //资金动态
     getAccountStatement:async(param)=>req.post('/capital/dynamic',param),
@@ -99,18 +97,20 @@ export const baseService={
     getRepaymentPlan:async()=>req.get('/project/getBorrowPlan'),
     // 保存 借款信息接口
     saveLoanInfo: async (param) => req.post('/apply/save', param),
-    // 提交借款信息接口
+    // 提交借款信息接口-改状态
     commit: async () => req.get('/apply/submit'),
+    //提交借款信息-校验信息
     commitInfo: async (param) => req.post('/apply/submitToZero', param),
     
 
     // 项目可选城市获取
     getProCityList: async () => req.get('/apply/getCity'),
+    //获取之前的项目信息
     getBeforeProjectData: async ()=>req.get('/apply/getFinishProject'),
     // 获取上传视频的签名
     createKey: async ()=>req.get('/getUploadSignature'),
 
-    //体现时判断是否缴纳佣金
+    //提现时判断是否缴纳佣金
     payCommission: async()=>req.get('withdrawals/kickback/bill'),
     
     //提交佣金
@@ -237,7 +237,6 @@ export const mineloan = {
     getProjectdl: async (param) => req.get('/project/getRateAndLevel', param),
     //删除项目
     delProject: async (param) => req.get('/project/delete', param), 
-
     //投前咨询
     getConsult: async (param) => req.post('/projectTopic/getInvConsulting', param),
     //获取投资人列表
@@ -275,9 +274,8 @@ export const mineloan = {
     commitCou: (param) => req.post('/projectApproval/subCoupon', param),
     //提交完善信息
     commitwsInfo: (param) => req.post('/projectApproval/subPendRelease', param),
+    //确认借款，获取安心签短信
     getSign : (param)  => req.get(`/cfca/loan/sendMessage?projectId=${param}`),
-
-
     //借款人姓名身份证号校验
     checkUserInfo : async(param) => req.post(`jh/authIdCard`,param)
       

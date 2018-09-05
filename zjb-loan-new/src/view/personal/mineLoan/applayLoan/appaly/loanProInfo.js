@@ -91,7 +91,6 @@ class Loaninfo extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps.data.flocation', nextProps.data.flocation)
     if (this.props.data.flocation !== nextProps.data.flocation) {
       if (nextProps.data.flocation) {
         if (this.mapInstance) {
@@ -307,7 +306,6 @@ class Loaninfo extends React.Component {
           this.first += 1
         }
       });
-      console.log(window);
       window.AMap.plugin(['AMap.Autocomplete','AMap.PlaceSearch'],function(){
           var autoOptions = {
               input: "tipinput"//使用联想输入的input的id
@@ -318,7 +316,6 @@ class Loaninfo extends React.Component {
           })
           window.AMap.event.addListener(autocomplete, "select", function(e){
               //TODO 针对选中的poi实现自己的功能
-              console.log(e.poi.location);
               if (e.poi && e.poi.location) {
                 mapInstance.setZoom(15);
                 mapInstance.setCenter(e.poi.location);
@@ -480,8 +477,6 @@ class Loaninfo extends React.Component {
                                     arr[index].fpictures = JSON.stringify(valArr);
                                     this.setState({
                                       dataList: arr
-                                    }, () => {
-                                      console.log(this.state.dataList);
                                     })
                                   }}
                                 >项目详情图片</UploadPicMultipleFile>

@@ -18,7 +18,6 @@ export default class UploadPicMultipleFile extends React.Component {
       this.setState({
         fileList: nextProps.value,
       });
-      console.log(this.state.fileList);
     }
   }
 
@@ -65,15 +64,12 @@ export default class UploadPicMultipleFile extends React.Component {
       onProgress: function (info) {
         const percent = parseInt(info.percent * 10000) / 100;
         const speed = parseInt(info.speed / 1024 / 1024 * 100) / 100;
-        console.log('进度：' + percent + '%; 速度：' + speed + 'Mb/s;');
       },
       onFileFinish: function (err, data, options) {
-        console.log(options.Key + ' 上传' + (err ? '失败' : '完成'));
       },
     },  (err, data) => {
       this.setState({ loading: false });
       if (err) {
-        console.log(err);
         const fileList = this.state.fileList;
         for (let obj of fileList) {
           if (obj.name === fileName) {

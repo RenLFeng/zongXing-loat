@@ -8,7 +8,6 @@ export default class SeeCoupon extends React.Component {
   render(){
     const {couponInfo} = this.props;
     let place = couponInfo.couponUsePlaces;
-    console.log('this.props.type',this.props.type)
     return(
       <div className="see-box send-coupon-info">
         <p className="top-bg"><span>投资人</span></p>

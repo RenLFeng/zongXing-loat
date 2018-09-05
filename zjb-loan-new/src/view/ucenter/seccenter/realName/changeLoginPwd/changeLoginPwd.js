@@ -109,9 +109,7 @@ export default class ChangeLPwd extends React.Component {
     }
     this.setState({ loading: true });
     try {
-      console.log("getCode running ...");
       const response = await securityCentreService.UpdatePass(param);
-      console.log("getCode finish ...");
       if (response.code === 0) {
         message.info('发送成功');
         this.setState({
@@ -125,7 +123,6 @@ export default class ChangeLPwd extends React.Component {
       }
     } catch (e) {
       this.setState({ loading: false });
-      console.log("error",e);
       message.error('请求失败');
       return;
     }
@@ -157,19 +154,16 @@ export default class ChangeLPwd extends React.Component {
     }
     this.setState({sureloading:true})
     const response = await securityCentreService.changePass(param);
-    console.log('reaponse',response)
     if(response.code === 0){
        this.setState({
         firstShow:false,
         sureloading:false
        })
       this.countDowns = setInterval(()=>{ 
-        console.log(this.countDowns);
         this.setState({
             num: this.state.num - 1
           }, () => {
             if (!this.state.num) {
-              console.log(111111)
               clearInterval(this.countDowns);
               this.props.history.push('/index/login');
             }

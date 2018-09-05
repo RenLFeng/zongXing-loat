@@ -17,11 +17,8 @@ export default  class Loaninfo extends React.Component{
     }
 
     getcommision(type){
-    console.log('type',type)
         this.setState({
             show:type
-        },()=>{
-            console.log('this.state.show',this.state.show)
         })
     }
     render(){

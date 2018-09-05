@@ -152,7 +152,6 @@ export default class ForgetPassWord extends React.Component {
       loginName: this.state.firstPhone,
       type: 1,// 借款用户
     });
-    console.log('response',response)
     if(response.code === 0){
       this.setState({
         whetherAuthentication:response.data.isCertification,

@@ -122,16 +122,13 @@ class BindCard extends React.Component {
     }
   }
   updateRealName = (e) => {
-    console.log('updateRealName', e.target.value);
     this.setState({ realName: e.target.value });
   };
   updateIdcard = (e) => {
-    console.log('updateIdcard', e.target.value);
     this.setState({ idcard: e.target.value });
   };
 
   verifyBankCard = () => {
-    console.log("verifyBankCard,bankcard:", this.state.bankCardNo);
   }
   updateBankCard = (e) => {
     this.setState({ bankCardNo: e.target.value });
@@ -139,7 +136,6 @@ class BindCard extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      console.log("submit.value:", values);
       if (!err) {
 
       }
@@ -193,7 +189,6 @@ class BindCard extends React.Component {
         idcard: response.data.verifyBankcard3Dto.idcard, // 身份证
         realname: response.data.verifyBankcard3Dto.realname
       }
-      console.log(result.tipCityName);
       this.setState({
         ...result
       });
@@ -295,8 +290,6 @@ class BindCard extends React.Component {
   }
 
   render() {
-    //console.log("this.props:",this.props);
-    console.log('this.state.cardType', this.state.cardType)
     const { userName } = this.state;
     const suffix = userName ? <Icon type="close-circle" onClick={this.emitEmpty} /> : null;
     const { getFieldDecorator } = this.props.form;

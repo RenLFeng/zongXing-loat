@@ -52,7 +52,6 @@ export default class Repayment extends React.Component {
     //获取还款计划列表
     async getBorrowPlan (){
         const response = await baseService.getRepaymentPlan();
-        console.log('还款计划',response)
         if(response.code === 0){
            this.setState({
             paymentArr:response.data.bills,
@@ -72,7 +71,6 @@ export default class Repayment extends React.Component {
     }
 
     onChange(e,index) {  
-        console.log(`checked = ${e.target.checked}`);
         if (!e.target.checked) {
             for (let i = index ; i < this.state.recentRepay.length ; i++) {
                 this.state.recentRepay[i].check = false;
@@ -131,7 +129,6 @@ export default class Repayment extends React.Component {
             notifyPageUrl:`${NOTIFY_URL}/index/uCenter/receivePlan`,
           }
           const res  = await baseService.earlyPayment(param);
-          console.log('提前还款',res)
           if(res.code === 0){
               this.setState({
                 earlyPay:res.data,
@@ -202,7 +199,6 @@ export default class Repayment extends React.Component {
       }
 
     render(){
-        console.log('data',this.props.baseData)
         const {paymentArr,recentRepay,project,repayInfo,earlyPay}  = this.state;
         return(
             <div>    

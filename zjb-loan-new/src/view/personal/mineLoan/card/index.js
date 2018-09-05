@@ -10,7 +10,6 @@ export default class Loaninfo extends React.Component {
         this.state = {
             proObj :props.param,
         }
-        console.log(this.state.proObj,"param")
     }
     // edit
     handlerClcikEdit(item){

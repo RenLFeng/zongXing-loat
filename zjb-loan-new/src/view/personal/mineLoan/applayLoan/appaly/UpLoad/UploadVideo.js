@@ -34,7 +34,6 @@ export default class UploadVideo extends React.Component {
   getKey = (callback) => {
     baseService.createKey()
       .then((data)=>{
-        console.log(data);
         if (data.code === 0) {
           callback(data.data);
         } else {
@@ -42,17 +41,14 @@ export default class UploadVideo extends React.Component {
         }
       })
       .catch((err) => {
-        console.log(err);
         message.error('获取签名失败');
       })
   };
   
   uploadRequest = (data) => {
-    console.log(123);
     const file = data.file;
     const fileName = data.file.name;
     const suffix = data.file.name.substring(fileName.lastIndexOf('.'), fileName.length);
-    console.log(file);
     if (suffix!=='.mp4' ) {
       message.warning('只支持mp4格式视频上传');
       return;
@@ -63,13 +59,12 @@ export default class UploadVideo extends React.Component {
     }
     const fileNames = this.uuid();
     const realName = this.props.type + fileNames.replace(/-/g, '') + suffix;
-    console.log(window.qcVideo.ugcUploader);
     window.qcVideo.ugcUploader.start({
       videoFile: file,
       getSignature: this.getKey,
       allowAudio: 1,
       success:(result) => {
-        console.log('success', result);
+
       },
       error:(result) => {
         this.setState({
@@ -81,7 +76,6 @@ export default class UploadVideo extends React.Component {
         message.error("上传失败");
       },
       finish:(result) => {
-        console.log(fileName);
         this.setState({
           fileList: [{uid: -1,
             name: fileName,
@@ -102,15 +96,12 @@ export default class UploadVideo extends React.Component {
     //   onProgress: function (info) {
     //     const percent = parseInt(info.percent * 10000) / 100;
     //     const speed = parseInt(info.speed / 1024 / 1024 * 100) / 100;
-    //     console.log('进度：' + percent + '%; 速度：' + speed + 'Mb/s;');
     //   },
     //   onFileFinish: function (err, data, options) {
-    //     console.log(options.Key + ' 上传' + (err ? '失败' : '完成'));
     //   },
     // },  (err, data) => {
     //   this.setState({ loading: false });
     //   if (err) {
-    //     console.log(err);
     //     this.setState({
     //       fileList: [{uid: -1,
     //         name: fileName,

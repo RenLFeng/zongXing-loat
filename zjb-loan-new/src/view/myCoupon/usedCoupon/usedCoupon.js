@@ -8,9 +8,7 @@ import {IMG_BASE_URL} from '../../../common/SystemParam'
 export default class UsedCoupon extends React.Component {
   render(){
     const {couponInfo} = this.props;
-    console.log('优惠券详情',couponInfo)
     let place = couponInfo.couponUsePlaces;
-    console.log('palce',place)
     return(
         <div className="used">
            <div className="see-box send-coupon-info">

@@ -128,7 +128,6 @@ class SureLoan extends React.Component{
     }
     
     render(){
-        console.log('11111111',[this.state.suredata])
         const locale = {
             filterTitle: '筛选',
             filterConfirm: '确定',

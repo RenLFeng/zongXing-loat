@@ -4,13 +4,7 @@ import './index.scss'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 
 export default  class Loaninfo extends React.Component{
-     constructor(props){
-         super(props)
-         this.state={
-            //  types
-         }
-         console.log(this.props,"2323232323")
-     }
+   
     render(){
        
         return(

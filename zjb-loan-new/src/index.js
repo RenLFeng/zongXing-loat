@@ -11,7 +11,6 @@ require('babel-polyfill');
 const app = dva({
   onError(err, dispatch) {
     onErrorHandle(err, dispatch);
-    console.log(err, dispatch);
   },
 });
 
